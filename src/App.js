@@ -4,12 +4,12 @@ import Button from '@material-ui/core/Button';
 import logo from './logo.svg';
 import './App.css';
 
-import { palette } from './components/theme';
+import theme from './components/theme';
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={palette}>
+      <ThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />

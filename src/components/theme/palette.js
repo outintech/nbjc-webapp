@@ -1,6 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const palette = createMuiTheme({
+const palette = {
   palette: {
     primary: {
       light: '#A96EB8',
@@ -22,6 +20,6 @@ const palette = createMuiTheme({
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2,
   },
-});
+};
 
 export default palette;

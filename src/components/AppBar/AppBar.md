@@ -1,5 +1,5 @@
 ## AppBar
 
 ```jsx
-<AppBar />
+<AppBar pageTitle="Search Page"/>
 ```
