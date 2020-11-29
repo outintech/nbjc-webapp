@@ -7,4 +7,4 @@ const theme = createMuiTheme({
   ...typography,
 });
 
-export default theme
+export default theme;

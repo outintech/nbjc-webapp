@@ -11,16 +11,15 @@ import {
   Chip,
   Divider,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
-
 const styles = {
   root: {
     '& .MuiSvgIcon-root': {
-      padding: '6px 6px;'
+      padding: '6px 6px;',
     },
     maxWidth: 500,
   },
@@ -33,7 +32,7 @@ const styles = {
     height: 200,
     margin: 'auto',
   },
-  // todo: this needs to be a hyrperlink 
+  // todo: this needs to be a hyrperlink
   location: {
     display: 'flex',
     'flex-direction': 'row',
@@ -59,7 +58,7 @@ const styles = {
   shareButton: {
     float: 'right',
     padding: '6px 6px',
-  }
+  },
 };
 
 const BusinessCard = ({
@@ -106,26 +105,30 @@ const BusinessCard = ({
       <CardContent>
         <Typography variant="body1" className={classes.location}>
           <div className={classes.address}>{address}</div>
-          <div className={classes.distance}>{distance} </div>
+          <div className={classes.distance}>{distance}</div>
         </Typography>
         <Divider />
         <div className={classes.chipWrapper}>
           {chipRenderer()}
           {filters.length > 5 ? (
-            <Chip 
+            <Chip
               color="secondary"
               variant="outlined"
-              label = {`+${filters.length - 5} More`}
+              label={`+${filters.length - 5} More`}
               className={classes.filter}
             />
           ) : (
-            ""
+            ''
           )}
         </div>
         <div>
           <Button color="secondary">Call Space</Button>
           <Button color="secondary">Write a review</Button>
-          <ShareIcon color="secondary" size="small" className={classes.shareButton} />
+          <ShareIcon
+            color="secondary"
+            size="small"
+            className={classes.shareButton}
+          />
         </div>
       </CardContent>
     </Card>

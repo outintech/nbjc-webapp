@@ -1,3 +1,3 @@
-import BusinessCard from './BusinessCard.jsx';
+import BusinessCard from './BusinessCard';
 
 export default BusinessCard;

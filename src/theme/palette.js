@@ -3,7 +3,7 @@ const palette = {
     primary: {
       light: '#A96EB8',
       main: '#752A87',
-      dark: '#480658'
+      dark: '#480658',
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {

@@ -43,7 +43,7 @@ const typography = {
   button: {
     fontWeight: 500,
     fontSize: 14,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   caption: {
     fontWeight: 'normal',

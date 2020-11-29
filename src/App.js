@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
@@ -13,7 +14,9 @@ function App() {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <Button color="primary" variant="contained" disableElevation>Primary</Button>
+            <Button color="primary" variant="contained" disableElevation>
+              Primary
+            </Button>
             <Button variant="outlined">default</Button>
             <Button color="secondary">Secondary</Button>
             <a
