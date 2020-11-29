@@ -81,7 +81,7 @@ const BusinessCard = ({
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
+        avatar={(
           <div color="secondary">
             <StarIcon color="secondary" fontSize="large" />
             <Typography
@@ -92,7 +92,7 @@ const BusinessCard = ({
               {averageRating}
             </Typography>
           </div>
-        }
+        )}
         action={<BookmarkBorderIcon fontSize="large" color="secondary" />}
         title={<Typography variant="h6">{name}</Typography>}
         subheader={<Typography variant="body2">{category}</Typography>}
