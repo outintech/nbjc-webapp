@@ -10,7 +10,7 @@ const palette = {
       light: '#E083AA',
       main: '#AE3367',
       dark: '#720432',
-      contrastText: '#ffcc00',
+      // contrastText: '#000000',
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
