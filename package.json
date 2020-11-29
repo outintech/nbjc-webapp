@@ -21,7 +21,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "styleguide": "npx styleguidist server",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "generate": "plop"
   },
   "browserslist": {
     "production": [
@@ -43,6 +44,7 @@
     "eslint-plugin-react": "^7.21.5",
     "husky": "^4.3.0",
     "lint-staged": "^10.5.2",
+    "plop": "^2.7.4",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.1"
   },
@@ -53,7 +55,6 @@
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx}": [
-      "npx prettier --write",
       "eslint src/**/*.js src/**/*.jsx --fix-dry-run"
     ]
   }
