@@ -2,6 +2,86 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Development
+### Prerequisites
+* This repo uses `node` and `yarn`. 
+* TDB - Specify versions for node and yarn
+* To install node consider using a version manager like [nvm](https://github.com/nvm-sh/nvm)
+* To install yarn consider using a version manager like [yvm](https://yvm.js.org/docs/overview)
+
+### Setting up the repo locallay
+```bash
+$ git clone git@github.com:outintech/nbjc-webapp.git
+$ cd nbjc-webapp
+$ yarn install
+```
+
+### Running the repo locally
+The following will start the repo locally with watchers and hmr in localhost:3000
+
+```bash
+$ yarn start
+```
+If 3030 is already in use it will prompt you to run in a different port like so. Hit `Y` to allow 
+```
+? Something is already running on port 3000. Probably:
+...
+Would you like to run the app on another port instead? (Y/n)
+```
+
+### Creating components
+New standalone React components can be scaffolded using a plop script. 
+
+To run the generator: 
+
+```
+$ yarn generate component
+```
+In the prompt, provide a name to your compoenent in [PascalCase](https://wiki.c2.com/?PascalCase)
+The script will create :
+1. A new directory in `src/components` 
+2. Four new files:
+
+    1. `.jsx` file for the component
+    2. `.md` file for styleguide
+    3. `.test.jsx` file for unit testing
+    4. `index.js` file for ease of import. 
+
+Example: 
+```
+$ yarn generate component
+yarn run v1.22.5
+$ plop component
+? What is your component name? FilterDialog
+✔  ++ /src/components/FilterDialog/FilterDialog.jsx
+✔  ++ /src/components/FilterDialog/FilterDialog.md
+✔  ++ /src/components/FilterDialog/FilterDialog.test.jsx
+✔  ++ /src/components/FilterDialog/index.js
+✨  Done in 6.64s.
+```
+### Styleguide
+* This repo uses a styleguide based on `react-styleguidist` to develop components locally. 
+* It looks for any components with a .md file in `src/components` folder
+* The files are wrapped with the `src/Provider.js` component to theme the stylguide according to the NBJC theme
+
+To run the styleguide
+```
+$ yarn styleguide
+```
+go to localhost:6060 to see the styleguide and modify the examples.
+
+To add styleguide to component in the `src/components` folder simply add a `.md` file with `jsx` codeblocks. 
+
+### Linting
+* Run `yarn lint` to lint all *.js and *.jsx files in the src folder
+* CSS lint tbd
+* This repo uses `eslint` with `airbnb` rules.
+
+### Testing
+* Run `yarn test` to run all tests with a watcher. 
+* Tests will automaticcaly run based on changes.
+* Standalone components use snapshot testing to test the rendered component.
+
 ## Available Scripts
 
 In the project directory, you can run:
