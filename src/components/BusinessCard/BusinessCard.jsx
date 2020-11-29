@@ -74,14 +74,19 @@ const BusinessCard = ({
   const chipRenderer = () => {
     const filtersToRender = filters.slice(0, 4);
     const chips = filtersToRender.map((filter) => (
-      <Chip color="secondary" label={filter.name} className={classes.filter} />
+      <Chip
+        color="secondary"
+        label={filter.name}
+        className={classes.filter}
+        key={filter.name.replace(/\w/, '')}
+      />
     ));
     return chips;
   };
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={(
+        avatar={
           <div color="secondary">
             <StarIcon color="secondary" fontSize="large" />
             <Typography
@@ -92,7 +97,7 @@ const BusinessCard = ({
               {averageRating}
             </Typography>
           </div>
-        )}
+        }
         action={<BookmarkBorderIcon fontSize="large" color="secondary" />}
         title={<Typography variant="h6">{name}</Typography>}
         subheader={<Typography variant="body2">{category}</Typography>}
@@ -103,10 +108,14 @@ const BusinessCard = ({
         className={classes.cardMedia}
       />
       <CardContent>
-        <Typography variant="body1" className={classes.location}>
-          <div className={classes.address}>{address}</div>
-          <div className={classes.distance}>{distance}</div>
-        </Typography>
+        <div className={classes.location}>
+          <div className={classes.address}>
+            <Typography variant="body1">{address}</Typography>
+          </div>
+          <div className={classes.distance}>
+            <Typography variant="body1">{distance}</Typography>
+          </div>
+        </div>
         <Divider />
         <div className={classes.chipWrapper}>
           {chipRenderer()}
@@ -143,9 +152,11 @@ BusinessCard.propTypes = {
   imageUrl: PropTypes.string,
   address: PropTypes.string.isRequired,
   distance: PropTypes.string.isRequired,
-  filters: PropTypes.arrayOf({
-    name: PropTypes.string.isRequired,
-  }),
+  filters: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 BusinessCard.defaultProps = {

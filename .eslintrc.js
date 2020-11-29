@@ -6,6 +6,23 @@ module.exports = {
     // todo fix this
     'import/no-extraneous-dependencies': 0,
     // todo fix this
-    'no-undef': 0,
   },
+  overrides: [{
+    files: ['*.test.js', '*.test.jsx'],
+
+    rules: {
+      /**
+       * props spreading is a very common usecase in tests
+       * when you have a set of props initially (in a before) and
+       * then might want to test different variations of those
+       * props in the test suite.
+       */
+      'react/jsx-props-no-spreading': 0,
+      /**
+       * in test files, without this rule, eslint considers
+       * the `test` and `expect` keywords to be undefined
+      */
+      'no-undef': 0,
+    },
+  }],
 };
