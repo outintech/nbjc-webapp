@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ChipList from './ChipList';
 
-jest.mock('react-intersection-observer', () =>({
+jest.mock('react-intersection-observer', () => ({
   useInView: () => [{}, true],
 }));
 
