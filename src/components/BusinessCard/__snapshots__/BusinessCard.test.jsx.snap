@@ -94,53 +94,7 @@ exports[`renders the BusinessCardComponent 1`] = `
       />
       <div
         class="BusinessCard-chipWrapper-7"
-      >
-        <div
-          class="MuiChip-root BusinessCard-filter-8 MuiChip-colorSecondary"
-        >
-          <span
-            class="MuiChip-label"
-          >
-            Black Friendly
-          </span>
-        </div>
-        <div
-          class="MuiChip-root BusinessCard-filter-8 MuiChip-colorSecondary"
-        >
-          <span
-            class="MuiChip-label"
-          >
-            Inclusive
-          </span>
-        </div>
-        <div
-          class="MuiChip-root BusinessCard-filter-8 MuiChip-colorSecondary"
-        >
-          <span
-            class="MuiChip-label"
-          >
-            Black Owned
-          </span>
-        </div>
-        <div
-          class="MuiChip-root BusinessCard-filter-8 MuiChip-colorSecondary"
-        >
-          <span
-            class="MuiChip-label"
-          >
-            Gender Neutral Restrooms
-          </span>
-        </div>
-        <div
-          class="MuiChip-root BusinessCard-filter-8 MuiChip-colorSecondary MuiChip-outlined MuiChip-outlinedSecondary"
-        >
-          <span
-            class="MuiChip-label"
-          >
-            +3 More
-          </span>
-        </div>
-      </div>
+      />
       <div>
         <button
           class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary"

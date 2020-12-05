@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChipList render 1`] = `
+<DocumentFragment>
+  <div
+    class="ChipList-chipWrapper-1"
+  >
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Friendly
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Inclusive
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Owned
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Gender Neutral Restrooms
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Accessible
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Queer hangout space
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Trans friendly
+        </p>
+      </span>
+    </div>
+    <div
+      class="MuiChip-root ChipList-chip-2 MuiChip-colorSecondary"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Queer owned
+        </p>
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
