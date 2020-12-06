@@ -5,7 +5,7 @@ module.exports = {
     'react/prop-types': 0,
     // todo fix this
     'import/no-extraneous-dependencies': 0,
-    // todo fix this
+    'no-plusplus': 0,
   },
   overrides: [{
     files: ['*.test.js', '*.test.jsx'],
