@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the BusinessCardComponent 1`] = `
+<DocumentFragment>
+  <div
+    class="PriceFilter-wrapper-1"
+  >
+    <div
+      class="MuiButtonBase-root MuiChip-root PriceFilter-filter-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiChip-icon MuiChip-iconColorPrimary"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+        />
+      </svg>
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-colorInherit"
+        >
+          $
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root PriceFilter-filter-2 MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-colorPrimary"
+        >
+          $,$
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root PriceFilter-filter-2 MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-colorPrimary"
+        >
+          $,$,$
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root PriceFilter-filter-2 MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-colorPrimary"
+        >
+          $,$,$,$
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

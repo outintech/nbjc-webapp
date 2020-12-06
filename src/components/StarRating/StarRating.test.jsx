@@ -8,7 +8,6 @@ test('StarRating with default props', () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-
 test('StarRating with some filled', () => {
   const { asFragment } = render(<StarRating numberFilled={2} />);
   expect(asFragment()).toMatchSnapshot();
