@@ -13,10 +13,20 @@ const styles = {
   },
 };
 
-const StarRating = ({ color, numberFilled, classes }) => {
+const StarRating = ({
+  color,
+  numberFilled,
+  classes,
+  onRatingChanged,
+}) => {
   const totalStars = 5;
   const [filled, setNumberFilled] = useState(numberFilled);
   const [totalRating, setTotalRating] = useState(numberFilled);
+
+  const changeRating = (rating) => {
+    setTotalRating(rating);
+    onRatingChanged(rating);
+  };
 
   const getStars = () => {
     const stars = [];
@@ -29,7 +39,7 @@ const StarRating = ({ color, numberFilled, classes }) => {
             disableRipple
             onMouseEnter={() => setNumberFilled(rating)}
             onMouseLeave={() => setNumberFilled(totalRating)}
-            onClick={() => setTotalRating(rating)}
+            onClick={() => changeRating(rating)}
             color={color}
             key={rating}
           >
@@ -43,7 +53,7 @@ const StarRating = ({ color, numberFilled, classes }) => {
             disableRipple
             onMouseEnter={() => setNumberFilled(rating)}
             onMouseLeave={() => setNumberFilled(totalRating)}
-            onClick={() => setTotalRating(rating)}
+            onClick={() => changeRating(rating)}
             color={color}
             key={rating}
           >
@@ -55,22 +65,20 @@ const StarRating = ({ color, numberFilled, classes }) => {
     return stars;
   };
 
-  return (
-    <>
-      {getStars()}
-    </>
-  );
+  return <>{getStars()}</>;
 };
 
 StarRating.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   color: PropTypes.string,
   numberFilled: PropTypes.number,
+  onRatingChanged: PropTypes.func,
 };
 
 StarRating.defaultProps = {
   color: 'primary',
   numberFilled: 0,
+  onRatingChanged: () => {},
 };
 
 export default withStyles(styles)(StarRating);

@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import StarRating from '../StarRating';
 import PriceFilter from './PriceFilter';
+import useFilters from './hooks/useFilters';
 
 const styles = {
   toolbar: {
@@ -46,21 +47,23 @@ const styles = {
 
 const FilterDialog = ({ open, onClose, classes }) => {
   const ratingText = '3 and above';
+  const { state: { stars, price, distance }, dispatch } = useFilters();
+
   const priceFilters = [{
     label: '$',
-    active: false,
+    active: price === 1,
     value: 1,
   }, {
     label: '$$',
-    active: true,
+    active: price === 2,
     value: 2,
   }, {
     label: '$$$',
-    active: false,
+    active: price === 3,
     value: 3,
   }, {
     label: '$$$$',
-    active: false,
+    active: price === 4,
     value: 4,
   }];
   return (
@@ -80,7 +83,7 @@ const FilterDialog = ({ open, onClose, classes }) => {
         <Typography variant="h5">Filter by</Typography>
         <div className={classes.section}>
           <Typography variant="h6">Average Rating</Typography>
-          <StarRating />
+          <StarRating numberFilled={stars} onRatingChanged={(value) => dispatch({ type: 'start', payload: { stars: value } })} />
           <Typography variant="caption">{ratingText}</Typography>
         </div>
         <div className={classes.section}>
@@ -88,20 +91,21 @@ const FilterDialog = ({ open, onClose, classes }) => {
           {/* make price list */}
           <PriceFilter
             filters={priceFilters}
-            onFilterClick={() => {}}
+            onFilterClick={(i) => dispatch({ type: 'price', payload: { price: i } })}
           />
         </div>
         <div className={classes.section}>
           <Typography variant="h6" className={classes.distanceHeader}>Distance</Typography>
           <Typography variant="caption">Number of miles away</Typography>
           <Slider
-            defaultValue={5}
+            value={distance}
             valueLabelDisplay="on"
             className={classes.slider}
             marks={[
               { value: 0, label: '0' },
               { value: 100, label: '100' },
             ]}
+            onChangeCommitted={(_, value) => dispatch({ type: 'distance', payload: { distance: value } })}
           />
         </div>
       </div>
