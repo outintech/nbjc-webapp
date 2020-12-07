@@ -46,9 +46,8 @@ const styles = {
 };
 
 const FilterDialog = ({ open, onClose, classes }) => {
-  const ratingText = '3 and above';
   const { state: { stars, price, distance }, dispatch } = useFilters();
-
+  const ratingText = `${stars} and above`;
   const priceFilters = [{
     label: '$',
     active: price === 1,
@@ -83,7 +82,7 @@ const FilterDialog = ({ open, onClose, classes }) => {
         <Typography variant="h5">Filter by</Typography>
         <div className={classes.section}>
           <Typography variant="h6">Average Rating</Typography>
-          <StarRating numberFilled={stars} onRatingChanged={(value) => dispatch({ type: 'start', payload: { stars: value } })} />
+          <StarRating numberFilled={stars} onRatingChanged={(value) => dispatch({ type: 'stars', payload: { stars: value } })} />
           <Typography variant="caption">{ratingText}</Typography>
         </div>
         <div className={classes.section}>
