@@ -1,8 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-
+// eslint-disable-next-line no-unused-vars
+import MockChipList from '../ChipList';
 import BusinessCard from './BusinessCard';
 
+jest.mock('../ChipList', () => () => (<></>));
 test('renders the BusinessCardComponent', () => {
   const props = {
     name: 'La colombe coffee roasters',

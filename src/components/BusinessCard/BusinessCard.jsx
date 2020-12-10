@@ -8,13 +8,14 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  Chip,
   Divider,
   Typography,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
+
+import ChipList from '../ChipList';
 
 const styles = {
   root: {
@@ -70,79 +71,55 @@ const BusinessCard = ({
   address,
   distance,
   filters,
-}) => {
-  const chipRenderer = () => {
-    const filtersToRender = filters.slice(0, 4);
-    const chips = filtersToRender.map((filter) => (
-      <Chip
-        color="secondary"
-        label={filter.name}
-        className={classes.filter}
-        key={filter.name.replace(/\w/, '')}
-      />
-    ));
-    return chips;
-  };
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={(
-          <div color="secondary">
-            <StarIcon color="secondary" fontSize="large" />
-            <Typography
-              variant="body2"
-              color="secondary"
-              className={classes.rating}
-            >
-              {averageRating}
-            </Typography>
-          </div>
-        )}
-        action={<BookmarkBorderIcon fontSize="large" color="secondary" />}
-        title={<Typography variant="h6">{name}</Typography>}
-        subheader={<Typography variant="body2">{category}</Typography>}
-      />
-      <CardMedia
-        image={imageUrl}
-        // todo make this responsive
-        className={classes.cardMedia}
-      />
-      <CardContent>
-        <div className={classes.location}>
-          <div className={classes.address}>
-            <Typography variant="body1">{address}</Typography>
-          </div>
-          <div className={classes.distance}>
-            <Typography variant="body1">{distance}</Typography>
-          </div>
-        </div>
-        <Divider />
-        <div className={classes.chipWrapper}>
-          {chipRenderer()}
-          {filters.length > 5 ? (
-            <Chip
-              color="secondary"
-              variant="outlined"
-              label={`+${filters.length - 5} More`}
-              className={classes.filter}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div>
-          <Button color="secondary">Call Space</Button>
-          <Button color="secondary">Write a review</Button>
-          <ShareIcon
+}) => (
+  <Card className={classes.root}>
+    <CardHeader
+      avatar={(
+        <div color="secondary">
+          <StarIcon color="secondary" fontSize="large" />
+          <Typography
+            variant="body2"
             color="secondary"
-            size="small"
-            className={classes.shareButton}
-          />
+            className={classes.rating}
+          >
+            {averageRating}
+          </Typography>
         </div>
-      </CardContent>
-    </Card>
-  );
-};
+      )}
+      action={<BookmarkBorderIcon fontSize="large" color="secondary" />}
+      title={<Typography variant="h6">{name}</Typography>}
+      subheader={<Typography variant="body2">{category}</Typography>}
+    />
+    <CardMedia
+      image={imageUrl}
+      // todo make this responsive
+      className={classes.cardMedia}
+    />
+    <CardContent>
+      <div className={classes.location}>
+        <div className={classes.address}>
+          <Typography variant="body1">{address}</Typography>
+        </div>
+        <div className={classes.distance}>
+          <Typography variant="body1">{distance}</Typography>
+        </div>
+      </div>
+      <Divider />
+      <div className={classes.chipWrapper}>
+        <ChipList chips={filters} />
+      </div>
+      <div>
+        <Button color="secondary">Call Space</Button>
+        <Button color="secondary">Write a review</Button>
+        <ShareIcon
+          color="secondary"
+          size="small"
+          className={classes.shareButton}
+        />
+      </div>
+    </CardContent>
+  </Card>
+);
 
 BusinessCard.propTypes = {
   name: PropTypes.string.isRequired,
