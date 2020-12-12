@@ -1,9 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
-import {
-  BrowserRouter as Router, Link, Switch, Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
 
 import theme from './theme';
 import { Home, Search } from './routes';
