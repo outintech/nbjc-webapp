@@ -1,8 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
 import {
-  BrowserRouter as Router, Link, Switch, Route,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 
 import theme from './theme';
@@ -14,7 +13,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <div className="App">
-            <Link to="/">
+            {/* <Link to="/">
               <Button color="primary" variant="contained" disableElevation>
                 Home
               </Button>
@@ -23,7 +22,7 @@ function App() {
               <Button color="primary" variant="contained" disableElevation>
                 Search
               </Button>
-            </Link>
+            </Link> */}
           </div>
           <Switch>
             <Route path="/search">

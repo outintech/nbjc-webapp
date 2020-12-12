@@ -45,8 +45,14 @@ const styles = {
   },
 };
 
-const FilterDialog = ({ open, onClose, classes }) => {
-  const { state: { stars, price, distance }, dispatch } = useFilters();
+const FilterDialog = ({
+  open,
+  onClose,
+  classes,
+  setFilters,
+  defaultFilters,
+}) => {
+  const { state: { stars, price, distance }, dispatch } = useFilters(defaultFilters);
   const ratingText = `${stars} and above`;
   const priceFilters = [{
     label: '$',
@@ -114,6 +120,10 @@ const FilterDialog = ({ open, onClose, classes }) => {
           variant="outlined"
           disableElevation
           className={classes.footerButtons}
+          onClick={() => {
+            dispatch({ type: 'reset' });
+            onClose();
+          }}
         >
           <Typography variant="button" color="primary">Cancel</Typography>
         </Button>
@@ -122,6 +132,10 @@ const FilterDialog = ({ open, onClose, classes }) => {
           variant="contained"
           disableElevation
           className={classes.footerButtons}
+          onClick={() => {
+            setFilters({ stars, distance, price });
+            onClose();
+          }}
         >
           <Typography variant="button" color="inherit">Apply</Typography>
         </Button>
@@ -134,8 +148,17 @@ FilterDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  setFilters: PropTypes.func,
+  defaultFilters: PropTypes.shape({
+    star: PropTypes.number,
+    distance: PropTypes.number,
+    price: PropTypes.number,
+  }),
 };
 
-FilterDialog.defaultProps = {};
+FilterDialog.defaultProps = {
+  setFilters: () => {},
+  defaultFilters: {},
+};
 
 export default withStyles(styles)(FilterDialog);
