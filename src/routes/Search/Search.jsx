@@ -58,7 +58,7 @@ const Search = ({ classes }) => {
     <>
       <AppBar pageTitle="Search for a space" />
       <div className={classes.content}>
-        {matches && <DesktopSearch chips={chips} />}
+        {matches && <DesktopSearch chips={chips} onSearch={onSearchSubmit} />}
         {!matches && (
           <MobileSearch
             chips={chips}

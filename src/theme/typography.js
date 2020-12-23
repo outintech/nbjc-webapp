@@ -45,6 +45,11 @@ const typography = {
     fontSize: 14,
     textTransform: 'uppercase',
   },
+  allCaps: {
+    fontWeight: 'normal',
+    fontSize: 12,
+    textTransform: 'uppercase',
+  },
   caption: {
     fontWeight: 'normal',
     fontSize: 12,
