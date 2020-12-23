@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { withStyles } from '@material-ui/core/styles';
 
+import { Typography } from '@material-ui/core';
 import AppBar from '../../components/AppBar';
+
+import getBusinessMock from '../../__mocks__/getBusinessMock';
+import BusinessCard from '../../components/BusinessCard';
 
 import DesktopSearch from './DesktopSearch';
 import MobileSearch from './MobileSearch';
 
-const Search = () => {
+const styles = {
+  resultsWrapper: {},
+  result: {
+    margin: '10px 0px 40px 0px',
+  },
+  content: {
+    margin: '0 15px',
+  },
+};
+
+const Search = ({ classes }) => {
   const matches = useMediaQuery('(min-width:376px)');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchCriteria, setSearchCriteria] = useState();
   // TODO: this needs to come from the db.
   const chips = [{
     name: 'Black Friendly',
@@ -27,15 +45,50 @@ const Search = () => {
     name: 'Queer owned',
   }];
 
+  const onSearchSubmit = (searchTerm) => {
+    setSearchResults([]);
+    setSearchCriteria(searchTerm);
+    setTimeout(() => {
+      const results = [...Array(10)].map((_, i) => getBusinessMock({ id: `${i}` }));
+      setSearchResults(results);
+    }, 300);
+  };
+
   return (
     <>
-      <AppBar
-        pageTitle="Search for a space"
-      />
-      { matches && <DesktopSearch chips={chips} /> }
-      {!matches && <MobileSearch /> }
+      <AppBar pageTitle="Search for a space" />
+      <div className={classes.content}>
+        {matches && <DesktopSearch chips={chips} />}
+        {!matches && (
+          <MobileSearch
+            chips={chips}
+            onSearch={onSearchSubmit}
+            results={searchResults}
+          />
+        )}
+        <div className={classes.resultsWrapper}>
+          {searchResults.length > 0 && (
+            <Typography variant="h6">
+              {`${searchResults.length} results found for ${searchCriteria}`}
+            </Typography>
+          )}
+          {searchResults.length > 0
+            && searchResults.map((result) => (
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              <BusinessCard
+                business={result}
+                key={result.id}
+                overrideClasses={{ root: classes.result }}
+              />
+            ))}
+        </div>
+      </div>
     </>
   );
 };
 
-export default Search;
+Search.props = {
+  classes: PropTypes.shape({}),
+};
+
+export default withStyles(styles)(Search);

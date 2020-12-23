@@ -2,6 +2,7 @@
 
 ```jsx
 const props = {
+  id: '123',
   name: 'La colombe coffee roasters',
   category: 'Coffee',
   averageRating: '4.5',
@@ -26,5 +27,5 @@ const props = {
     name: 'Queer owned',
   }],
 };
-<BusinessCard  {...props} />;
+<BusinessCard  business={props} />;
 ```
