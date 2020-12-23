@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -19,6 +21,20 @@ const styles = {
   },
   content: {
     margin: '0 15px',
+  },
+  searchResultsWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  desktop: {
+    margin: '0 100px',
+  },
+  desktopSearchResults: {
+    maxWidth: '350px',
+    marginRight: 50,
+  },
+  mobileSearchResults: {
+    width: '100%',
   },
 };
 
@@ -66,21 +82,32 @@ const Search = ({ classes }) => {
             results={searchResults}
           />
         )}
-        <div className={classes.resultsWrapper}>
+        <div className={cx(classes.resultsWrapper, {
+          [classes.desktop]: matches,
+        })}
+        >
           {searchResults.length > 0 && (
             <Typography variant="h6">
               {`${searchResults.length} results found for ${searchCriteria}`}
             </Typography>
           )}
-          {searchResults.length > 0
-            && searchResults.map((result) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <BusinessCard
-                business={result}
-                key={result.id}
-                overrideClasses={{ root: classes.result }}
-              />
-            ))}
+          <div className={classes.searchResultsWrapper}>
+            {searchResults.length > 0
+              && searchResults.map((result) => (
+                <div
+                  className={cx({
+                    [classes.desktopSearchResults]: matches,
+                    [classes.mobileSearchResults]: !matches,
+                  })}
+                >
+                  <BusinessCard
+                    business={result}
+                    key={result.id}
+                    overrideClasses={{ root: classes.result }}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </>

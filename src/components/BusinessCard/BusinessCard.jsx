@@ -24,7 +24,7 @@ const styles = {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
     },
-    maxWidth: 500,
+    maxWidth: 345,
   },
   rating: {
     display: 'block',
