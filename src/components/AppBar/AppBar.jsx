@@ -19,6 +19,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 const styles = (theme) => ({
   root: {
     display: 'flex',
+    height: 56,
+    marginBottom: 80,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
