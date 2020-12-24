@@ -41,6 +41,6 @@ test('renders the BusinessCardComponent', () => {
       },
     ],
   };
-  const { asFragment } = render(<BusinessCard {...props} />);
+  const { asFragment } = render(<BusinessCard business={props} />);
   expect(asFragment()).toMatchSnapshot();
 });

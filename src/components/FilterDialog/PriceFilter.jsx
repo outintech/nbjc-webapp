@@ -13,6 +13,7 @@ const styles = {
     marginRight: 10,
     minWidth: 42,
     textAlign: 'center',
+    marginBottom: 5,
   },
 };
 

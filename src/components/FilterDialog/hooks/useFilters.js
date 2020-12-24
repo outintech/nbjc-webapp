@@ -17,17 +17,23 @@ export const reducer = (state, action) => {
         ...state,
         distance: action.payload.distance,
       };
+    case 'reset':
+      return {
+        stars: 3,
+        price: 2,
+        distance: 5,
+      };
     default:
       return state;
   }
 };
 
-const useFilters = () => {
+const useFilters = ({ stars = 3, price = 2, distance = 5 }) => {
   // default filter values
   const initialState = {
-    stars: 3,
-    price: 2,
-    distance: 5,
+    stars,
+    price,
+    distance,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
