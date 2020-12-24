@@ -2,44 +2,48 @@
 
 exports[`AppBar renders with default state 1`] = `
 <DocumentFragment>
-  <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+  <div
+    class="AppBar-root-1"
   >
-    <div
-      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    <header
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionFixed MuiAppBar-colorPrimary AppBar-appBar-2 mui-fixed MuiPaper-elevation4"
     >
-      <button
-        aria-label="menu"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
-        data-testid="appbar-menu"
-        tabindex="0"
-        type="button"
+      <div
+        class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
       >
-        <span
-          class="MuiIconButton-label"
+        <button
+          aria-label="menu"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+          data-testid="appbar-menu"
+          tabindex="0"
+          type="button"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <span
+            class="MuiIconButton-label"
           >
-            <path
-              d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-            />
-          </svg>
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
-      </button>
-      <h6
-        class="MuiTypography-root MuiTypography-h6"
-        data-testid="appbar-title"
-      >
-        Home
-      </h6>
-    </div>
-  </header>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+        <h6
+          class="MuiTypography-root MuiTypography-h6"
+          data-testid="appbar-title"
+        >
+          Home
+        </h6>
+      </div>
+    </header>
+  </div>
 </DocumentFragment>
 `;
