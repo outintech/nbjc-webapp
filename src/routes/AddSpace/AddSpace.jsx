@@ -6,12 +6,18 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-const styles = {
+const styles = (theme) => ({
   stepperWrapper: {
     width: '100%',
     margin: '0 auto',
+    [theme.breakpoints.up('xs')]: {
+      backgroundColor: 'blue',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      backgroundColor: 'red',
+    },
   },
-};
+});
 
 // const getStepContent = (step) => {
 //   switch (step) {

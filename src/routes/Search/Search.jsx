@@ -13,8 +13,12 @@ import BusinessCard from '../../components/BusinessCard';
 import DesktopSearch from './DesktopSearch';
 import MobileSearch from './MobileSearch';
 
-const styles = {
-  resultsWrapper: {},
+const styles = (theme) => ({
+  resultsWrapper: {
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 100px',
+    },
+  },
   result: {
     margin: '10px 0px 40px 0px',
   },
@@ -25,17 +29,16 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
-  desktop: {
-    margin: '0 100px',
+  searchResult: {
+    [theme.breakpoints.up('xs')]: {
+      maxWidth: '350px',
+      marginRight: 50,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: '100%',
+    },
   },
-  desktopSearchResults: {
-    maxWidth: '350px',
-    marginRight: 50,
-  },
-  mobileSearchResults: {
-    width: '100%',
-  },
-};
+});
 
 const Search = ({ classes }) => {
   const matches = useMediaQuery('(min-width:376px)');
@@ -93,10 +96,7 @@ const Search = ({ classes }) => {
             {searchResults.length > 0
               && searchResults.map((result) => (
                 <div
-                  className={cx({
-                    [classes.desktopSearchResults]: matches,
-                    [classes.mobileSearchResults]: !matches,
-                  })}
+                  className={classes.searchResult}
                 >
                   <BusinessCard
                     business={result}
