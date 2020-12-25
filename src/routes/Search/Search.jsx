@@ -6,7 +6,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
-import AppBar from '../../components/AppBar';
 
 import getBusinessMock from '../../__mocks__/getBusinessMock';
 import BusinessCard from '../../components/BusinessCard';
@@ -72,7 +71,6 @@ const Search = ({ classes }) => {
 
   return (
     <>
-      <AppBar pageTitle="Search for a space" />
       <div className={classes.content}>
         {matches && <DesktopSearch chips={chips} onSearch={onSearchSubmit} />}
         {!matches && (
