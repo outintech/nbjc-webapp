@@ -51,7 +51,7 @@ const styles = (theme) => ({
   },
 });
 
-const Search = ({ classes }) => {
+const Search = ({ classes, onNext }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
     name: '',
@@ -68,6 +68,7 @@ const Search = ({ classes }) => {
 
   const onSearch = (e) => {
     e.preventDefault();
+    onNext();
   };
 
   const validateForm = () => formValues.name.length > 0
@@ -162,8 +163,11 @@ const Search = ({ classes }) => {
 
 Search.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  onNext: PropTypes.func,
 };
 
-Search.defaultProps = {};
+Search.defaultProps = {
+  onNext: () => {},
+};
 
 export default withStyles(styles)(Search);

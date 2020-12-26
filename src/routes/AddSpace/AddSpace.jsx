@@ -33,12 +33,18 @@ const styles = (theme) => ({
 
 const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
 
-const getStepContent = (step) => {
+const getStepContent = (step, stepProps) => {
   switch (step) {
     case 0:
-      return <AddSpaceSearch />;
+      return <AddSpaceSearch onNext={stepProps.onNext} />;
     case 1:
-      return <AddSpaceAddress businessList={getMockBusiness()} />;
+      return (
+        <AddSpaceAddress
+          businessList={getMockBusiness()}
+          onBack={stepProps.onBack}
+          onNext={stepProps.onNext}
+        />
+      );
     case 2:
       return 'Attributes';
     case 3:
@@ -53,8 +59,13 @@ const getStepContent = (step) => {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
+  const stepProps = {
+    onBack: () => setActiveStep(activeStep - 1),
+    onNext: () => setActiveStep(activeStep + 1),
+  };
+
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep} connector={null} className={classes.stepper}>
@@ -75,7 +86,7 @@ const AddSpace = ({ classes }) => {
         ))}
       </Stepper>
       <div>
-        {getStepContent(activeStep)}
+        {getStepContent(activeStep, stepProps)}
       </div>
     </div>
   );

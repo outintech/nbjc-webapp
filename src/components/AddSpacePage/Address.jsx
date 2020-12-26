@@ -32,7 +32,9 @@ const styles = (theme) => ({
   },
 });
 
-const Address = ({ businessList, classes }) => {
+const Address = ({
+  businessList, classes, onBack, onNext,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [selected, setSelected] = useState();
   const onCheck = (index) => {
@@ -65,6 +67,7 @@ const Address = ({ businessList, classes }) => {
           className={classes.submitButton}
           fullWidth={!matches}
           disabled={selected === undefined}
+          onClick={onNext}
           disableElevation
         >
           Next
@@ -74,6 +77,7 @@ const Address = ({ businessList, classes }) => {
           variant="outlined"
           color="secondary"
           fullWidth={!matches}
+          onClick={onBack}
           disableElevation
         >
           Back
@@ -87,6 +91,13 @@ const Address = ({ businessList, classes }) => {
 Address.propTypes = {
   businessList: PropTypes.arrayOf(PropTypes.shape(businessProps)).isRequired,
   classes: PropTypes.shape({}).isRequired,
+  onNext: PropTypes.func,
+  onBack: PropTypes.func,
+};
+
+Address.defaultProps = {
+  onNext: () => {},
+  onBack: () => {},
 };
 
 export default withStyles(styles)(Address);
