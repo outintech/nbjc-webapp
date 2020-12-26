@@ -40,6 +40,8 @@ const Attributes = ({
     setActiveChips(oldChips);
   };
 
+  const isAnySelected = () => ((activeChips.filter((c) => c.isSelected) || []).length > 0);
+
   return (
     <>
       <Typography variant="subtitle1" align="center">
@@ -60,6 +62,7 @@ const Attributes = ({
           className={classes.submitButton}
           fullWidth={!matches}
           onClick={onNext}
+          disabled={!isAnySelected()}
           disableElevation
         >
           Next

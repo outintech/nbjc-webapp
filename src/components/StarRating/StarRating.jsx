@@ -24,6 +24,10 @@ const StarRating = ({
   const [totalRating, setTotalRating] = useState(numberFilled);
 
   const changeRating = (rating) => {
+    if (rating === 1 && totalRating === 1) {
+      setTotalRating(0);
+      return;
+    }
     setTotalRating(rating);
     onRatingChanged(rating);
   };

@@ -10,7 +10,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
 
-import { AddSpaceSearch, AddSpaceAddress, AddSpaceAttributes } from '../../components/AddSpacePage';
+import {
+  AddSpaceSearch, AddSpaceAddress, AddSpaceAttributes, AddSpaceReview,
+} from '../../components/AddSpacePage';
 
 const styles = (theme) => ({
   root: {
@@ -50,7 +52,7 @@ const getStepContent = (step, { onBack, onNext }) => {
     case 2:
       return <AddSpaceAttributes chips={chips} onBack={onBack} onNext={onNext} />;
     case 3:
-      return 'Rate and Review';
+      return <AddSpaceReview onBack={onBack} onNext={onNext} />;
     case 4:
       return 'Submit';
     default:
@@ -61,7 +63,7 @@ const getStepContent = (step, { onBack, onNext }) => {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const steps = getSteps();
   const stepProps = {
     onBack: () => setActiveStep(activeStep - 1),
