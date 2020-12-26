@@ -12,6 +12,8 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import states from '../../api/states';
+
 const styles = (theme) => ({
   inputLabel: {
     margin: '18px 0',
@@ -127,8 +129,9 @@ const Search = ({ classes, onNext }) => {
             value={formValues.state}
             required
           >
-            <MenuItem value="ny">NY</MenuItem>
-            <MenuItem value="ca">CA</MenuItem>
+            {states.map((state) => (
+              <MenuItem value={state.abbreviation}>{state.abbreviation}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
