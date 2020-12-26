@@ -6,7 +6,9 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import { AddSpaceSearch } from '../../components/AddSpacePage';
+import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
+
+import { AddSpaceSearch, AddSpaceAddress } from '../../components/AddSpacePage';
 
 const styles = (theme) => ({
   root: {
@@ -29,12 +31,14 @@ const styles = (theme) => ({
   },
 });
 
+const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
+
 const getStepContent = (step) => {
   switch (step) {
     case 0:
       return <AddSpaceSearch />;
     case 1:
-      return 'Address';
+      return <AddSpaceAddress businessList={getMockBusiness()} />;
     case 2:
       return 'Attributes';
     case 3:
@@ -49,7 +53,7 @@ const getStepContent = (step) => {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep] = useState(0);
+  const [activeStep] = useState(1);
   const steps = getSteps();
   return (
     <div className={classes.root}>
