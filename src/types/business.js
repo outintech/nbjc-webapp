@@ -5,7 +5,7 @@ const businessProps = {
   name: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  distance: PropTypes.string.isRequired,
+  distance: PropTypes.string,
   phoneNumber: PropTypes.string,
 };
 

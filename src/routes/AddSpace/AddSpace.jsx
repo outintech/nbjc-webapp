@@ -6,9 +6,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+// todo: change to use api.
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
+import chips from '../../api/chips';
 
-import { AddSpaceSearch, AddSpaceAddress } from '../../components/AddSpacePage';
+import { AddSpaceSearch, AddSpaceAddress, AddSpaceAttributes } from '../../components/AddSpacePage';
 
 const styles = (theme) => ({
   root: {
@@ -33,20 +35,20 @@ const styles = (theme) => ({
 
 const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
 
-const getStepContent = (step, stepProps) => {
+const getStepContent = (step, { onBack, onNext }) => {
   switch (step) {
     case 0:
-      return <AddSpaceSearch onNext={stepProps.onNext} />;
+      return <AddSpaceSearch onNext={onNext} />;
     case 1:
       return (
         <AddSpaceAddress
           businessList={getMockBusiness()}
-          onBack={stepProps.onBack}
-          onNext={stepProps.onNext}
+          onBack={onBack}
+          onNext={onNext}
         />
       );
     case 2:
-      return 'Attributes';
+      return <AddSpaceAttributes chips={chips} onBack={onBack} onNext={onNext} />;
     case 3:
       return 'Rate and Review';
     case 4:

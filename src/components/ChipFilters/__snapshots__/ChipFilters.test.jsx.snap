@@ -3,7 +3,7 @@
 exports[`ChipFilters render 1`] = `
 <DocumentFragment>
   <div
-    class="ChipFilters-mobileWrapper-2"
+    class="ChipFilters-wrapper-2"
   >
     <div
       class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"

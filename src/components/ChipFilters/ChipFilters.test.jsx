@@ -22,7 +22,7 @@ describe('ChipFilters', () => {
     }, {
       name: 'Queer owned',
     }];
-    const { asFragment } = render(<ChipFilters chips={chips} />);
+    const { asFragment } = render(<ChipFilters chips={chips} onChipSelected={jest.fn()} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
