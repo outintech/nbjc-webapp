@@ -1,4 +1,5 @@
-import businessType from './business';
+import { businessProps, spaceProps } from './business';
+
 import chipType from './chip';
 
-export { businessType, chipType };
+export { businessProps, spaceProps, chipType };

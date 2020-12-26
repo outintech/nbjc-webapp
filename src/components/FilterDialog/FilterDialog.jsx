@@ -250,7 +250,7 @@ FilterDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
   setFilters: PropTypes.func,
-  type: PropTypes.oneOf('desktop', 'mobile'),
+  type: PropTypes.oneOf(['desktop', 'mobile']),
   defaultFilters: PropTypes.shape({
     star: PropTypes.number,
     distance: PropTypes.number,
