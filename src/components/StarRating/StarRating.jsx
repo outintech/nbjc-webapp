@@ -26,6 +26,7 @@ const StarRating = ({
   const changeRating = (rating) => {
     if (rating === 1 && totalRating === 1) {
       setTotalRating(0);
+      onRatingChanged(0);
       return;
     }
     setTotalRating(rating);

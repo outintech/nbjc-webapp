@@ -63,7 +63,7 @@ const getStepContent = (step, { onBack, onNext }) => {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const stepProps = {
     onBack: () => setActiveStep(activeStep - 1),

@@ -11,7 +11,18 @@ import Typography from '@material-ui/core/Typography';
 
 import StarRating from '../StarRating';
 
-const styles = () => ({
+const styles = (theme) => ({
+  ratingText: {
+    [theme.breakpoints.down('mobile')]: {
+      float: 'right',
+    },
+  },
+  review: {
+    marginTop: 20,
+  },
+  remaining: {
+    float: 'right',
+  },
   checkbox: {
     display: 'block',
     '& p': {
@@ -35,10 +46,18 @@ const Review = ({ classes, onBack, onNext }) => {
     anon: false,
   });
 
+  const getSanitizedReview = (review) => {
+    // todo: sanitize input for invalid characters
+    if (review.length > 500) {
+      return review.substring(0, 499);
+    }
+    return review;
+  };
+
   const onChange = (e) => {
     switch (e.target.name) {
       case 'review':
-        setFormValues({ ...formValues, review: e.target.value });
+        setFormValues({ ...formValues, review: getSanitizedReview(e.target.value) });
         break;
       case 'anon':
         setFormValues({ ...formValues, anon: !formValues.anon });
@@ -53,7 +72,10 @@ const Review = ({ classes, onBack, onNext }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    onNext();
   };
+
+  const validateForm = () => formValues.review.length > 0 && formValues.rating > 0;
 
   return (
     <>
@@ -64,7 +86,10 @@ const Review = ({ classes, onBack, onNext }) => {
         <Typography variant="h6">
           Rate this space
         </Typography>
-        <StarRating numberFilled={formValues.rating} onRatingChanged={(rating) => onChange({ target: { rating, name: 'rating' } })} />
+        <div>
+          <StarRating numberFilled={formValues.rating} onRatingChanged={(rating) => onChange({ target: { value: rating, name: 'rating' } })} />
+          <Typography variant="caption" className={classes.ratingText}>{`${formValues.rating} stars`}</Typography>
+        </div>
         <Typography variant="h6">
           Share your thought
         </Typography>
@@ -73,10 +98,16 @@ const Review = ({ classes, onBack, onNext }) => {
           onChange={onChange}
           variant="outlined"
           label="Write a Review"
-          helperText="Required"
+          helperText={(
+            <>
+              <Typography variant="caption" color="primary">Required</Typography>
+              <Typography variant="caption" className={classes.remaining}>{`${500 - formValues.review.length} characters remaining`}</Typography>
+            </>
+          )}
           name="review"
           rows={5}
-          fullWidth={!matches}
+          className={classes.review}
+          fullWidth
           multiline
         />
         <FormControlLabel
@@ -101,7 +132,8 @@ const Review = ({ classes, onBack, onNext }) => {
             color="secondary"
             className={classes.submitButton}
             fullWidth={!matches}
-            onClick={onNext}
+            onClick={onFormSubmit}
+            disabled={!validateForm()}
             disableElevation
           >
             Next
