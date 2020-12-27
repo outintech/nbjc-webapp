@@ -13,6 +13,7 @@ const addSpaceProps = {
   rating: PropTypes.number,
   review: PropTypes.string,
   anon: PropTypes.bool,
+  canContact: PropTypes.bool,
 };
 
 export default addSpaceProps;

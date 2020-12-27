@@ -14,13 +14,21 @@ import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
 
 import {
-  AddSpaceSearch, AddSpaceAddress, AddSpaceAttributes, AddSpaceReview,
+  AddSpaceSearch,
+  AddSpaceAddress,
+  AddSpaceAttributes,
+  AddSpaceReview,
+  AddSpaceSubmit,
+  AddSpaceSuccess,
 } from '../../components/AddSpacePage';
 
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('mobile')]: {
       margin: '0 100px',
+    },
+    [theme.breakpoints.up('xs')]: {
+      margin: '0 20px',
     },
   },
   stepper: {
@@ -62,7 +70,12 @@ const styles = (theme) => ({
 
 const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
 
-const getStepContent = (step, { onBack, onNext, disableNext }, formValues) => {
+const getStepContent = (step, {
+  onBack,
+  onNext,
+  onSubmit,
+  disableNext,
+}, formValues) => {
   switch (step) {
     case 0:
       return (
@@ -93,7 +106,17 @@ const getStepContent = (step, { onBack, onNext, disableNext }, formValues) => {
     case 3:
       return <AddSpaceReview onBack={onBack} onNext={onNext} addSpaceProps={formValues} />;
     case 4:
-      return 'Submit';
+      return (
+        <AddSpaceSubmit
+          onBack={onBack}
+          onSubmit={onSubmit}
+          addSpaceProps={formValues}
+        />
+      );
+    case 5:
+      return (
+        <AddSpaceSuccess />
+      );
     default:
       return 'Unknown step';
   }
@@ -120,46 +143,55 @@ const AddSpace = ({ classes }) => {
     });
     setActiveStep(activeStep + 1);
   };
+  const onSubmit = (space) => {
+    // todo: contact api
+    console.log('Space details', space);
+    setActiveStep(5);
+  };
+
   const stepProps = {
     onBack: (step) => {
-      if (step && Number.isNaN(step)) {
+      if (step > -1 && step < 6) {
         return setActiveStep(step);
       }
       return setActiveStep(activeStep - 1);
     },
     onNext,
+    onSubmit,
     disableNext: snackbarOpen,
   };
 
   return (
     <div className={classes.root}>
-      <Stepper
-        activeStep={activeStep}
-        connector={null}
-        className={classes.stepper}
-      >
-        {steps.map((label, index) => (
-          <Step
-            color="secondary"
-            key={label}
-            onClick={() => {
-              if (index < activeStep) {
-                setActiveStep(index);
-              }
-            }}
-            className={classes.step}
-          >
-            {activeStep === index && (
-              <StepLabel className={classes.stepLabel} color="secondary">
-                {label}
-              </StepLabel>
-            )}
-            {activeStep !== index && (
-              <StepLabel className={classes.stepLabel} color="secondary" />
-            )}
-          </Step>
-        ))}
-      </Stepper>
+      {activeStep !== 5 && (
+        <Stepper
+          activeStep={activeStep}
+          connector={null}
+          className={classes.stepper}
+        >
+          {steps.map((label, index) => (
+            <Step
+              color="secondary"
+              key={label}
+              onClick={() => {
+                if (index < activeStep && activeStep !== 5) {
+                  setActiveStep(index);
+                }
+              }}
+              className={classes.step}
+            >
+              {activeStep === index && (
+                <StepLabel className={classes.stepLabel} color="secondary">
+                  {label}
+                </StepLabel>
+              )}
+              {activeStep !== index && (
+                <StepLabel className={classes.stepLabel} color="secondary" />
+              )}
+            </Step>
+          ))}
+        </Stepper>
+      )}
       <div>{getStepContent(activeStep, stepProps, formValues)}</div>
       <Snackbar
         open={snackbarOpen}

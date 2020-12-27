@@ -36,14 +36,14 @@ const styles = (theme) => ({
 });
 
 const BusinessResultCard = ({
-  business, classes, checked, onCheck, overrideClasses,
+  business, classes, checked, onCheck, overrideClasses, hideCheck,
 }) => (
   <div className={cx(classes.resultCard, overrideClasses.resultCard)}>
     <Card className={cx(classes.card, { [classes.checked]: checked })} variant="outlined">
       <CardContent>
         <div>
           <Typography variant="subtitle1" className={classes.title}>{business.name}</Typography>
-          <Checkbox color="primary" className={classes.checkbox} checked={checked} onChange={onCheck} />
+          {!hideCheck && <Checkbox color="primary" className={classes.checkbox} checked={checked} onChange={onCheck} /> }
         </div>
         <Typography variant="caption">{business.category}</Typography>
         <div className={classes.wrapper}>
@@ -64,10 +64,12 @@ BusinessResultCard.propTypes = {
   checked: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
+  hideCheck: PropTypes.bool,
 };
 
 BusinessResultCard.defaultProps = {
   overrideClasses: {},
+  hideCheck: false,
 };
 
 export default withStyles(styles)(BusinessResultCard);

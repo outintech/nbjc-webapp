@@ -108,7 +108,7 @@ exports[`StarRating with default props 1`] = `
 exports[`StarRating with some filled 1`] = `
 <DocumentFragment>
   <button
-    class="MuiButtonBase-root MuiIconButton-root StarRating-button-2 MuiIconButton-colorPrimary"
+    class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
     tabindex="0"
     type="button"
   >
@@ -128,7 +128,7 @@ exports[`StarRating with some filled 1`] = `
     </span>
   </button>
   <button
-    class="MuiButtonBase-root MuiIconButton-root StarRating-button-2 MuiIconButton-colorPrimary"
+    class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
     tabindex="0"
     type="button"
   >
@@ -148,7 +148,7 @@ exports[`StarRating with some filled 1`] = `
     </span>
   </button>
   <button
-    class="MuiButtonBase-root MuiIconButton-root StarRating-button-2 MuiIconButton-colorPrimary"
+    class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
     tabindex="0"
     type="button"
   >
@@ -168,7 +168,7 @@ exports[`StarRating with some filled 1`] = `
     </span>
   </button>
   <button
-    class="MuiButtonBase-root MuiIconButton-root StarRating-button-2 MuiIconButton-colorPrimary"
+    class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
     tabindex="0"
     type="button"
   >
@@ -188,7 +188,7 @@ exports[`StarRating with some filled 1`] = `
     </span>
   </button>
   <button
-    class="MuiButtonBase-root MuiIconButton-root StarRating-button-2 MuiIconButton-colorPrimary"
+    class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
     tabindex="0"
     type="button"
   >
