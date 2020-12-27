@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -33,14 +36,33 @@ const styles = (theme) => ({
       },
     },
   },
+  alert: {
+    backgroundColor: theme.palette.error.main,
+    color: 'white',
+  },
+  alertMessage: {
+    display: 'flex',
+    width: 344,
+  },
+  alertText: {
+    display: 'inline-block',
+  },
+  supportButton: {
+    display: 'inline-block',
+    float: 'right',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: 'unset',
+    },
+  },
 });
 
 const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
 
-const getStepContent = (step, { onBack, onNext }) => {
+const getStepContent = (step, { onBack, onNext, disableNext }) => {
   switch (step) {
     case 0:
-      return <AddSpaceSearch onNext={onNext} />;
+      return <AddSpaceSearch onNext={onNext} disableNext={disableNext} />;
     case 1:
       return (
         <AddSpaceAddress
@@ -64,22 +86,40 @@ const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review',
 
 const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formValues, setFormValues] = useState({});
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const steps = getSteps();
+  const onNext = (data) => {
+    if (activeStep === 0) {
+      // todo: call yelp api
+      if (data && data.name === 'error') {
+        setSnackbarOpen(true);
+        return;
+      }
+    }
+    setFormValues({
+      ...formValues,
+      ...data,
+    });
+    setActiveStep(activeStep + 1);
+  };
   const stepProps = {
     onBack: () => setActiveStep(activeStep - 1),
-    onNext: () => setActiveStep(activeStep + 1),
+    onNext,
+    disableNext: snackbarOpen,
   };
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep} connector={null} className={classes.stepper}>
+      <Stepper
+        activeStep={activeStep}
+        connector={null}
+        className={classes.stepper}
+      >
         {steps.map((label, index) => (
           <Step color="secondary" key={label}>
             {activeStep === index && (
-              <StepLabel
-                className={classes.stepLabel}
-                color="secondary"
-              >
+              <StepLabel className={classes.stepLabel} color="secondary">
                 {label}
               </StepLabel>
             )}
@@ -89,9 +129,32 @@ const AddSpace = ({ classes }) => {
           </Step>
         ))}
       </Stepper>
-      <div>
-        {getStepContent(activeStep, stepProps)}
-      </div>
+      <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="error"
+          className={classes.alert}
+          icon={false}
+          classes={{ message: classes.alertMessage }}
+        >
+          <Typography variant="body2">
+            We could not find the space. Please try again or contact support.
+          </Typography>
+          {/* todo: link to what? */}
+          <Button
+            className={classes.supportButton}
+            disableElevation
+            disableRipple
+          >
+            Support
+          </Button>
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

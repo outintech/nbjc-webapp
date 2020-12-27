@@ -28,6 +28,9 @@ const styles = (theme) => ({
       },
     },
   },
+  stateLabel: {
+    padding: '0px 12px',
+  },
   smallFormControl: {
     width: 150,
   },
@@ -53,7 +56,7 @@ const styles = (theme) => ({
   },
 });
 
-const Search = ({ classes, onNext }) => {
+const Search = ({ classes, onNext, disableNext }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
     name: '',
@@ -70,7 +73,7 @@ const Search = ({ classes, onNext }) => {
 
   const onSearch = (e) => {
     e.preventDefault();
-    onNext();
+    onNext(formValues);
   };
 
   const validateForm = () => formValues.name.length > 0
@@ -100,6 +103,7 @@ const Search = ({ classes, onNext }) => {
           name="name"
           onChange={onChange}
           value={formValues.name}
+          fullWidth={!matches}
           required
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
@@ -114,10 +118,11 @@ const Search = ({ classes, onNext }) => {
           name="city"
           onChange={onChange}
           value={formValues.city}
+          fullWidth={!matches}
           required
         />
         <FormControl className={classes.formControl}>
-          <InputLabel type="inputLabel">State</InputLabel>
+          <InputLabel type="inputLabel" className={classes.stateLabel}>State</InputLabel>
           <Select
             type="input"
             label="City"
@@ -154,7 +159,7 @@ const Search = ({ classes, onNext }) => {
           className={cx(classes.inputField, classes.submitButton)}
           fullWidth={!matches}
           onChange={onChange}
-          disabled={!validateForm()}
+          disabled={!validateForm() || disableNext}
           disableElevation
         >
           Next
@@ -167,10 +172,12 @@ const Search = ({ classes, onNext }) => {
 Search.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   onNext: PropTypes.func,
+  disableNext: PropTypes.bool,
 };
 
 Search.defaultProps = {
   onNext: () => {},
+  disableNext: false,
 };
 
 export default withStyles(styles)(Search);
