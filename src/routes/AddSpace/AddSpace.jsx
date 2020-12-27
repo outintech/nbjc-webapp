@@ -26,6 +26,9 @@ const styles = (theme) => ({
   stepper: {
     justifyContent: 'center',
   },
+  step: {
+    cursor: 'pointer',
+  },
   stepLabel: {
     '& .MuiStepIcon-root': {
       width: 30,
@@ -59,22 +62,36 @@ const styles = (theme) => ({
 
 const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
 
-const getStepContent = (step, { onBack, onNext, disableNext }) => {
+const getStepContent = (step, { onBack, onNext, disableNext }, formValues) => {
   switch (step) {
     case 0:
-      return <AddSpaceSearch onNext={onNext} disableNext={disableNext} />;
+      return (
+        <AddSpaceSearch
+          onNext={onNext}
+          disableNext={disableNext}
+          addSpaceProps={formValues}
+        />
+      );
     case 1:
       return (
         <AddSpaceAddress
           businessList={getMockBusiness()}
           onBack={onBack}
           onNext={onNext}
+          addSpaceProps={formValues}
         />
       );
     case 2:
-      return <AddSpaceAttributes chips={chips} onBack={onBack} onNext={onNext} />;
+      return (
+        <AddSpaceAttributes
+          chips={chips}
+          onBack={onBack}
+          onNext={onNext}
+          addSpaceProps={formValues}
+        />
+      );
     case 3:
-      return <AddSpaceReview onBack={onBack} onNext={onNext} />;
+      return <AddSpaceReview onBack={onBack} onNext={onNext} addSpaceProps={formValues} />;
     case 4:
       return 'Submit';
     default:
@@ -104,7 +121,12 @@ const AddSpace = ({ classes }) => {
     setActiveStep(activeStep + 1);
   };
   const stepProps = {
-    onBack: () => setActiveStep(activeStep - 1),
+    onBack: (step) => {
+      if (step && Number.isNaN(step)) {
+        return setActiveStep(step);
+      }
+      return setActiveStep(activeStep - 1);
+    },
     onNext,
     disableNext: snackbarOpen,
   };
@@ -117,7 +139,16 @@ const AddSpace = ({ classes }) => {
         className={classes.stepper}
       >
         {steps.map((label, index) => (
-          <Step color="secondary" key={label}>
+          <Step
+            color="secondary"
+            key={label}
+            onClick={() => {
+              if (index < activeStep) {
+                setActiveStep(index);
+              }
+            }}
+            className={classes.step}
+          >
             {activeStep === index && (
               <StepLabel className={classes.stepLabel} color="secondary">
                 {label}

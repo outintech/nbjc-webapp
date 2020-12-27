@@ -6,7 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import { businessProps } from '../../types';
+import { businessProps, addSpaceProps as addSpacePropTypes } from '../../types';
 import BusinessResultCard from '../BusinessResultCard';
 
 const styles = (theme) => ({
@@ -33,10 +33,19 @@ const styles = (theme) => ({
 });
 
 const Address = ({
-  businessList, classes, onBack, onNext,
+  businessList,
+  classes,
+  onBack,
+  onNext,
+  addSpaceProps,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [selected, setSelected] = useState();
+  const { business: preSelectedBusiness } = addSpaceProps;
+  let preSelected;
+  if (preSelectedBusiness) {
+    preSelected = businessList.findIndex((b) => b.id === preSelectedBusiness.id);
+  }
+  const [selected, setSelected] = useState(preSelected === undefined ? null : preSelected);
   const onCheck = (index) => {
     if (selected === index) {
       setSelected();
@@ -67,7 +76,7 @@ const Address = ({
           className={classes.submitButton}
           fullWidth={!matches}
           disabled={selected === undefined}
-          onClick={onNext}
+          onClick={() => onNext({ business: businessList[selected] })}
           disableElevation
         >
           Next
@@ -93,11 +102,13 @@ Address.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   onNext: PropTypes.func,
   onBack: PropTypes.func,
+  addSpaceProps: PropTypes.shape(addSpacePropTypes),
 };
 
 Address.defaultProps = {
   onNext: () => {},
   onBack: () => {},
+  addSpaceProps: {},
 };
 
 export default withStyles(styles)(Address);

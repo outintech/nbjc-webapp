@@ -6,7 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button, Typography } from '@material-ui/core';
 
 import ChipFilters from '../ChipFilters';
-import { chipType } from '../../types';
+import { chipType, addSpaceProps as addSpacePropTypes } from '../../types';
 
 const styles = (theme) => ({
   chipWrapper: {
@@ -30,10 +30,21 @@ const styles = (theme) => ({
 });
 
 const Attributes = ({
-  chips, onBack, onNext, classes,
+  chips,
+  onBack,
+  onNext,
+  classes,
+  addSpaceProps,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [activeChips, setActiveChips] = useState(chips);
+  const { chips: initialChips = [] } = addSpaceProps;
+  const initialChipMap = initialChips.reduce((acc, c) => {
+    acc[c.value] = c;
+    return acc;
+  }, {});
+  const [activeChips, setActiveChips] = useState(
+    chips.map((c) => ({ ...c, isSelected: !!initialChipMap[c.value] })),
+  );
   const onChipSelected = (i) => {
     const oldChips = [...activeChips];
     oldChips[i].isSelected = !oldChips[i].isSelected;
@@ -41,6 +52,11 @@ const Attributes = ({
   };
 
   const isAnySelected = () => ((activeChips.filter((c) => c.isSelected) || []).length > 0);
+
+  const onSubmit = () => {
+    const selectedChips = activeChips.filter((chip) => chip.isSelected);
+    onNext({ chips: selectedChips });
+  };
 
   return (
     <>
@@ -61,7 +77,7 @@ const Attributes = ({
           color="secondary"
           className={classes.submitButton}
           fullWidth={!matches}
-          onClick={onNext}
+          onClick={onSubmit}
           disabled={!isAnySelected()}
           disableElevation
         >
@@ -86,8 +102,11 @@ Attributes.propTypes = {
   chips: PropTypes.arrayOf(chipType).isRequired,
   onBack: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,
+  addSpaceProps: PropTypes.shape(addSpacePropTypes),
 };
 
-Attributes.defaultProps = {};
+Attributes.defaultProps = {
+  addSpaceProps: {},
+};
 
 export default withStyles(styles)(Attributes);

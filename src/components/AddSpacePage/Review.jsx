@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 
 import StarRating from '../StarRating';
 
+import { addSpaceProps as addSpacePropTypes } from '../../types';
+
 const styles = (theme) => ({
   ratingText: {
     [theme.breakpoints.down('mobile')]: {
@@ -38,12 +40,17 @@ const styles = (theme) => ({
   },
 });
 
-const Review = ({ classes, onBack, onNext }) => {
+const Review = ({
+  classes,
+  onBack,
+  onNext,
+  addSpaceProps,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
-    rating: 0,
-    review: '',
-    anon: false,
+    rating: addSpaceProps.rating || 0,
+    review: addSpaceProps.review || '',
+    anon: addSpaceProps.anon || false,
   });
 
   const getSanitizedReview = (review) => {
@@ -72,7 +79,7 @@ const Review = ({ classes, onBack, onNext }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    onNext();
+    onNext(formValues);
   };
 
   const validateForm = () => formValues.review.length > 0 && formValues.rating > 0;
@@ -158,8 +165,11 @@ Review.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   onBack: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,
+  addSpaceProps: PropTypes.shape(addSpacePropTypes),
 };
 
-Review.defaultProps = {};
+Review.defaultProps = {
+  addSpaceProps: {},
+};
 
 export default withStyles(styles)(Review);

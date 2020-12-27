@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import states from '../../api/states';
+import { addSpaceProps as addSpacePropTypes } from '../../types';
 
 const styles = (theme) => ({
   inputLabel: {
@@ -56,13 +57,18 @@ const styles = (theme) => ({
   },
 });
 
-const Search = ({ classes, onNext, disableNext }) => {
+const Search = ({
+  classes,
+  onNext,
+  disableNext,
+  addSpaceProps,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
-    name: '',
-    city: '',
-    zipcode: '',
-    state: '',
+    name: addSpaceProps.name || '',
+    city: addSpaceProps.city || '',
+    zipcode: addSpaceProps.zipcode || '',
+    state: addSpaceProps.state || '',
   });
   const onChange = (e) => {
     setFormValues({
@@ -173,11 +179,13 @@ Search.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   onNext: PropTypes.func,
   disableNext: PropTypes.bool,
+  addSpaceProps: PropTypes.shape(addSpacePropTypes),
 };
 
 Search.defaultProps = {
   onNext: () => {},
   disableNext: false,
+  addSpaceProps: {},
 };
 
 export default withStyles(styles)(Search);
