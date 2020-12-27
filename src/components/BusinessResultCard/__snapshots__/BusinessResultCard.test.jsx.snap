@@ -4,6 +4,7 @@ exports[`BusinessResultCard renders 1`] = `
 <DocumentFragment>
   <div
     class=""
+    data-testid="businessresultcard-123"
   >
     <div
       class="MuiPaper-root MuiCard-root BusinessResultCard-card-1 MuiPaper-outlined MuiPaper-rounded"

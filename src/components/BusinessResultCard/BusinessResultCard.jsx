@@ -38,7 +38,7 @@ const styles = (theme) => ({
 const BusinessResultCard = ({
   business, classes, checked, onCheck, overrideClasses, hideCheck,
 }) => (
-  <div className={cx(classes.resultCard, overrideClasses.resultCard)}>
+  <div className={cx(classes.resultCard, overrideClasses.resultCard)} data-testid={`businessresultcard-${business.id}`}>
     <Card className={cx(classes.card, { [classes.checked]: checked })} variant="outlined">
       <CardContent>
         <div>

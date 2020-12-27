@@ -77,6 +77,7 @@ const Address = ({
           fullWidth={!matches}
           disabled={selected === undefined}
           onClick={() => onNext({ business: businessList[selected] })}
+          data-testid="addspace-business-next"
           disableElevation
         >
           Next
@@ -99,10 +100,10 @@ const Address = ({
 
 Address.propTypes = {
   businessList: PropTypes.arrayOf(PropTypes.shape(businessProps)).isRequired,
-  classes: PropTypes.shape({}).isRequired,
   onNext: PropTypes.func,
   onBack: PropTypes.func,
   addSpaceProps: PropTypes.shape(addSpacePropTypes),
+  classes: PropTypes.shape({}).isRequired,
 };
 
 Address.defaultProps = {
