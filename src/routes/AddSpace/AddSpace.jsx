@@ -24,15 +24,16 @@ import {
 
 const styles = (theme) => ({
   root: {
-    [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
-    },
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 100px',
     },
   },
   stepper: {
     justifyContent: 'center',
+    paddingTop: 0,
   },
   step: {
     cursor: 'pointer',

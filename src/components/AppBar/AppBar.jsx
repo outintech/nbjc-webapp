@@ -20,6 +20,9 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     height: 56,
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 20,
+    },
     [theme.breakpoints.up('mobile')]: {
       marginBottom: 80,
     },

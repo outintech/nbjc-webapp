@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search renders with default values 1`] = `
+<DocumentFragment>
+  <h4
+    class="MuiTypography-root Search-pageTitle-1 MuiTypography-h4 MuiTypography-alignCenter"
+  >
+    Add a Space
+  </h4>
+  <h6
+    class="MuiTypography-root Search-pageSubtitle-2 MuiTypography-subtitle1 MuiTypography-alignCenter"
+  >
+    Add your favorite space to OurGuide. The information you enter will be reviewed by an administrator. Thank you for helping your community find and enjoy spaces.
+  </h6>
+  <form
+    class="Search-form-3"
+  >
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root Search-inputLabel-4 MuiInputLabel-animated"
+      type="inputLabel"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+      >
+        What's the space?
+      </h6>
+    </label>
+    <div
+      class="MuiFormControl-root MuiTextField-root Search-inputField-5 MuiFormControl-fullWidth"
+      data-testid="addspace-name"
+    >
+      <label
+        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-required Mui-required"
+        data-shrink="false"
+      >
+        Name of Space
+        <span
+          aria-hidden="true"
+          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+        >
+           *
+        </span>
+      </label>
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input"
+          name="name"
+          required=""
+          type="input"
+          value=""
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="PrivateNotchedOutline-legendLabelled-14"
+          >
+            <span>
+              Name of Space *
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      <p
+        class="MuiFormHelperText-root MuiFormHelperText-contained Mui-required"
+      >
+        Required
+      </p>
+    </div>
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root Search-inputLabel-4 Search-section-6 MuiInputLabel-animated"
+      type="inputLabel"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+      >
+        Space Location
+      </h6>
+    </label>
+    <div
+      class="MuiFormControl-root MuiTextField-root Search-inputField-5 MuiFormControl-fullWidth"
+      data-testid="addspace-city"
+    >
+      <label
+        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-required Mui-required"
+        data-shrink="false"
+      >
+        City
+        <span
+          aria-hidden="true"
+          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+        >
+           *
+        </span>
+      </label>
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input"
+          name="city"
+          required=""
+          type="input"
+          value=""
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="PrivateNotchedOutline-legendLabelled-14"
+          >
+            <span>
+              City *
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      <p
+        class="MuiFormHelperText-root MuiFormHelperText-contained Mui-required"
+      >
+        Required
+      </p>
+    </div>
+    <div
+      class="MuiFormControl-root Search-formControl-9"
+    >
+      <label
+        class="MuiFormLabel-root MuiInputLabel-root Search-stateLabel-7 MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
+        data-shrink="false"
+        type="inputLabel"
+      >
+        State
+        <span
+          aria-hidden="true"
+          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+        >
+           *
+        </span>
+      </label>
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root Search-smallFormControl-8 MuiInputBase-formControl"
+        data-testid="addspace-state"
+        required=""
+      >
+        <div
+          aria-haspopup="listbox"
+          aria-labelledby="mui-component-select-state"
+          class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+          id="mui-component-select-state"
+          role="button"
+          tabindex="0"
+        >
+          <span>
+            ​
+          </span>
+        </div>
+        <input
+          aria-hidden="true"
+          class="MuiSelect-nativeInput"
+          name="state"
+          required=""
+          tabindex="-1"
+          value=""
+        />
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="PrivateNotchedOutline-legendLabelled-14"
+          >
+            <span>
+              City
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+    </div>
+    <div
+      class="MuiFormControl-root Search-formControl-9"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root Search-smallFormControl-8"
+        data-testid="addspace-zipcode"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Zipcode
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            name="zipcode"
+            type="input"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-14"
+            >
+              <span>
+                Zipcode
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+        <p
+          class="MuiFormHelperText-root MuiFormHelperText-contained"
+        >
+          Optional
+        </p>
+      </div>
+    </div>
+    <div
+      class="Search-footer-10"
+    >
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained Search-inputField-5 Search-submitButton-11 MuiButton-containedSecondary MuiButton-disableElevation Mui-disabled MuiButton-fullWidth Mui-disabled"
+        data-testid="addspace-search-next"
+        disabled=""
+        tabindex="-1"
+        type="submit"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Next
+        </span>
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

@@ -16,28 +16,16 @@ import states from '../../api/states';
 import { addSpaceProps as addSpacePropTypes } from '../../types';
 
 const styles = (theme) => ({
-  inputLabel: {
-    margin: '18px 0',
-    color: '#000',
+  pageTitle: {
+    marginBottom: 10,
   },
-  inputField: {
-    display: 'block',
-    marginTop: '18px',
-    '& input': {
-      [theme.breakpoints.up('mobile')]: {
-        minWidth: '326px',
-      },
+  pageSubtitle: {
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: 60,
     },
-  },
-  stateLabel: {
-    padding: '0px 12px',
-  },
-  smallFormControl: {
-    width: 150,
-  },
-  formControl: {
-    marginTop: '18px',
-    display: 'block',
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 40,
+    },
   },
   form: {
     [theme.breakpoints.up('mobile')]: {
@@ -47,6 +35,45 @@ const styles = (theme) => ({
       margin: '0 20px',
     },
   },
+  inputLabel: {
+    marginBottom: '10px',
+    color: '#000',
+  },
+  inputField: {
+    display: 'block',
+    '& input': {
+      [theme.breakpoints.up('mobile')]: {
+        minWidth: '326px',
+      },
+    },
+  },
+  section: {
+    [theme.breakpoints.up('mobile')]: {
+      marginTop: 30,
+    },
+    [theme.breakpoints.up('xs')]: {
+      marginTop: 15,
+    },
+  },
+  stateLabel: {
+    padding: '0px 12px',
+  },
+  smallFormControl: {
+    width: 150,
+  },
+  formControl: {
+    marginTop: '15px',
+    [theme.breakpoints.up('xs')]: {
+      display: 'block',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      display: 'inline-block',
+      marginRight: 22,
+    },
+  },
+  footer: {
+    display: 'block',
+  },
   submitButton: {
     [theme.breakpoints.up('xs')]: {
       marginBottom: 25,
@@ -54,6 +81,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       float: 'right',
     },
+    marginTop: 20,
   },
 });
 
@@ -88,10 +116,18 @@ const Search = ({
 
   return (
     <>
-      <Typography variant="h4" align="center">
+      <Typography
+        variant={matches ? 'h2' : 'h4'}
+        align="center"
+        className={classes.pageTitle}
+      >
         Add a Space
       </Typography>
-      <Typography variant="subtitle1" align="center">
+      <Typography
+        variant={matches ? 'h4' : 'subtitle1'}
+        align="center"
+        className={classes.pageSubtitle}
+      >
         Add your favorite space to OurGuide. The information you enter will be
         reviewed by an administrator. Thank you for helping your community find
         and enjoy spaces.
@@ -110,9 +146,13 @@ const Search = ({
           onChange={onChange}
           value={formValues.name}
           fullWidth={!matches}
+          data-testid="addspace-name"
           required
         />
-        <InputLabel type="inputLabel" className={classes.inputLabel}>
+        <InputLabel
+          type="inputLabel"
+          className={cx(classes.inputLabel, classes.section)}
+        >
           <Typography variant="h6">Space Location</Typography>
         </InputLabel>
         <TextField
@@ -125,23 +165,28 @@ const Search = ({
           onChange={onChange}
           value={formValues.city}
           fullWidth={!matches}
+          data-testid="addspace-city"
           required
         />
         <FormControl className={classes.formControl}>
-          <InputLabel type="inputLabel" className={classes.stateLabel}>State</InputLabel>
+          <InputLabel type="inputLabel" className={classes.stateLabel} required>
+            State
+          </InputLabel>
           <Select
             type="input"
             label="City"
             variant="outlined"
-            helperText="Required"
             className={classes.smallFormControl}
             name="state"
             onChange={onChange}
             value={formValues.state}
+            data-testid="addspace-state"
             required
           >
             {states.map((state) => (
-              <MenuItem value={state.abbreviation}>{state.abbreviation}</MenuItem>
+              <MenuItem value={state.abbreviation} key={state.abbreviation}>
+                {state.abbreviation}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -155,21 +200,25 @@ const Search = ({
             onChange={onChange}
             value={formValues.zipcode}
             name="zipcode"
+            data-testid="addspace-zipcode"
           />
         </FormControl>
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          onClick={onSearch}
-          className={cx(classes.inputField, classes.submitButton)}
-          fullWidth={!matches}
-          onChange={onChange}
-          disabled={!validateForm() || disableNext}
-          disableElevation
-        >
-          Next
-        </Button>
+        <div className={classes.footer}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            onClick={onSearch}
+            className={cx(classes.inputField, classes.submitButton)}
+            fullWidth={!matches}
+            onChange={onChange}
+            disabled={!validateForm() || disableNext}
+            data-testid="addspace-search-next"
+            disableElevation
+          >
+            Next
+          </Button>
+        </div>
       </form>
     </>
   );
