@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
-import AppBar from '../../components/AppBar';
 
 import getBusinessMock from '../../__mocks__/getBusinessMock';
 import BusinessCard from '../../components/BusinessCard';
@@ -38,7 +38,7 @@ const styles = {
   },
 };
 
-const Search = ({ classes }) => {
+const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [searchResults, setSearchResults] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState();
@@ -69,10 +69,10 @@ const Search = ({ classes }) => {
       setSearchResults(results);
     }, 300);
   };
-
+  // todo: use the coordinates in search query
+  console.log(coords);
   return (
     <>
-      <AppBar pageTitle="Search for a space" />
       <div className={classes.content}>
         {matches && <DesktopSearch chips={chips} onSearch={onSearchSubmit} />}
         {!matches && (
@@ -118,4 +118,6 @@ Search.props = {
   classes: PropTypes.shape({}),
 };
 
-export default withStyles(styles)(Search);
+Search.props = { ...Search.props, ...geoPropTypes };
+
+export default geolocated()(withStyles(styles)(Search));

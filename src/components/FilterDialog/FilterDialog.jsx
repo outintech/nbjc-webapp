@@ -106,15 +106,15 @@ const FilterDialog = ({
         <Accordion color="primary">
           <AccordionSummary className={classes.filterHeaderContainer}>
             <div className={classes.filterHeaderItem}>
-              <Typography variant="allCaps">Distance</Typography>
-              <Divider variant="vertical" flexItem />
+              <Typography>Distance</Typography>
+              <Divider flexItem />
             </div>
             <div className={classes.filterHeaderItem}>
-              <Typography variant="allCaps">Price</Typography>
-              <Divider variant="vertical" flexItem />
+              <Typography>Price</Typography>
+              <Divider flexItem />
             </div>
             <div className={classes.filterHeaderItem}>
-              <Typography variant="allCaps">Rating</Typography>
+              <Typography>Rating</Typography>
             </div>
           </AccordionSummary>
           <AccordionDetails className={classes.filterContainer}>
@@ -250,7 +250,7 @@ FilterDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
   setFilters: PropTypes.func,
-  type: PropTypes.oneOf('desktop', 'mobile'),
+  type: PropTypes.oneOf(['desktop', 'mobile']),
   defaultFilters: PropTypes.shape({
     star: PropTypes.number,
     distance: PropTypes.number,
