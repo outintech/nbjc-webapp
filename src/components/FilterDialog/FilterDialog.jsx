@@ -75,6 +75,7 @@ const styles = {
 
 const FilterDialog = ({
   open,
+  onToggle,
   onClose,
   classes,
   setFilters,
@@ -103,7 +104,7 @@ const FilterDialog = ({
   return (
     <>
       { type === 'desktop' && (
-        <Accordion color="primary">
+        <Accordion color="primary" expanded={open} onChange={onToggle}>
           <AccordionSummary className={classes.filterHeaderContainer}>
             <div className={classes.filterHeaderItem}>
               <Typography>Distance</Typography>
@@ -149,7 +150,7 @@ const FilterDialog = ({
                 className={classes.footerButtons}
                 onClick={() => {
                   dispatch({ type: 'reset' });
-                  onClose();
+                  onToggle();
                 }}
               >
                 <Typography variant="button" color="primary">Cancel</Typography>
@@ -161,7 +162,7 @@ const FilterDialog = ({
                 className={classes.footerButtons}
                 onClick={() => {
                   setFilters({ stars, distance, price });
-                  onClose();
+                  onToggle();
                 }}
               >
                 <Typography variant="button" color="inherit">Apply</Typography>
@@ -256,12 +257,14 @@ FilterDialog.propTypes = {
     distance: PropTypes.number,
     price: PropTypes.number,
   }),
+  onToggle: PropTypes.func,
 };
 
 FilterDialog.defaultProps = {
   setFilters: () => {},
   defaultFilters: {},
   type: 'mobile',
+  onToggle: () => {},
 };
 
 export default withStyles(styles)(FilterDialog);

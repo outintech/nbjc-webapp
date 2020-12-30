@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
-import { chipType } from '../../types';
+import { searchProps } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
 import FilterDialog from '../../components/FilterDialog';
@@ -21,16 +21,20 @@ const styles = {
   },
 };
 
-const DesktopSearch = ({ classes, chips, onSearch }) => {
+const DesktopSearch = ({
+  classes,
+  onSearch,
+  onFilterApplied,
+  searchCriteria,
+}) => {
   const defaultFilters = {
     stars: 0,
     price: 0,
     distance: 0,
   };
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(searchCriteria.searchTerm || '');
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, setFilters] = useState(defaultFilters);
-  // const [filtersActive, setFiltersActive] = useState(false);
   const handleChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -38,6 +42,7 @@ const DesktopSearch = ({ classes, chips, onSearch }) => {
     e.preventDefault();
     onSearch(searchText);
   };
+  const { chips } = searchCriteria;
   return (
     <form onSubmit={onSearchSubmit} className={classes.form}>
       <OutlinedInput
@@ -67,24 +72,23 @@ const DesktopSearch = ({ classes, chips, onSearch }) => {
       />
       <FilterDialog
         open={openFilter}
-        onClose={() => setOpenFilter(false)}
+        onToggle={() => setOpenFilter(!openFilter)}
         defaultFilters={filters}
         setFilters={(changedFilters) => setFilters(changedFilters)}
         type="desktop"
       />
-      <ChipFilters chips={chips} onChipSelected={() => {}} />
+      <ChipFilters chips={chips} onChipSelected={(i) => onFilterApplied('indicators', chips[i].value)} />
     </form>
   );
 };
 
 DesktopSearch.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  chips: PropTypes.arrayOf(chipType),
   onSearch: PropTypes.func.isRequired,
+  onFilterApplied: PropTypes.func.isRequired,
+  searchCriteria: PropTypes.shape(searchProps).isRequired,
 };
 
-DesktopSearch.defaultProps = {
-  chips: [],
-};
+DesktopSearch.defaultProps = {};
 
 export default withStyles(styles)(DesktopSearch);

@@ -7,7 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 
-import { chipType } from '../../types';
+import { searchProps } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
 import FilterDialog from '../../components/FilterDialog';
@@ -25,7 +25,10 @@ const styles = {
 };
 
 const MobileSearch = ({
-  classes, chips, onSearch,
+  classes,
+  onSearch,
+  onFilterApplied,
+  searchCriteria,
 }) => {
   const defaultFilters = {
     stars: 0,
@@ -33,7 +36,7 @@ const MobileSearch = ({
     distance: 0,
   };
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(searchCriteria.searchTerm || '');
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, setFilters] = useState(defaultFilters);
   const handleChange = (event) => {
@@ -43,7 +46,7 @@ const MobileSearch = ({
     e.preventDefault();
     onSearch(searchText);
   };
-
+  const { chips } = searchCriteria;
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
@@ -71,7 +74,7 @@ const MobileSearch = ({
             onClick={() => setOpenFilter(true)}
             className={classes.filterButton}
           />
-          <ChipFilters chips={chips} onChipSelected={() => {}} />
+          <ChipFilters chips={chips} onChipSelected={(i) => onFilterApplied('indicators', chips[i].value)} />
         </div>
       </form>
       <div>
@@ -88,12 +91,11 @@ const MobileSearch = ({
 
 MobileSearch.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  chips: PropTypes.arrayOf(chipType),
   onSearch: PropTypes.func.isRequired,
+  onFilterApplied: PropTypes.func.isRequired,
+  searchCriteria: PropTypes.shape(searchProps).isRequired,
 };
 
-MobileSearch.defaultProps = {
-  chips: [],
-};
+MobileSearch.defaultProps = {};
 
 export default withStyles(styles)(MobileSearch);

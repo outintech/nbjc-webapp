@@ -11,9 +11,9 @@ import { Typography } from '@material-ui/core';
 // import getBusinessMock from '../../__mocks__/getBusinessMock';
 import { getSearchResults } from '../../api';
 import utils from '../../utils';
-
 import BusinessCard from '../../components/BusinessCard';
 
+import useSearch from './hooks/useSearch';
 import DesktopSearch from './DesktopSearch';
 import MobileSearch from './MobileSearch';
 
@@ -48,26 +48,10 @@ const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [searchResults, setSearchResults] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState();
-  // TODO: this needs to come from the db.
-  const chips = [{
-    name: 'Black Friendly',
-  }, {
-    name: 'Inclusive',
-  }, {
-    name: 'Black Owned',
-  }, {
-    name: 'Gender Neutral Restrooms',
-  }, {
-    name: 'Accessible',
-  }, {
-    name: 'Queer hangout space',
-  }, {
-    name: 'Trans friendly',
-  }, {
-    name: 'Queer owned',
-  }];
+  const { updateSearch, search } = useSearch({ useLocation: coords });
 
   const onSearchSubmit = async (searchTerm) => {
+    updateSearch('searchTerm', searchTerm);
     setSearchResults([]);
     setSearchCriteria(searchTerm);
     try {
@@ -78,22 +62,34 @@ const Search = ({ classes, coords }) => {
       // todo: show snackbar?
     }
   };
-  // todo: use the coordinates in search query
-  console.log(coords);
+
+  const onFilterApplied = (filter, value) => {
+    updateSearch(filter, value);
+  };
+
   return (
     <>
       <div className={classes.content}>
-        {matches && <DesktopSearch chips={chips} onSearch={onSearchSubmit} />}
-        {!matches && (
-          <MobileSearch
-            chips={chips}
+        {matches && (
+          <DesktopSearch
+            chips={search.chips}
             onSearch={onSearchSubmit}
-            results={searchResults}
+            onFilterApplied={onFilterApplied}
+            searchCriteria={search}
           />
         )}
-        <div className={cx(classes.resultsWrapper, {
-          [classes.desktop]: matches,
-        })}
+        {!matches && (
+          <MobileSearch
+            chips={search.chips}
+            onSearch={onSearchSubmit}
+            onFilterApplied={onFilterApplied}
+            searchCriteria={search}
+          />
+        )}
+        <div
+          className={cx(classes.resultsWrapper, {
+            [classes.desktop]: matches,
+          })}
         >
           {searchResults.length > 0 && (
             <Typography variant="h6">
@@ -103,9 +99,7 @@ const Search = ({ classes, coords }) => {
           <div className={classes.searchResultsWrapper}>
             {searchResults.length > 0
               && searchResults.map((result) => (
-                <div
-                  className={classes.searchResult}
-                >
+                <div className={classes.searchResult}>
                   <BusinessCard
                     business={result}
                     key={result.id}

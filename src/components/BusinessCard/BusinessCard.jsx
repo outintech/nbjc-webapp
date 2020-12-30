@@ -98,7 +98,7 @@ const BusinessCard = ({
   classes,
   overrideClasses,
 }) => (
-  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined">
+  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
     <CardHeader
       avatar={(
         <div color="secondary">
@@ -113,7 +113,7 @@ const BusinessCard = ({
           </Typography>
         </div>
       )}
-      action={<BookmarkBorderIcon fontSize="medium" color="secondary" />}
+      action={<BookmarkBorderIcon color="secondary" />}
       title={<Typography variant="h6">{name}</Typography>}
       subheader={<Typography variant="body2">{category}</Typography>}
       classes={{ action: classes.headerAction }}
@@ -142,7 +142,6 @@ const BusinessCard = ({
           <a href={url} target="_blank" rel="noreferrer">
             <ShareIcon
               color="primary"
-              fontSize="medium"
               style={{ padding: 0 }}
             />
           </a>
