@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useQuery from '../../../hooks/useQuery';
+import { getSearchResults } from '../../../api';
+import utils from '../../../utils';
 
 const getSearchCriteria = (query) => ({
   searchTerm: query.get('searchTerm'),
-  distance: query.get('distance'),
-  rating: query.get('rating'),
-  price: query.get('price'),
+  distance: parseInt(query.get('distance'), 10) || 0,
+  rating: parseFloat(query.get('rating')) || 0,
+  price: parseInt(query.get('distance'), 10) || 0,
   indicators: query.getAll('indicators'),
 });
 
@@ -37,7 +39,7 @@ const useSearch = () => {
     name: 'Queer owned',
     value: '8',
   }];
-  const [searchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const query = useQuery();
   const history = useHistory();
   const searchCriteria = getSearchCriteria(query);
@@ -48,6 +50,19 @@ const useSearch = () => {
       isSelected: searchCriteria.indicators.includes(c.value),
     })),
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      const results = await getSearchResults(searchCriteria);
+      setSearchResults(results.slice(0, 9).map(utils.formatSearchResults));
+    }
+    if (search.searchTerm && search.searchTerm.length > 0) {
+      fetchData();
+    } else {
+      setSearchResults([]);
+    }
+  }, [search]);
+
   const updateSearch = (criteria, value) => {
     if (criteria === 'indicators') {
       if (searchCriteria.indicators.includes(value)) {

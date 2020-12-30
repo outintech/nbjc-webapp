@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
@@ -8,9 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
 
-// import getBusinessMock from '../../__mocks__/getBusinessMock';
-import { getSearchResults } from '../../api';
-import utils from '../../utils';
 import BusinessCard from '../../components/BusinessCard';
 
 import useSearch from './hooks/useSearch';
@@ -27,13 +24,13 @@ const styles = (theme) => ({
     },
   },
   searchResultsWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 350px)',
+    gridGap: 50,
   },
   searchResult: {
     [theme.breakpoints.up('xs')]: {
       maxWidth: '350px',
-      marginRight: 50,
     },
     [theme.breakpoints.up('mobile')]: {
       width: '100%',
@@ -43,21 +40,10 @@ const styles = (theme) => ({
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchCriteria, setSearchCriteria] = useState();
-  const { updateSearch, search } = useSearch({ useLocation: coords });
+  const { updateSearch, search, searchResults } = useSearch({ useLocation: coords });
 
   const onSearchSubmit = async (searchTerm) => {
     updateSearch('searchTerm', searchTerm);
-    setSearchResults([]);
-    setSearchCriteria(searchTerm);
-    try {
-      const results = await getSearchResults({});
-      // todo: results must come in an array
-      setSearchResults([results].map(utils.formatSearchResults));
-    } catch (e) {
-      // todo: show snackbar?
-    }
   };
 
   const onFilterApplied = (filter, value) => {
@@ -79,10 +65,10 @@ const Search = ({ classes, coords }) => {
       >
         {searchResults.length > 0 && (
           <Typography variant="h6">
-            {`${searchResults.length} results found for ${searchCriteria}`}
+            {`${searchResults.length} results found for ${search.searchTerm}`}
           </Typography>
         )}
-        <div>
+        <div className={classes.searchResultsWrapper}>
           {searchResults.length > 0
             && searchResults.map((result) => (
               <div className={classes.searchResult}>
