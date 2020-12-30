@@ -19,21 +19,37 @@ import ShareIcon from '@material-ui/icons/Share';
 import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
 
-const styles = {
+const styles = (theme) => ({
   root: {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
     },
-    maxWidth: 345,
+    [theme.breakpoints.up('xs')]: {
+      maxWidth: 344,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      maxWidth: 436,
+    },
+  },
+  starIcon: {
+    paddingBottom: '0 !important',
   },
   rating: {
     display: 'block',
-    'text-align': 'center',
+  },
+  headerAction: {
+    margin: '0 !important',
   },
   cardMedia: {
-    width: 350,
-    height: 200,
     margin: 'auto',
+    [theme.breakpoints.up('xs')]: {
+      width: 344,
+      height: 194,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: 436,
+      height: 222,
+    },
   },
   // todo: this needs to be a hyrperlink
   location: {
@@ -58,14 +74,17 @@ const styles = {
   filter: {
     margin: '15px 20px 15px 0',
   },
+  footer: {
+    marginTop: 30,
+  },
   shareButton: {
     float: 'right',
-    padding: '6px 6px',
   },
-};
+});
 
 const BusinessCard = ({
   business: {
+    id,
     name,
     category,
     averageRating,
@@ -73,6 +92,8 @@ const BusinessCard = ({
     address,
     distance,
     filters,
+    phoneNumber,
+    url,
   },
   classes,
   overrideClasses,
@@ -81,23 +102,24 @@ const BusinessCard = ({
     <CardHeader
       avatar={(
         <div color="secondary">
-          <StarIcon color="secondary" fontSize="large" />
+          <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
           <Typography
-            variant="body2"
+            variant="caption"
             color="secondary"
             className={classes.rating}
+            align="center"
           >
             {averageRating}
           </Typography>
         </div>
       )}
-      action={<BookmarkBorderIcon fontSize="large" color="secondary" />}
+      action={<BookmarkBorderIcon fontSize="medium" color="secondary" />}
       title={<Typography variant="h6">{name}</Typography>}
       subheader={<Typography variant="body2">{category}</Typography>}
+      classes={{ action: classes.headerAction }}
     />
     <CardMedia
       image={imageUrl}
-      // todo make this responsive
       className={classes.cardMedia}
     />
     <CardContent>
@@ -113,14 +135,18 @@ const BusinessCard = ({
       <div className={classes.chipWrapper}>
         <ChipList chips={filters} />
       </div>
-      <div>
-        <Button color="secondary">Call Space</Button>
-        <Button color="secondary">Write a review</Button>
-        <ShareIcon
-          color="secondary"
-          size="small"
-          className={classes.shareButton}
-        />
+      <div className={classes.footer}>
+        <Button color="primary" href={`tel:${phoneNumber}`}>Call Space</Button>
+        <Button color="primary" href={`/spaces/${id}/review/new`}>Write a review</Button>
+        <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
+          <a href={url} target="_blank" rel="noreferrer">
+            <ShareIcon
+              color="primary"
+              fontSize="medium"
+              style={{ padding: 0 }}
+            />
+          </a>
+        </Button>
       </div>
     </CardContent>
   </Card>

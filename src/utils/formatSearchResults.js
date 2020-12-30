@@ -15,7 +15,7 @@ const formatSearchResults = (space) => {
   } = space;
   const stitchedAddress = `${line1} ${line2} ${city} ${state} ${zipcode}`;
   return {
-    id: space.id,
+    id: `${space.id}`,
     name: space.name,
     category: space.category || '',
     address: stitchedAddress,
@@ -23,6 +23,7 @@ const formatSearchResults = (space) => {
     phoneNumber: space.phone,
     filters: space.indicators.map((i) => ({ name: i.name })),
     imageUrl: (space.photos[0] || {}).url,
+    url: space.url || space.yelp_url,
   };
 };
 
