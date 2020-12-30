@@ -7,6 +7,7 @@ import BusinessCard from './BusinessCard';
 jest.mock('../ChipList', () => () => (<></>));
 test('renders the BusinessCardComponent', () => {
   const props = {
+    id: '123',
     name: 'La colombe coffee roasters',
     category: 'Coffee',
     averageRating: '4.5',

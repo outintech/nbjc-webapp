@@ -3,7 +3,7 @@
 exports[`renders the BusinessCardComponent 1`] = `
 <DocumentFragment>
   <div
-    class="MuiPaper-root MuiCard-root BusinessCard-root-1 MuiPaper-elevation1 MuiPaper-rounded"
+    class="MuiPaper-root MuiCard-root BusinessCard-root-1 MuiPaper-outlined MuiPaper-rounded"
   >
     <div
       class="MuiCardHeader-root"

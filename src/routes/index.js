@@ -5,6 +5,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 import Home from './Home';
 import Search from './Search';
+import AddSpace from './AddSpace';
 
 const routes = [{
   label: 'Home',
@@ -23,8 +24,7 @@ const routes = [{
 }, {
   label: 'Add a space',
   path: '/space/new',
-  // todo: change this/
-  content: Home,
+  content: AddSpace,
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
   // todo: change this

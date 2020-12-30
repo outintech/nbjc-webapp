@@ -1,24 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 import { Chip, Typography } from '@material-ui/core';
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined';
 
-const styles = () => ({
+const styles = (theme) => ({
   chip: {
     margin: 10,
   },
-  mobileWrapper: {
-    display: 'flex',
-    overflow: 'scroll',
+  wrapper: {
+    [theme.breakpoints.up('xs')]: {
+      display: 'flex',
+      overflow: 'scroll',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      display: 'block',
+    },
   },
 });
 
-const ChipFilters = ({ chips, onChipSelected, classes }) => {
+const ChipFilters = ({
+  chips, onChipSelected, classes, chipSize, overrideClasses,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
   return (
-    <div className={matches ? '' : classes.mobileWrapper}>
+    <div className={cx(classes.wrapper, overrideClasses.wrapper)}>
       {chips.map((chip, i) => (
         <Chip
           label={
@@ -26,11 +34,11 @@ const ChipFilters = ({ chips, onChipSelected, classes }) => {
           }
           key={chip.name.replace(/\w/, '')}
           variant={chip.isSelected ? 'default' : 'outlined'}
-          size={matches ? 'medium' : 'small'}
+          size={chipSize || matches ? 'medium' : 'small'}
           onClick={() => onChipSelected(i)}
           icon={chip.isSelected ? <CheckOutlinedIcon /> : null}
           color="primary"
-          className={classes.chip}
+          className={cx(classes.chip, overrideClasses.chip)}
         />
       ))}
     </div>
@@ -44,8 +52,13 @@ ChipFilters.propTypes = {
   })).isRequired,
   onChipSelected: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  chipSize: PropTypes.oneOf(['small', 'medium', 'large']),
+  overrideClasses: PropTypes.shape({}),
 };
 
-ChipFilters.defaultProps = {};
+ChipFilters.defaultProps = {
+  chipSize: null,
+  overrideClasses: {},
+};
 
 export default withStyles(styles)(ChipFilters);

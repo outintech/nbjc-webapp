@@ -16,7 +16,7 @@ import StarIcon from '@material-ui/icons/Star';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
-import { businessType } from '../../types';
+import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
 
 const styles = {
@@ -77,7 +77,7 @@ const BusinessCard = ({
   classes,
   overrideClasses,
 }) => (
-  <Card className={cx(classes.root, overrideClasses.root)}>
+  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined">
     <CardHeader
       avatar={(
         <div color="secondary">
@@ -127,7 +127,7 @@ const BusinessCard = ({
 );
 
 BusinessCard.propTypes = {
-  business: businessType.isRequired,
+  business: PropTypes.shape(spaceProps).isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };

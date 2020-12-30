@@ -20,7 +20,12 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     height: 56,
-    marginBottom: 80,
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 20,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: 80,
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
