@@ -6,7 +6,7 @@ const searchProps = {
   searchTerm: PropTypes.string,
   distance: PropTypes.number,
   rating: PropTypes.number,
-  pricing: PropTypes.number,
+  price: PropTypes.number,
   indicators: PropTypes.arrayOf(PropTypes.string),
   chips: PropTypes.arrayOf(chipType),
 };

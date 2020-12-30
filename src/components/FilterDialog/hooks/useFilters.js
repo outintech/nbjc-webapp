@@ -10,7 +10,7 @@ export const reducer = (state, action) => {
     case 'price':
       return {
         ...state,
-        price: action.payload.price,
+        price: state.price === action.payload.price ? 0 : action.payload.price,
       };
     case 'distance':
       return {

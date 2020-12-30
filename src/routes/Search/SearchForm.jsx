@@ -48,15 +48,9 @@ const SearchForm = ({
   searchCriteria,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const defaultFilters = {
-    stars: 0,
-    price: 0,
-    distance: 0,
-  };
 
   const [searchText, setSearchText] = useState(searchCriteria.searchTerm || '');
   const [openFilter, setOpenFilter] = useState(false);
-  const [filters, setFilters] = useState(defaultFilters);
   const handleChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -64,6 +58,19 @@ const SearchForm = ({
     e.preventDefault();
     onSearch(searchText);
   };
+
+  const filters = {
+    stars: searchCriteria.rating || 0,
+    distance: searchCriteria.distance || 0,
+    price: searchCriteria.price || 0,
+  };
+
+  const setFilters = (changedFilters) => {
+    onFilterApplied('distance', changedFilters.distance);
+    onFilterApplied('price', changedFilters.price);
+    onFilterApplied('rating', changedFilters.stars);
+  };
+
   const { chips } = searchCriteria;
   return (
     <form className={classes.form} onSubmit={onSearchSubmit}>

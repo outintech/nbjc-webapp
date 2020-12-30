@@ -7,7 +7,7 @@ const getSearchCriteria = (query) => ({
   searchTerm: query.get('searchTerm'),
   distance: query.get('distance'),
   rating: query.get('rating'),
-  pricing: query.get('pricing'),
+  price: query.get('price'),
   indicators: query.getAll('indicators'),
 });
 

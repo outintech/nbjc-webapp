@@ -17,16 +17,14 @@ import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
 
 const styles = (theme) => ({
-  resultsWrapper: {
-    [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
-    },
-  },
   result: {
     margin: '10px 0px 40px 0px',
   },
   content: {
     margin: '0 15px',
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 100px',
+    },
   },
   searchResultsWrapper: {
     display: 'flex',
@@ -67,41 +65,37 @@ const Search = ({ classes, coords }) => {
   };
 
   return (
-    <>
-      <div className={classes.content}>
-        {true && (
-          <SearchForm
-            chips={search.chips}
-            onSearch={onSearchSubmit}
-            onFilterApplied={onFilterApplied}
-            searchCriteria={search}
-          />
+    <div className={classes.content}>
+      <SearchForm
+        chips={search.chips}
+        onSearch={onSearchSubmit}
+        onFilterApplied={onFilterApplied}
+        searchCriteria={search}
+      />
+      <div
+        className={cx(classes.resultsWrapper, {
+          [classes.desktop]: matches,
+        })}
+      >
+        {searchResults.length > 0 && (
+          <Typography variant="h6">
+            {`${searchResults.length} results found for ${searchCriteria}`}
+          </Typography>
         )}
-        <div
-          className={cx(classes.resultsWrapper, {
-            [classes.desktop]: matches,
-          })}
-        >
-          {searchResults.length > 0 && (
-            <Typography variant="h6">
-              {`${searchResults.length} results found for ${searchCriteria}`}
-            </Typography>
-          )}
-          <div className={classes.searchResultsWrapper}>
-            {searchResults.length > 0
-              && searchResults.map((result) => (
-                <div className={classes.searchResult}>
-                  <BusinessCard
-                    business={result}
-                    key={result.id}
-                    overrideClasses={{ root: classes.result }}
-                  />
-                </div>
-              ))}
-          </div>
+        <div>
+          {searchResults.length > 0
+            && searchResults.map((result) => (
+              <div className={classes.searchResult}>
+                <BusinessCard
+                  business={result}
+                  key={result.id}
+                  overrideClasses={{ root: classes.result }}
+                />
+              </div>
+            ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

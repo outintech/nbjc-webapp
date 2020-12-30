@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
  * @param {string} searchOpts.searchTerm - name of space to search
  * @param {number} searchOpts.distance - distance from user's current location
  * @param {number} searchOpts.rating - minimum average rating
- * @param {number} searchOpts.pricing - maximum price rating
+ * @param {number} searchOpts.price - maximum price rating
  * @param {Array<string>} searchOpts.indicators - list of indicators
  * @param {page} searchOpts.page - current page to return
  * @param {pageSize} searchOpts.pageSize - size of each page
