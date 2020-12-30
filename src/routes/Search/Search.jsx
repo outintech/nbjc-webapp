@@ -8,7 +8,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
 
-import getBusinessMock from '../../__mocks__/getBusinessMock';
+// import getBusinessMock from '../../__mocks__/getBusinessMock';
+import { getSearchResults } from '../../api';
+import utils from '../../utils';
+
 import BusinessCard from '../../components/BusinessCard';
 
 import DesktopSearch from './DesktopSearch';
@@ -64,13 +67,16 @@ const Search = ({ classes, coords }) => {
     name: 'Queer owned',
   }];
 
-  const onSearchSubmit = (searchTerm) => {
+  const onSearchSubmit = async (searchTerm) => {
     setSearchResults([]);
     setSearchCriteria(searchTerm);
-    setTimeout(() => {
-      const results = [...Array(10)].map((_, i) => getBusinessMock({ id: `${i}` }));
-      setSearchResults(results);
-    }, 300);
+    try {
+      const results = await getSearchResults({});
+      // todo: results must come in an array
+      setSearchResults([results].map(utils.formatSearchResults));
+    } catch (e) {
+      // todo: show snackbar?
+    }
   };
   // todo: use the coordinates in search query
   console.log(coords);
