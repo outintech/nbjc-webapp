@@ -1,37 +1,59 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import {
-  OutlinedInput, InputAdornment, IconButton, Typography,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
+import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
+
 import { searchProps } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
 import FilterDialog from '../../components/FilterDialog';
 
-const styles = {
+const styles = (theme) => ({
   form: {
-    margin: '80px 100px',
+    margin: '10px 0px',
   },
-  inputField: {
-    marginBottom: 12,
+  filterWrapper: {
+    display: 'flex',
+    [theme.breakpoints.up('mobile')]: {
+      flexWrap: 'wrap',
+    },
   },
-};
+  filterButton: {
+    margin: '10px 0px',
+  },
+  filterDialog: {
+    [theme.breakpoints.up('mobile')]: {
+      width: '100%',
+      marginBottom: 40,
+      marginTop: 10,
+    },
+  },
+});
 
-const DesktopSearch = ({
+const SearchForm = ({
   classes,
   onSearch,
   onFilterApplied,
   searchCriteria,
 }) => {
+  const matches = useMediaQuery('(min-width:376px)');
   const defaultFilters = {
     stars: 0,
     price: 0,
     distance: 0,
   };
+
   const [searchText, setSearchText] = useState(searchCriteria.searchTerm || '');
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, setFilters] = useState(defaultFilters);
@@ -44,7 +66,7 @@ const DesktopSearch = ({
   };
   const { chips } = searchCriteria;
   return (
-    <form onSubmit={onSearchSubmit} className={classes.form}>
+    <form className={classes.form} onSubmit={onSearchSubmit}>
       <OutlinedInput
         type="text"
         endAdornment={(
@@ -58,37 +80,50 @@ const DesktopSearch = ({
             </IconButton>
           </InputAdornment>
         )}
-        startAdornment={(
+        variant="outlined"
+        fullWidth
+        style={{ margin: '8px 0px' }}
+        value={searchText}
+        onChange={handleChange}
+        startAdornment={matches && (
           <InputAdornment position="start">
             <Typography variant="caption">Search</Typography>
           </InputAdornment>
         )}
-        variant="outlined"
-        fullWidth
-        value={searchText}
-        onChange={handleChange}
-        className={classes.inputField}
         placeholder="Coffee, Laptop Repair"
       />
-      <FilterDialog
-        open={openFilter}
-        onToggle={() => setOpenFilter(!openFilter)}
-        defaultFilters={filters}
-        setFilters={(changedFilters) => setFilters(changedFilters)}
-        type="desktop"
-      />
-      <ChipFilters chips={chips} onChipSelected={(i) => onFilterApplied('indicators', chips[i].value)} />
+      <div className={classes.filterWrapper}>
+        <FilterDialog
+          open={openFilter}
+          onClose={() => setOpenFilter(false)}
+          onToggle={() => setOpenFilter(!openFilter)}
+          defaultFilters={filters}
+          setFilters={(changedFilters) => setFilters(changedFilters)}
+          type={matches ? 'desktop' : 'mobile'}
+          overrideClasses={{ root: classes.filterDialog }}
+        />
+        {!matches && (
+          <FilterListOutlinedIcon
+            onClick={() => setOpenFilter(true)}
+            className={classes.filterButton}
+          />
+        )}
+        <ChipFilters
+          chips={chips}
+          onChipSelected={(i) => onFilterApplied('indicators', chips[i].value)}
+        />
+      </div>
     </form>
   );
 };
 
-DesktopSearch.propTypes = {
+SearchForm.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   onSearch: PropTypes.func.isRequired,
   onFilterApplied: PropTypes.func.isRequired,
   searchCriteria: PropTypes.shape(searchProps).isRequired,
 };
 
-DesktopSearch.defaultProps = {};
+SearchForm.defaultProps = {};
 
-export default withStyles(styles)(DesktopSearch);
+export default withStyles(styles)(SearchForm);

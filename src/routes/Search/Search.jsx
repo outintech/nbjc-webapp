@@ -14,8 +14,7 @@ import utils from '../../utils';
 import BusinessCard from '../../components/BusinessCard';
 
 import useSearch from './hooks/useSearch';
-import DesktopSearch from './DesktopSearch';
-import MobileSearch from './MobileSearch';
+import SearchForm from './SearchForm';
 
 const styles = (theme) => ({
   resultsWrapper: {
@@ -70,16 +69,8 @@ const Search = ({ classes, coords }) => {
   return (
     <>
       <div className={classes.content}>
-        {matches && (
-          <DesktopSearch
-            chips={search.chips}
-            onSearch={onSearchSubmit}
-            onFilterApplied={onFilterApplied}
-            searchCriteria={search}
-          />
-        )}
-        {!matches && (
-          <MobileSearch
+        {true && (
+          <SearchForm
             chips={search.chips}
             onSearch={onSearchSubmit}
             onFilterApplied={onFilterApplied}
