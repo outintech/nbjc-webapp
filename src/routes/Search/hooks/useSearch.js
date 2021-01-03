@@ -53,8 +53,16 @@ const useSearch = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const results = await getSearchResults(searchCriteria);
-      setSearchResults(results.slice(0, 9).map(utils.formatSearchResults));
+      if (searchCriteria.searchTerm === 'empty') {
+        setSearchResults([]);
+        return;
+      }
+      const { data } = await getSearchResults(searchCriteria);
+      if (data.length === 0) {
+        setSearchResults([]);
+        return;
+      }
+      setSearchResults(data.slice(0, 9).map(utils.formatSearchResults));
     }
     if (search.searchTerm && search.searchTerm.length > 0) {
       fetchData();

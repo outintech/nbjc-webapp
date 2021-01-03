@@ -6,7 +6,9 @@ import cx from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
 
@@ -34,6 +36,22 @@ const styles = (theme) => ({
     },
     [theme.breakpoints.up('mobile')]: {
       width: '100%',
+    },
+  },
+  emptyStateWrapper: {
+    marginTop: 60,
+  },
+  emptyStateIcon: {
+    width: 55,
+    height: 55,
+    margin: '0 auto',
+  },
+  emptyStateFooter: {
+    marginTop: 80,
+    display: 'flex',
+    justifyContent: 'center',
+    '& a:first-child': {
+      marginRight: 20,
     },
   },
 });
@@ -69,7 +87,7 @@ const Search = ({ classes, coords }) => {
           </Typography>
         )}
         <div className={classes.searchResultsWrapper}>
-          {searchResults.length > 0
+          {searchResults !== null && searchResults.length > 0
             && searchResults.map((result) => (
               <div className={classes.searchResult}>
                 <BusinessCard
@@ -80,6 +98,29 @@ const Search = ({ classes, coords }) => {
               </div>
             ))}
         </div>
+        {searchResults !== null && search.searchTerm !== null && searchResults.length === 0
+          && (
+            <div className={classes.emptyStateWrapper}>
+              <Typography variant={matches ? 'h2' : 'h4'} align="center">
+                No Results
+              </Typography>
+              <div className={classes.emptyStateIcon}>
+                <SearchIcon color="primary" fontSize="large" className={classes.emptyStateIcon} />
+              </div>
+              <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
+                We couldn’t find what you’re looking for.
+                Please try again or add a space to OurGuide.
+              </Typography>
+              <div className={classes.emptyStateFooter}>
+                <Button variant="outlined" href="/" color="secondary">
+                  Home
+                </Button>
+                <Button variant="contained" href="/space/new" color="secondary" disableElevation>
+                  Add space
+                </Button>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );
