@@ -78,9 +78,15 @@ const SearchForm = ({
         type="text"
         endAdornment={(
           <InputAdornment position="end">
-            <IconButton>
+            <IconButton onClick={() => {
+              if (searchText.length > 0) {
+                setSearchText('');
+                onSearch('');
+              }
+            }}
+            >
               {searchText.length > 0 ? (
-                <ClearOutlinedIcon onClick={() => setSearchText('')} />
+                <ClearOutlinedIcon />
               ) : (
                 <SearchIcon />
               )}
@@ -98,6 +104,7 @@ const SearchForm = ({
           </InputAdornment>
         )}
         placeholder="Coffee, Laptop Repair"
+        autoFocus
       />
       <div className={classes.filterWrapper}>
         <FilterDialog

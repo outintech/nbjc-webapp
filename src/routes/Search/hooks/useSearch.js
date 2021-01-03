@@ -14,6 +14,7 @@ const getSearchCriteria = (query) => ({
 });
 
 const useSearch = () => {
+  // todo: this must be fetched and cached by the front end.
   const chips = [{
     name: 'Black Friendly',
     value: '1',
@@ -65,7 +66,12 @@ const useSearch = () => {
       setSearchResults(data.slice(0, 9).map(utils.formatSearchResults));
     }
     if (search.searchTerm && search.searchTerm.length > 0) {
-      fetchData();
+      try {
+        fetchData();
+      } catch (e) {
+        console.log(e);
+        setSearchResults([]);
+      }
     } else {
       setSearchResults([]);
     }

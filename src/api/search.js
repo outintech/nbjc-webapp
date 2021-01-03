@@ -23,9 +23,7 @@ const paramMap = {
  * @returns {Promise} - resolves to list of businesses or errors when none found
 */
 const getSearchResults = async (searchOpts) => {
-  // todo: change this to an env variable
-  const baseUrl = 'https://00895f10-199e-4807-b94f-a924c303a692.mock.pstmn.io';
-  const url = new URL(baseUrl);
+  const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
   Object.keys(searchOpts).forEach((key) => {
     url.searchParams.append(paramMap[key], searchOpts[key]);

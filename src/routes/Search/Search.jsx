@@ -89,7 +89,7 @@ const Search = ({ classes, coords }) => {
         <div className={classes.searchResultsWrapper}>
           {searchResults !== null && searchResults.length > 0
             && searchResults.map((result) => (
-              <div className={classes.searchResult}>
+              <div className={classes.searchResult} key={result.id}>
                 <BusinessCard
                   business={result}
                   key={result.id}
