@@ -47,7 +47,7 @@ const AppBar = ({
   isLoggedIn, selected, classes, routes,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const pageTitle = routes.find((item) => item.key === selected).label;
+  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const history = useHistory();
 
   const showDrawerItems = () => (
