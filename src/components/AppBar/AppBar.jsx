@@ -47,7 +47,7 @@ const AppBar = ({
   isLoggedIn, selected, classes, routes,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const pageTitle = routes.find((item) => item.key === selected).label;
+  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const history = useHistory();
 
   const showDrawerItems = () => (
@@ -123,7 +123,6 @@ AppBar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
-    content: PropTypes.func,
     key: PropTypes.string.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     icon: PropTypes.object,
