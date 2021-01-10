@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import useQuery from '../../../hooks/useQuery';
 import { getSearchResults } from '../../../api';
@@ -45,6 +46,8 @@ const useSearch = () => {
   const [searchResults, setSearchResults] = useState([]);
   const query = useQuery();
   const history = useHistory();
+  const { promiseInProgress } = usePromiseTracker();
+
   const searchCriteria = getSearchCriteria(query);
   const [search, setSearch] = useState({
     ...searchCriteria,
@@ -69,7 +72,9 @@ const useSearch = () => {
     }
     if (search.searchTerm && search.searchTerm.length > 0) {
       try {
-        fetchData();
+        trackPromise(
+          fetchData(),
+        );
       } catch (e) {
         // todo: how do we monitor?
         console.log(e);
@@ -113,6 +118,7 @@ const useSearch = () => {
     searchCriteria,
     search,
     updateSearch,
+    loading: promiseInProgress,
   };
 };
 

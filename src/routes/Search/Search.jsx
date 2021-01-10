@@ -7,6 +7,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -58,7 +59,12 @@ const styles = (theme) => ({
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const { updateSearch, search, searchResults } = useSearch({ useLocation: coords });
+  const {
+    updateSearch,
+    search,
+    searchResults,
+    loading,
+  } = useSearch({ useLocation: coords });
 
   const onSearchSubmit = async (searchTerm) => {
     updateSearch('searchTerm', searchTerm);
@@ -98,7 +104,10 @@ const Search = ({ classes, coords }) => {
               </div>
             ))}
         </div>
-        {searchResults !== null && search.searchTerm !== null && searchResults.length === 0
+        {searchResults !== null
+          && search.searchTerm !== null
+          && searchResults.length === 0
+          && !loading
           && (
             <div className={classes.emptyStateWrapper}>
               <Typography variant={matches ? 'h2' : 'h4'} align="center">
@@ -121,6 +130,7 @@ const Search = ({ classes, coords }) => {
               </div>
             </div>
           )}
+        {loading && <CircularProgress color="secondary" />}
       </div>
     </div>
   );
