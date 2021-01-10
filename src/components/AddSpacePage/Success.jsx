@@ -27,36 +27,51 @@ const styles = () => ({
   },
 });
 
-const Success = ({ classes }) => (
-  <>
-    <Typography variant="h4" align="center" className={classes.pageTitle}>
-      Space Submitted
-    </Typography>
-    <div className={classes.check}>
-      <CheckCircleIcon color="primary" className={classes.check} />
-    </div>
-    <Typography variant="subtitle1" align="center" className={classes.body}>
-      Thank you for adding a space to OurGuide. An administrator will review
-      your submission. Check back soon to see your space in the application.
-    </Typography>
-    <div className={classes.buttonWrapper}>
-      <Button
-        variant="contained"
-        color="secondary"
-        align="center"
-        fullWidth={!useMediaQuery('(min-width:376px)')}
-        href="/search"
-        disableElevation
-      >
-        Search for a space
-      </Button>
-    </div>
-  </>
-);
+const Success = ({
+  classes,
+  title,
+  subtitle,
+  primaryButton,
+}) => {
+  const matches = useMediaQuery('(min-width:376px)');
+  return (
+    <>
+      <Typography variant={matches ? 'h2' : 'h4'} align="center" className={classes.pageTitle}>
+        {title}
+      </Typography>
+      <div className={classes.check}>
+        <CheckCircleIcon color="primary" className={classes.check} />
+      </div>
+      <Typography variant={matches ? 'h4' : 'subtitle1'} align="center" className={classes.body}>
+        {subtitle}
+      </Typography>
+      <div className={classes.buttonWrapper}>
+        {primaryButton && primaryButton(matches)}
+        <Button
+          variant="contained"
+          color="secondary"
+          align="center"
+          fullWidth={!matches}
+          href="/search"
+          disableElevation
+        >
+          Search for a space
+        </Button>
+      </div>
+    </>
+  );
+};
 
 Success.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  primaryButton: PropTypes.func,
 };
 
-Success.defaultProps = {};
+Success.defaultProps = {
+  title: 'Space Submitted',
+  subtitle: 'Thank you for adding a space to OurGuide. An administrator will review your submission. Check back soon to see your space in the application.',
+  primaryButton: undefined,
+};
 export default withStyles(styles)(Success);

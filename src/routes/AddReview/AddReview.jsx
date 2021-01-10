@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 import { getSpace, postReview } from '../../api';
 import Review from '../../components/AddSpacePage/Review';
+import Success from '../../components/AddSpacePage/Success';
 
 const AddReview = () => {
   const { spaceId } = useParams();
   const [space, setSpace] = useState(null);
-  const history = useHistory();
+  const [pageStatus, setPageStatus] = useState('review');
   // todo: call backend to verify user does not have review for space
   useEffect(() => {
     async function fetchData() {
@@ -20,6 +22,7 @@ const AddReview = () => {
       setSpace(data);
     }
     fetchData();
+    setPageStatus('review');
   }, [spaceId]);
 
   const saveReview = (formData) => {
@@ -30,7 +33,7 @@ const AddReview = () => {
       anonymous: formData.anon,
     })
       .then(() => {
-        history.push(`/spaces/${spaceId}/reviews/success`);
+        setPageStatus('success');
       })
       .catch((err) => {
         console.log(err);
@@ -39,7 +42,7 @@ const AddReview = () => {
 
   return (
     <>
-      {space && (
+      {space && pageStatus === 'review' && (
         <Review
           title={(isDesktop) => (
             <>
@@ -54,6 +57,24 @@ const AddReview = () => {
           showBack={false}
           submitLabel="Submit"
           onNext={saveReview}
+        />
+      )}
+      {space && pageStatus === 'success' && (
+        <Success
+          title="Your Review Was Submitted!"
+          subtitle={`Thank you for rating and reviewing ${space.name} on OurGuide.`}
+          primaryButton={(isDesktop) => (
+            <Button
+              variant="contained"
+              align="center"
+              fullWidth={!isDesktop}
+              href={`/spaces/${space.id}`}
+              color="primary"
+              disableElevation
+            >
+              Go to space
+            </Button>
+          )}
         />
       )}
       {!space && <CircularProgress color="secondary" /> }
