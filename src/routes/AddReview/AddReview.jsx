@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,10 +12,52 @@ import { getSpace, postReview } from '../../api';
 import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 
-const AddReview = () => {
+const styles = (theme) => ({
+  root: {
+    [theme.breakpoints.up('xs')]: {
+      margin: '0 20px',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 100px',
+    },
+  },
+  reviewSubtitle: {
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 60,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: 40,
+    },
+  },
+  reviewFooter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewSubmit: {
+    [theme.breakpoints.up('mobile')]: {
+      width: 254,
+    },
+  },
+  successFooter: {
+    display: 'block !important',
+  },
+  successButton: {
+    [theme.breakpoints.up('mobile')]: {
+      width: 254,
+    },
+    margin: '0 auto',
+    display: 'block',
+    marginBottom: 40,
+  },
+});
+
+const AddReview = ({ classes }) => {
   const { spaceId } = useParams();
   const [space, setSpace] = useState(null);
   const [pageStatus, setPageStatus] = useState('review');
+  const { promiseInProgress } = usePromiseTracker();
+
   // todo: call backend to verify user does not have review for space
   useEffect(() => {
     async function fetchData() {
@@ -26,22 +71,24 @@ const AddReview = () => {
   }, [spaceId]);
 
   const saveReview = (formData) => {
-    postReview({
-      spaceId,
-      rating: formData.rating,
-      detail: formData.review,
-      anonymous: formData.anon,
-    })
-      .then(() => {
-        setPageStatus('success');
+    trackPromise(
+      postReview({
+        spaceId,
+        rating: formData.rating,
+        detail: formData.review,
+        anonymous: formData.anon,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(() => {
+          setPageStatus('success');
+        })
+        .catch((err) => {
+          console.log(err);
+        }),
+    );
   };
 
   return (
-    <>
+    <div className={classes.root}>
       {space && pageStatus === 'review' && (
         <Review
           title={(isDesktop) => (
@@ -49,7 +96,11 @@ const AddReview = () => {
               <Typography variant={isDesktop ? 'h2' : 'h4'} align="center">
                 Rate and Review
               </Typography>
-              <Typography variant={isDesktop ? 'h4' : 'subtitle1'} align="center">
+              <Typography
+                variant={isDesktop ? 'h4' : 'subtitle1'}
+                align="center"
+                className={classes.reviewSubtitle}
+              >
                 {`You can rate ${space.name} anonymously.`}
               </Typography>
             </>
@@ -57,6 +108,11 @@ const AddReview = () => {
           showBack={false}
           submitLabel="Submit"
           onNext={saveReview}
+          disableSubmit={() => promiseInProgress}
+          overrideClasses={{
+            footer: classes.reviewFooter,
+            submitButton: classes.reviewSubmit,
+          }}
         />
       )}
       {space && pageStatus === 'success' && (
@@ -71,15 +127,24 @@ const AddReview = () => {
               href={`/spaces/${space.id}`}
               color="primary"
               disableElevation
+              className={classes.successButton}
             >
               Go to space
             </Button>
           )}
+          overrideClasses={{
+            buttonWrapper: classes.successFooter,
+            secondaryButton: classes.successButton,
+          }}
         />
       )}
-      {!space && <CircularProgress color="secondary" /> }
-    </>
+      {!space && <CircularProgress color="secondary" />}
+    </div>
   );
 };
 
-export default AddReview;
+AddReview.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+};
+
+export default withStyles(styles)(AddReview);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import cx from 'classnames';
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -48,6 +49,8 @@ const Review = ({
   title,
   showBack,
   submitLabel,
+  disableSubmit,
+  overrideClasses,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
@@ -135,15 +138,15 @@ const Review = ({
             </Typography>
           )}
         />
-        <div className={classes.footer}>
+        <div className={cx(classes.footer, overrideClasses.footer)}>
           <Button
             type="submit"
             variant="contained"
             color="secondary"
-            className={classes.submitButton}
+            className={cx(classes.submitButton, overrideClasses.submitButton)}
             fullWidth={!matches}
             onClick={onFormSubmit}
-            disabled={!validateForm()}
+            disabled={!validateForm() || disableSubmit()}
             disableElevation
           >
             {submitLabel}
@@ -174,6 +177,8 @@ Review.propTypes = {
   title: PropTypes.func,
   showBack: PropTypes.bool,
   submitLabel: PropTypes.string,
+  disableSubmit: PropTypes.func,
+  overrideClasses: PropTypes.shape({}),
 };
 
 Review.defaultProps = {
@@ -186,6 +191,8 @@ Review.defaultProps = {
   showBack: true,
   onBack: () => {},
   submitLabel: 'Next',
+  disableSubmit: () => false,
+  overrideClasses: {},
 };
 
 export default withStyles(styles)(Review);
