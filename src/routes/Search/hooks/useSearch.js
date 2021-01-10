@@ -11,6 +11,8 @@ const getSearchCriteria = (query) => ({
   rating: parseFloat(query.get('rating')) || 0,
   price: parseInt(query.get('distance'), 10) || 0,
   indicators: query.getAll('indicators'),
+  pageNumber: parseInt(query.get('pageSize'), 10) || 1,
+  pageSize: parseInt(query.get('pageSize'), 10) || 20,
 });
 
 const useSearch = () => {
@@ -69,6 +71,7 @@ const useSearch = () => {
       try {
         fetchData();
       } catch (e) {
+        // todo: how do we monitor?
         console.log(e);
         setSearchResults([]);
       }
