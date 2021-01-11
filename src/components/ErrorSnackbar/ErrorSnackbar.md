@@ -1,0 +1,5 @@
+## ErrorSnackbar
+
+```jsx
+<ErrorSnackbar />
+```

@@ -50,7 +50,7 @@ const spaceRoutes = [{
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
   // todo: change this
-  enforceLogin: true,
+  enforceLogin: false,
 }];
 
 export default routes;

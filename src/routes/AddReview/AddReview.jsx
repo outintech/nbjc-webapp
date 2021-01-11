@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { getSpace, postReview } from '../../api';
 import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
+import ErrorSnackbar from '../../components/ErrorSnackbar';
 
 const styles = (theme) => ({
   root: {
@@ -56,6 +57,7 @@ const AddReview = ({ classes }) => {
   const { spaceId } = useParams();
   const [space, setSpace] = useState(null);
   const [pageStatus, setPageStatus] = useState('review');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
 
   // todo: call backend to verify user does not have review for space
@@ -139,6 +141,11 @@ const AddReview = ({ classes }) => {
         />
       )}
       {!space && <CircularProgress color="secondary" />}
+      <ErrorSnackbar
+        snackbarOpen={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        body="There was an error posting the reivew. Please try again later"
+      />
     </div>
   );
 };

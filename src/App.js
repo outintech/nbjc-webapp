@@ -12,6 +12,7 @@ import routes, { spaceRoutes } from './routes';
 
 function Spaces() {
   const match = useRouteMatch();
+  const spaceKeys = ['addSpace', 'addReview'];
   return (
     <Switch>
       {spaceRoutes.map((route) => (
@@ -23,7 +24,7 @@ function Spaces() {
           <AppBar
             routes={[...routes, ...spaceRoutes].filter((r) => !r.skipAppBar).map((r) => ({
               label: r.label,
-              path: `${match.path}${route.path}`,
+              path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
               key: r.key,
               enforceLogin: r.enforceLogin,
               icon: r.icon,
@@ -38,6 +39,8 @@ function Spaces() {
 }
 
 function App() {
+  console.log([...routes, ...spaceRoutes].filter((r) => !r.skipAppBar));
+  const spaceKeys = ['addSpace', 'addReview'];
   return (
     <>
       <Router>
@@ -53,7 +56,7 @@ function App() {
                   <AppBar
                     routes={[...routes, ...spaceRoutes].filter((r) => !r.skipAppBar).map((r) => ({
                       label: r.label,
-                      path: r.path,
+                      path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
                       key: r.key,
                       enforceLogin: r.enforceLogin,
                       icon: r.icon,
