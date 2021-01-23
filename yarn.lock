@@ -1413,6 +1413,17 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
+"@material-ui/lab@^4.0.0-alpha.57":
+  version "4.0.0-alpha.57"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@material-ui/lab/-/lab-4.0.0-alpha.57.tgz#e8961bcf6449e8a8dabe84f2700daacfcafbf83a"
+  integrity sha1-6JYbz2RJ6KjavoTycA2qz8r7+Do=
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.11.2"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
+
 "@material-ui/styles@^4.11.2":
   version "4.11.2"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@material-ui/styles/-/styles-4.11.2.tgz#e70558be3f41719e8c0d63c7a3c9ae163fdc84cb"
@@ -10097,7 +10108,7 @@ prompts@2.4.0, prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -10346,6 +10357,13 @@ react-error-overlay@^6.0.8:
   version "6.0.8"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/react-error-overlay/-/react-error-overlay-6.0.8.tgz#474ed11d04fc6bda3af643447d85e9127ed6b5de"
   integrity sha1-R07RHQT8a9o69kNEfYXpEn7Wtd4=
+
+react-geolocated@^3.1.0:
+  version "3.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/react-geolocated/-/react-geolocated-3.1.0.tgz#a0a1f2f342b41988d27e8dcbbdf8ee8410a9b5ff"
+  integrity sha1-oKHy80K0GYjSfo3LvfjuhBCptf8=
+  dependencies:
+    prop-types "^15.5.8"
 
 react-group@^3.0.2:
   version "3.0.2"

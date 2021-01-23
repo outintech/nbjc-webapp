@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import cx from 'classnames';
 
 import {
   Button,
@@ -15,6 +16,7 @@ import StarIcon from '@material-ui/icons/Star';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
+import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
 
 const styles = {
@@ -22,7 +24,7 @@ const styles = {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
     },
-    maxWidth: 500,
+    maxWidth: 345,
   },
   rating: {
     display: 'block',
@@ -63,16 +65,19 @@ const styles = {
 };
 
 const BusinessCard = ({
+  business: {
+    name,
+    category,
+    averageRating,
+    imageUrl,
+    address,
+    distance,
+    filters,
+  },
   classes,
-  name,
-  category,
-  averageRating,
-  imageUrl,
-  address,
-  distance,
-  filters,
+  overrideClasses,
 }) => (
-  <Card className={classes.root}>
+  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined">
     <CardHeader
       avatar={(
         <div color="secondary">
@@ -122,24 +127,13 @@ const BusinessCard = ({
 );
 
 BusinessCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  averageRating: PropTypes.string.isRequired,
+  business: PropTypes.shape(spaceProps).isRequired,
   classes: PropTypes.shape({}).isRequired,
-  imageUrl: PropTypes.string,
-  address: PropTypes.string.isRequired,
-  distance: PropTypes.string.isRequired,
-  filters: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ),
+  overrideClasses: PropTypes.shape({}),
 };
 
 BusinessCard.defaultProps = {
-  // TODO: add a default url,
-  imageUrl: '',
-  filters: [],
+  overrideClasses: {},
 };
 
 export default withStyles(styles)(BusinessCard);

@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Attributes renders with default values 1`] = `
+<DocumentFragment>
+  <h6
+    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-alignCenter"
+  >
+    What are the attributes that make this an OurGuide space?
+  </h6>
+  <h6
+    class="MuiTypography-root MuiTypography-h6"
+  >
+    Select all that apply
+  </h6>
+  <div
+    class="ChipFilters-wrapper-6 Attributes-chipWrapper-1"
+  >
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Accessible
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          ATM Available
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          ASL Spoken
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Friendly
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Owned
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Gender-Neutral Restroom
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Inclusive
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          LGBTQIA+ Friendly
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Multilingual
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Person of Color owned
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Price Conscious
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Trans-Trained
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-5 Attributes-chip-2 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Wheelchair Ramp
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+  </div>
+  <div
+    class="Attributes-footer-3"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained Attributes-submitButton-4 MuiButton-containedSecondary MuiButton-disableElevation Mui-disabled MuiButton-fullWidth Mui-disabled"
+      disabled=""
+      tabindex="-1"
+      type="submit"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Next
+      </span>
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-disableElevation MuiButton-fullWidth"
+      tabindex="0"
+      type="cancel"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Back
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

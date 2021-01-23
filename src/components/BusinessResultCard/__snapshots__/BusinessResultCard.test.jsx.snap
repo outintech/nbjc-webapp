@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BusinessResultCard renders 1`] = `
+<DocumentFragment>
+  <div
+    class=""
+    data-testid="businessresultcard-123"
+  >
+    <div
+      class="MuiPaper-root MuiCard-root BusinessResultCard-card-1 MuiPaper-outlined MuiPaper-rounded"
+    >
+      <div
+        class="MuiCardContent-root"
+      >
+        <div>
+          <h6
+            class="MuiTypography-root BusinessResultCard-title-3 MuiTypography-subtitle1"
+          >
+            La colombe coffee roasters
+          </h6>
+          <span
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-6 MuiCheckbox-root MuiCheckbox-colorPrimary BusinessResultCard-checkbox-4 MuiIconButton-colorPrimary"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                class="PrivateSwitchBase-input-9"
+                data-indeterminate="false"
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </span>
+        </div>
+        <span
+          class="MuiTypography-root MuiTypography-caption"
+        >
+          Coffee
+        </span>
+        <div
+          class="BusinessResultCard-wrapper-5"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle2"
+          >
+            Address:
+          </h6>
+          <p
+            class="MuiTypography-root MuiTypography-body2"
+          >
+            924 Blagden Alley Way Washington, D.C. 20001
+          </p>
+        </div>
+        <div
+          class="BusinessResultCard-wrapper-5"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle2"
+          >
+            Phone number:
+          </h6>
+          <p
+            class="MuiTypography-root MuiTypography-body2"
+          >
+            123-456-7890
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

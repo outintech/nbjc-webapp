@@ -12,6 +12,9 @@ const palette = {
       dark: '#720432',
       // contrastText: '#000000',
     },
+    error: {
+      main: '#B00020',
+    },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
     contrastThreshold: 3,

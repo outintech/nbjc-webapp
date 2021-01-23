@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Success renders 1`] = `
+<DocumentFragment>
+  <h4
+    class="MuiTypography-root Success-pageTitle-1 MuiTypography-h4 MuiTypography-alignCenter"
+  >
+    Space Submitted
+  </h4>
+  <div
+    class="Success-check-2"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root Success-check-2 MuiSvgIcon-colorPrimary"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+      />
+    </svg>
+  </div>
+  <h6
+    class="MuiTypography-root Success-body-3 MuiTypography-subtitle1 MuiTypography-alignCenter"
+  >
+    Thank you for adding a space to OurGuide. An administrator will review your submission. Check back soon to see your space in the application.
+  </h6>
+  <div
+    class="Success-buttonWrapper-4"
+  >
+    <a
+      align="center"
+      aria-disabled="false"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-disableElevation MuiButton-fullWidth"
+      href="/search"
+      tabindex="0"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Search for a space
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </a>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChipFilters render 1`] = `
+<DocumentFragment>
+  <div
+    class="ChipFilters-wrapper-2"
+  >
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Friendly
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Inclusive
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Black Owned
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Gender Neutral Restrooms
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Accessible
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Queer hangout space
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Trans friendly
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiChip-root ChipFilters-chip-1 MuiChip-colorPrimary MuiChip-clickableColorPrimary MuiChip-outlined MuiChip-outlinedPrimary MuiChip-sizeSmall MuiChip-clickable"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="MuiChip-label MuiChip-labelSmall"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2"
+        >
+          Queer owned
+        </p>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
