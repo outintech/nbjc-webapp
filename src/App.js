@@ -66,6 +66,7 @@ function App() {
                   <route.content />
                 </Route>
               ))}
+              {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
               <Route path="/spaces">
                 <Spaces />
               </Route>
