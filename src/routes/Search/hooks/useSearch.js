@@ -10,10 +10,10 @@ const getSearchCriteria = (query) => ({
   searchTerm: query.get('searchTerm'),
   distance: parseInt(query.get('distance'), 10) || 0,
   rating: parseFloat(query.get('rating')) || 0,
-  price: parseInt(query.get('distance'), 10) || 0,
+  price: parseInt(query.get('price'), 10) || 0,
   indicators: query.getAll('indicators'),
-  pageNumber: parseInt(query.get('pageSize'), 10) || 1,
-  pageSize: parseInt(query.get('pageSize'), 10) || 20,
+  // pageNumber: parseInt(query.get('pageNumber'), 10) || 1,
+  // pageSize: parseInt(query.get('pageSize'), 10) || 20,
 });
 
 const useSearch = ({ indicators }) => {

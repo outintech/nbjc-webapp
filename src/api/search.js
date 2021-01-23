@@ -1,13 +1,14 @@
 import fetch from 'node-fetch';
 
 const paramMap = {
-  searchTerm: 'search_term',
-  distance: 'distance',
-  price: 'price',
-  rating: 'rating',
-  indicators: 'indicators',
+  searchTerm: 'search',
+  distance: 'filters[distance]',
+  price: 'filters[price]',
+  rating: 'filters[rating]',
+  indicators: 'filters[indicators]',
   page: 'current[page]',
   pageSize: 'page[size]',
+  pageNumber: 'page',
 };
 
 /**
@@ -26,7 +27,11 @@ const getSearchResults = async (searchOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
   Object.keys(searchOpts).forEach((key) => {
-    url.searchParams.append(paramMap[key], searchOpts[key]);
+    if (key === 'indicators' && searchOpts[key].length > 0) {
+      url.searchParams.append(paramMap[key], searchOpts[key]);
+    } else if (key !== 'indicators' && searchOpts[key]) {
+      url.searchParams.append(paramMap[key], searchOpts[key]);
+    }
   });
   const results = await fetch(url.href);
   return results.json();

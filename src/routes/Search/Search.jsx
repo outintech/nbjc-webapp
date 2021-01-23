@@ -61,7 +61,6 @@ const styles = (theme) => ({
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const { indicators, indicatorLoading } = useContext(IndicatorContext);
-  console.log(indicators);
   const {
     updateSearch,
     search,
@@ -78,7 +77,6 @@ const Search = ({ classes, coords }) => {
   };
   return (
     <div className={classes.content}>
-      {indicatorLoading && <CircularProgress color="secondary" />}
       {!indicatorLoading && (
         <SearchForm
           chips={indicators}
