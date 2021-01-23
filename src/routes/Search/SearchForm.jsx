@@ -48,7 +48,6 @@ const SearchForm = ({
   searchCriteria,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-
   const [searchText, setSearchText] = useState(searchCriteria.searchTerm || '');
   const [openFilter, setOpenFilter] = useState(false);
   const handleChange = (event) => {
@@ -123,7 +122,7 @@ const SearchForm = ({
           />
         )}
         <ChipFilters
-          chips={chips}
+          chips={searchCriteria.chips}
           onChipSelected={(i) => onFilterApplied('indicators', chips[i].value)}
         />
       </div>

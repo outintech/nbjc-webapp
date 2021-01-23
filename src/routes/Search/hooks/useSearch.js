@@ -16,33 +16,7 @@ const getSearchCriteria = (query) => ({
   pageSize: parseInt(query.get('pageSize'), 10) || 20,
 });
 
-const useSearch = () => {
-  // todo: this must be fetched and cached by the front end.
-  const chips = [{
-    name: 'Black Friendly',
-    value: '1',
-  }, {
-    name: 'Inclusive',
-    value: '2',
-  }, {
-    name: 'Black Owned',
-    value: '3',
-  }, {
-    name: 'Gender Neutral Restrooms',
-    value: '4',
-  }, {
-    name: 'Accessible',
-    value: '5',
-  }, {
-    name: 'Queer hangout space',
-    value: '6',
-  }, {
-    name: 'Trans friendly',
-    value: '7',
-  }, {
-    name: 'Queer owned',
-    value: '8',
-  }];
+const useSearch = ({ indicators }) => {
   const [searchResults, setSearchResults] = useState([]);
   const query = useQuery();
   const history = useHistory();
@@ -51,7 +25,7 @@ const useSearch = () => {
   const searchCriteria = getSearchCriteria(query);
   const [search, setSearch] = useState({
     ...searchCriteria,
-    chips: chips.map((c) => ({
+    chips: indicators.map((c) => ({
       ...c,
       isSelected: searchCriteria.indicators.includes(c.value),
     })),
@@ -106,7 +80,7 @@ const useSearch = () => {
     const updatedSearchCritera = getSearchCriteria(query);
     setSearch({
       ...updatedSearchCritera,
-      chips: chips.map((c) => ({
+      chips: indicators.map((c) => ({
         ...c,
         isSelected: updatedSearchCritera.indicators.includes(c.value),
       })),

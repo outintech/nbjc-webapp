@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
+import { IndicatorContext } from '../../providers/IndicatorContext';
 
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
@@ -59,12 +60,14 @@ const styles = (theme) => ({
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
+  const { indicators, indicatorLoading } = useContext(IndicatorContext);
+  console.log(indicators);
   const {
     updateSearch,
     search,
     searchResults,
     loading,
-  } = useSearch({ useLocation: coords });
+  } = useSearch({ useLocation: coords, indicators });
 
   const onSearchSubmit = async (searchTerm) => {
     updateSearch('searchTerm', searchTerm);
@@ -73,15 +76,17 @@ const Search = ({ classes, coords }) => {
   const onFilterApplied = (filter, value) => {
     updateSearch(filter, value);
   };
-
   return (
     <div className={classes.content}>
-      <SearchForm
-        chips={search.chips}
-        onSearch={onSearchSubmit}
-        onFilterApplied={onFilterApplied}
-        searchCriteria={search}
-      />
+      {indicatorLoading && <CircularProgress color="secondary" />}
+      {!indicatorLoading && (
+        <SearchForm
+          chips={indicators}
+          onSearch={onSearchSubmit}
+          onFilterApplied={onFilterApplied}
+          searchCriteria={search}
+        />
+      )}
       <div
         className={cx(classes.resultsWrapper, {
           [classes.desktop]: matches,

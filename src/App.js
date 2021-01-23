@@ -4,6 +4,8 @@ import {
   BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 
+import { IndicatorProvider } from './providers/IndicatorContext';
+
 import AppBar from './components/AppBar';
 
 import theme from './theme';
@@ -13,25 +15,27 @@ function App() {
   return (
     <>
       <Router>
-        <ThemeProvider theme={theme}>
-          <div className="App">
-            <Switch>
-              {routes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  exact
-                >
-                  <AppBar
-                    routes={routes}
-                    selected={route.key}
-                  />
-                  <route.content />
-                </Route>
-              ))}
-            </Switch>
-          </div>
-        </ThemeProvider>
+        <IndicatorProvider>
+          <ThemeProvider theme={theme}>
+            <div className="App">
+              <Switch>
+                {routes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    exact
+                  >
+                    <AppBar
+                      routes={routes}
+                      selected={route.key}
+                    />
+                    <route.content />
+                  </Route>
+                ))}
+              </Switch>
+            </div>
+          </ThemeProvider>
+        </IndicatorProvider>
       </Router>
     </>
   );
