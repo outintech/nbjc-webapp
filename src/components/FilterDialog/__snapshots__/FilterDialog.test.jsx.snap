@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterDialog 1`] = `<DocumentFragment />`;
+exports[`FilterDialog 1`] = `
+<DocumentFragment>
+  <div
+    class=""
+  />
+</DocumentFragment>
+`;

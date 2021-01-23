@@ -41,6 +41,8 @@ test('renders the BusinessCardComponent', () => {
         name: 'Queer owned',
       },
     ],
+    phoneNumber: '000000000',
+    url: 'example.com',
   };
   const { asFragment } = render(<BusinessCard business={props} />);
   expect(asFragment()).toMatchSnapshot();

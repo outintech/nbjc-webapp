@@ -10,7 +10,7 @@ export const reducer = (state, action) => {
     case 'price':
       return {
         ...state,
-        price: action.payload.price,
+        price: state.price === action.payload.price ? 0 : action.payload.price,
       };
     case 'distance':
       return {
@@ -19,16 +19,16 @@ export const reducer = (state, action) => {
       };
     case 'reset':
       return {
-        stars: 3,
-        price: 2,
-        distance: 5,
+        stars: 0,
+        price: 0,
+        distance: 0,
       };
     default:
       return state;
   }
 };
 
-const useFilters = ({ stars = 3, price = 2, distance = 5 }) => {
+const useFilters = ({ stars = 0, price = 0, distance = 0 }) => {
   // default filter values
   const initialState = {
     stars,

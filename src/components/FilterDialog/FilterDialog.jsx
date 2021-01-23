@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import {
@@ -75,8 +76,10 @@ const styles = {
 
 const FilterDialog = ({
   open,
+  onToggle,
   onClose,
   classes,
+  overrideClasses,
   setFilters,
   defaultFilters,
   type,
@@ -101,9 +104,9 @@ const FilterDialog = ({
     value: 4,
   }];
   return (
-    <>
+    <div className={cx(classes.root, overrideClasses.root)}>
       { type === 'desktop' && (
-        <Accordion color="primary">
+        <Accordion color="primary" expanded={open} onChange={onToggle}>
           <AccordionSummary className={classes.filterHeaderContainer}>
             <div className={classes.filterHeaderItem}>
               <Typography>Distance</Typography>
@@ -149,7 +152,7 @@ const FilterDialog = ({
                 className={classes.footerButtons}
                 onClick={() => {
                   dispatch({ type: 'reset' });
-                  onClose();
+                  onToggle();
                 }}
               >
                 <Typography variant="button" color="primary">Cancel</Typography>
@@ -161,7 +164,7 @@ const FilterDialog = ({
                 className={classes.footerButtons}
                 onClick={() => {
                   setFilters({ stars, distance, price });
-                  onClose();
+                  onToggle();
                 }}
               >
                 <Typography variant="button" color="inherit">Apply</Typography>
@@ -241,7 +244,7 @@ const FilterDialog = ({
           </div>
         </Dialog>
       )}
-    </>
+    </div>
   );
 };
 
@@ -249,6 +252,7 @@ FilterDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  overrideClasses: PropTypes.shape({}),
   setFilters: PropTypes.func,
   type: PropTypes.oneOf(['desktop', 'mobile']),
   defaultFilters: PropTypes.shape({
@@ -256,12 +260,15 @@ FilterDialog.propTypes = {
     distance: PropTypes.number,
     price: PropTypes.number,
   }),
+  onToggle: PropTypes.func,
 };
 
 FilterDialog.defaultProps = {
   setFilters: () => {},
   defaultFilters: {},
   type: 'mobile',
+  overrideClasses: {},
+  onToggle: () => {},
 };
 
 export default withStyles(styles)(FilterDialog);

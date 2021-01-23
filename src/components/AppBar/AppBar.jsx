@@ -123,10 +123,7 @@ AppBar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
-    content: PropTypes.func,
     key: PropTypes.string.isRequired,
-    // eslint-disable-next-line react/forbid-prop-types
-    icon: PropTypes.object,
     enforceLogin: PropTypes.bool.isRequired,
   })).isRequired,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
@@ -6,111 +6,133 @@ import cx from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 
-import getBusinessMock from '../../__mocks__/getBusinessMock';
 import BusinessCard from '../../components/BusinessCard';
 
-import DesktopSearch from './DesktopSearch';
-import MobileSearch from './MobileSearch';
+import useSearch from './hooks/useSearch';
+import SearchForm from './SearchForm';
 
 const styles = (theme) => ({
-  resultsWrapper: {
-    [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
-    },
-  },
   result: {
     margin: '10px 0px 40px 0px',
   },
   content: {
     margin: '0 15px',
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 100px',
+    },
   },
   searchResultsWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 350px)',
+    gridGap: 50,
   },
   searchResult: {
     [theme.breakpoints.up('xs')]: {
       maxWidth: '350px',
-      marginRight: 50,
     },
     [theme.breakpoints.up('mobile')]: {
       width: '100%',
+    },
+  },
+  emptyStateWrapper: {
+    marginTop: 60,
+  },
+  emptyStateIcon: {
+    width: 55,
+    height: 55,
+    margin: '0 auto',
+  },
+  emptyStateFooter: {
+    marginTop: 80,
+    display: 'flex',
+    justifyContent: 'center',
+    '& a:first-child': {
+      marginRight: 20,
     },
   },
 });
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchCriteria, setSearchCriteria] = useState();
-  // TODO: this needs to come from the db.
-  const chips = [{
-    name: 'Black Friendly',
-  }, {
-    name: 'Inclusive',
-  }, {
-    name: 'Black Owned',
-  }, {
-    name: 'Gender Neutral Restrooms',
-  }, {
-    name: 'Accessible',
-  }, {
-    name: 'Queer hangout space',
-  }, {
-    name: 'Trans friendly',
-  }, {
-    name: 'Queer owned',
-  }];
+  const {
+    updateSearch,
+    search,
+    searchResults,
+    loading,
+  } = useSearch({ useLocation: coords });
 
-  const onSearchSubmit = (searchTerm) => {
-    setSearchResults([]);
-    setSearchCriteria(searchTerm);
-    setTimeout(() => {
-      const results = [...Array(10)].map((_, i) => getBusinessMock({ id: `${i}` }));
-      setSearchResults(results);
-    }, 300);
+  const onSearchSubmit = async (searchTerm) => {
+    updateSearch('searchTerm', searchTerm);
   };
-  // todo: use the coordinates in search query
-  console.log(coords);
+
+  const onFilterApplied = (filter, value) => {
+    updateSearch(filter, value);
+  };
+
   return (
-    <>
-      <div className={classes.content}>
-        {matches && <DesktopSearch chips={chips} onSearch={onSearchSubmit} />}
-        {!matches && (
-          <MobileSearch
-            chips={chips}
-            onSearch={onSearchSubmit}
-            results={searchResults}
-          />
-        )}
-        <div className={cx(classes.resultsWrapper, {
+    <div className={classes.content}>
+      <SearchForm
+        chips={search.chips}
+        onSearch={onSearchSubmit}
+        onFilterApplied={onFilterApplied}
+        searchCriteria={search}
+      />
+      <div
+        className={cx(classes.resultsWrapper, {
           [classes.desktop]: matches,
         })}
-        >
-          {searchResults.length > 0 && (
-            <Typography variant="h6">
-              {`${searchResults.length} results found for ${searchCriteria}`}
-            </Typography>
-          )}
-          <div className={classes.searchResultsWrapper}>
-            {searchResults.length > 0
-              && searchResults.map((result) => (
-                <div
-                  className={classes.searchResult}
-                >
-                  <BusinessCard
-                    business={result}
-                    key={result.id}
-                    overrideClasses={{ root: classes.result }}
-                  />
-                </div>
-              ))}
-          </div>
+      >
+        {searchResults.length > 0 && (
+          <Typography variant="h6">
+            {`${searchResults.length} results found for ${search.searchTerm}`}
+          </Typography>
+        )}
+        <div className={classes.searchResultsWrapper}>
+          {searchResults !== null && searchResults.length > 0
+            && searchResults.map((result) => (
+              <div className={classes.searchResult} key={result.id}>
+                <BusinessCard
+                  business={result}
+                  key={result.id}
+                  overrideClasses={{ root: classes.result }}
+                />
+              </div>
+            ))}
         </div>
+        {searchResults !== null
+          && search.searchTerm !== null
+          && searchResults.length === 0
+          && !loading
+          && (
+            <div className={classes.emptyStateWrapper}>
+              <Typography variant={matches ? 'h2' : 'h4'} align="center">
+                No Results
+              </Typography>
+              <div className={classes.emptyStateIcon}>
+                <SearchIcon color="primary" fontSize="large" className={classes.emptyStateIcon} />
+              </div>
+              <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
+                We couldn’t find what you’re looking for.
+                Please try again or add a space to OurGuide.
+              </Typography>
+              <div className={classes.emptyStateFooter}>
+                <Button variant="outlined" href="/" color="secondary">
+                  Home
+                </Button>
+                <Button variant="contained" href="/space/new" color="secondary" disableElevation>
+                  Add space
+                </Button>
+              </div>
+            </div>
+          )}
+        {loading && <CircularProgress color="secondary" />}
       </div>
-    </>
+    </div>
   );
 };
 
