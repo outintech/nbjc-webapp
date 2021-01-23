@@ -1,8 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
 import {
-  BrowserRouter as Router, Link, Switch, Route,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 
 import AppBar from './components/AppBar';
