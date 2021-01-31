@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Typography, withStyles } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -21,6 +18,8 @@ import {
   AddSpaceSubmit,
   AddSpaceSuccess,
 } from '../../components/AddSpacePage';
+
+import ErrorSnackbar from '../../components/ErrorSnackbar';
 
 const styles = (theme) => ({
   root: {
@@ -46,25 +45,6 @@ const styles = (theme) => ({
         width: 50,
         height: 50,
       },
-    },
-  },
-  alert: {
-    backgroundColor: theme.palette.error.main,
-    color: 'white',
-  },
-  alertMessage: {
-    display: 'flex',
-    width: 344,
-  },
-  alertText: {
-    display: 'inline-block',
-  },
-  supportButton: {
-    display: 'inline-block',
-    float: 'right',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: 'unset',
     },
   },
 });
@@ -194,31 +174,11 @@ const AddSpace = ({ classes }) => {
         </Stepper>
       )}
       <div>{getStepContent(activeStep, stepProps, formValues)}</div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
+      <ErrorSnackbar
+        snackbarOpen={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity="error"
-          className={classes.alert}
-          icon={false}
-          classes={{ message: classes.alertMessage }}
-        >
-          <Typography variant="body2">
-            We could not find the space. Please try again or contact support.
-          </Typography>
-          {/* todo: link to what? */}
-          <Button
-            className={classes.supportButton}
-            disableElevation
-            disableRipple
-          >
-            Support
-          </Button>
-        </Alert>
-      </Snackbar>
+        body="We could not find the space. Please try again or contact Support."
+      />
     </div>
   );
 };

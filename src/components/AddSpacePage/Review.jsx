@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import cx from 'classnames';
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -45,6 +46,11 @@ const Review = ({
   onBack,
   onNext,
   addSpaceProps,
+  title,
+  showBack,
+  submitLabel,
+  disableSubmit,
+  overrideClasses,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
@@ -87,19 +93,21 @@ const Review = ({
   return (
     <>
       <form onSubmit={onFormSubmit}>
-        <Typography variant="subtitle1" align="center">
-          Rate and review this space. You can rate and review anonymously.
-        </Typography>
-        <Typography variant="h6">
-          Rate this space
-        </Typography>
+        {title(matches)}
+        <Typography variant="h6">Rate this space</Typography>
         <div>
-          <StarRating numberFilled={formValues.rating} onRatingChanged={(rating) => onChange({ target: { value: rating, name: 'rating' } })} />
-          <Typography variant="caption" className={classes.ratingText}>{`${formValues.rating} stars`}</Typography>
+          <StarRating
+            numberFilled={formValues.rating}
+            onRatingChanged={(rating) => onChange({ target: { value: rating, name: 'rating' } })}
+          />
+          <Typography
+            variant="caption"
+            className={classes.ratingText}
+          >
+            {`${formValues.rating} stars`}
+          </Typography>
         </div>
-        <Typography variant="h6">
-          Share your thought
-        </Typography>
+        <Typography variant="h6">Share your thoughts</Typography>
         <TextField
           value={formValues.review}
           onChange={onChange}
@@ -107,8 +115,12 @@ const Review = ({
           label="Write a Review"
           helperText={(
             <>
-              <Typography variant="caption" color="primary">Required</Typography>
-              <Typography variant="caption" className={classes.remaining}>{`${500 - formValues.review.length} characters remaining`}</Typography>
+              <Typography variant="caption" color="primary">
+                Required
+              </Typography>
+              <Typography variant="caption" className={classes.remaining}>
+                {`${500 - formValues.review.length} characters remaining`}
+              </Typography>
             </>
           )}
           name="review"
@@ -119,42 +131,38 @@ const Review = ({
         />
         <FormControlLabel
           className={classes.checkbox}
-          control={(
-            <Checkbox
-              name="anon"
-              color="primary"
-              onChange={onChange}
-            />
-          )}
+          control={<Checkbox name="anon" color="primary" onChange={onChange} />}
           label={(
             <Typography variant="body2">
               Publish my rating and review anonymously.
             </Typography>
           )}
         />
-        <div className={classes.footer}>
+        <div className={cx(classes.footer, overrideClasses.footer)}>
           <Button
             type="submit"
             variant="contained"
             color="secondary"
-            className={classes.submitButton}
+            className={cx(classes.submitButton, overrideClasses.submitButton)}
             fullWidth={!matches}
             onClick={onFormSubmit}
-            disabled={!validateForm()}
+            disabled={!validateForm() || disableSubmit()}
             disableElevation
           >
-            Next
+            {submitLabel}
           </Button>
-          <Button
-            type="cancel"
-            variant="outlined"
-            color="secondary"
-            fullWidth={!matches}
-            onClick={onBack}
-            disableElevation
-          >
-            Back
-          </Button>
+          {showBack && (
+            <Button
+              type="cancel"
+              variant="outlined"
+              color="secondary"
+              fullWidth={!matches}
+              onClick={onBack}
+              disableElevation
+            >
+              Back
+            </Button>
+          )}
         </div>
       </form>
     </>
@@ -163,13 +171,28 @@ const Review = ({
 
 Review.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  onBack: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
   onNext: PropTypes.func.isRequired,
   addSpaceProps: PropTypes.shape(addSpacePropTypes),
+  title: PropTypes.func,
+  showBack: PropTypes.bool,
+  submitLabel: PropTypes.string,
+  disableSubmit: PropTypes.func,
+  overrideClasses: PropTypes.shape({}),
 };
 
 Review.defaultProps = {
   addSpaceProps: {},
+  title: (matches) => (
+    <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
+      Rate and review this space. You can rate and review anonymously.
+    </Typography>
+  ),
+  showBack: true,
+  onBack: () => {},
+  submitLabel: 'Next',
+  disableSubmit: () => false,
+  overrideClasses: {},
 };
 
 export default withStyles(styles)(Review);

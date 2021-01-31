@@ -6,6 +6,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Home from './Home';
 import Search from './Search';
 import AddSpace from './AddSpace';
+import AddReview from './AddReview';
 
 const routes = [{
   label: 'Home',
@@ -22,14 +23,6 @@ const routes = [{
   icon: SearchIcon,
   enforceLogin: false,
 }, {
-  label: 'Add a space',
-  path: '/space/new',
-  content: AddSpace,
-  key: 'addSpace',
-  icon: AddCircleOutlineIcon,
-  // todo: change this
-  enforceLogin: false,
-}, {
   label: 'Profile',
   path: '/profile',
   // todo: change this/
@@ -40,4 +33,25 @@ const routes = [{
   enforceLogin: false,
 }];
 
+const spaceRoutes = [{
+  label: 'Add Review',
+  path: '/:spaceId/reviews/new',
+  // todo: change this/
+  content: AddReview,
+  key: 'addReview',
+  // todo: change this
+  enforceLogin: false,
+  skipAppBar: true,
+  exact: false,
+}, {
+  label: 'Add a space',
+  path: '/new',
+  content: AddSpace,
+  key: 'addSpace',
+  icon: AddCircleOutlineIcon,
+  // todo: change this
+  enforceLogin: false,
+}];
+
 export default routes;
+export { spaceRoutes };
