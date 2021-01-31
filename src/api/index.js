@@ -1,4 +1,9 @@
 import getSearchResults from './search';
+import getSpace from './space';
+import postReview from './review';
 
-// eslint-disable-next-line import/prefer-default-export
-export { getSearchResults };
+export {
+  getSearchResults,
+  getSpace,
+  postReview,
+};

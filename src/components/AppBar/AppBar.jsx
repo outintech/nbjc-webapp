@@ -47,7 +47,7 @@ const AppBar = ({
   isLoggedIn, selected, classes, routes,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const pageTitle = routes.find((item) => item.key === selected).label;
+  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const history = useHistory();
 
   const showDrawerItems = () => (
@@ -118,7 +118,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile']),
+  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview']),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
