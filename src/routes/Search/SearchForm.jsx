@@ -87,8 +87,9 @@ const SearchForm = ({
       && formValues.category.length === 0
     ) {
       setShowError(true);
+    } else {
+      onSearch(formValues);
     }
-    onSearch(formValues);
   };
 
   const filters = {
