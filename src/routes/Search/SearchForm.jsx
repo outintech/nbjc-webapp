@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -8,15 +8,18 @@ import {
   Typography,
   InputLabel,
 } from '@material-ui/core';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withStyles } from '@material-ui/core/styles';
 
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 
-import { searchProps } from '../../types';
+import { searchProps, chipType } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
 import FilterDialog from '../../components/FilterDialog';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
+import { getCategories } from '../../api';
 
 const styles = (theme) => ({
   form: {
@@ -45,13 +48,14 @@ const SearchForm = ({
   onSearch,
   onFilterApplied,
   searchCriteria,
+  chips,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
     name: '',
     location: '',
-    category: '',
-    indicators: searchCriteria.chips.map((chip) => ({
+    category: {},
+    indicators: chips.map((chip) => ({
       ...chip,
       isSelected: false,
     })),
@@ -59,6 +63,30 @@ const SearchForm = ({
 
   const [openFilter, setOpenFilter] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [categoryText, setCategoryText] = useState('');
+  const [categories, setCategories] = useState([]);
+
+  const onCategoryTextChange = (e) => {
+    setCategoryText(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getCategories({ searchTerm: categoryText });
+      setCategories(result);
+    };
+    fetchData();
+  }, [categoryText]);
+
+  const onCategoryChange = (e, value) => {
+    if (value === null) {
+      setCategoryText('');
+    }
+    setFormValues({
+      ...formValues,
+      category: value,
+    });
+  };
 
   const handleChange = (e) => {
     setFormValues({
@@ -103,8 +131,6 @@ const SearchForm = ({
     onFilterApplied('price', changedFilters.price);
     onFilterApplied('rating', changedFilters.stars);
   };
-
-  const { chips } = searchCriteria;
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
@@ -150,18 +176,29 @@ const SearchForm = ({
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What type of Space are you looking for? </Typography>
         </InputLabel>
-        <TextField
-          type="text"
-          variant="outlined"
-          fullWidth={!matches}
-          style={{ margin: '8px 0px' }}
-          value={formValues.category}
-          onChange={handleChange}
-          placeholder="Space Category"
-          helperText="Optional"
-          name="category"
-          autoFocus
+        <Autocomplete
+          getOptionSelected={(option, value) => option.title === value.title}
+          getOptionLabel={(option) => option.title}
+          options={categories}
+          style={{ width: 300 }}
+          onChange={onCategoryChange}
+          renderInput={(params) => (
+            <TextField
+              type="text"
+              variant="outlined"
+              style={{ margin: '8px 0px' }}
+              value={categoryText}
+              onChange={onCategoryTextChange}
+              placeholder="Space Category"
+              helperText="Optional"
+              name="category"
+              autoFocus
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...params}
+            />
+          )}
         />
+
         <div className={classes.filterWrapper}>
           { false
             && (
@@ -215,6 +252,7 @@ SearchForm.propTypes = {
   onSearch: PropTypes.func.isRequired,
   onFilterApplied: PropTypes.func.isRequired,
   searchCriteria: PropTypes.shape(searchProps).isRequired,
+  chips: PropTypes.arrayOf(PropTypes.shape(chipType)).isRequired,
 };
 
 SearchForm.defaultProps = {};

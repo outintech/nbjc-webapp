@@ -25,7 +25,7 @@ const IndicatorProvider = ({ children }) => {
   }, []);
   return (
     <IndicatorContext.Provider
-      value={{ indicators, indicatorLoading: promiseInProgress }}
+      value={{ indicators, indicatorLoading: promiseInProgress, indicatorCount: indicators.length }}
     >
       {children}
     </IndicatorContext.Provider>

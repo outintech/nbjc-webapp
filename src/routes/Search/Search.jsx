@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
@@ -12,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
-import { IndicatorContext } from '../../providers/IndicatorContext';
+import { getAllIndicators } from '../../api';
 
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
@@ -60,16 +61,29 @@ const styles = (theme) => ({
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const { indicators, indicatorLoading } = useContext(IndicatorContext);
+  const [indicators, setIndicators] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getAllIndicators();
+      setIndicators(data);
+    }
+    try {
+      fetchData();
+    } catch (err) {
+      // todo: retry?
+      console.log(err);
+    }
+  }, []);
+
   const {
     updateSearch,
     search,
     searchResults,
     loading,
   } = useSearch({ useLocation: coords, indicators });
-
   const onSearchSubmit = async (searchTerm) => {
-    updateSearch('searchTerm', searchTerm);
+    updateSearch(searchTerm);
   };
 
   const onFilterApplied = (filter, value) => {
@@ -77,7 +91,7 @@ const Search = ({ classes, coords }) => {
   };
   return (
     <div className={classes.content}>
-      {!indicatorLoading && (
+      {indicators.length > 0 && searchResults.length < 1 && (
         <SearchForm
           chips={indicators}
           onSearch={onSearchSubmit}
@@ -133,7 +147,7 @@ const Search = ({ classes, coords }) => {
               </div>
             </div>
           )}
-        {loading && <CircularProgress color="secondary" />}
+        {(loading || indicators.length < 1) && <CircularProgress color="secondary" />}
       </div>
     </div>
   );

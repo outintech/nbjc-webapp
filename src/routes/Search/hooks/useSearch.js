@@ -8,6 +8,7 @@ import utils from '../../../utils';
 
 const getSearchCriteria = (query) => ({
   searchTerm: query.get('searchTerm'),
+  category: query.get('category'),
   distance: parseInt(query.get('distance'), 10) || 0,
   rating: parseFloat(query.get('rating')) || 0,
   price: parseInt(query.get('price'), 10) || 0,
@@ -59,23 +60,23 @@ const useSearch = ({ indicators }) => {
     }
   }, [search]);
 
-  const updateSearch = (criteria, value) => {
-    if (criteria === 'indicators') {
-      if (searchCriteria.indicators.includes(value)) {
-        query.delete('indicators');
-        searchCriteria.indicators.forEach((indicator) => {
-          if (indicator !== value) {
-            query.append('indicators', indicator);
-          }
-        });
-      } else {
-        query.append(criteria, value);
-      }
-    } else if (!value) {
-      query.delete(criteria);
-    } else {
-      query.set(criteria, value);
+  const updateSearch = (searchData) => {
+    const { name, category, indicators: searchIndicators } = searchData;
+    if (name) {
+      query.set('searchTerm', name);
     }
+    if (category) {
+      query.set('category', category);
+    }
+    query.delete('indicators');
+    if (searchIndicators) {
+      searchIndicators.forEach((indicator) => {
+        if (indicator.isSelected) {
+          query.append('indicators', indicator.value);
+        }
+      });
+    }
+
     history.push({ pathname: '/search', search: query.toString() });
     const updatedSearchCritera = getSearchCriteria(query);
     setSearch({
