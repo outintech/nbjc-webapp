@@ -76,8 +76,6 @@ const useSearch = () => {
           fetchData(),
         );
       } catch (e) {
-        // todo: how do we monitor?
-        console.log(e);
         setSearchResults([]);
       }
     } else {

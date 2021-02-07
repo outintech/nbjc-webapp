@@ -13,27 +13,48 @@ const postReview = async (reviewOpts) => {
   url.pathname = `/api/v1/spaces/${reviewOpts.spaceId}/reviews`;
   const data = {
     rating: reviewOpts.rating,
-    review: reviewOpts.detail,
+    content: reviewOpts.detail,
     anonymous: reviewOpts.anonymous,
+    // todo: add actual user id
+    user_id: 1,
+    space_id: reviewOpts.spaceId,
   };
 
-  try {
-    const results = await fetch(url, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      body: JSON.stringify(data),
-    });
-    return results.json();
-  } catch (err) {
-    // todo: during integration remove this to let the caller
-    // deal with the error.
-    console.log(err);
-    return Promise.resolve({});
-  }
+  const results = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      // todo: add actual user token.
+      Authorization: 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjE3NjcyMjIzfQ.fLtzvF_gYMb_59SV_rDOE3qMqR_RLSvjdXTC_hXPqUs',
+    },
+    redirect: 'follow',
+    body: JSON.stringify(data),
+  });
+  return results.json();
 };
 
-export default postReview;
+/**
+ * Get a user's review for a space
+ * @param {Object} reviewOpts
+ * @param {number} reviewsOpts.spaceId - id for the space to retrieve the user
+ * @param {number} reviewOpts.userId - id of the user
+ * @returns {Promise}
+*/
+const getReviewForSpaceAndUser = async (reviewOpts) => {
+  const url = new URL(process.env.REACT_APP_API_HOST);
+  url.pathname = `/api/v1/spaces/${reviewOpts.spaceId}/reviews`;
+  url.searchParams.append('user_id', reviewOpts.userId);
+  const results = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
+  return results.json();
+};
+
+export { postReview, getReviewForSpaceAndUser };
