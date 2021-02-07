@@ -19,7 +19,7 @@ import { searchProps, chipType } from '../../types';
 import ChipFilters from '../../components/ChipFilters';
 import FilterDialog from '../../components/FilterDialog';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
-import { getCategories } from '../../api';
+import { getCategories, getSpacesByName } from '../../api';
 
 const styles = (theme) => ({
   form: {
@@ -63,6 +63,32 @@ const SearchForm = ({
 
   const [openFilter, setOpenFilter] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  /** Start Name Autocomplete */
+  const [nameText, setNameText] = useState('');
+  const [spaceNames, setSpaceNames] = useState([]);
+  const onNameTextChange = (e) => {
+    setNameText(e.target.value);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getSpacesByName({ name: nameText });
+      setSpaceNames(result);
+    };
+    fetchData();
+  }, [nameText]);
+  const onNameChange = (e, value) => {
+    if (value === null) {
+      setNameText('');
+    }
+    setFormValues({
+      ...formValues,
+      name: value,
+    });
+  };
+  /** End Name Autocomplete */
+
+  /** Start Category Autocomplete */
   const [categoryText, setCategoryText] = useState('');
   const [categories, setCategories] = useState([]);
 
@@ -87,7 +113,7 @@ const SearchForm = ({
       category: value,
     });
   };
-
+  /** End Category Autocomplete */
   const handleChange = (e) => {
     setFormValues({
       ...formValues,
@@ -146,17 +172,27 @@ const SearchForm = ({
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What&apos;s the space?</Typography>
         </InputLabel>
-        <TextField
-          type="input"
-          variant="outlined"
-          fullWidth={!matches}
-          style={{ margin: '8px 0px' }}
-          value={formValues.name}
-          onChange={handleChange}
-          placeholder="Name of the space"
-          helperText="Optional"
-          name="name"
-          autoFocus
+        <Autocomplete
+          getOptionSelected={(option, value) => option.name === value.name}
+          getOptionLabel={(option) => option.name}
+          options={spaceNames}
+          style={{ width: 300 }}
+          onChange={onNameChange}
+          renderInput={(params) => (
+            <TextField
+              type="text"
+              variant="outlined"
+              style={{ margin: '8px 0px' }}
+              value={nameText}
+              onChange={onNameTextChange}
+              placeholder="Space Name"
+              helperText="Optional"
+              name="name"
+              autoFocus
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...params}
+            />
+          )}
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">Where are you looking?</Typography>

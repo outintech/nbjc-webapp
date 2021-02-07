@@ -1,7 +1,7 @@
 import getAllIndicators from './indicators';
 import getCategories from './categories';
 import getSearchResults from './search';
-import getSpace from './space';
+import { getSpace, getSpacesByName } from './space';
 import postReview from './review';
 
 export {
@@ -9,5 +9,6 @@ export {
   getSearchResults,
   getAllIndicators,
   getSpace,
+  getSpacesByName,
   postReview,
 };
