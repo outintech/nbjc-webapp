@@ -25,10 +25,12 @@ const styles = (theme) => ({
   form: {
     margin: '10px 0px',
   },
-  filterWrapper: {
-    display: 'flex',
+  autocompleteField: {
+    [theme.breakpoints.up('xs')]: {
+      width: '100%',
+    },
     [theme.breakpoints.up('mobile')]: {
-      flexWrap: 'wrap',
+      width: 326,
     },
   },
   filterButton: {
@@ -39,6 +41,17 @@ const styles = (theme) => ({
       width: '100%',
       marginBottom: 40,
       marginTop: 10,
+    },
+  },
+  submitButtonWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 60,
+    width: '100%',
+  },
+  submitButton: {
+    [theme.breakpoints.up('mobile')]: {
+      width: 250,
     },
   },
 });
@@ -52,9 +65,9 @@ const SearchForm = ({
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
-    name: '',
+    name: undefined,
     location: '',
-    category: {},
+    category: undefined,
     indicators: chips.map((chip) => ({
       ...chip,
       isSelected: false,
@@ -136,9 +149,9 @@ const SearchForm = ({
   const onSearchSubmit = (e) => {
     e.preventDefault();
     if (
-      formValues.name.length === 0
-      && formValues.location.length === 0
-      && formValues.category.length === 0
+      !formValues.name
+      && !formValues.location
+      && !formValues.category
     ) {
       setShowError(true);
     } else {
@@ -176,7 +189,7 @@ const SearchForm = ({
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => option.name}
           options={spaceNames}
-          style={{ width: 300 }}
+          className={classes.autocompleteField}
           onChange={onNameChange}
           renderInput={(params) => (
             <TextField
@@ -216,7 +229,7 @@ const SearchForm = ({
           getOptionSelected={(option, value) => option.title === value.title}
           getOptionLabel={(option) => option.title}
           options={categories}
-          style={{ width: 300 }}
+          className={classes.autocompleteField}
           onChange={onCategoryChange}
           renderInput={(params) => (
             <TextField
@@ -262,16 +275,20 @@ const SearchForm = ({
             onChipSelected={(i) => handleIndicatorSelect(chips[i].value)}
           />
         </div>
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          fullWidth={!matches}
-          data-testid="search-searchform-submit"
-          disableElevation
-        >
-          Search
-        </Button>
+        <div className={classes.submitButtonWrapper}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            fullWidth={!matches}
+            data-testid="search-searchform-submit"
+            className={classes.submitButton}
+            align="center"
+            disableElevation
+          >
+            Search
+          </Button>
+        </div>
       </form>
       <ErrorSnackbar
         snackbarOpen={showError}
