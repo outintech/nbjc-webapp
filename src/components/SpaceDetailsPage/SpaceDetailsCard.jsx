@@ -155,7 +155,7 @@ const SpaceDetailCard = ({
         <Divider />
         { /*  TODO:  ADD FEATURED REVIEW COMPONENT */}
         <Typography variant="body1">Featured Reviews</Typography>
-        <Button color="primary" href={`/spaces/${id}/review/new`}>Write a review</Button>
+        <Button color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Space Address</Typography>
         <div className={classes.location}>
