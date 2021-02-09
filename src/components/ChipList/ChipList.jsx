@@ -16,6 +16,7 @@ const styles = {
 };
 
 const ChipList = ({ chips, classes }) => {
+  console.log(chips);
   const parentRef = useRef();
   const [moreChips, setMoreChips] = useState(0);
   const inViewList = [];

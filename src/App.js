@@ -40,7 +40,7 @@ function Spaces() {
 
 function App() {
   console.log([...routes, ...spaceRoutes].filter((r) => !r.skipAppBar));
-  const spaceKeys = ['addSpace', 'addReview'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails'];
   return (
     <>
       <Router>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+// import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
 // import { spaceProps } from '../../types';
@@ -40,6 +40,12 @@ const styles = (theme) => ({
   headerAction: {
     margin: '0 !important',
   },
+  card: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    padding: '30px',
+    marginLeft: '30px',
+  },
   cardMedia: {
     margin: 'auto',
     [theme.breakpoints.up('xs')]: {
@@ -51,7 +57,7 @@ const styles = (theme) => ({
       height: 222,
     },
   },
-  // todo: this needs to be a hyrperlink
+  // todo: this needs to be a hyperlink
   location: {
     display: 'flex',
     'flex-direction': 'row',
@@ -67,12 +73,16 @@ const styles = (theme) => ({
   address: {
     marginRight: 30,
     flexGrow: 1,
+    textAlign: 'left',
+    fontStyle: 'italic',
+    color: 'black',
   },
   chipWrapper: {
     'margin-top': '15px',
   },
   filter: {
     margin: '15px 20px 15px 0',
+    // fontStyle: 'italic', TODO: make italic
   },
   footer: {
     marginTop: 30,
@@ -80,62 +90,97 @@ const styles = (theme) => ({
   shareButton: {
     float: 'right',
   },
+  h6: {
+    fontStyle: 'italic',
+  },
+  subtitles: {
+    fontSize: 12,
+    textTransform: 'uppercase',
+    textAlign: 'left',
+    color: 'grey',
+  },
+  mainInformation: {
+    fontStyle: 'italic',
+    color: 'black',
+  },
 });
 
 const SpaceDetailCard = ({
   id,
   name,
-  // category,
-  // averageRating,
-  // imageUrl,
-  // address,
+  category,
+  averageRating,
+  imageUrl,
+  address,
   // distance,
+  hoursOfOperation,
   filters,
   phoneNumber,
   url,
   classes,
   overrideClasses,
-}) => (
-  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
-    <CardHeader
-      avatar={(
-        <div color="secondary">
-          <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
-          <Typography
-            variant="caption"
-            color="secondary"
-            className={classes.rating}
-            align="center"
-          >
-            {/* {averageRating} */}
-          </Typography>
+}) => {
+  useEffect(() => {
+    console.log(id, name, category);
+  }, []);
+  return (
+    <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
+      <CardHeader
+        avatar={(
+          <div color="secondary">
+            <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
+            <Typography
+              variant="caption"
+              color="secondary"
+              className={classes.rating}
+              align="center"
+            >
+              {averageRating}
+            </Typography>
+          </div>
+        )}
+        // action={<BookmarkBorderIcon color="secondary" />}
+        title={<Typography variant="h6" className={classes.h6}>{name}</Typography>}
+        subheader={<Typography variant="body2">{category}</Typography>}
+        classes={{ action: classes.headerAction }}
+      />
+      <CardMedia
+        image={imageUrl}
+        className={classes.cardMedia}
+      />
+      <CardContent>
+        <div className={classes.chipWrapper}>
+          <ChipList chips={filters} />
         </div>
-      )}
-      action={<BookmarkBorderIcon color="secondary" />}
-      title={<Typography variant="h6">{name}</Typography>}
-    //   subheader={<Typography variant="body2">{category}</Typography>}
-      classes={{ action: classes.headerAction }}
-    />
-    <CardMedia
-    //   image={imageUrl}
-      className={classes.cardMedia}
-    />
-    <CardContent>
-      <div className={classes.location}>
-        <div className={classes.address}>
-          {/* <Typography variant="body1">{address}</Typography> */}
-        </div>
-        <div className={classes.distance}>
-          {/* <Typography variant="body1">{distance}</Typography> */}
-        </div>
-      </div>
-      <Divider />
-      <div className={classes.chipWrapper}>
-        <ChipList chips={filters} />
-      </div>
-      <div className={classes.footer}>
-        <Button color="primary" href={`tel:${phoneNumber}`}>Call Space</Button>
+        <Divider />
+        { /*  TODO:  ADD FEATURED REVIEW COMPONENT */}
+        <Typography variant="body1">Featured Reviews</Typography>
         <Button color="primary" href={`/spaces/${id}/review/new`}>Write a review</Button>
+        <Divider />
+        <Typography variant="body1" className={classes.subtitles}>Space Address</Typography>
+        <div className={classes.location}>
+          <div className={classes.address}>
+            <Typography variant="body1">{address.address_1}</Typography>
+            <Typography variant="body1">{address.address_2}</Typography>
+            <Typography variant="body1">{address.city}</Typography>
+            <Typography variant="body1">{address.postal_code}</Typography>
+            <Typography variant="body1">{address.country}</Typography>
+          </div>
+          <div className={classes.distance}>
+            <Typography variant="body1">TBD: distance</Typography>
+          </div>
+        </div>
+        <Divider />
+        <Typography variant="body1" className={classes.subtitles}>Phone Number</Typography>
+        <Button color="primary" href={`tel:${phoneNumber}`}>{phoneNumber}</Button>
+        <Divider />
+        <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
+        <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
+        <Divider />
+        <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
+        <Typography variant="body1" className={classes.mainInformation}>{hoursOfOperation.open[0].day}</Typography>
+        <Divider />
+        <Typography variant="body1" className={classes.subtitles}>Share</Typography>
         <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
           <a href={url} target="_blank" rel="noreferrer">
             <ShareIcon
@@ -144,10 +189,11 @@ const SpaceDetailCard = ({
             />
           </a>
         </Button>
-      </div>
-    </CardContent>
-  </Card>
-);
+        <Typography variant="body1" className={classes.mainInformation}>Share this Space with your network</Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 SpaceDetailCard.propTypes = {
   id: PropTypes.string.isRequired,

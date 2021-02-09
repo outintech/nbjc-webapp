@@ -118,7 +118,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetailsPage']),
+  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetails']),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
