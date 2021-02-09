@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import StarIcon from '@material-ui/icons/Star';
@@ -11,64 +11,94 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 import StarRating from '../StarRating';
+import SpaceDetailsCard from './SpaceDetailsCard';
 
-const styles = {};
+const styles = {
+
+};
 
 const SpaceDetailsPage = ({
   classes,
   name,
   category,
   averageRating,
-}) => (
-  <FormGroup>
-    <h1> Rate and review this space.</h1>
-    <h1> You can rate and review anonymously.</h1>
-    <div
-      aria-label="Name of Space"
-      avatar={(
-        <div color="secondary">
-          <StarIcon color="secondary" fontSize="large" />
-          <Typography
-            variant="body2"
-            color="secondary"
-            className={classes.rating}
-          >
-            {averageRating}
-          </Typography>
-        </div>
-    )}
-      title={<Typography variant="h6">{name}</Typography>}
-      subheader={<Typography variant="body2">{category}</Typography>}
-    />
+  space,
+}) => {
+  const [cardData, setCardData] = useState({});
 
-    <p>Rate this space.</p>
-    <StarRating />
+  useEffect(() => {
+    setCardData(space);
+  }, [space]);
 
-    <p>Share your thoughts</p>
-    <TextField
-      id="outlined-multiline-static"
-      label="Write Review"
-      multiline
-      placeholder="Write Your Review Here"
-      variant="outlined"
-      required
-    />
+  return (
+    <>
+      { cardData
+        && (
+          <div>
+            <SpaceDetailsCard
+              name={cardData.name}
+              id={cardData.id}
+              phoneNumber={cardData.phone}
+              filters={cardData.filters}
+              url={cardData.url}
+            />
+          </div>
+        )}
+      <FormGroup>
+        <h1> Rate and review this space.</h1>
+        <h1> You can rate and review anonymously.</h1>
+        <div
+          aria-label="Name of Space"
+          avatar={(
+            <div color="secondary">
+              <StarIcon color="secondary" fontSize="large" />
+              <Typography
+                variant="body2"
+                color="secondary"
+                className={classes.rating}
+              >
+                {averageRating}
+              </Typography>
+            </div>
+          )}
+          title={<Typography variant="h6">{name}</Typography>}
+          subheader={<Typography variant="body2">{category}</Typography>}
+        />
 
-    <FormControlLabel
-      control={<Checkbox name="publish" />}
-      label="Publish my rating and review anonymously."
-    />
+        <p>Rate this space.</p>
+        <StarRating />
 
-    <Button color="secondary">Submit</Button>
-  </FormGroup>
-);
+        <p>Share your thoughts</p>
+        <TextField
+          id="outlined-multiline-static"
+          label="Write Review"
+          multiline
+          placeholder="Write Your Review Here"
+          variant="outlined"
+          required
+        />
 
+        <FormControlLabel
+          control={<Checkbox name="publish" />}
+          label="Publish my rating and review anonymously."
+        />
+
+        <Button color="secondary">Submit</Button>
+      </FormGroup>
+    </>
+  );
+};
+
+// TODO: fix warnings and add reqiured propTypes
 SpaceDetailsPage.propTypes = {
   name: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   averageRating: PropTypes.string.isRequired,
+  space: PropTypes.shape({}).isRequired,
 };
 
-SpaceDetailsPage.defaultProps = {};
+SpaceDetailsPage.defaultProps = {
+
+};
 
 export default withStyles(styles)(SpaceDetailsPage);
