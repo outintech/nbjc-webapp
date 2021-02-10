@@ -4,7 +4,7 @@ import React, { createContext, useState } from 'react';
 export const NameContext = createContext();
 
 const NameContextProvider = (props) => {
-  const [spaceTitle, setSpaceTitle] = useState('');
+  const [spaceTitle, setSpaceTitle] = useState();
 
   return (
     <NameContext.Provider value={{ spaceTitle, setSpaceTitle }}>

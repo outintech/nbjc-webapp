@@ -8,6 +8,7 @@ import Search from './Search';
 import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
+import Reviews from './Reviews';
 
 const routes = [{
   label: 'Home',
@@ -59,7 +60,16 @@ const spaceRoutes = [{
   key: 'spaceDetails',
   skipAppBar: true,
   enforceLogin: false,
-  // exact: true,
+  /* TODO: check on this
+   exact: true */
+},
+{
+  label: 'Reviews',
+  path: '/:spaceId/reviews',
+  content: Reviews,
+  key: 'Reviews',
+  skipAppBar: true,
+  enforceLogin: false,
 },
 ];
 
