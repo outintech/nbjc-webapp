@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+
+import { NameContext } from '../../context/NameContext';
 
 const styles = (theme) => ({
   root: {
@@ -48,6 +50,7 @@ const AppBar = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
+  const { spaceTitle } = useContext(NameContext);
   const history = useHistory();
 
   const showDrawerItems = () => (
@@ -98,7 +101,8 @@ const AppBar = ({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" data-testid="appbar-title">
-            {pageTitle}
+            {/* {pageTitle} */}
+            {pageTitle || spaceTitle}
           </Typography>
         </Toolbar>
       </MaterialAppBar>

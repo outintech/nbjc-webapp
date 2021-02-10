@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { getSpace } from '../../api';
 
 import SpaceDetailsPage from '../../components/SpaceDetailsPage';
+import { NameContext } from '../../context/NameContext';
 
 const SpaceDetails = () => {
+  const { setSpaceTitle } = useContext(NameContext);
   const { spaceId } = useParams();
   const [space, setSpace] = useState();
 
@@ -14,6 +17,7 @@ const SpaceDetails = () => {
       // todo: add validation to number.
       const { data } = await getSpace(intId);
       setSpace(data);
+      setSpaceTitle(data.name);
     }
     fetchData();
     // setPageStatus('spaceDetail');
@@ -25,6 +29,10 @@ const SpaceDetails = () => {
       <SpaceDetailsPage space={space} />
     </>
   );
+};
+
+SpaceDetails.props = {
+  space: PropTypes.shape({}),
 };
 
 export default SpaceDetails;
