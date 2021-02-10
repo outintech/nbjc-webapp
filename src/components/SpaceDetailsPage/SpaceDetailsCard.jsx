@@ -11,8 +11,10 @@ import {
   CardContent,
   Divider,
   Typography,
+  IconButton,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 // import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
@@ -93,6 +95,10 @@ const styles = (theme) => ({
   footer: {
     marginTop: 30,
   },
+  nextButton: {
+    float: 'right',
+    padding: 0,
+  },
   shareButton: {
     float: 'right',
   },
@@ -105,6 +111,9 @@ const styles = (theme) => ({
   },
   mainInformation: {
     color: 'black',
+  },
+  hoursOfOperation: {
+    display: 'flex',
   },
 });
 
@@ -182,14 +191,27 @@ const SpaceDetailCard = ({
         <Button color="primary" href={`tel:${phoneNumber}`}>{phoneNumber}</Button>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
+        {/* TODO:  fix size of navigate next icon */}
         <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
+        {/* TODO:  fix placement of navigate next icon */}
+        <IconButton component="span" className={classes.nextButton} color="secondary" aria-label="hours of operation on yelp">
+          <a
+            variant="body1"
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <NavigateNextIcon color="primary" />
+          </a>
+        </IconButton>
         <Typography variant="body1" className={classes.mainInformation}>
-          { hoursOfOperation
+          {hoursOfOperation
             ? 'Open Now'
             : 'Closed'}
         </Typography>
+
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Share</Typography>
         <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>

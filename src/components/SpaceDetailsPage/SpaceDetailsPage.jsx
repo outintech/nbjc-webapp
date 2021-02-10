@@ -18,7 +18,7 @@ const SpaceDetailsPage = ({
   space,
 }) => {
   const [cardData, setCardData] = useState();
-  // const [hoursOfOperation, setHoursOfOperation] = useState();
+  const [hoursOfOperation, setHoursOfOperation] = useState();
   // const [isOpen, setIsOpen] = useState();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const SpaceDetailsPage = ({
 
   useEffect(() => {
     if (cardData) {
-      utils.formatHoursOfOperation(cardData.hours_of_op);
+      setHoursOfOperation(utils.formatHoursOfOperation(cardData.hours_of_op));
     }
   }, [cardData]);
 
@@ -46,7 +46,7 @@ const SpaceDetailsPage = ({
               address={cardData.address}
               averageRating="4.5"
               category="coffee"
-              hoursOfOperation="true"
+              hoursOfOperation={hoursOfOperation}
             />
           </div>
         )}
