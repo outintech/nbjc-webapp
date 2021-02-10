@@ -43,8 +43,8 @@ const styles = (theme) => ({
   card: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: '30px',
-    marginLeft: '30px',
+    padding: '15px',
+    margin: '30px',
   },
   cardMedia: {
     margin: 'auto',
@@ -57,15 +57,23 @@ const styles = (theme) => ({
       height: 222,
     },
   },
+  featuredReview: {
+    margin: '20px',
+    textAlign: 'center',
+  },
+  reviewButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '30px',
+  },
   // todo: this needs to be a hyperlink
   location: {
     display: 'flex',
     'flex-direction': 'row',
     marginBottom: 15,
     color: 'rgba(0, 0, 0, 0.6)',
-    textDecorationLine: 'underline',
   },
-
   distance: {
     textAlign: 'right',
     flexGrow: 2,
@@ -74,7 +82,6 @@ const styles = (theme) => ({
     marginRight: 30,
     flexGrow: 1,
     textAlign: 'left',
-    fontStyle: 'italic',
     color: 'black',
   },
   chipWrapper: {
@@ -82,7 +89,6 @@ const styles = (theme) => ({
   },
   filter: {
     margin: '15px 20px 15px 0',
-    // fontStyle: 'italic', TODO: make italic
   },
   footer: {
     marginTop: 30,
@@ -90,17 +96,14 @@ const styles = (theme) => ({
   shareButton: {
     float: 'right',
   },
-  h6: {
-    fontStyle: 'italic',
-  },
   subtitles: {
     fontSize: 12,
     textTransform: 'uppercase',
     textAlign: 'left',
     color: 'grey',
+    marginTop: '10px',
   },
   mainInformation: {
-    fontStyle: 'italic',
     color: 'black',
   },
 });
@@ -121,7 +124,7 @@ const SpaceDetailCard = ({
   overrideClasses,
 }) => {
   useEffect(() => {
-    console.log(id, name, category);
+    console.log(id, name, category, hoursOfOperation);
   }, []);
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
@@ -139,7 +142,6 @@ const SpaceDetailCard = ({
             </Typography>
           </div>
         )}
-        // action={<BookmarkBorderIcon color="secondary" />}
         title={<Typography variant="h6" className={classes.h6}>{name}</Typography>}
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
@@ -153,9 +155,14 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        { /*  TODO:  ADD FEATURED REVIEW COMPONENT */}
-        <Typography variant="body1">Featured Reviews</Typography>
-        <Button color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
+        <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
+        <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
+        { /*  TODO:  Conditional logic for if there are reviews or not */}
+        {/* <Button variant="outlined"
+          color="primary" href={`/spaces/${id}/reviews/`}> See All </Button> */}
+        <div className={classes.reviewButton}>
+          <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
+        </div>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Space Address</Typography>
         <div className={classes.location}>
@@ -178,7 +185,11 @@ const SpaceDetailCard = ({
         <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
-        <Typography variant="body1" className={classes.mainInformation}>{hoursOfOperation.open[0].day}</Typography>
+        <Typography variant="body1" className={classes.mainInformation}>
+          { hoursOfOperation
+            ? 'Open Now'
+            : 'Closed'}
+        </Typography>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Share</Typography>
         <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>

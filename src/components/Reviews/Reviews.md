@@ -1,0 +1,5 @@
+## Reviews
+
+```jsx
+<Reviews />
+```

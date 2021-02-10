@@ -1,3 +1,4 @@
 import formatSearchResults from './formatSearchResults';
+import formatHoursOfOperation from './formatHoursOfOperation';
 
-export default { formatSearchResults };
+export default { formatSearchResults, formatHoursOfOperation };

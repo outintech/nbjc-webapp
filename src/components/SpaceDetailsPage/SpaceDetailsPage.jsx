@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import StarIcon from '@material-ui/icons/Star';
-// import {
-//   Button,
-//   Typography,
-//   Checkbox,
-//   TextField,
-//   FormGroup,
-//   FormControlLabel,
-// } from '@material-ui/core';
-// import StarRating from '../StarRating';
+import utils from '../../utils';
 import SpaceDetailsCard from './SpaceDetailsCard';
 
 const styles = {
@@ -27,10 +18,18 @@ const SpaceDetailsPage = ({
   space,
 }) => {
   const [cardData, setCardData] = useState();
+  // const [hoursOfOperation, setHoursOfOperation] = useState();
+  // const [isOpen, setIsOpen] = useState();
 
   useEffect(() => {
     setCardData(space);
   }, [space]);
+
+  useEffect(() => {
+    if (cardData) {
+      utils.formatHoursOfOperation(cardData.hours_of_op);
+    }
+  }, [cardData]);
 
   return (
     <div>
@@ -47,7 +46,7 @@ const SpaceDetailsPage = ({
               address={cardData.address}
               averageRating="4.5"
               category="coffee"
-              hoursOfOperation={cardData.hours_of_op}
+              hoursOfOperation="true"
             />
           </div>
         )}

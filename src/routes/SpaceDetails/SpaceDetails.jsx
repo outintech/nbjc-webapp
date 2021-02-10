@@ -21,6 +21,7 @@ const SpaceDetails = () => {
 
   return (
     <>
+      {/* TODO: add average Rating & category props & name */}
       <SpaceDetailsPage space={space} />
     </>
   );
