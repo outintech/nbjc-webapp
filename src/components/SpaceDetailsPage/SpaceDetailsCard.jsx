@@ -12,6 +12,8 @@ import {
   Divider,
   Typography,
   IconButton,
+  // Grid,
+  // Paper,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -25,12 +27,6 @@ const styles = (theme) => ({
   root: {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
-    },
-    [theme.breakpoints.up('xs')]: {
-      maxWidth: 344,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      maxWidth: 436,
     },
   },
   starIcon: {
@@ -49,10 +45,10 @@ const styles = (theme) => ({
     margin: '30px',
   },
   cardMedia: {
-    margin: 'auto',
-    [theme.breakpoints.up('xs')]: {
-      width: 344,
-      height: 194,
+    margin: '10px 10px',
+    [theme.breakpoints.up('lg')]: {
+      width: 1045,
+      height: 400,
     },
     [theme.breakpoints.up('mobile')]: {
       width: 436,
@@ -168,13 +164,13 @@ const SpaceDetailCard = ({
         <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
         <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
         { /*  TODO:  Conditional logic for if there are reviews or not  */}
-        <Button
-          variant="outlined"
-          color="primary"
-          href={`/spaces/${id}/reviews/`}
-        >
-          See All
-        </Button>
+        {/* <Button
+            variant="outlined"
+            color="primary"
+            href={`/spaces/${id}/reviews/`}
+          >
+            See All {numberOfReviews}
+          </Button> */}
         <div className={classes.reviewButton}>
           <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
         </div>
@@ -197,9 +193,9 @@ const SpaceDetailCard = ({
         <Button color="primary" href={`tel:${phoneNumber}`}>{phoneNumber}</Button>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
-        { url
+        {url
           ? <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
-          : <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">Link to Yelp</a> }
+          : <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">Link to Yelp</a>}
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
         {/* TODO:  fix placement of navigate next icon */}

@@ -26,7 +26,7 @@ const styles = (theme) => ({
       marginBottom: 20,
     },
     [theme.breakpoints.up('mobile')]: {
-      marginBottom: 80,
+      marginBottom: 20,
     },
   },
   appBar: {
