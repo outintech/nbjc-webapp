@@ -4,8 +4,8 @@ import React, { createContext, useState } from 'react';
 export const NameContext = createContext();
 
 const NameContextProvider = (props) => {
-  const [spaceTitle, setSpaceTitle] = useState(null);
-  const [spaceData, setSpaceData] = useState(null);
+  const [spaceTitle, setSpaceTitle] = useState('fruit');
+  const [spaceData, setSpaceData] = useState();
 
   return (
     <NameContext.Provider

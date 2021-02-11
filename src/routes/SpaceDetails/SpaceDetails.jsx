@@ -17,12 +17,18 @@ const SpaceDetails = () => {
       // todo: add validation to number.
       const { data } = await getSpace(intId);
       setSpace(data);
-      setSpaceData(data);
-      setSpaceTitle(data.name);
     }
     fetchData();
     // setPageStatus('spaceDetail');
   }, [spaceId]);
+
+  // updating the state in name context
+  useEffect(() => {
+    if (space) {
+      setSpaceData(space);
+      setSpaceTitle(space.name);
+    }
+  }, [space]);
 
   return (
     <>

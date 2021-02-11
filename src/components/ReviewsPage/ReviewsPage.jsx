@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
+
+import { NameContext } from '../../context/NameContext';
 
 const styles = (theme) => ({
   root: {
@@ -15,8 +17,15 @@ const styles = (theme) => ({
   },
 });
 
-const ReviewsPage = ({ classes, spaceTitle }) => {
-  console.log('this linter..');
+const ReviewsPage = ({ classes }) => {
+  const { spaceTitle } = useContext(NameContext);
+
+  /* useEffect that spaceTitle changed and resets it */
+
+  useEffect(() => {
+    console.log(spaceTitle, 'spaceTitle');
+  }, [spaceTitle]);
+
   return (
     <main>
       <Grid

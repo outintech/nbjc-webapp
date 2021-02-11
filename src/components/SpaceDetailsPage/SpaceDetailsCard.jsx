@@ -167,14 +167,14 @@ const SpaceDetailCard = ({
         <Divider />
         <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
         <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
-        { /*  TODO:  Conditional logic for if there are reviews or not */}
-        {/* <Button
+        { /*  TODO:  Conditional logic for if there are reviews or not  */}
+        <Button
           variant="outlined"
           color="primary"
           href={`/spaces/${id}/reviews/`}
         >
           See All
-        </Button> */}
+        </Button>
         <div className={classes.reviewButton}>
           <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
         </div>
