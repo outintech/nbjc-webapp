@@ -101,7 +101,6 @@ const AppBar = ({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" data-testid="appbar-title">
-            {/* {pageTitle} */}
             {pageTitle || spaceTitle}
           </Typography>
         </Toolbar>
@@ -122,7 +121,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetails']),
+  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetails', 'reviews']),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,

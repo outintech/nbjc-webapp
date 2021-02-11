@@ -7,7 +7,7 @@ import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
 
 const SpaceDetails = () => {
-  const { setSpaceTitle } = useContext(NameContext);
+  const { setSpaceTitle, setSpaceData } = useContext(NameContext);
   const { spaceId } = useParams();
   const [space, setSpace] = useState();
 
@@ -17,6 +17,7 @@ const SpaceDetails = () => {
       // todo: add validation to number.
       const { data } = await getSpace(intId);
       setSpace(data);
+      setSpaceData(data);
       setSpaceTitle(data.name);
     }
     fetchData();

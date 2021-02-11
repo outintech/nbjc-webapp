@@ -3,7 +3,7 @@
  * and compares them to the current date to
  * determine if the space is open
  *  * @param {Object} hoursOfOperation - From /spaces
- * @returns {Boolean} ?
+ * @returns {Boolean} determines if the space is open or closed
 */
 
 const formatHoursOfOperation = (hoursOfOperation) => {

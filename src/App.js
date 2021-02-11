@@ -13,7 +13,7 @@ import routes, { spaceRoutes } from './routes';
 
 function Spaces() {
   const match = useRouteMatch();
-  const spaceKeys = ['addSpace', 'addReview'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
   return (
     <Switch>
       {spaceRoutes.map((route) => (
@@ -41,11 +41,11 @@ function Spaces() {
 
 function App() {
   console.log([...routes, ...spaceRoutes].filter((r) => !r.skipAppBar));
-  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
   return (
     <>
-      <Router>
-        <NameContextProvider>
+      <NameContextProvider>
+        <Router>
           <ThemeProvider theme={theme}>
             <div className="App">
               <Switch>
@@ -75,8 +75,8 @@ function App() {
               </Switch>
             </div>
           </ThemeProvider>
-        </NameContextProvider>
-      </Router>
+        </Router>
+      </NameContextProvider>
     </>
   );
 }

@@ -130,6 +130,7 @@ const SpaceDetailCard = ({
   phoneNumber,
   url,
   classes,
+  yelpUrl,
   overrideClasses,
 }) => {
   useEffect(() => {
@@ -167,8 +168,13 @@ const SpaceDetailCard = ({
         <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
         <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
         { /*  TODO:  Conditional logic for if there are reviews or not */}
-        {/* <Button variant="outlined"
-          color="primary" href={`/spaces/${id}/reviews/`}> See All </Button> */}
+        {/* <Button
+          variant="outlined"
+          color="primary"
+          href={`/spaces/${id}/reviews/`}
+        >
+          See All
+        </Button> */}
         <div className={classes.reviewButton}>
           <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
         </div>
@@ -191,15 +197,16 @@ const SpaceDetailCard = ({
         <Button color="primary" href={`tel:${phoneNumber}`}>{phoneNumber}</Button>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
-        {/* TODO:  fix size of navigate next icon */}
-        <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
+        { url
+          ? <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
+          : <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">Link to Yelp</a> }
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
         {/* TODO:  fix placement of navigate next icon */}
         <IconButton component="span" className={classes.nextButton} color="secondary" aria-label="hours of operation on yelp">
           <a
             variant="body1"
-            href={url}
+            href={yelpUrl}
             target="_blank"
             rel="noreferrer"
           >
@@ -211,7 +218,6 @@ const SpaceDetailCard = ({
             ? 'Open Now'
             : 'Closed'}
         </Typography>
-
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Share</Typography>
         <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>

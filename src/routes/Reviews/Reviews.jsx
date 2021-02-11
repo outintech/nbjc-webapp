@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+// import { useParams } from 'react-router-dom';
 import ReviewsPage from '../../components/ReviewsPage';
+import { NameContext } from '../../context/NameContext';
 
 const Reviews = () => {
-  console.log('reveiew route');
+  const { spaceTitle } = useContext(NameContext);
+
   return (
     <main>
-      <ReviewsPage />
+      <ReviewsPage spaceTitle={spaceTitle} />
     </main>
   );
 };

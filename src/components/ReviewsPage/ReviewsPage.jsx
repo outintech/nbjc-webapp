@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
-import { NameContext } from '../../context/NameContext';
 
 const styles = (theme) => ({
   root: {
@@ -16,14 +15,8 @@ const styles = (theme) => ({
   },
 });
 
-const ReviewsPage = ({ classes }) => {
-  const { spaceTitle } = useContext(NameContext);
-  const [title, setTitle] = useState();
-
-  useEffect(() => {
-    setTitle(spaceTitle);
-  }, [spaceTitle]);
-
+const ReviewsPage = ({ classes, spaceTitle }) => {
+  console.log('this linter..');
   return (
     <main>
       <Grid
@@ -41,7 +34,7 @@ const ReviewsPage = ({ classes }) => {
             </Typography>
             <Typography variant="body2" align="center">
               Read ratings and reviews for
-              {title}
+              { spaceTitle }
               from The Lavender Book users.
             </Typography>
           </Paper>

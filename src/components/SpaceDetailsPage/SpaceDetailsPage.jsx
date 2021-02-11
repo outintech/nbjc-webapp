@@ -19,7 +19,7 @@ const SpaceDetailsPage = ({
 }) => {
   const [cardData, setCardData] = useState();
   const [hoursOfOperation, setHoursOfOperation] = useState();
-  // const [isOpen, setIsOpen] = useState();
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   useEffect(() => {
     setCardData(space);
@@ -28,6 +28,7 @@ const SpaceDetailsPage = ({
   useEffect(() => {
     if (cardData) {
       setHoursOfOperation(utils.formatHoursOfOperation(cardData.hours_of_op));
+      setPhoneNumber(utils.formatPhoneNumber(cardData.phone));
     }
   }, [cardData]);
 
@@ -39,9 +40,10 @@ const SpaceDetailsPage = ({
             <SpaceDetailsCard
               name={cardData.name}
               id={cardData.id}
-              phoneNumber={cardData.phone}
+              phoneNumber={phoneNumber}
               filters={cardData.indicators}
-              url={cardData.yelp_url}
+              url={cardData.url}
+              yelpUrl={cardData.yelp_url}
               imageUrl={cardData.photos[0].url}
               address={cardData.address}
               averageRating="4.5"

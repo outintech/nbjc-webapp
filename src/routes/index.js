@@ -67,7 +67,7 @@ const spaceRoutes = [{
   label: 'Reviews',
   path: '/:spaceId/reviews',
   content: Reviews,
-  key: 'Reviews',
+  key: 'reviews',
   skipAppBar: true,
   enforceLogin: false,
 },
