@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
@@ -12,12 +12,10 @@ import {
   Divider,
   Typography,
   IconButton,
-  // Grid,
-  // Paper,
+  useMediaQuery,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-// import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ShareIcon from '@material-ui/icons/Share';
 
 // import { spaceProps } from '../../types';
@@ -45,14 +43,13 @@ const styles = (theme) => ({
     margin: '30px',
   },
   cardMedia: {
-    margin: '10px 10px',
     [theme.breakpoints.up('lg')]: {
-      width: 1045,
+      width: '100%',
       height: 400,
     },
     [theme.breakpoints.up('mobile')]: {
-      width: 436,
-      height: 222,
+      width: 300,
+      height: 204,
     },
   },
   featuredReview: {
@@ -87,9 +84,6 @@ const styles = (theme) => ({
   },
   filter: {
     margin: '15px 20px 15px 0',
-  },
-  footer: {
-    marginTop: 30,
   },
   nextButton: {
     float: 'right',
@@ -128,10 +122,11 @@ const SpaceDetailCard = ({
   classes,
   yelpUrl,
   overrideClasses,
+  // type,
+  // eslint-disable-next-line
 }) => {
-  useEffect(() => {
-    console.log(id, name, category, hoursOfOperation);
-  }, []);
+  const matches = useMediaQuery((theme) => (theme.breakpoints.up('lg')));
+
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
       <CardHeader
@@ -152,10 +147,20 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia
-        image={imageUrl}
-        className={classes.cardMedia}
-      />
+      {matches ? (
+        <CardMedia
+          component="img"
+          image={imageUrl}
+          width="100%"
+          className={classes.cardMedia}
+        />
+      ) : (
+        <CardMedia
+          image={imageUrl}
+          component="img"
+          className={classes.cardMedia}
+        />
+      )}
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
@@ -240,11 +245,13 @@ SpaceDetailCard.propTypes = {
     }),
   ).isRequired,
   url: PropTypes.string.isRequired,
+  // type: PropTypes.oneOf(['desktop', 'mobile']),
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };
 
 SpaceDetailCard.defaultProps = {
+  // type: 'mobile',
   overrideClasses: {},
 };
 
