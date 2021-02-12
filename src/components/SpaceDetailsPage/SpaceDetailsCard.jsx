@@ -43,13 +43,13 @@ const styles = (theme) => ({
     margin: '30px',
   },
   cardMedia: {
-    [theme.breakpoints.up('lg')]: {
-      width: '100%',
-      height: 400,
-    },
     [theme.breakpoints.up('mobile')]: {
       width: 300,
       height: 204,
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 1020,
+      height: 400,
     },
   },
   featuredReview: {
@@ -125,7 +125,7 @@ const SpaceDetailCard = ({
   // type,
   // eslint-disable-next-line
 }) => {
-  const matches = useMediaQuery((theme) => (theme.breakpoints.up('lg')));
+  const matches = useMediaQuery((theme) => (theme.breakpoints.up('mobile')));
 
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
@@ -151,7 +151,6 @@ const SpaceDetailCard = ({
         <CardMedia
           component="img"
           image={imageUrl}
-          width="100%"
           className={classes.cardMedia}
         />
       ) : (
