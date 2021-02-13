@@ -12,16 +12,14 @@ import {
   Divider,
   Typography,
   IconButton,
-  useMediaQuery,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ShareIcon from '@material-ui/icons/Share';
 
-// import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
@@ -43,14 +41,8 @@ const styles = (theme) => ({
     margin: '30px',
   },
   cardMedia: {
-    [theme.breakpoints.up('mobile')]: {
-      width: 300,
-      height: 204,
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: 1020,
-      height: 400,
-    },
+    margin: 'auto',
+    height: '300px',
   },
   featuredReview: {
     margin: '20px',
@@ -122,11 +114,8 @@ const SpaceDetailCard = ({
   classes,
   yelpUrl,
   overrideClasses,
-  // type,
   // eslint-disable-next-line
 }) => {
-  const matches = useMediaQuery((theme) => (theme.breakpoints.up('mobile')));
-
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
       <CardHeader
@@ -147,19 +136,11 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      {matches ? (
-        <CardMedia
-          component="img"
-          image={imageUrl}
-          className={classes.cardMedia}
-        />
-      ) : (
-        <CardMedia
-          image={imageUrl}
-          component="img"
-          className={classes.cardMedia}
-        />
-      )}
+      <CardMedia
+        // component="img"
+        image={imageUrl}
+        className={classes.cardMedia}
+      />
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
@@ -203,21 +184,24 @@ const SpaceDetailCard = ({
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
         {/* TODO:  fix placement of navigate next icon */}
-        <IconButton component="span" className={classes.nextButton} color="secondary" aria-label="hours of operation on yelp">
-          <a
-            variant="body1"
-            href={yelpUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <NavigateNextIcon color="primary" />
-          </a>
-        </IconButton>
         <Typography variant="body1" className={classes.mainInformation}>
           {hoursOfOperation
             ? 'Open Now'
             : 'Closed'}
         </Typography>
+        {!hoursOfOperation
+          && (
+            <IconButton component="span" className={classes.nextButton} color="secondary" aria-label="hours of operation on yelp">
+              <a
+                variant="body1"
+                href={yelpUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <NavigateNextIcon color="primary" />
+              </a>
+            </IconButton>
+          )}
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Share</Typography>
         <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
@@ -244,13 +228,11 @@ SpaceDetailCard.propTypes = {
     }),
   ).isRequired,
   url: PropTypes.string.isRequired,
-  // type: PropTypes.oneOf(['desktop', 'mobile']),
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };
 
 SpaceDetailCard.defaultProps = {
-  // type: 'mobile',
   overrideClasses: {},
 };
 
