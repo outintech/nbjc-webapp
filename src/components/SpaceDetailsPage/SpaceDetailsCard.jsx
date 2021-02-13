@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
@@ -114,8 +114,20 @@ const SpaceDetailCard = ({
   classes,
   yelpUrl,
   overrideClasses,
-  // eslint-disable-next-line
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
+  /* TODO: if desktop, copy to clipboard unique url for the space.
+  if mobile, react-native share sheet to text, email, (fb, tw, ig?)
+  */
+  const handleShare = () => {
+    setIsCopied(true);
+    // eslint-disable-next-line
+    const currentUrl = window.location.href;
+    if (isCopied) {
+      // eslint-disable-next-line
+      navigator.clipboard.writeText(currentUrl);
+    }
+  };
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
       <CardHeader
@@ -204,13 +216,11 @@ const SpaceDetailCard = ({
           )}
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Share</Typography>
-        <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
-          <a href={url} target="_blank" rel="noreferrer">
-            <ShareIcon
-              color="primary"
-              style={{ padding: 0 }}
-            />
-          </a>
+        <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} onClick={handleShare}>
+          <ShareIcon
+            color="primary"
+            style={{ padding: 0 }}
+          />
         </Button>
         <Typography variant="body1" className={classes.mainInformation}>Share this Space with your network</Typography>
       </CardContent>
