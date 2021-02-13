@@ -19,6 +19,7 @@ import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ShareIcon from '@material-ui/icons/Share';
 
+import useMobileDevice from '../../hooks/useMobileDevice';
 import ChipList from '../ChipList';
 
 const styles = () => ({
@@ -121,18 +122,36 @@ const SpaceDetailCard = ({
   overrideClasses,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [isMobileOrTablet] = useMobileDevice();
 
   const history = useHistory();
   /* if desktop, copy to clipboard unique url for the space.
-  TODO: if mobile, react-native share sheet to text, email, (fb, tw, ig?)
+   if mobile, share sheet to text, email, whatever is on your phone or tablet
   */
   const handleShare = () => {
-    setIsCopied(true);
     // eslint-disable-next-line
-    const currentUrl = window.location.href;
-    if (isCopied) {
+    if (isMobileOrTablet && navigator.share) {
       // eslint-disable-next-line
-      navigator.clipboard.writeText(currentUrl);
+      navigator
+        .share({
+          // eslint-disable-next-line
+          url: document.location.href,
+          text: `Check out ${name} at ${url}`,
+        })
+        .then(() => {
+          console.log('Successfully shared');
+        })
+        .catch((error) => {
+          console.error('Something went wrong sharing the blog', error);
+        });
+    } else {
+      setIsCopied(true);
+      // eslint-disable-next-line
+      const currentUrl = document.location.href || window.location.href;
+      if (isCopied) {
+        // eslint-disable-next-line
+        navigator.clipboard.writeText(currentUrl);
+      }
     }
   };
 
@@ -144,11 +163,19 @@ const SpaceDetailCard = ({
     history.push(location);
   };
   return (
-    <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
+    <Card
+      className={cx(classes.root, overrideClasses.root, classes.card)}
+      variant="outlined"
+      key={id}
+    >
       <CardHeader
         avatar={(
           <div color="secondary">
-            <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
+            <StarIcon
+              color="secondary"
+              fontSize="large"
+              classes={{ root: classes.starIcon }}
+            />
             <Typography
               variant="caption"
               color="secondary"
@@ -159,7 +186,11 @@ const SpaceDetailCard = ({
             </Typography>
           </div>
         )}
-        title={<Typography variant="h6" className={classes.h6}>{name}</Typography>}
+        title={(
+          <Typography variant="h6" className={classes.h6}>
+            {name}
+          </Typography>
+        )}
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
@@ -173,22 +204,30 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
-        <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
-        { /*  TODO:  Conditional logic for if there are reviews or not  */}
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleClick}
-        >
+        <Typography variant="h5" className={classes.featuredReview}>
+          Featured Reviews
+        </Typography>
+        <Typography variant="body2" align="center">
+          There are no reviews. Be the first to rate and review this space!
+        </Typography>
+        {/*  TODO:  Conditional logic for if there are reviews or not  */}
+        <Button variant="outlined" color="primary" onClick={handleClick}>
           See All Reviews
           {/* See All {numberOfReviews} */}
         </Button>
         <div className={classes.reviewButton}>
-          <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            href={`/spaces/${id}/reviews/new`}
+          >
+            Write a review
+          </Button>
         </div>
         <Divider />
-        <Typography variant="body1" className={classes.subtitles}>Space Address</Typography>
+        <Typography variant="body1" className={classes.subtitles}>
+          Space Address
+        </Typography>
         <div className={classes.location}>
           <div className={classes.address}>
             <Typography variant="body1">{address.address_1}</Typography>
@@ -202,43 +241,73 @@ const SpaceDetailCard = ({
           </div>
         </div>
         <Divider />
-        <Typography variant="body1" className={classes.subtitles}>Phone Number</Typography>
-        <Button color="primary" href={`tel:${phoneNumber}`}>{phoneNumber}</Button>
+        <Typography variant="body1" className={classes.subtitles}>
+          Phone Number
+        </Typography>
+        <Button color="primary" href={`tel:${phoneNumber}`}>
+          {phoneNumber}
+        </Button>
         <Divider />
-        <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
-        {url
-          ? <Link variant="body1" href={url} target="_blank" rel="noreferrer" className={classes.url}>{url}</Link>
-          : <Link variant="body1" href={yelpUrl} target="_blank" rel="noreferrer" className={classes.url}>Link to Yelp</Link>}
+        <Typography variant="body1" className={classes.subtitles}>
+          WebSite
+        </Typography>
+        {url ? (
+          <Link
+            variant="body1"
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className={classes.url}
+          >
+            {url}
+          </Link>
+        ) : (
+          <Link
+            variant="body1"
+            href={yelpUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={classes.url}
+          >
+            Link to Yelp
+          </Link>
+        )}
         <Divider />
-        <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
+        <Typography variant="body1" className={classes.subtitles}>
+          Hours Of Operation
+        </Typography>
         {/* TODO:  fix placement of navigate next icon */}
         <Typography variant="body1" className={classes.mainInformation}>
-          {hoursOfOperation
-            ? 'Open Now'
-            : 'Closed'}
+          {hoursOfOperation ? 'Open Now' : 'Closed'}
         </Typography>
-        {!hoursOfOperation
-          && (
-            <IconButton component="span" className={classes.nextButton} color="secondary" aria-label="hours of operation on yelp">
-              <a
-                variant="body1"
-                href={yelpUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <NavigateNextIcon color="primary" />
-              </a>
-            </IconButton>
-          )}
+        {!hoursOfOperation && (
+          <IconButton
+            component="span"
+            className={classes.nextButton}
+            color="secondary"
+            aria-label="hours of operation on yelp"
+          >
+            <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">
+              <NavigateNextIcon color="primary" />
+            </a>
+          </IconButton>
+        )}
         <Divider />
-        <Typography variant="body1" className={classes.subtitles}>Share</Typography>
-        <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} onClick={handleShare}>
-          <ShareIcon
-            color="primary"
-            style={{ padding: 0 }}
-          />
+        <Typography variant="body1" className={classes.subtitles}>
+          Share
+        </Typography>
+        <Button
+          color="primary"
+          aria-label="visit space"
+          component="span"
+          className={classes.shareButton}
+          onClick={handleShare}
+        >
+          <ShareIcon color="primary" style={{ padding: 0 }} />
         </Button>
-        <Typography variant="body1" className={classes.mainInformation}>Share this Space with your network</Typography>
+        <Typography variant="body1" className={classes.mainInformation}>
+          Share this Space with your network
+        </Typography>
       </CardContent>
     </Card>
   );
