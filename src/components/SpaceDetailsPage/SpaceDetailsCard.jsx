@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -12,6 +13,7 @@ import {
   Divider,
   Typography,
   IconButton,
+  Link,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -97,6 +99,9 @@ const styles = () => ({
   hoursOfOperation: {
     display: 'flex',
   },
+  url: {
+    textDeocration: 'none',
+  },
 });
 
 const SpaceDetailCard = ({
@@ -116,8 +121,10 @@ const SpaceDetailCard = ({
   overrideClasses,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
-  /* TODO: if desktop, copy to clipboard unique url for the space.
-  if mobile, react-native share sheet to text, email, (fb, tw, ig?)
+
+  const history = useHistory();
+  /* if desktop, copy to clipboard unique url for the space.
+  TODO: if mobile, react-native share sheet to text, email, (fb, tw, ig?)
   */
   const handleShare = () => {
     setIsCopied(true);
@@ -127,6 +134,14 @@ const SpaceDetailCard = ({
       // eslint-disable-next-line
       navigator.clipboard.writeText(currentUrl);
     }
+  };
+
+  const handleClick = () => {
+    const location = {
+      pathname: `/spaces/${id}/reviews/`,
+      state: { name },
+    };
+    history.push(location);
   };
   return (
     <Card className={cx(classes.root, overrideClasses.root, classes.card)} variant="outlined" key={id}>
@@ -161,13 +176,14 @@ const SpaceDetailCard = ({
         <Typography variant="h5" className={classes.featuredReview}>Featured Reviews</Typography>
         <Typography variant="body2" align="center">There are no reviews. Be the first to rate and review this space!</Typography>
         { /*  TODO:  Conditional logic for if there are reviews or not  */}
-        {/* <Button
-            variant="outlined"
-            color="primary"
-            href={`/spaces/${id}/reviews/`}
-          >
-            See All {numberOfReviews}
-          </Button> */}
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClick}
+        >
+          See All Reviews
+          {/* See All {numberOfReviews} */}
+        </Button>
         <div className={classes.reviewButton}>
           <Button variant="contained" color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
         </div>
@@ -191,8 +207,8 @@ const SpaceDetailCard = ({
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>WebSite</Typography>
         {url
-          ? <a variant="body1" href={url} target="_blank" rel="noreferrer">{url}</a>
-          : <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">Link to Yelp</a>}
+          ? <Link variant="body1" href={url} target="_blank" rel="noreferrer" className={classes.url}>{url}</Link>
+          : <Link variant="body1" href={yelpUrl} target="_blank" rel="noreferrer" className={classes.url}>Link to Yelp</Link>}
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>Hours Of Operation</Typography>
         {/* TODO:  fix placement of navigate next icon */}

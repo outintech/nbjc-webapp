@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
-
-import { NameContext } from '../../context/NameContext';
+import { useHistory } from 'react-router-dom';
 
 const styles = (theme) => ({
   root: {
@@ -18,13 +17,9 @@ const styles = (theme) => ({
 });
 
 const ReviewsPage = ({ classes }) => {
-  const { spaceTitle } = useContext(NameContext);
-
-  /* useEffect that spaceTitle changed and resets it */
-
-  useEffect(() => {
-    console.log(spaceTitle, 'spaceTitle');
-  }, [spaceTitle]);
+  const history = useHistory();
+  // eslint-disable-next-line
+  const name = history.location.state.name;
 
   return (
     <main>
@@ -41,10 +36,9 @@ const ReviewsPage = ({ classes }) => {
             <Typography variant="h4" align="center">
               Reviews
             </Typography>
-            <Typography variant="body2" align="center">
-              Read ratings and reviews for
-              { spaceTitle }
-              from The Lavender Book users.
+            <Typography variant="body1" align="center">
+              {/* eslint-disable-next-line */}
+              Read ratings and reviews for {name} from The Lavender Book users.
             </Typography>
           </Paper>
         </Grid>

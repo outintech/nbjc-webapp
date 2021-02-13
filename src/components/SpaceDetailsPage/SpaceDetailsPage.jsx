@@ -47,7 +47,7 @@ const SpaceDetailsPage = ({
               imageUrl={cardData.photos[0].url}
               address={cardData.address}
               averageRating="4.5"
-              category="coffee"
+              category="Restaurant"
               hoursOfOperation={hoursOfOperation}
             />
           </div>

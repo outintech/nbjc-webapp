@@ -1,3 +1,4 @@
 import SpaceDetailsPage from './SpaceDetailsPage';
+import ReviewsPage from './ReviewsPage';
 
-export default SpaceDetailsPage;
+export { SpaceDetailsPage, ReviewsPage };

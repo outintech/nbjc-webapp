@@ -1,6 +1,5 @@
 import React from 'react';
-// import { useParams } from 'react-router-dom';
-import ReviewsPage from '../../components/ReviewsPage';
+import { ReviewsPage } from '../../components/SpaceDetailsPage';
 
 const Reviews = () => <ReviewsPage />;
 
