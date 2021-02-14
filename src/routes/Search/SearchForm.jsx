@@ -12,12 +12,9 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withStyles } from '@material-ui/core/styles';
 
-import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
-
 import { searchProps, chipType } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
-import FilterDialog from '../../components/FilterDialog';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
 import { getCategories, getSpacesByName } from '../../api';
 
@@ -59,8 +56,6 @@ const styles = (theme) => ({
 const SearchForm = ({
   classes,
   onSearch,
-  onFilterApplied,
-  searchCriteria,
   chips,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
@@ -74,7 +69,6 @@ const SearchForm = ({
     })),
   });
 
-  const [openFilter, setOpenFilter] = useState(false);
   const [showError, setShowError] = useState(false);
 
   /** Start Name Autocomplete */
@@ -127,6 +121,7 @@ const SearchForm = ({
     });
   };
   /** End Category Autocomplete */
+
   const handleChange = (e) => {
     setFormValues({
       ...formValues,
@@ -159,17 +154,6 @@ const SearchForm = ({
     }
   };
 
-  const filters = {
-    stars: searchCriteria.rating || 0,
-    distance: searchCriteria.distance || 0,
-    price: searchCriteria.price || 0,
-  };
-
-  const setFilters = (changedFilters) => {
-    onFilterApplied('distance', changedFilters.distance);
-    onFilterApplied('price', changedFilters.price);
-    onFilterApplied('rating', changedFilters.stars);
-  };
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
@@ -249,24 +233,6 @@ const SearchForm = ({
         />
 
         <div className={classes.filterWrapper}>
-          { false
-            && (
-            <FilterDialog
-              open={openFilter}
-              onClose={() => setOpenFilter(false)}
-              onToggle={() => setOpenFilter(!openFilter)}
-              defaultFilters={filters}
-              setFilters={(changedFilters) => setFilters(changedFilters)}
-              type={matches ? 'desktop' : 'mobile'}
-              overrideClasses={{ root: classes.filterDialog }}
-            />
-            )}
-          {!matches && false && (
-            <FilterListOutlinedIcon
-              onClick={() => setOpenFilter(true)}
-              className={classes.filterButton}
-            />
-          )}
           <InputLabel type="inputLabel" className={classes.inputLabel}>
             <Typography variant="h6">Select all that apply</Typography>
           </InputLabel>

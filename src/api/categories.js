@@ -17,6 +17,7 @@ const getCategories = async (searchOpts) => {
   const { data } = await results.json();
   const formattedCategories = data.map((category) => ({
     title: category.title,
+    alias: category.alias,
     value: `${category.id}`,
   }));
   return new Promise((resolve) => {

@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
+import FilterDialog from '../../components/FilterDialog';
 import { getAllIndicators } from '../../api';
 
 import useSearch from './hooks/useSearch';
@@ -57,11 +58,15 @@ const styles = (theme) => ({
       marginRight: 20,
     },
   },
+  filterButtonWrapper: {
+    display: 'flex',
+  },
 });
 
 const Search = ({ classes, coords }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [indicators, setIndicators] = useState([]);
+  const [openFilter, setOpenFilter] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -89,9 +94,22 @@ const Search = ({ classes, coords }) => {
   const onFilterApplied = (filter, value) => {
     updateSearch(filter, value);
   };
+
+  const filters = {
+    stars: search.rating || 0,
+    distance: search.distance || 0,
+    price: search.price || 0,
+  };
+
+  const setFilters = (changedFilters) => {
+    onFilterApplied('distance', changedFilters.distance);
+    onFilterApplied('price', changedFilters.price);
+    onFilterApplied('rating', changedFilters.stars);
+  };
+
   return (
     <div className={classes.content}>
-      {indicators.length > 0 && searchResults.length < 1 && (
+      {indicators.length > 0 && searchResults === null && (
         <SearchForm
           chips={indicators}
           onSearch={onSearchSubmit}
@@ -104,10 +122,28 @@ const Search = ({ classes, coords }) => {
           [classes.desktop]: matches,
         })}
       >
-        {searchResults.length > 0 && (
-          <Typography variant="h6">
-            {`${searchResults.length} results found for ${search.searchTerm}`}
-          </Typography>
+        {searchResults !== null && searchResults.length > 0 && (
+          <>
+            <div className={classes.filterButtonWrapper}>
+              <Typography variant="h6">
+                {`${searchResults.length} results found for ${search.searchTerm}`}
+              </Typography>
+              <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary">FILTER</Button>
+            </div>
+            <div className={classes.filterWrapper}>
+              {openFilter && (
+                <FilterDialog
+                  open={openFilter}
+                  onClose={() => setOpenFilter(false)}
+                  onToggle={() => setOpenFilter(!openFilter)}
+                  defaultFilters={filters}
+                  setFilters={(changedFilters) => setFilters(changedFilters)}
+                  type={matches ? 'desktop' : 'mobile'}
+                  overrideClasses={{ root: classes.filterDialog }}
+                />
+              )}
+            </div>
+          </>
         )}
         <div className={classes.searchResultsWrapper}>
           {searchResults !== null && searchResults.length > 0

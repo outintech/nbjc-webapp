@@ -18,7 +18,7 @@ const getSearchCriteria = (query) => ({
 });
 
 const useSearch = ({ indicators }) => {
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const query = useQuery();
   const history = useHistory();
   const { promiseInProgress } = usePromiseTracker();
@@ -56,17 +56,17 @@ const useSearch = ({ indicators }) => {
         setSearchResults([]);
       }
     } else {
-      setSearchResults([]);
+      setSearchResults(null);
     }
   }, [search]);
 
   const updateSearch = (searchData) => {
     const { name, category, indicators: searchIndicators } = searchData;
     if (name) {
-      query.set('searchTerm', name);
+      query.set('searchTerm', name.name);
     }
     if (category) {
-      query.set('category', category);
+      query.set('category', category.alias);
     }
     query.delete('indicators');
     if (searchIndicators) {

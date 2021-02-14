@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 
 const paramMap = {
   searchTerm: 'search',
+  category: 'category',
   distance: 'filters[distance]',
   price: 'filters[price]',
   rating: 'filters[rating]',
@@ -33,6 +34,7 @@ const getSearchResults = async (searchOpts) => {
       url.searchParams.append(paramMap[key], searchOpts[key]);
     }
   });
+  url.searchParams.append('include', 'address,photos,indicators,reviews,languages');
   const results = await fetch(url.href);
   return results.json();
 };
