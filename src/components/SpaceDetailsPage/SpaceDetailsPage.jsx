@@ -6,20 +6,21 @@ import SpaceDetailsCard from './SpaceDetailsCard';
 
 const styles = {
   // root: {
-
   // }
 };
 
 const SpaceDetailsPage = ({
   // classes,
-  // name,
-  // category,
-  // averageRating,
   space,
 }) => {
   const [cardData, setCardData] = useState();
   const [hoursOfOperation, setHoursOfOperation] = useState();
   const [phoneNumber, setPhoneNumber] = useState('');
+
+  const hardCodedData = {
+    category: 'Restaurant',
+    averageRating: '4.5',
+  };
 
   useEffect(() => {
     setCardData(space);
@@ -42,12 +43,12 @@ const SpaceDetailsPage = ({
               id={cardData.id}
               phoneNumber={phoneNumber}
               filters={cardData.indicators}
-              url={cardData.url}
+              website={cardData.url}
               yelpUrl={cardData.yelp_url}
               imageUrl={cardData.photos[0].url}
               address={cardData.address}
-              averageRating="4.5"
-              category="Restaurant"
+              averageRating={hardCodedData.averageRating}
+              category={hardCodedData.category}
               hoursOfOperation={hoursOfOperation}
             />
           </div>
@@ -59,7 +60,6 @@ const SpaceDetailsPage = ({
 
 // TODO: fix warnings and add reqiured propTypes
 SpaceDetailsPage.propTypes = {
-  // name: PropTypes.string.isRequired,
   // category: PropTypes.string.isRequired,
   // averageRating: PropTypes.string.isRequired,
   space: PropTypes.shape({}).isRequired,

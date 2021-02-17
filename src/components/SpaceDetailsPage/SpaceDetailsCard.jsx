@@ -116,7 +116,7 @@ const SpaceDetailCard = ({
   hoursOfOperation,
   filters,
   phoneNumber,
-  url,
+  website,
   classes,
   yelpUrl,
   overrideClasses,
@@ -136,6 +136,7 @@ const SpaceDetailCard = ({
         .share({
           // eslint-disable-next-line
           url: document.location.href,
+          // eslint-disable-next-line
           text: `Check out ${name} at ${url}`,
         })
         .then(() => {
@@ -144,13 +145,15 @@ const SpaceDetailCard = ({
         .catch((error) => {
           console.error('Something went wrong sharing the blog', error);
         });
-    } else {
+    // eslint-disable-next-line
+    } else if (navigator.clipboard) {
       setIsCopied(true);
       // eslint-disable-next-line
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
         // eslint-disable-next-line
         navigator.clipboard.writeText(currentUrl);
+        console.log('Successfully shared');
       }
     }
   };
@@ -251,15 +254,15 @@ const SpaceDetailCard = ({
         <Typography variant="body1" className={classes.subtitles}>
           WebSite
         </Typography>
-        {url ? (
+        {website ? (
           <Link
             variant="body1"
-            href={url}
+            href={website}
             target="_blank"
             rel="noreferrer"
             className={classes.url}
           >
-            {url}
+            {website}
           </Link>
         ) : (
           <Link
@@ -314,7 +317,10 @@ const SpaceDetailCard = ({
 };
 
 SpaceDetailCard.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   name: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(
@@ -322,13 +328,18 @@ SpaceDetailCard.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  url: PropTypes.string.isRequired,
+  /* TODO: write website or yelpUrl
+  website || yelpUrl: PropTypes.string.isRequired, */
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };
 
 SpaceDetailCard.defaultProps = {
   overrideClasses: {},
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 export default withStyles(styles)(SpaceDetailCard);

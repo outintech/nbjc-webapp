@@ -2,8 +2,7 @@
 
 ```jsx
 const props = {
-  name: 'La Colombe Coffee Roasters',
-  category: 'Coffee',
+  category: 'Restaurant',
   averageRating: '4.5',
 };
 <SpaceDetailsPage {...props} />;
