@@ -83,6 +83,7 @@ const Search = ({ classes, coords }) => {
 
   const {
     updateSearch,
+    updateFilters,
     search,
     searchResults,
     loading,
@@ -102,9 +103,9 @@ const Search = ({ classes, coords }) => {
   };
 
   const setFilters = (changedFilters) => {
-    onFilterApplied('distance', changedFilters.distance);
-    onFilterApplied('price', changedFilters.price);
-    onFilterApplied('rating', changedFilters.stars);
+    updateFilters('distance', changedFilters.distance);
+    updateFilters('price', changedFilters.price);
+    updateFilters('rating', changedFilters.stars);
   };
 
   return (

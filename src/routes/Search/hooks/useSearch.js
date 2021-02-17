@@ -88,12 +88,30 @@ const useSearch = ({ indicators }) => {
     });
   };
 
+  const updateFilters = (filterName, value) => {
+    if (!value) {
+      query.delete(filterName, value);
+    } else {
+      query.set(filterName, value);
+    }
+    history.push({ pathname: '/search', search: query.toString() });
+    const updatedSearchCritera = getSearchCriteria(query);
+    setSearch({
+      ...updatedSearchCritera,
+      chips: indicators.map((c) => ({
+        ...c,
+        isSelected: updatedSearchCritera.indicators.includes(c.value),
+      })),
+    });
+  };
+
   return {
     searchResults,
     searchCriteria,
     search,
     updateSearch,
     loading: promiseInProgress,
+    updateFilters,
   };
 };
 
