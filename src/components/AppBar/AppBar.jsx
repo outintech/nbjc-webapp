@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+import { ArrowBackIos } from '@material-ui/icons';
 
 const styles = (theme) => ({
   root: {
@@ -43,14 +44,23 @@ const styles = (theme) => ({
   },
 });
 
-const AppBar = ({
-  isLoggedIn, selected, classes, routes,
-}) => {
+// eslint-disable-next-line
+const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [routesPathNames, setRoutesPathNames] = useState();
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const history = useHistory();
 
-  const showDrawerItems = () => (
+  useEffect(() => {
+    setRoutesPathNames(routes.forEach((route) => route.path));
+  }, []);
+
+  const goBack = () => {
+    history.goBack();
+  };
+
+  const showDrawerItems = () =>
+    // eslint-disable-next-line
     routes.map((item) => {
       // todo: add injection security
       if (item.enforceLogin && !isLoggedIn) {
@@ -81,22 +91,41 @@ const AppBar = ({
           </ListItemText>
         </ListItem>
       );
-    })
-  );
+    });
+
+  // eslint-disable-next-line
+  const NavIcons = () => {
+    if (routesPathNames === '/home' || '/new' || '/search' || '/profile') {
+      return (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => setShowDrawer(!showDrawer)}
+          data-testid="appbar-menu"
+        >
+          <MenuIcon />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        onClick={goBack}
+        data-testid="appbar-menu"
+      >
+        <ArrowBackIos />
+      </IconButton>
+    );
+  };
 
   return (
     <div className={classes.root}>
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setShowDrawer(!showDrawer)}
-            data-testid="appbar-menu"
-          >
-            <MenuIcon />
-          </IconButton>
+          <NavIcons />
           <Typography variant="h6" data-testid="appbar-title">
             {pageTitle}
           </Typography>
@@ -118,14 +147,22 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview']),
+  selected: PropTypes.oneOf([
+    'home',
+    'addSpace',
+    'search',
+    'profile',
+    'addReview',
+  ]),
   classes: PropTypes.shape({}).isRequired,
-  routes: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
-    enforceLogin: PropTypes.bool.isRequired,
-  })).isRequired,
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      enforceLogin: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 
 AppBar.defaultProps = {
