@@ -11,16 +11,13 @@ const styles = {
 
 const SpaceDetailsPage = ({
   // classes,
+  category,
+  averageRating,
   space,
 }) => {
   const [cardData, setCardData] = useState();
   const [hoursOfOperation, setHoursOfOperation] = useState();
   const [phoneNumber, setPhoneNumber] = useState('');
-
-  const hardCodedData = {
-    category: 'Restaurant',
-    averageRating: '4.5',
-  };
 
   useEffect(() => {
     setCardData(space);
@@ -47,26 +44,24 @@ const SpaceDetailsPage = ({
               yelpUrl={cardData.yelp_url}
               imageUrl={cardData.photos[0].url}
               address={cardData.address}
-              averageRating={hardCodedData.averageRating}
-              category={hardCodedData.category}
+              averageRating={averageRating}
+              category={category}
               hoursOfOperation={hoursOfOperation}
             />
           </div>
         )}
-
     </div>
   );
 };
 
 // TODO: fix warnings and add reqiured propTypes
 SpaceDetailsPage.propTypes = {
-  // category: PropTypes.string.isRequired,
-  // averageRating: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  averageRating: PropTypes.string.isRequired,
   space: PropTypes.shape({}).isRequired,
 };
 
 SpaceDetailsPage.defaultProps = {
-
 };
 
 export default withStyles(styles)(SpaceDetailsPage);

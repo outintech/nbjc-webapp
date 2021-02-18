@@ -5,6 +5,8 @@ import { getSpace } from '../../api';
 import { SpaceDetailsPage } from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
 
+import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';
+
 const SpaceDetails = () => {
   const { setSpaceTitle, setSpaceData, spaceTitle } = useContext(NameContext);
   const { spaceId } = useParams();
@@ -32,7 +34,12 @@ const SpaceDetails = () => {
   return (
     <>
       {/* TODO: add average Rating & category props & name */}
-      <SpaceDetailsPage space={space} spaceTitle={spaceTitle} />
+      <SpaceDetailsPage
+        category={getCategoryAndRating().category}
+        averageRating={getCategoryAndRating().averageRating}
+        space={space}
+        spaceTitle={spaceTitle}
+      />
     </>
   );
 };

@@ -47,9 +47,21 @@ const styles = () => ({
     margin: 'auto',
     height: '300px',
   },
+  reviewDiv: {
+    width: '100%',
+    display: 'inline-flex',
+    flexFlow: 'row',
+    justifyContent: 'space-between',
+  },
   featuredReview: {
     margin: '20px',
-    textAlign: 'center',
+    textAlign: 'left',
+    display: 'inline-flex',
+  },
+  seeAllButton: {
+    display: 'inline-flex',
+    float: 'right',
+    margin: 0,
   },
   reviewButton: {
     display: 'flex',
@@ -145,7 +157,7 @@ const SpaceDetailCard = ({
         .catch((error) => {
           console.error('Something went wrong sharing the blog', error);
         });
-    // eslint-disable-next-line
+      // eslint-disable-next-line
     } else if (navigator.clipboard) {
       setIsCopied(true);
       // eslint-disable-next-line
@@ -207,17 +219,19 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <Typography variant="h5" className={classes.featuredReview}>
-          Featured Reviews
-        </Typography>
+        <div className={classes.reviewDiv}>
+          <Typography variant="h5" className={classes.featuredReview}>
+            Recent Reviews
+          </Typography>
+          {/*  TODO:  Conditional logic for if there are reviews or not! Fix sizing! */}
+          <Button variant="outlined" color="primary" onClick={handleClick} className={classes.seeAllButton}>
+            See All Reviews
+            {/* See All {numberOfReviews} */}
+          </Button>
+        </div>
         <Typography variant="body2" align="center">
           There are no reviews. Be the first to rate and review this space!
         </Typography>
-        {/*  TODO:  Conditional logic for if there are reviews or not  */}
-        <Button variant="outlined" color="primary" onClick={handleClick}>
-          See All Reviews
-          {/* See All {numberOfReviews} */}
-        </Button>
         <div className={classes.reviewButton}>
           <Button
             variant="contained"
@@ -317,10 +331,7 @@ const SpaceDetailCard = ({
 };
 
 SpaceDetailCard.propTypes = {
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(
@@ -328,18 +339,22 @@ SpaceDetailCard.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  /* TODO: write website or yelpUrl
-  website || yelpUrl: PropTypes.string.isRequired, */
+  // website: PropTypes.string,
+  // yelpUrl: PropTypes.string,
+  hoursOfOperation: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
+  // category,
+  // averageRating,
+  // imageUrl,
+  // address,
+  // TODO: add distance when geocoding
+  // distance,
 };
 
 SpaceDetailCard.defaultProps = {
   overrideClasses: {},
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default withStyles(styles)(SpaceDetailCard);
