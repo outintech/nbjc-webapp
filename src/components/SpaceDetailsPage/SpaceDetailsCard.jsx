@@ -339,17 +339,20 @@ SpaceDetailCard.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  // website: PropTypes.string,
-  // yelpUrl: PropTypes.string,
+  /* TODO: make conditional rendering for prop types?
+   website: PropTypes.string,
+  yelpUrl: PropTypes.string
+  */
+ category: PropTypes.string.isRequired,
+ averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+ imageUrl: PropTypes.string.isRequired,
+ address: PropTypes.shape({}).isRequired,
+ // TODO: add distance when geocoding
+ // distance,
   hoursOfOperation: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
-  // category,
-  // averageRating,
-  // imageUrl,
-  // address,
-  // TODO: add distance when geocoding
-  // distance,
+ 
 };
 
 SpaceDetailCard.defaultProps = {

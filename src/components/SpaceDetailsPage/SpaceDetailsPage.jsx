@@ -54,7 +54,6 @@ const SpaceDetailsPage = ({
   );
 };
 
-// TODO: fix warnings and add reqiured propTypes
 SpaceDetailsPage.propTypes = {
   category: PropTypes.string.isRequired,
   averageRating: PropTypes.string.isRequired,
