@@ -3,10 +3,16 @@ import { render } from '@testing-library/react';
 
 import SpaceDetailsPage from './SpaceDetailsPage';
 
+jest.mock('react-intersection-observer', () => ({
+  useInView: () => [{}, true],
+}));
+
+describe('SpaceDetailsPage', () => { 
 test('renders SpaceDetailsPage', () => {
   const props = {
     category: 'Restaurant',
     averageRating: '4.5',
+    spaceTitle: "Katz's Delicatessen",
     space: {
       address: {
         address_1: '205 E Houston St',
@@ -16,6 +22,17 @@ test('renders SpaceDetailsPage', () => {
         postal_code: '10002',
         space_id: 1,
         state: 'NY',
+      },
+      hours_of_op: {
+        open: [
+          {day: 0, end: "1500", start: "0800"},
+          {day: 1, end: "1500", start: "0800"},
+          {day: 2, end: "1500", start: "0800"},
+          {day: 3, end: "1500", start: "0800"},
+          {day: 4, end: "1600", start: "0800"},
+          {day: 5, end: "1800", start: "0800"},
+          {day: 6, end: "1600", start: "0800"}
+        ]
       },
       id: '1',
       indicators: [{
@@ -35,4 +52,5 @@ test('renders SpaceDetailsPage', () => {
   };
   const { asFragment } = render(<SpaceDetailsPage {...props} />);
   expect(asFragment()).toMatchSnapshot();
+});
 });

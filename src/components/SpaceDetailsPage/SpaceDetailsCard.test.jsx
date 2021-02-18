@@ -3,7 +3,12 @@ import { render } from '@testing-library/react';
 
 import SpaceDetailsCard from './SpaceDetailsCard';
 
-test('renders SpaceDetailsPage', () => {
+jest.mock('react-intersection-observer', () => ({
+  useInView: () => [{}, true],
+}));
+
+describe('SpaceDetailsCard', () => { 
+  test('renders ', () => {
     const props = {
         address: {
             address_1: '205 E Houston St',
@@ -30,4 +35,5 @@ test('renders SpaceDetailsPage', () => {
     const { asFragment } = render(<SpaceDetailsCard {...props} />);
     expect(asFragment()).toMatchSnapshot();
   });
+})
   

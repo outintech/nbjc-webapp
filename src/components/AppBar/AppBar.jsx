@@ -50,7 +50,7 @@ const AppBar = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
-  const { spaceTitle } = useContext(NameContext);
+  const nameContext = useContext(NameContext);
   const history = useHistory();
 
   const showDrawerItems = () => (
@@ -101,7 +101,7 @@ const AppBar = ({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" data-testid="appbar-title">
-            {pageTitle || spaceTitle}
+            {pageTitle || nameContext.spaceTitle}
           </Typography>
         </Toolbar>
       </MaterialAppBar>
