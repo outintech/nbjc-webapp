@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { NameContext } from '../../context/NameContext';
+
 const styles = (theme) => ({
   root: {
     display: 'flex',
@@ -24,7 +26,7 @@ const styles = (theme) => ({
       marginBottom: 20,
     },
     [theme.breakpoints.up('mobile')]: {
-      marginBottom: 80,
+      marginBottom: 20,
     },
   },
   appBar: {
@@ -48,6 +50,7 @@ const AppBar = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
+  const nameContext = useContext(NameContext);
   const history = useHistory();
 
   const showDrawerItems = () => (
@@ -98,7 +101,7 @@ const AppBar = ({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" data-testid="appbar-title">
-            {pageTitle}
+            {pageTitle || nameContext.spaceTitle}
           </Typography>
         </Toolbar>
       </MaterialAppBar>
@@ -118,7 +121,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview']),
+  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetails', 'reviews']),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,

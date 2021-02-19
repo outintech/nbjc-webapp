@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 /**
  * @param {string} spaceId - id for the space to return
- * @returns {Promis} - resolves to a single space
+ * @returns {Promise} - resolves to a single space
 */
 const getSpace = async (spaceId) => {
   const url = new URL(process.env.REACT_APP_API_HOST);

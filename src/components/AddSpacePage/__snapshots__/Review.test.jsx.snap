@@ -123,7 +123,7 @@ exports[`Review renders with default values 1`] = `
     <h6
       class="MuiTypography-root MuiTypography-h6"
     >
-      Share your thought
+      Share your thoughts
     </h6>
     <div
       class="MuiFormControl-root MuiTextField-root Review-review-2 MuiFormControl-fullWidth"
