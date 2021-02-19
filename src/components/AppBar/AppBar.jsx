@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -47,13 +47,8 @@ const styles = (theme) => ({
 // eslint-disable-next-line
 const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [routesPathNames, setRoutesPathNames] = useState();
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const history = useHistory();
-
-  useEffect(() => {
-    setRoutesPathNames(routes.forEach((route) => route.path));
-  }, []);
 
   const goBack = () => {
     history.goBack();
@@ -95,8 +90,9 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
 
   // eslint-disable-next-line
   const NavIcons = () => {
-    if (routesPathNames === '/home' || '/new' || '/search' || '/profile') {
-      return (
+    let appIcons;
+    if ((selected === 'home') || (selected === 'profile') || (selected === 'addSpace') || (selected === 'search')) {
+      appIcons = (
         <IconButton
           edge="start"
           color="inherit"
@@ -107,18 +103,22 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
           <MenuIcon />
         </IconButton>
       );
+    // make an else if for when it's a search (based on the url)
+    // include the spaceDetails for menu
+    } else {
+      appIcons = (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="go-back"
+          onClick={goBack}
+          data-testid="appbar-go-back"
+        >
+          <ArrowBackIos />
+        </IconButton>
+      );
     }
-    return (
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        onClick={goBack}
-        data-testid="appbar-menu"
-      >
-        <ArrowBackIos />
-      </IconButton>
-    );
+    return appIcons;
   };
 
   return (
