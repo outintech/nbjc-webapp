@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { getSpace } from '../../api';
-import { SpaceDetailsPage } from '../../components/SpaceDetailsPage';
+import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
 
 import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';

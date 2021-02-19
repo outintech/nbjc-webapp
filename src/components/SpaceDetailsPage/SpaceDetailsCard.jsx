@@ -141,15 +141,11 @@ const SpaceDetailCard = ({
    if mobile, share sheet to text, email, whatever is on your phone or tablet
   */
   const handleShare = () => {
-    // eslint-disable-next-line
+    /* navigator */
     if (isMobileOrTablet && navigator.share) {
-      // eslint-disable-next-line
       navigator
         .share({
-          // eslint-disable-next-line
-          url: document.location.href,
-          // eslint-disable-next-line
-          text: `Check out ${name} at ${url}`,
+          text: `Check out ${name} at ${document.location.href}`,
         })
         .then(() => {
           console.log('Successfully shared');
@@ -157,13 +153,10 @@ const SpaceDetailCard = ({
         .catch((error) => {
           console.error('Something went wrong sharing the blog', error);
         });
-      // eslint-disable-next-line
     } else if (navigator.clipboard) {
       setIsCopied(true);
-      // eslint-disable-next-line
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
-        // eslint-disable-next-line
         navigator.clipboard.writeText(currentUrl);
         console.log('Successfully shared');
       }

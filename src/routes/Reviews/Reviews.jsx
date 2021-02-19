@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReviewsPage } from '../../components/SpaceDetailsPage';
+import ReviewsPage from '../../components/ReviewsPage';
 
 const Reviews = () => <ReviewsPage />;
 

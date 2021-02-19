@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -25,9 +25,6 @@ const ReviewsPage = ({ classes }) => {
     <main>
       <Grid
         container
-        // direction="column"
-        // justify="felx-start"
-        // alignItems="stretch"
         className={classes.root}
         spacing={2}
       >
@@ -37,8 +34,7 @@ const ReviewsPage = ({ classes }) => {
               Reviews
             </Typography>
             <Typography variant="body1" align="center">
-              {/* eslint-disable-next-line */}
-              Read ratings and reviews for {name} from The Lavender Book users.
+              {` Read ratings and reviews for ${name} from The Lavender Book users.`}
             </Typography>
           </Paper>
         </Grid>
@@ -47,8 +43,11 @@ const ReviewsPage = ({ classes }) => {
   );
 };
 
-ReviewsPage.propTypes = {};
+ReviewsPage.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+};
 
-ReviewsPage.defaultProps = {};
+ReviewsPage.defaultProps = {
+};
 
 export default withStyles(styles)(ReviewsPage);
