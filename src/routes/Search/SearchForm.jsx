@@ -204,7 +204,6 @@ const SearchForm = ({
           placeholder="City, State"
           helperText="Optional"
           name="location"
-          autoFocus
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What type of Space are you looking for? </Typography>
@@ -225,7 +224,6 @@ const SearchForm = ({
               placeholder="Space Category"
               helperText="Optional"
               name="category"
-              autoFocus
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
             />

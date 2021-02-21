@@ -80,14 +80,14 @@ const Search = ({ classes, coords }) => {
       console.log(err);
     }
   }, []);
-
+  console.log(coords);
   const {
     updateSearch,
     updateFilters,
     search,
     searchResults,
     loading,
-  } = useSearch({ useLocation: coords, indicators });
+  } = useSearch({ userLocation: coords, indicators });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
