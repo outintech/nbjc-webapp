@@ -73,6 +73,7 @@ const AddReview = ({ classes }) => {
         getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
       ]);
       if (reviewData.data.exists) {
+        setSpace(spaceData.data);
         setPageStatus('reviewExists');
       } else {
         setSpace(spaceData.data);

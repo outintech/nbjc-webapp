@@ -4,6 +4,7 @@ exports[`StarRating with default props 1`] = `
 <DocumentFragment>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-1"
     tabindex="0"
     type="button"
   >
@@ -24,6 +25,7 @@ exports[`StarRating with default props 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-2"
     tabindex="0"
     type="button"
   >
@@ -44,6 +46,7 @@ exports[`StarRating with default props 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-3"
     tabindex="0"
     type="button"
   >
@@ -64,6 +67,7 @@ exports[`StarRating with default props 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-4"
     tabindex="0"
     type="button"
   >
@@ -84,6 +88,7 @@ exports[`StarRating with default props 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-5"
     tabindex="0"
     type="button"
   >
@@ -149,6 +154,7 @@ exports[`StarRating with some filled 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-3"
     tabindex="0"
     type="button"
   >
@@ -169,6 +175,7 @@ exports[`StarRating with some filled 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-4"
     tabindex="0"
     type="button"
   >
@@ -189,6 +196,7 @@ exports[`StarRating with some filled 1`] = `
   </button>
   <button
     class="MuiButtonBase-root MuiIconButton-root StarRating-button-3 MuiIconButton-colorPrimary"
+    data-testid="star-rating-unfilled-5"
     tabindex="0"
     type="button"
   >
