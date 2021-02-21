@@ -7,10 +7,10 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'no-plusplus': 0,
   },
-  "globals": {
-    "window": true,
-    "navigator": true,
-    "document": true,
+  globals: {
+    window: true,
+    navigator: true,
+    document: true,
   },
   overrides: [{
     files: ['*.test.js', '*.test.jsx'],
