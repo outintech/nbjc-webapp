@@ -1,0 +1,389 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddReview should show already submitted when review is present 1`] = `
+<DocumentFragment>
+  <div
+    class="AddReview-root-27"
+  >
+    <h4
+      class="MuiTypography-root Success-pageTitle-53 MuiTypography-h4 MuiTypography-alignCenter"
+    >
+      Your Review exists for this space
+    </h4>
+    <div
+      class="Success-check-54"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root Success-check-54 MuiSvgIcon-colorPrimary"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+        />
+      </svg>
+    </div>
+    <h6
+      class="MuiTypography-root Success-body-55 MuiTypography-subtitle1 MuiTypography-alignCenter"
+    >
+      You have already submitted your review for this space
+    </h6>
+    <div
+      class="Success-buttonWrapper-56 AddReview-successFooter-31"
+    >
+      <a
+        align="center"
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained AddReview-successButton-32 MuiButton-containedPrimary MuiButton-disableElevation MuiButton-fullWidth"
+        href="/spaces/undefined"
+        tabindex="0"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Go to space
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
+      <a
+        align="center"
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined AddReview-successButton-32 MuiButton-outlinedSecondary MuiButton-disableElevation MuiButton-fullWidth"
+        href="/search"
+        tabindex="0"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Search for a space
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AddReview should show success page when a review is submitted 1`] = `
+<DocumentFragment>
+  <div
+    class="AddReview-root-57"
+  >
+    <h4
+      class="MuiTypography-root Success-pageTitle-83 MuiTypography-h4 MuiTypography-alignCenter"
+    >
+      Your Review Was Submitted!
+    </h4>
+    <div
+      class="Success-check-84"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root Success-check-84 MuiSvgIcon-colorPrimary"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+        />
+      </svg>
+    </div>
+    <h6
+      class="MuiTypography-root Success-body-85 MuiTypography-subtitle1 MuiTypography-alignCenter"
+    >
+      Thank you for rating and reviewing abc on OurGuide.
+    </h6>
+    <div
+      class="Success-buttonWrapper-86 AddReview-successFooter-61"
+    >
+      <a
+        align="center"
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained AddReview-successButton-62 MuiButton-containedPrimary MuiButton-disableElevation MuiButton-fullWidth"
+        href="/spaces/undefined"
+        tabindex="0"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Go to space
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
+      <a
+        align="center"
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined AddReview-successButton-62 MuiButton-outlinedSecondary MuiButton-disableElevation MuiButton-fullWidth"
+        href="/search"
+        tabindex="0"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Search for a space
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AddReview should show the form when review is not present 1`] = `
+<DocumentFragment>
+  <div
+    class="AddReview-root-1"
+  >
+    <form
+      data-testid="review-form"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter"
+      >
+        Rate and Review
+      </h4>
+      <h6
+        class="MuiTypography-root AddReview-reviewSubtitle-2 MuiTypography-subtitle1 MuiTypography-alignCenter"
+      >
+        You can rate abc anonymously.
+      </h6>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+      >
+        Rate this space
+      </h6>
+      <div>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root StarRating-button-17 MuiIconButton-colorPrimary"
+          data-testid="star-rating-unfilled-1"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root StarRating-button-17 MuiIconButton-colorPrimary"
+          data-testid="star-rating-unfilled-2"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root StarRating-button-17 MuiIconButton-colorPrimary"
+          data-testid="star-rating-unfilled-3"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root StarRating-button-17 MuiIconButton-colorPrimary"
+          data-testid="star-rating-unfilled-4"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root StarRating-button-17 MuiIconButton-colorPrimary"
+          data-testid="star-rating-unfilled-5"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </span>
+        </button>
+        <span
+          class="MuiTypography-root Review-ratingText-11 MuiTypography-caption"
+        >
+          0 stars
+        </span>
+      </div>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+      >
+        Share your thoughts
+      </h6>
+      <div
+        class="MuiFormControl-root MuiTextField-root Review-review-12 MuiFormControl-fullWidth"
+        data-testid="review-content"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Write a Review
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        >
+          <textarea
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+            name="review"
+            rows="5"
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-19 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-21"
+            >
+              <span>
+                Write a Review
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+        <p
+          class="MuiFormHelperText-root MuiFormHelperText-contained"
+        >
+          <span
+            class="MuiTypography-root MuiTypography-caption MuiTypography-colorPrimary"
+          >
+            Required
+          </span>
+          <span
+            class="MuiTypography-root Review-remaining-13 MuiTypography-caption"
+          >
+            500 characters remaining
+          </span>
+        </p>
+      </div>
+      <label
+        class="MuiFormControlLabel-root Review-checkbox-14"
+      >
+        <span
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-23 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <input
+              class="PrivateSwitchBase-input-26"
+              data-indeterminate="false"
+              name="anon"
+              type="checkbox"
+              value=""
+            />
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </span>
+        <span
+          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body2"
+          >
+            Publish my rating and review anonymously.
+          </p>
+        </span>
+      </label>
+      <div
+        class="Review-footer-15 AddReview-reviewFooter-3"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained Review-submitButton-16 AddReview-reviewSubmit-4 MuiButton-containedSecondary MuiButton-disableElevation Mui-disabled MuiButton-fullWidth Mui-disabled"
+          disabled=""
+          tabindex="-1"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Submit
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;
