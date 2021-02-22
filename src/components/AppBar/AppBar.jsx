@@ -103,7 +103,7 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
           <MenuIcon />
         </IconButton>
       );
-    // make an else if for when it's a search (based on the url)
+    // TODO: make an else if for when it's a search (based on the url)
     // include the spaceDetails for menu
     } else {
       appIcons = (
