@@ -2,7 +2,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import {
-  BrowserRouter as Router, Switch, Route, useRouteMatch,
+  Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import AppBar from './components/AppBar';

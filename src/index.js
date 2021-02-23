@@ -1,21 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
-import { Auth0Provider } from '@auth0/auth0-react';
+import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import App from './App';
 // eslint-disable-next-line
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <Auth0Provider
-    domain="dev-inz0b2tv.us.auth0.com"
-    clientId="AJfV70psKlUrEckGzlcoGj0iK50drkQt"
-    redirectUri={window.location.origin}
-  >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Auth0Provider>,
+  <React.StrictMode>
+    <Router>
+      <Auth0ProviderWithHistory>
+        <App />
+      </Auth0ProviderWithHistory>
+    </Router>
+  </React.StrictMode>,
   document.getElementById('root'), // eslint-disable-line no-undef
 );
 
