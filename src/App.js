@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+// import { withAuthenticationRequired } from '@auth0/auth0-react';
 import AppBar from './components/AppBar';
 import NameContextProvider from './context/NameContext';
 
@@ -39,9 +39,9 @@ function Spaces() {
   );
 }
 
-const ProtectedSpaces = withAuthenticationRequired(Spaces, {
-  onRedirecting: () => <div>Redirecting you to the login page...</div>,
-});
+// const ProtectedSpaces = withAuthenticationRequired(Spaces, {
+//   onRedirecting: () => <div>Redirecting you to the login page...</div>,
+// });
 
 function App() {
   const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
@@ -72,7 +72,7 @@ function App() {
               ))}
               {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
               <Route path="/spaces">
-                <ProtectedSpaces />
+                <Spaces />
               </Route>
             </Switch>
           </div>
