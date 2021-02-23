@@ -87,25 +87,15 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
         </ListItem>
       );
     });
-
   // eslint-disable-next-line
   const NavIcons = () => {
     let appIcons;
-    if ((selected === 'home') || (selected === 'profile') || (selected === 'addSpace') || (selected === 'search')) {
-      appIcons = (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={() => setShowDrawer(!showDrawer)}
-          data-testid="appbar-menu"
-        >
-          <MenuIcon />
-        </IconButton>
-      );
-    // TODO: make an else if for when it's a search (based on the url)
-    // include the spaceDetails for menu
-    } else {
+    if (
+      history.location.search.length > 0
+      || selected === 'spaceDetails'
+      || selected === 'addReview'
+      || selected === 'review'
+    ) {
       appIcons = (
         <IconButton
           edge="start"
@@ -115,6 +105,18 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
           data-testid="appbar-go-back"
         >
           <ArrowBackIos />
+        </IconButton>
+      );
+    } else {
+      appIcons = (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => setShowDrawer(!showDrawer)}
+          data-testid="appbar-menu"
+        >
+          <MenuIcon />
         </IconButton>
       );
     }
@@ -153,6 +155,8 @@ AppBar.propTypes = {
     'search',
     'profile',
     'addReview',
+    'spaceDetails',
+    'reviews',
   ]),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(
