@@ -3,12 +3,18 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Home from './Home';
 import Search from './Search';
 import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
+
+const ProtectedRoute = (component) => withAuthenticationRequired(component, {
+  // eslint-disable-next-line react/react-in-jsx-scope
+  onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
 
 const routes = [{
   label: 'Home',
@@ -39,7 +45,7 @@ const spaceRoutes = [{
   label: 'Add Review',
   path: '/:spaceId/reviews/new',
   // todo: change this/
-  content: AddReview,
+  content: ProtectedRoute(AddReview),
   key: 'addReview',
   // todo: change this
   enforceLogin: false,
@@ -48,11 +54,11 @@ const spaceRoutes = [{
 }, {
   label: 'Add a space',
   path: '/new',
-  content: AddSpace,
+  content: ProtectedRoute(AddSpace),
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
   // todo: change this
-  enforceLogin: false,
+  enforceLogin: true,
 }, {
   label: 'Space Details',
   path: '/:spaceId',
