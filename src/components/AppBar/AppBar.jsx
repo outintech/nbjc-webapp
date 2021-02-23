@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core';
 
@@ -17,6 +17,8 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { ArrowBackIos } from '@material-ui/icons';
 
+import { NameContext } from '../../context/NameContext';
+
 const styles = (theme) => ({
   root: {
     display: 'flex',
@@ -25,7 +27,7 @@ const styles = (theme) => ({
       marginBottom: 20,
     },
     [theme.breakpoints.up('mobile')]: {
-      marginBottom: 80,
+      marginBottom: 20,
     },
   },
   appBar: {
@@ -47,8 +49,11 @@ const styles = (theme) => ({
 // eslint-disable-next-line
 const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
+  const nameContext = useContext(NameContext);
   const history = useHistory();
+  const location = useLocation();
+
+  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 
   const goBack = () => {
     history.goBack();
@@ -87,14 +92,15 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
         </ListItem>
       );
     });
+
   // eslint-disable-next-line
   const NavIcons = () => {
     let appIcons;
     if (
-      history.location.search.length > 0
+      location.search.length > 0
       || selected === 'spaceDetails'
       || selected === 'addReview'
-      || selected === 'review'
+      || selected === 'reviews'
     ) {
       appIcons = (
         <IconButton
@@ -129,7 +135,7 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
         <Toolbar>
           <NavIcons />
           <Typography variant="h6" data-testid="appbar-title">
-            {pageTitle}
+            {pageTitle || nameContext.spaceTitle}
           </Typography>
         </Toolbar>
       </MaterialAppBar>

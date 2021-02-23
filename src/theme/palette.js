@@ -2,14 +2,14 @@ const palette = {
   palette: {
     primary: {
       light: '#A96EB8',
-      main: '#752A87',
+      main: '#9276b5',
       dark: '#480658',
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      light: '#E083AA',
-      main: '#AE3367',
-      dark: '#720432',
+      light: '#694CA0',
+      main: '#6F49AA',
+      dark: '#270C5B',
       // contrastText: '#000000',
     },
     error: {
