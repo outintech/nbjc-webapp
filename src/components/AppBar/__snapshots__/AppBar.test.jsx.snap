@@ -4,6 +4,7 @@ exports[`AppBar renders with default state 1`] = `
 <DocumentFragment>
   <div
     class="AppBar-root-1"
+    data-testid="app-bar"
   >
     <header
       class="MuiPaper-root MuiAppBar-root MuiAppBar-positionFixed MuiAppBar-colorPrimary AppBar-appBar-2 mui-fixed MuiPaper-elevation4"

@@ -13,7 +13,7 @@ import routes, { spaceRoutes } from './routes';
 
 function Spaces() {
   const match = useRouteMatch();
-  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
   return (
     <Switch>
       {spaceRoutes.map((route) => (
@@ -40,7 +40,7 @@ function Spaces() {
 }
 
 function App() {
-  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
   return (
     <>
       <NameContextProvider>

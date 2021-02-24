@@ -46,8 +46,12 @@ const styles = (theme) => ({
   },
 });
 
-// eslint-disable-next-line
-const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
+const AppBar = ({
+  isLoggedIn,
+  selected,
+  classes,
+  routes,
+}) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
   const history = useHistory();
@@ -59,45 +63,42 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
     history.goBack();
   };
 
-  const showDrawerItems = () =>
-    // eslint-disable-next-line
-    routes.map((item) => {
-      // todo: add injection security
-      if (item.enforceLogin && !isLoggedIn) {
-        return null;
-      }
-      const otherProps = {
-        selected: item.key === selected,
-        color: item.key === selected ? 'primary' : 'inherit',
-      };
-      return (
-        <ListItem
-          button
-          key={item.key}
-          selected={otherProps.selected}
-          className={cx({ [classes.selected]: otherProps.selected })}
-          onClick={() => {
-            setShowDrawer(false);
-            history.push(item.path);
-          }}
-        >
-          <ListItemIcon>
-            <item.icon color={otherProps.color} />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography color={otherProps.color} variant="subtitle2">
-              {item.label}
-            </Typography>
-          </ListItemText>
-        </ListItem>
-      );
-    });
+  const showDrawerItems = () => routes.map((item) => {
+    // todo: add injection security
+    if (item.enforceLogin && !isLoggedIn) {
+      return null;
+    }
+    const otherProps = {
+      selected: item.key === selected,
+      color: item.key === selected ? 'primary' : 'inherit',
+    };
+    return (
+      <ListItem
+        button
+        key={item.key}
+        selected={otherProps.selected}
+        className={cx({ [classes.selected]: otherProps.selected })}
+        onClick={() => {
+          setShowDrawer(false);
+          history.push(item.path);
+        }}
+      >
+        <ListItemIcon>
+          <item.icon color={otherProps.color} />
+        </ListItemIcon>
+        <ListItemText>
+          <Typography color={otherProps.color} variant="subtitle2">
+            {item.label}
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    );
+  });
 
-  // eslint-disable-next-line
   const NavIcons = () => {
     let appIcons;
     if (
-      location.search.length > 0
+      (location && location.search.length > 0)
       || selected === 'spaceDetails'
       || selected === 'addReview'
       || selected === 'reviews'
@@ -130,7 +131,7 @@ const AppBar = ({ isLoggedIn, selected, classes, routes }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <NavIcons />
