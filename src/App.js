@@ -27,7 +27,6 @@ function Spaces() {
               label: r.label,
               path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
               key: r.key,
-              enforceLogin: r.enforceLogin,
               icon: r.icon,
             }))}
             selected={route.key}
@@ -38,10 +37,6 @@ function Spaces() {
     </Switch>
   );
 }
-
-// const ProtectedSpaces = withAuthenticationRequired(Spaces, {
-//   onRedirecting: () => <div>Redirecting you to the login page...</div>,
-// });
 
 function App() {
   const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
@@ -62,7 +57,6 @@ function App() {
                       label: r.label,
                       path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
                       key: r.key,
-                      enforceLogin: r.enforceLogin,
                       icon: r.icon,
                     }))}
                     selected={route.key}

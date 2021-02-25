@@ -22,14 +22,12 @@ const routes = [{
   content: Home,
   key: 'home',
   icon: HomeIcon,
-  enforceLogin: false,
 }, {
   label: 'Search for a space',
   path: '/search',
   content: Search,
   key: 'search',
   icon: SearchIcon,
-  enforceLogin: false,
 }, {
   label: 'Profile',
   path: '/profile',
@@ -37,8 +35,6 @@ const routes = [{
   content: Home,
   key: 'profile',
   icon: PersonOutlineIcon,
-  // todo: change this
-  enforceLogin: false,
 }];
 
 const spaceRoutes = [{
@@ -47,8 +43,6 @@ const spaceRoutes = [{
   // todo: change this/
   content: ProtectedRoute(AddReview),
   key: 'addReview',
-  // todo: change this
-  enforceLogin: false,
   skipAppBar: true,
   exact: false,
 }, {
@@ -57,15 +51,12 @@ const spaceRoutes = [{
   content: ProtectedRoute(AddSpace),
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
-  // todo: change this
-  enforceLogin: true,
 }, {
   label: 'Space Details',
   path: '/:spaceId',
   content: SpaceDetails,
   key: 'spaceDetails',
   skipAppBar: true,
-  enforceLogin: false,
   /* TODO: check on this
    exact: true */
 },
@@ -75,7 +66,6 @@ const spaceRoutes = [{
   content: Reviews,
   key: 'reviews',
   skipAppBar: true,
-  enforceLogin: false,
 },
 ];
 
