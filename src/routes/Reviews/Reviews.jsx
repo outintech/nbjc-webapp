@@ -5,9 +5,9 @@ import getAllReviews from '../../__mocks__/getAllReviewsMock';
 const Reviews = () => (
   <ReviewsPage
     text={getAllReviews().text}
-    dateCreated={getAllReviews().dateCreated}
     userName={getAllReviews().userName}
     rating={getAllReviews().rating}
+    dateCreated={getAllReviews().dateCreated}
   />
 );
 

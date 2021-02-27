@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography } from '@material-ui/core';
-// import { useHistory } from 'react-router-dom';
+import {
+  Grid,
+  Paper,
+  Typography,
+  Card,
+} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import Rating from '@material-ui/lab/Rating';
 // import StarIcon from '@material-ui/icons/Star';
@@ -18,15 +23,14 @@ const styles = (theme) => ({
     flexGrow: 1,
   },
   paperMain: {
-    padding: '10px',
+    padding: '10px 10px',
     textAlign: 'center',
     color: theme.palette.text.secondary,
     height: '100px',
   },
   paper: {
-    padding: '10px',
+    padding: '10px 10px',
     textAlign: 'left',
-    height: '100px',
   },
   starIcon: {
     paddingBottom: '0 !important',
@@ -37,14 +41,14 @@ const styles = (theme) => ({
 const ReviewsPage = ({
   classes,
   rating,
-  // dateCreated,
+  dateCreated,
   userName,
   text,
 }) => {
-  // const history = useHistory();
-  // // eslint-disable-next-line
-  // const name = history.location.state.name;
-  const name = 'La Colombe Coffee';
+  const history = useHistory();
+  // eslint-disable-next-line
+  const name = history.location.state.name;
+  // const name = 'La Colombe Coffee';
 
   return (
     <main>
@@ -62,15 +66,18 @@ const ReviewsPage = ({
               {` Read ratings and reviews for ${name} from The Lavender Book users.`}
             </Typography>
           </Paper>
-          <Paper className={classes.paper}>
+          <Card className={classes.paper}>
             <Typography variant="body1">
               {userName}
+            </Typography>
+            <Typography variant="body1">
+              {dateCreated}
             </Typography>
             <StyledRating name="read-only" value={rating} readOnly />
             <Typography variant="body1">
               {`"${text}"`}
             </Typography>
-          </Paper>
+          </Card>
         </Grid>
       </Grid>
     </main>
