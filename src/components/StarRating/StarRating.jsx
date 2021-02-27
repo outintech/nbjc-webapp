@@ -78,6 +78,7 @@ const StarRating = ({
             onClick={() => changeRating(rating)}
             color={color}
             key={rating}
+            data-testid={`star-rating-unfilled-${rating}`}
           >
             <StarBorderIcon />
           </IconButton>,

@@ -7,6 +7,8 @@ import Home from './Home';
 import Search from './Search';
 import AddSpace from './AddSpace';
 import AddReview from './AddReview';
+import SpaceDetails from './SpaceDetails';
+import Reviews from './Reviews';
 
 const routes = [{
   label: 'Home',
@@ -59,7 +61,25 @@ const spaceRoutes = [{
   icon: AddCircleOutlineIcon,
   // todo: change this
   enforceLogin: false,
-}];
+}, {
+  label: 'Space Details',
+  path: '/:spaceId',
+  content: SpaceDetails,
+  key: 'spaceDetails',
+  skipAppBar: true,
+  enforceLogin: false,
+  /* TODO: check on this
+   exact: true */
+},
+{
+  label: 'Reviews',
+  path: '/:spaceId/reviews',
+  content: Reviews,
+  key: 'reviews',
+  skipAppBar: true,
+  enforceLogin: false,
+},
+];
 
 export default routes;
 export { spaceRoutes };

@@ -1,230 +1,273 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders SpaceDetailsPage 1`] = `
+exports[`SpaceDetailsPage renders SpaceDetailsPage 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiFormGroup-root"
-  >
-    <h1>
-       Rate and review this space.
-    </h1>
-    <h1>
-       You can rate and review anonymously.
-    </h1>
-    <div
-      aria-label="Name of Space"
-      avatar="[object Object]"
-      subheader="[object Object]"
-      title="[object Object]"
-    />
-    <p>
-      Rate this space.
-    </p>
-    <button
-      class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiIconButton-label"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiIconButton-label"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiIconButton-label"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiIconButton-label"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiIconButton-root StarRating-button-1 MuiIconButton-colorPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiIconButton-label"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
-      </span>
-    </button>
-    <p>
-      Share your thoughts
-    </p>
-    <div
-      class="MuiFormControl-root MuiTextField-root"
-    >
-      <label
-        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-required Mui-required"
-        data-shrink="false"
-        for="outlined-multiline-static"
-        id="outlined-multiline-static-label"
-      >
-        Write Review
-        <span
-          aria-hidden="true"
-          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
-        >
-           *
-        </span>
-      </label>
+  <div>
+    <div>
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiPaper-root MuiCard-root SpaceDetailCard-root-1 SpaceDetailCard-card-5 MuiPaper-outlined MuiPaper-rounded"
       >
-        <textarea
-          aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
-          id="outlined-multiline-static"
-          placeholder="Write Your Review Here"
-          required=""
-          rows="1"
-          style="height: 0px; overflow: hidden;"
-        />
-        <textarea
-          aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
-          readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
-          tabindex="-1"
-        />
-        <fieldset
-          aria-hidden="true"
-          class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+        <div
+          class="MuiCardHeader-root"
         >
-          <legend
-            class="PrivateNotchedOutline-legendLabelled-4"
+          <div
+            class="MuiCardHeader-avatar"
           >
-            <span>
-              Write Review *
+            <div
+              color="secondary"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root SpaceDetailCard-starIcon-2 MuiSvgIcon-colorSecondary MuiSvgIcon-fontSizeLarge"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                />
+              </svg>
+              <span
+                class="MuiTypography-root SpaceDetailCard-rating-3 MuiTypography-caption MuiTypography-colorSecondary MuiTypography-alignCenter"
+              >
+                4.5
+              </span>
+            </div>
+          </div>
+          <div
+            class="MuiCardHeader-content"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6"
+            >
+              Katz's Delicatessen
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body2"
+            >
+              Restaurant
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiCardMedia-root SpaceDetailCard-cardMedia-6"
+          style="background-image: url(https://s3-media1.fl.yelpcdn.com/bphoto/B6xNx79cSE7bFxqERBYOhg/o.jpg);"
+        />
+        <div
+          class="MuiCardContent-root"
+        >
+          <div
+            class="SpaceDetailCard-chipWrapper-14"
+          >
+            <div
+              class="ChipList-chipWrapper-22"
+            >
+              <div
+                class="MuiChip-root ChipList-chip-23 MuiChip-colorSecondary"
+              >
+                <span
+                  class="MuiChip-label"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body2"
+                  >
+                    POC-owned
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root"
+          />
+          <div
+            class="SpaceDetailCard-reviewDiv-7"
+          >
+            <h5
+              class="MuiTypography-root SpaceDetailCard-featuredReview-8 MuiTypography-h5"
+            >
+              Recent Reviews
+            </h5>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined SpaceDetailCard-seeAllButton-9 MuiButton-outlinedPrimary"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                See All Reviews
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter"
+          >
+            There are no reviews. Be the first to rate and review this space!
+          </p>
+          <div
+            class="SpaceDetailCard-reviewButton-10"
+          >
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              href="/spaces/1/reviews/new"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Write a review
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+          <hr
+            class="MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root SpaceDetailCard-subtitles-18 MuiTypography-body1"
+          >
+            Space Address
+          </p>
+          <div
+            class="SpaceDetailCard-location-11"
+          >
+            <div
+              class="SpaceDetailCard-address-13"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                205 E Houston St
+              </p>
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                New York
+              </p>
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                10002
+              </p>
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                US
+              </p>
+            </div>
+            <div
+              class="SpaceDetailCard-distance-12"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                TBD: distance
+              </p>
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root SpaceDetailCard-subtitles-18 MuiTypography-body1"
+          >
+            Phone Number
+          </p>
+          <a
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+            href="tel:+1 (212) 254-2246"
+            tabindex="0"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              +1 (212) 254-2246
             </span>
-          </legend>
-        </fieldset>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </a>
+          <hr
+            class="MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root SpaceDetailCard-subtitles-18 MuiTypography-body1"
+          >
+            WebSite
+          </p>
+          <a
+            class="MuiTypography-root MuiLink-root MuiLink-underlineHover SpaceDetailCard-url-21 MuiTypography-body1 MuiTypography-colorPrimary"
+            href="https://www.yelp.com/biz/katzs-delicatessen-new-york?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=cZpSYyZPR1LaxFGR9syHlQ"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Link to Yelp
+          </a>
+          <hr
+            class="MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root SpaceDetailCard-subtitles-18 MuiTypography-body1"
+          >
+            Hours Of Operation
+          </p>
+          <p
+            class="MuiTypography-root SpaceDetailCard-mainInformation-19 MuiTypography-body1"
+          >
+            Open Now
+          </p>
+          <hr
+            class="MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root SpaceDetailCard-subtitles-18 MuiTypography-body1"
+          >
+            Share
+          </p>
+          <span
+            aria-disabled="false"
+            aria-label="visit space"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text SpaceDetailCard-shareButton-17 MuiButton-textPrimary"
+            role="button"
+            tabindex="0"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                focusable="false"
+                style="padding: 0px;"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </span>
+          <p
+            class="MuiTypography-root SpaceDetailCard-mainInformation-19 MuiTypography-body1"
+          >
+            Share this Space with your network
+          </p>
+        </div>
       </div>
     </div>
-    <label
-      class="MuiFormControlLabel-root"
-    >
-      <span
-        aria-disabled="false"
-        class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-6 MuiCheckbox-root MuiCheckbox-colorSecondary MuiIconButton-colorSecondary"
-      >
-        <span
-          class="MuiIconButton-label"
-        >
-          <input
-            class="PrivateSwitchBase-input-9"
-            data-indeterminate="false"
-            name="publish"
-            type="checkbox"
-            value=""
-          />
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-            />
-          </svg>
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
-      </span>
-      <span
-        class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
-      >
-        Publish my rating and review anonymously.
-      </span>
-    </label>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        Submit
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
   </div>
 </DocumentFragment>
 `;

@@ -51,8 +51,6 @@ const useSearch = ({ indicators }) => {
           fetchData(),
         );
       } catch (e) {
-        // todo: how do we monitor?
-        console.log(e);
         setSearchResults([]);
       }
     } else {

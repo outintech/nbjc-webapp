@@ -2,7 +2,9 @@
 
 exports[`Review renders with default values 1`] = `
 <DocumentFragment>
-  <form>
+  <form
+    data-testid="review-form"
+  >
     <h6
       class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-alignCenter"
     >
@@ -16,6 +18,7 @@ exports[`Review renders with default values 1`] = `
     <div>
       <button
         class="MuiButtonBase-root MuiIconButton-root StarRating-button-7 MuiIconButton-colorPrimary"
+        data-testid="star-rating-unfilled-1"
         tabindex="0"
         type="button"
       >
@@ -36,6 +39,7 @@ exports[`Review renders with default values 1`] = `
       </button>
       <button
         class="MuiButtonBase-root MuiIconButton-root StarRating-button-7 MuiIconButton-colorPrimary"
+        data-testid="star-rating-unfilled-2"
         tabindex="0"
         type="button"
       >
@@ -56,6 +60,7 @@ exports[`Review renders with default values 1`] = `
       </button>
       <button
         class="MuiButtonBase-root MuiIconButton-root StarRating-button-7 MuiIconButton-colorPrimary"
+        data-testid="star-rating-unfilled-3"
         tabindex="0"
         type="button"
       >
@@ -76,6 +81,7 @@ exports[`Review renders with default values 1`] = `
       </button>
       <button
         class="MuiButtonBase-root MuiIconButton-root StarRating-button-7 MuiIconButton-colorPrimary"
+        data-testid="star-rating-unfilled-4"
         tabindex="0"
         type="button"
       >
@@ -96,6 +102,7 @@ exports[`Review renders with default values 1`] = `
       </button>
       <button
         class="MuiButtonBase-root MuiIconButton-root StarRating-button-7 MuiIconButton-colorPrimary"
+        data-testid="star-rating-unfilled-5"
         tabindex="0"
         type="button"
       >
@@ -123,10 +130,11 @@ exports[`Review renders with default values 1`] = `
     <h6
       class="MuiTypography-root MuiTypography-h6"
     >
-      Share your thought
+      Share your thoughts
     </h6>
     <div
       class="MuiFormControl-root MuiTextField-root Review-review-2 MuiFormControl-fullWidth"
+      data-testid="review-content"
     >
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"

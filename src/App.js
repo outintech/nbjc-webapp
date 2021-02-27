@@ -8,13 +8,14 @@ import {
 import { IndicatorProvider } from './providers/IndicatorContext';
 
 import AppBar from './components/AppBar';
+import NameContextProvider from './context/NameContext';
 
 import theme from './theme';
 import routes, { spaceRoutes } from './routes';
 
 function Spaces() {
   const match = useRouteMatch();
-  const spaceKeys = ['addSpace', 'addReview'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
   return (
     <Switch>
       {spaceRoutes.map((route) => (
@@ -41,42 +42,45 @@ function Spaces() {
 }
 
 function App() {
-  const spaceKeys = ['addSpace', 'addReview'];
+  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'review'];
   return (
     <>
-      <Router>
+      <NameContextProvider>
         <IndicatorProvider>
-          <ThemeProvider theme={theme}>
-            <div className="App">
-              <Switch>
-                {routes.map((route) => (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    exact={route.exact === false ? false : true}
-                  >
-                    <AppBar
-                      routes={[...routes, ...spaceRoutes].filter((r) => !r.skipAppBar).map((r) => ({
-                        label: r.label,
-                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
-                        key: r.key,
-                        enforceLogin: r.enforceLogin,
-                        icon: r.icon,
-                      }))}
-                      selected={route.key}
-                    />
-                    <route.content />
+          <Router>
+            <ThemeProvider theme={theme}>
+              <div className="App">
+                <Switch>
+                  {routes.map((route) => (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      exact={route.exact === false ? false : true}
+                    >
+                      <AppBar
+                        routes={[...routes, ...spaceRoutes]
+                          .filter((r) => !r.skipAppBar).map((r) => ({
+                            label: r.label,
+                            path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
+                            key: r.key,
+                            enforceLogin: r.enforceLogin,
+                            icon: r.icon,
+                          }))}
+                        selected={route.key}
+                      />
+                      <route.content />
+                    </Route>
+                  ))}
+                  {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
+                  <Route path="/spaces">
+                    <Spaces />
                   </Route>
-                ))}
-                {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
-                <Route path="/spaces">
-                  <Spaces />
-                </Route>
-              </Switch>
-            </div>
-          </ThemeProvider>
+                </Switch>
+              </div>
+            </ThemeProvider>
+          </Router>
         </IndicatorProvider>
-      </Router>
+      </NameContextProvider>
     </>
   );
 }
