@@ -118,6 +118,7 @@ const styles = () => ({
 });
 
 const SpaceDetailCard = ({
+  totalReviews,
   id,
   name,
   category,
@@ -212,19 +213,23 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <div className={classes.reviewDiv}>
-          <Typography variant="h5" className={classes.featuredReview}>
-            Recent Reviews
-          </Typography>
-          {/*  TODO:  Conditional logic for if there are reviews or not! Fix sizing! */}
-          <Button variant="outlined" color="primary" onClick={handleClick} className={classes.seeAllButton}>
-            See All Reviews
-            {/* See All {numberOfReviews} */}
-          </Button>
-        </div>
-        <Typography variant="body2" align="center">
-          There are no reviews. Be the first to rate and review this space!
+        <Typography variant="h5" className={classes.featuredReview}>
+          Recent Reviews
         </Typography>
+        {totalReviews > 0 ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleClick}
+            className={classes.seeAllButton}
+          >
+            {`See All ${totalReviews}`}
+          </Button>
+        ) : (
+          <Typography variant="body2" align="center">
+            There are no reviews. Be the first to rate and review this space!
+          </Typography>
+        )}
         <div className={classes.reviewButton}>
           <Button
             variant="contained"

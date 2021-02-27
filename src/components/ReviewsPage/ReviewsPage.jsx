@@ -78,6 +78,30 @@ const ReviewsPage = ({
               {`"${text}"`}
             </Typography>
           </Card>
+          <Card className={classes.paper}>
+            <Typography variant="body1">
+              {userName}
+            </Typography>
+            <Typography variant="body1">
+              {dateCreated}
+            </Typography>
+            <StyledRating name="read-only" value={rating} readOnly />
+            <Typography variant="body1">
+              {`"${text}"`}
+            </Typography>
+          </Card>
+          <Card className={classes.paper}>
+            <Typography variant="body1">
+              {userName}
+            </Typography>
+            <Typography variant="body1">
+              {dateCreated}
+            </Typography>
+            <StyledRating name="read-only" value={rating} readOnly />
+            <Typography variant="body1">
+              {`"${text}"`}
+            </Typography>
+          </Card>
         </Grid>
       </Grid>
     </main>

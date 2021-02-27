@@ -14,6 +14,7 @@ const SpaceDetailsPage = ({
   category,
   averageRating,
   space,
+  totalReviews,
 }) => {
   const [cardData, setCardData] = useState();
   const [hoursOfOperation, setHoursOfOperation] = useState();
@@ -36,6 +37,7 @@ const SpaceDetailsPage = ({
         && (
           <div>
             <SpaceDetailsCard
+              totalReviews={totalReviews}
               name={cardData.name}
               id={cardData.id}
               phoneNumber={phoneNumber}

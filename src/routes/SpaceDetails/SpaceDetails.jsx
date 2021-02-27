@@ -6,6 +6,7 @@ import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
 
 import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';
+import getAllReviews from '../../__mocks__/getAllReviewsMock';
 
 const SpaceDetails = () => {
   const { setSpaceTitle, setSpaceData, spaceTitle } = useContext(NameContext);
@@ -39,6 +40,7 @@ const SpaceDetails = () => {
         averageRating={getCategoryAndRating().averageRating}
         space={space}
         spaceTitle={spaceTitle}
+        totalReviews={getAllReviews().totalReviews}
       />
     </>
   );
