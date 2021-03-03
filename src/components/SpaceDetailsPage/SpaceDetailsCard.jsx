@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
-
 import {
   Button,
   Card,
@@ -21,6 +20,8 @@ import ShareIcon from '@material-ui/icons/Share';
 
 import useMobileDevice from '../../hooks/useMobileDevice';
 import ChipList from '../ChipList';
+import ReviewCard from '../ReviewsPage/ReviewCard';
+import { previousReview, nextReview } from '../../utils/reviewPreview';
 
 const styles = () => ({
   root: {
@@ -135,6 +136,7 @@ const SpaceDetailCard = ({
   overrideClasses,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [currentReview, setCurrentReview] = useState(0);
   const [isMobileOrTablet] = useMobileDevice();
 
   const history = useHistory();
@@ -213,23 +215,50 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <Typography variant="h5" className={classes.featuredReview}>
-          Recent Reviews
-        </Typography>
-        {totalReviews > 0 ? (
+        <div display="flex">
+          <Typography variant="h5" className={classes.featuredReview}>
+            Recent Reviews
+          </Typography>
+          {totalReviews.length > 0 ? (
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleClick}
+              className={classes.seeAllButton}
+            >
+              {`See All ${totalReviews.length}`}
+            </Button>
+          ) : ''}
+        </div>
+        {totalReviews.length === 0 ? (
+        // eslint-disable-next-line
+          <Typography variant="body2" align="center">
+          There are no reviews. Be the first to rate and review this space!
+          </Typography>
+        ) : ''}
+        <div display="flex">
           <Button
             variant="outlined"
             color="primary"
-            onClick={handleClick}
-            className={classes.seeAllButton}
+            onClick={() => setCurrentReview(previousReview(currentReview, totalReviews.length))}
           >
-            {`See All ${totalReviews}`}
+            Previous
           </Button>
-        ) : (
-          <Typography variant="body2" align="center">
-            There are no reviews. Be the first to rate and review this space!
-          </Typography>
-        )}
+          <ReviewCard
+            userName={totalReviews[currentReview].userName}
+            dateCreated={totalReviews[currentReview].dateCreated}
+            rating={totalReviews[currentReview].rating}
+            text={totalReviews[currentReview].text}
+            classes={classes}
+          />
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => setCurrentReview(nextReview(currentReview, totalReviews.length))}
+          >
+            Next
+          </Button>
+        </div>
         <div className={classes.reviewButton}>
           <Button
             variant="contained"

@@ -5,18 +5,9 @@ import {
   Grid,
   Paper,
   Typography,
-  Card,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-
-import Rating from '@material-ui/lab/Rating';
-// import StarIcon from '@material-ui/icons/Star';
-
-const StyledRating = withStyles({
-  iconFilled: {
-    color: '#9276b5',
-  },
-})(Rating);
+import ReviewCard from './ReviewCard';
 
 const styles = (theme) => ({
   root: {
@@ -40,10 +31,11 @@ const styles = (theme) => ({
 
 const ReviewsPage = ({
   classes,
-  rating,
-  dateCreated,
-  userName,
-  text,
+  // rating,
+  // dateCreated,
+  // userName,
+  // text,
+  reviews,
 }) => {
   const history = useHistory();
   // eslint-disable-next-line
@@ -66,42 +58,15 @@ const ReviewsPage = ({
               {` Read ratings and reviews for ${name} from The Lavender Book users.`}
             </Typography>
           </Paper>
-          <Card className={classes.paper}>
-            <Typography variant="body1">
-              {userName}
-            </Typography>
-            <Typography variant="body1">
-              {dateCreated}
-            </Typography>
-            <StyledRating name="read-only" value={rating} readOnly />
-            <Typography variant="body1">
-              {`"${text}"`}
-            </Typography>
-          </Card>
-          <Card className={classes.paper}>
-            <Typography variant="body1">
-              {userName}
-            </Typography>
-            <Typography variant="body1">
-              {dateCreated}
-            </Typography>
-            <StyledRating name="read-only" value={rating} readOnly />
-            <Typography variant="body1">
-              {`"${text}"`}
-            </Typography>
-          </Card>
-          <Card className={classes.paper}>
-            <Typography variant="body1">
-              {userName}
-            </Typography>
-            <Typography variant="body1">
-              {dateCreated}
-            </Typography>
-            <StyledRating name="read-only" value={rating} readOnly />
-            <Typography variant="body1">
-              {`"${text}"`}
-            </Typography>
-          </Card>
+          {reviews.map((review) => (
+            <ReviewCard
+              userName={review.userName}
+              rating={review.rating}
+              dateCreated={review.dateCreated}
+              text={review.text}
+              classes={classes}
+            />
+          ))}
         </Grid>
       </Grid>
     </main>
