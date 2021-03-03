@@ -31,16 +31,12 @@ const styles = (theme) => ({
 
 const ReviewsPage = ({
   classes,
-  // rating,
-  // dateCreated,
-  // userName,
-  // text,
   reviews,
 }) => {
   const history = useHistory();
+  // TODO: fix the linting
   // eslint-disable-next-line
   const name = history.location.state.name;
-  // const name = 'La Colombe Coffee';
 
   return (
     <main>
