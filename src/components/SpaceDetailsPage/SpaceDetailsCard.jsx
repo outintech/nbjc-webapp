@@ -13,7 +13,12 @@ import {
   Typography,
   IconButton,
   Link,
+  Snackbar,
+  // SnackbarContent,
 } from '@material-ui/core';
+
+import MuiAlert from '@material-ui/lab/Alert';
+
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -23,6 +28,11 @@ import useMobileDevice from '../../hooks/useMobileDevice';
 import ChipList from '../ChipList';
 import ReviewCard from '../ReviewsPage/ReviewCard';
 import { previousReview, nextReview } from '../../utils/reviewPreview';
+
+function Alert(props) {
+  // eslint-disable-next-line
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const styles = () => ({
   root: {
@@ -136,11 +146,21 @@ const SpaceDetailCard = ({
   yelpUrl,
   overrideClasses,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [snackBar, setSnackBar] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [currentReview, setCurrentReview] = useState(0);
   const [isMobileOrTablet] = useMobileDevice();
 
   const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   /* if desktop, copy to clipboard unique url for the space.
    if mobile, share sheet to text, email, whatever is on your phone or tablet
   */
@@ -152,8 +172,8 @@ const SpaceDetailCard = ({
           text: `Check out ${name} at ${document.location.href}`,
         })
         .then(() => {
-          // TODO: add snackbar
-          console.log('Successfully shared');
+          setOpen(true);
+          setSnackBar(true);
         })
         .catch((error) => {
           console.error('Something went wrong sharing the blog', error);
@@ -163,8 +183,8 @@ const SpaceDetailCard = ({
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
         navigator.clipboard.writeText(currentUrl);
-        // TODO: add snackbar
-        console.log('Successfully shared');
+        setOpen(true);
+        setSnackBar(true);
       }
     }
   };
@@ -176,6 +196,7 @@ const SpaceDetailCard = ({
     };
     history.push(location);
   };
+
   return (
     <Card
       className={cx(classes.root, overrideClasses.root, classes.card)}
@@ -208,11 +229,7 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia
-        // component="img"
-        image={imageUrl}
-        className={classes.cardMedia}
-      />
+      <CardMedia image={imageUrl} className={classes.cardMedia} />
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
@@ -231,14 +248,18 @@ const SpaceDetailCard = ({
             >
               {`See All ${totalReviews.length}`}
             </Button>
-          ) : ''}
+          ) : (
+            ''
+          )}
         </div>
         {totalReviews.length === 0 ? (
-        // eslint-disable-next-line
+          // eslint-disable-next-line
           <Typography variant="body2" align="center">
-          There are no reviews. Be the first to rate and review this space!
+            There are no reviews. Be the first to rate and review this space!
           </Typography>
-        ) : ''}
+        ) : (
+          ''
+        )}
         <div display="flex">
           <IconButton
             variant="outlined"
@@ -355,6 +376,13 @@ const SpaceDetailCard = ({
         <Typography variant="body1" className={classes.mainInformation}>
           Share this Space with your network
         </Typography>
+        {snackBar ? (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              Copied to the ClipBoard
+            </Alert>
+          </Snackbar>
+        ) : null}
       </CardContent>
     </Card>
   );

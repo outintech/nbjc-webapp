@@ -34,7 +34,6 @@ const SpaceDetails = () => {
 
   return (
     <>
-      {/* TODO: add average Rating & category props & name */}
       <SpaceDetailsPage
         category={getCategoryAndRating().category}
         averageRating={getCategoryAndRating().averageRating}
