@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const styles = (theme) => ({
   root: {
@@ -17,11 +17,9 @@ const styles = (theme) => ({
 });
 
 const ReviewsPage = ({ classes }) => {
-  // const history = useHistory();
+  const history = useHistory();
   // eslint-disable-next-line
-  // const name = history.location.state.name;
-
-  const name = 'kat';
+  const name = history.location.state.name;
 
   return (
     <main>
