@@ -92,7 +92,7 @@ const Review = ({
 
   return (
     <>
-      <form onSubmit={onFormSubmit}>
+      <form onSubmit={onFormSubmit} data-testid="review-form">
         {title(matches)}
         <Typography variant="h6">Rate this space</Typography>
         <div>
@@ -126,6 +126,7 @@ const Review = ({
           name="review"
           rows={5}
           className={classes.review}
+          data-testid="review-content"
           fullWidth
           multiline
         />

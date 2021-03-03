@@ -247,6 +247,7 @@ exports[`Review renders with default values 1`] = `
     </button>
     <button
       class="MuiButtonBase-root MuiIconButton-root StarRating-button-15 StarRating-noHover-16 MuiIconButton-colorPrimary"
+      data-testid="star-rating-unfilled-5"
       tabindex="0"
       type="button"
     >

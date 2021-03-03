@@ -1,8 +1,9 @@
 import getSearchResults from './search';
 import getSpace from './space';
-import postReview from './review';
+import { postReview, getReviewForSpaceAndUser } from './review';
 
 export {
+  getReviewForSpaceAndUser,
   getSearchResults,
   getSpace,
   postReview,

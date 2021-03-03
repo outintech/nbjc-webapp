@@ -34,6 +34,7 @@ const ErrorSnackbar = ({
   onClose,
   body,
   classes,
+  showSupport,
 }) => (
   <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={onClose}>
     <Alert
@@ -44,14 +45,17 @@ const ErrorSnackbar = ({
       classes={{ message: classes.alertMessage }}
     >
       <Typography variant="body2">{body}</Typography>
-      <Button
-        className={classes.supportButton}
-        href="/support"
-        disableElevation
-        disableRipple
-      >
-        Support
-      </Button>
+      {showSupport
+        && (
+        <Button
+          className={classes.supportButton}
+          href="/support"
+          disableElevation
+          disableRipple
+        >
+          Support
+        </Button>
+        )}
     </Alert>
   </Snackbar>
 );
@@ -61,8 +65,11 @@ ErrorSnackbar.propTypes = {
   onClose: PropTypes.func.isRequired,
   body: PropTypes.string.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  showSupport: PropTypes.bool,
 };
 
-ErrorSnackbar.defaultProps = {};
+ErrorSnackbar.defaultProps = {
+  showSupport: true,
+};
 
 export default withStyles(styles)(ErrorSnackbar);
