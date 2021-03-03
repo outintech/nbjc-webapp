@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import ShareIcon from '@material-ui/icons/Share';
 
 import useMobileDevice from '../../hooks/useMobileDevice';
@@ -62,7 +63,7 @@ const styles = () => ({
   seeAllButton: {
     display: 'inline-flex',
     float: 'right',
-    margin: 0,
+    margin: '10px 10px',
   },
   reviewButton: {
     display: 'flex',
@@ -151,6 +152,7 @@ const SpaceDetailCard = ({
           text: `Check out ${name} at ${document.location.href}`,
         })
         .then(() => {
+          // TODO: add snackbar
           console.log('Successfully shared');
         })
         .catch((error) => {
@@ -161,6 +163,7 @@ const SpaceDetailCard = ({
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
         navigator.clipboard.writeText(currentUrl);
+        // TODO: add snackbar
         console.log('Successfully shared');
       }
     }
@@ -237,13 +240,13 @@ const SpaceDetailCard = ({
           </Typography>
         ) : ''}
         <div display="flex">
-          <Button
+          <IconButton
             variant="outlined"
             color="primary"
             onClick={() => setCurrentReview(previousReview(currentReview, totalReviews.length))}
           >
-            Previous
-          </Button>
+            <NavigateBeforeIcon color="primary" />
+          </IconButton>
           <ReviewCard
             userName={totalReviews[currentReview].userName}
             dateCreated={totalReviews[currentReview].dateCreated}
@@ -251,13 +254,13 @@ const SpaceDetailCard = ({
             text={totalReviews[currentReview].text}
             classes={classes}
           />
-          <Button
+          <IconButton
             variant="outlined"
             color="primary"
             onClick={() => setCurrentReview(nextReview(currentReview, totalReviews.length))}
           >
-            Next
-          </Button>
+            <NavigateNextIcon color="primary" />
+          </IconButton>
         </div>
         <div className={classes.reviewButton}>
           <Button

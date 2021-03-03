@@ -5,8 +5,9 @@ import {
   Grid,
   Paper,
   Typography,
+  Button,
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import ReviewCard from './ReviewCard';
 
 const styles = (theme) => ({
@@ -17,7 +18,12 @@ const styles = (theme) => ({
     padding: '10px 10px',
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    height: '100px',
+    height: '25%',
+  },
+  reviewButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '30px',
   },
   paper: {
     padding: '10px 10px',
@@ -37,14 +43,12 @@ const ReviewsPage = ({
   // TODO: fix the linting
   // eslint-disable-next-line
   const name = history.location.state.name;
+  const { spaceId } = useParams();
+  const id = parseInt(spaceId, 10);
 
   return (
     <main>
-      <Grid
-        container
-        className={classes.root}
-        spacing={2}
-      >
+      <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Paper className={classes.paperMain}>
             <Typography variant="h4" align="center">
@@ -53,6 +57,15 @@ const ReviewsPage = ({
             <Typography variant="body1" align="center">
               {` Read ratings and reviews for ${name} from The Lavender Book users.`}
             </Typography>
+            <div className={classes.reviewButton}>
+              <Button
+                variant="contained"
+                color="primary"
+                href={`/spaces/${id}/reviews/new`}
+              >
+                Write a review
+              </Button>
+            </div>
           </Paper>
           {reviews.map((review) => (
             <ReviewCard
