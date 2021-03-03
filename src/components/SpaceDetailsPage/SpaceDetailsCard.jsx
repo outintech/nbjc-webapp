@@ -14,10 +14,7 @@ import {
   IconButton,
   Link,
   Snackbar,
-  // SnackbarContent,
 } from '@material-ui/core';
-
-import MuiAlert from '@material-ui/lab/Alert';
 
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -28,11 +25,6 @@ import useMobileDevice from '../../hooks/useMobileDevice';
 import ChipList from '../ChipList';
 import ReviewCard from '../ReviewsPage/ReviewCard';
 import { previousReview, nextReview } from '../../utils/reviewPreview';
-
-function Alert(props) {
-  // eslint-disable-next-line
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const styles = () => ({
   root: {
@@ -162,7 +154,7 @@ const SpaceDetailCard = ({
   };
 
   /* if desktop, copy to clipboard unique url for the space.
-   if mobile, share sheet to text, email, whatever is on your phone or tablet
+  if mobile, share sheet to text, email, whatever is on your phone or tablet
   */
   const handleShare = () => {
     /* navigator */
@@ -377,11 +369,7 @@ const SpaceDetailCard = ({
           Share this Space with your network
         </Typography>
         {snackBar ? (
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success">
-              Copied to the ClipBoard
-            </Alert>
-          </Snackbar>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} message="Copied Link to the Clipboard." />
         ) : null}
       </CardContent>
     </Card>
