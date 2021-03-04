@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
-// import { withAuthenticationRequired } from '@auth0/auth0-react';
 import AppBar from './components/AppBar';
 import NameContextProvider from './context/NameContext';
 
