@@ -144,13 +144,20 @@ const SearchForm = ({
   const onSearchSubmit = (e) => {
     e.preventDefault();
     if (
-      !formValues.name
+      !(formValues.name || nameText)
       && !formValues.location
-      && !formValues.category
+      && !(formValues.category || categoryText)
     ) {
       setShowError(true);
     } else {
-      onSearch(formValues);
+      // nameText/categoryText is present when the user
+      // typed a free form name or category instead of choosing an
+      // option from the dropdown value.
+      onSearch({
+        name: formValues.name || nameText,
+        location: formValues.location,
+        category: formValues.categoy || categoryText,
+      });
     }
   };
 
@@ -175,6 +182,7 @@ const SearchForm = ({
           options={spaceNames}
           className={classes.autocompleteField}
           onChange={onNameChange}
+          freeSolo
           renderInput={(params) => (
             <TextField
               type="text"
@@ -214,6 +222,7 @@ const SearchForm = ({
           options={categories}
           className={classes.autocompleteField}
           onChange={onCategoryChange}
+          freeSolo
           renderInput={(params) => (
             <TextField
               type="text"

@@ -61,6 +61,13 @@ const styles = (theme) => ({
   filterButtonWrapper: {
     display: 'flex',
   },
+  searchresultsText: {
+    flexGrow: 2,
+  },
+  filterButton: {
+    width: '100px !important',
+    height: 36,
+  },
 });
 
 const Search = ({ classes, coords }) => {
@@ -80,7 +87,7 @@ const Search = ({ classes, coords }) => {
       console.log(err);
     }
   }, []);
-  console.log(coords);
+
   const {
     updateSearch,
     updateFilters,
@@ -126,10 +133,10 @@ const Search = ({ classes, coords }) => {
         {searchResults !== null && searchResults.length > 0 && (
           <>
             <div className={classes.filterButtonWrapper}>
-              <Typography variant="h6">
-                {`${searchResults.length} results found for ${search.searchTerm}`}
+              <Typography variant="h6" className={classes.searchresultsText}>
+                {`${searchResults.length} results found for ${search.searchTerm}, ${search.category}`}
               </Typography>
-              <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary">FILTER</Button>
+              <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary" className={classes.filterButton}>FILTER</Button>
             </div>
             <div className={classes.filterWrapper}>
               {openFilter && (

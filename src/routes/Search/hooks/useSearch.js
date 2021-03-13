@@ -43,13 +43,14 @@ const useSearch = ({ indicators }) => {
         setSearchResults([]);
         return;
       }
-      setSearchResults(data.slice(0, 9).map(utils.formatSearchResults));
+      setSearchResults(data.map(utils.formatSearchResults));
     }
-    if (search.searchTerm && search.searchTerm.length > 0) {
+    if (
+      (search.searchTerm && search.searchTerm.length > 0)
+      || (search.category && search.category.length > 0)
+    ) {
       try {
-        trackPromise(
-          fetchData(),
-        );
+        trackPromise(fetchData());
       } catch (e) {
         setSearchResults([]);
       }
@@ -75,7 +76,7 @@ const useSearch = ({ indicators }) => {
       });
     }
 
-    history.push({ pathname: '/search', search: query.toString() });
+    history.push({ pathname: '/search/results', search: query.toString() });
     const updatedSearchCritera = getSearchCriteria(query);
     setSearch({
       ...updatedSearchCritera,
@@ -92,7 +93,7 @@ const useSearch = ({ indicators }) => {
     } else {
       query.set(filterName, value);
     }
-    history.push({ pathname: '/search', search: query.toString() });
+    history.push({ pathname: '/search/results', search: query.toString() });
     const updatedSearchCritera = getSearchCriteria(query);
     setSearch({
       ...updatedSearchCritera,
