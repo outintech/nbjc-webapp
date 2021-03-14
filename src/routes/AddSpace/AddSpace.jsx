@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
@@ -111,7 +112,7 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { loadingUser } = useAuthenticatedUser();
+  const { loadingUser, redirectToCreate } = useAuthenticatedUser();
   console.log('loadingUser', loadingUser);
 
   const steps = getSteps();
@@ -148,43 +149,55 @@ const AddSpace = ({ classes }) => {
   };
 
   return (
-    <div className={classes.root}>
-      {activeStep !== 5 && (
-        <Stepper
-          activeStep={activeStep}
-          connector={null}
-          className={classes.stepper}
-        >
-          {steps.map((label, index) => (
-            <Step
-              color="secondary"
-              key={label}
-              onClick={() => {
-                if (index < activeStep && activeStep !== 5) {
-                  setActiveStep(index);
-                }
-              }}
-              className={classes.step}
-            >
-              {activeStep === index && (
-                <StepLabel className={classes.stepLabel} color="secondary">
-                  {label}
-                </StepLabel>
-              )}
-              {activeStep !== index && (
-                <StepLabel className={classes.stepLabel} color="secondary" />
-              )}
-            </Step>
-          ))}
-        </Stepper>
+    <>
+      {redirectToCreate && (
+        <Redirect
+          to={{
+            pathname: '/users/new',
+            search: '?returnTo=/spaces/new',
+          }}
+        />
       )}
-      <div>{getStepContent(activeStep, stepProps, formValues)}</div>
-      <ErrorSnackbar
-        snackbarOpen={snackbarOpen}
-        onClose={() => setSnackbarOpen(false)}
-        body="We could not find the space. Please try again or contact Support."
-      />
-    </div>
+      {!redirectToCreate && (
+        <div className={classes.root}>
+          {activeStep !== 5 && (
+            <Stepper
+              activeStep={activeStep}
+              connector={null}
+              className={classes.stepper}
+            >
+              {steps.map((label, index) => (
+                <Step
+                  color="secondary"
+                  key={label}
+                  onClick={() => {
+                    if (index < activeStep && activeStep !== 5) {
+                      setActiveStep(index);
+                    }
+                  }}
+                  className={classes.step}
+                >
+                  {activeStep === index && (
+                    <StepLabel className={classes.stepLabel} color="secondary">
+                      {label}
+                    </StepLabel>
+                  )}
+                  {activeStep !== index && (
+                    <StepLabel className={classes.stepLabel} color="secondary" />
+                  )}
+                </Step>
+              ))}
+            </Stepper>
+          )}
+          <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+          <ErrorSnackbar
+            snackbarOpen={snackbarOpen}
+            onClose={() => setSnackbarOpen(false)}
+            body="We could not find the space. Please try again or contact Support."
+          />
+        </div>
+      )}
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
+import CreateProfile from './CreateProfile';
 
 const ProtectedRoute = (component) => withAuthenticationRequired(component, {
   // eslint-disable-next-line react/react-in-jsx-scope
@@ -35,6 +36,14 @@ const routes = [{
   content: Home,
   key: 'profile',
   icon: PersonOutlineIcon,
+}, {
+  label: 'Create Profile',
+  path: '/users/new',
+  content: CreateProfile,
+  key: 'createProfile',
+  icon: PersonOutlineIcon,
+  skipAppBar: true,
+  exact: true,
 }];
 
 const spaceRoutes = [{
