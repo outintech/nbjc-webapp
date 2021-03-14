@@ -6,6 +6,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
+
 // todo: change to use api.
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
@@ -109,6 +111,9 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { loadingUser } = useAuthenticatedUser();
+  console.log('loadingUser', loadingUser);
+
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {

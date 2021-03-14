@@ -10,7 +10,6 @@ const getToken = async () => {
 const getUserID = async () => {
   const { user } = useAuth0();
   const userID = user.sub;
-
   return userID;
 };
 
