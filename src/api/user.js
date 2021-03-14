@@ -12,7 +12,7 @@ function getUser({ userId, token }) {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/users';
   url.searchParams.append('auth0_id', userId);
-
+  console.log(userId, token, url);
   const results = fetch(url, {
     method: 'GET',
     mode: 'cors',

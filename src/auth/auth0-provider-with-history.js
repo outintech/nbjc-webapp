@@ -20,6 +20,9 @@ const Auth0ProviderWithHistory = ({ children }) => {
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin}
+      responseType="token id_token"
+      audience="https://nbjc-app/api"
+      scope="openid profile write:spaces"
       onRedirectCallback={onRedirectCallback}
     >
       {children}
