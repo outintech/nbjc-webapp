@@ -57,6 +57,7 @@ const SearchForm = ({
   classes,
   onSearch,
   chips,
+  location,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
@@ -69,6 +70,14 @@ const SearchForm = ({
     })),
   });
 
+  useEffect(() => {
+    if (location) {
+      setFormValues({
+        ...formValues,
+        location: `${location.city}, ${location.state}`,
+      });
+    }
+  }, [location]);
   const [showError, setShowError] = useState(false);
 
   /** Start Name Autocomplete */
@@ -292,8 +301,11 @@ SearchForm.propTypes = {
   onFilterApplied: PropTypes.func.isRequired,
   searchCriteria: PropTypes.shape(searchProps).isRequired,
   chips: PropTypes.arrayOf(PropTypes.shape(chipType)).isRequired,
+  location: PropTypes.shape({}),
 };
 
-SearchForm.defaultProps = {};
+SearchForm.defaultProps = {
+  location: {},
+};
 
 export default withStyles(styles)(SearchForm);

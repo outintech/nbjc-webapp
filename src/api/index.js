@@ -3,6 +3,7 @@ import getCategories from './categories';
 import getSearchResults from './search';
 import { getSpace, getSpacesByName } from './space';
 import { postReview, getReviewForSpaceAndUser } from './review';
+import getLocation from './location';
 
 export {
   getCategories,
@@ -12,4 +13,5 @@ export {
   getSpace,
   getSpacesByName,
   postReview,
+  getLocation,
 };

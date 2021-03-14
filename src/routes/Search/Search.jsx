@@ -95,7 +95,8 @@ const Search = ({ classes, coords }) => {
     searchResults,
     loading,
     pagination,
-  } = useSearch({ userLocation: coords, indicators });
+    userLocation,
+  } = useSearch({ userCoords: coords, indicators });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -148,6 +149,7 @@ const Search = ({ classes, coords }) => {
           onSearch={onSearchSubmit}
           onFilterApplied={onFilterApplied}
           searchCriteria={search}
+          location={userLocation.address}
         />
       )}
       <div

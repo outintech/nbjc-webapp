@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import useQuery from '../../../hooks/useQuery';
-import { getSearchResults } from '../../../api';
+import { getSearchResults, getLocation } from '../../../api';
 import utils from '../../../utils';
 
 const getSearchCriteria = (query) => ({
@@ -17,7 +17,7 @@ const getSearchCriteria = (query) => ({
   // pageSize: parseInt(query.get('pageSize'), 10) || 20,
 });
 
-const useSearch = ({ indicators }) => {
+const useSearch = ({ indicators, userCoords }) => {
   const [searchResults, setSearchResults] = useState(null);
   const [pagination, setPagination] = useState(null);
   const query = useQuery();
@@ -61,6 +61,34 @@ const useSearch = ({ indicators }) => {
       setSearchResults(null);
     }
   }, [search]);
+
+  const [userLocation, setUserLocation] = useState({
+    coords: userCoords,
+    address: null,
+  });
+
+  useEffect(() => {
+    async function fetchLocation() {
+      if (userCoords && userCoords !== null) {
+        const locationResult = await getLocation({
+          lat: userCoords.latitude,
+          lng: userCoords.longitude,
+        });
+        setUserLocation({
+          ...userLocation,
+          address: locationResult.data.address,
+        });
+      }
+    }
+    try {
+      trackPromise(fetchLocation());
+    } catch (e) {
+      setUserLocation({
+        ...userLocation,
+        address: null,
+      });
+    }
+  }, [userCoords]);
 
   const updateSearch = (searchData) => {
     const { name, category, indicators: searchIndicators } = searchData;
@@ -115,6 +143,7 @@ const useSearch = ({ indicators }) => {
     loading: promiseInProgress,
     updateFilters,
     pagination,
+    userLocation,
   };
 };
 
