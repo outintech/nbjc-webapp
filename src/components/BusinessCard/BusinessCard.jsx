@@ -6,6 +6,7 @@ import cx from 'classnames';
 import {
   Button,
   Card,
+  CardActionArea,
   CardHeader,
   CardMedia,
   CardContent,
@@ -99,55 +100,58 @@ const BusinessCard = ({
   overrideClasses,
 }) => (
   <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
-    <CardHeader
-      avatar={(
-        <div color="secondary">
-          <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
-          <Typography
-            variant="caption"
-            color="secondary"
-            className={classes.rating}
-            align="center"
-          >
-            {averageRating}
-          </Typography>
+    <CardActionArea href={`/spaces/${id}`} disableRipple>
+      <CardHeader
+        avatar={(
+          <div color="secondary">
+            <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
+            <Typography
+              variant="caption"
+              color="secondary"
+              className={classes.rating}
+              align="center"
+            >
+              {averageRating}
+            </Typography>
+          </div>
+        )}
+        // TODO: POSTMVP feature
+        action={false && <BookmarkBorderIcon color="secondary" />}
+        title={<Typography variant="h6">{name}</Typography>}
+        subheader={<Typography variant="body2">{category}</Typography>}
+        classes={{ action: classes.headerAction }}
+      />
+      <CardMedia
+        image={imageUrl}
+        className={classes.cardMedia}
+      />
+      <CardContent>
+        <div className={classes.location}>
+          <div className={classes.address}>
+            <Typography variant="body1">{address}</Typography>
+          </div>
+          <div className={classes.distance}>
+            <Typography variant="body1">{distance}</Typography>
+          </div>
         </div>
-      )}
-      action={<BookmarkBorderIcon color="secondary" />}
-      title={<Typography variant="h6">{name}</Typography>}
-      subheader={<Typography variant="body2">{category}</Typography>}
-      classes={{ action: classes.headerAction }}
-    />
-    <CardMedia
-      image={imageUrl}
-      className={classes.cardMedia}
-    />
-    <CardContent>
-      <div className={classes.location}>
-        <div className={classes.address}>
-          <Typography variant="body1">{address}</Typography>
+        <Divider />
+        <div className={classes.chipWrapper}>
+          <ChipList chips={filters} />
         </div>
-        <div className={classes.distance}>
-          <Typography variant="body1">{distance}</Typography>
+        <div className={classes.footer}>
+          <Button color="primary" href={`tel:${phoneNumber}`}>Call Space</Button>
+          <Button color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
+          <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
+            <a href={url} target="_blank" rel="noreferrer">
+              <ShareIcon
+                color="primary"
+                style={{ padding: 0 }}
+              />
+            </a>
+          </Button>
         </div>
-      </div>
-      <Divider />
-      <div className={classes.chipWrapper}>
-        <ChipList chips={filters} />
-      </div>
-      <div className={classes.footer}>
-        <Button color="primary" href={`tel:${phoneNumber}`}>Call Space</Button>
-        <Button color="primary" href={`/spaces/${id}/review/new`}>Write a review</Button>
-        <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
-          <a href={url} target="_blank" rel="noreferrer">
-            <ShareIcon
-              color="primary"
-              style={{ padding: 0 }}
-            />
-          </a>
-        </Button>
-      </div>
-    </CardContent>
+      </CardContent>
+    </CardActionArea>
   </Card>
 );
 

@@ -10,7 +10,7 @@ import fetch from 'node-fetch';
  */
 const postReview = async (reviewOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = `/api/v1/spaces/${reviewOpts.spaceId}/reviews`;
+  url.pathname = '/api/v1/spaces/reviews';
   const data = {
     rating: reviewOpts.rating,
     content: reviewOpts.detail,

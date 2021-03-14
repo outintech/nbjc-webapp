@@ -19,6 +19,7 @@ const getSearchCriteria = (query) => ({
 
 const useSearch = ({ indicators }) => {
   const [searchResults, setSearchResults] = useState(null);
+  const [pagination, setPagination] = useState(null);
   const query = useQuery();
   const history = useHistory();
   const { promiseInProgress } = usePromiseTracker();
@@ -38,11 +39,13 @@ const useSearch = ({ indicators }) => {
         setSearchResults([]);
         return;
       }
-      const { data } = await getSearchResults(searchCriteria);
+      const { data, meta } = await getSearchResults(searchCriteria);
       if (data.length === 0) {
         setSearchResults([]);
+        setPagination(null);
         return;
       }
+      setPagination(meta);
       setSearchResults(data.map(utils.formatSearchResults));
     }
     if (
@@ -111,6 +114,7 @@ const useSearch = ({ indicators }) => {
     updateSearch,
     loading: promiseInProgress,
     updateFilters,
+    pagination,
   };
 };
 

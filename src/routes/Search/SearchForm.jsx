@@ -153,10 +153,23 @@ const SearchForm = ({
       // nameText/categoryText is present when the user
       // typed a free form name or category instead of choosing an
       // option from the dropdown value.
+      let name = formValues.name || nameText;
+      if (typeof name === 'string') {
+        name = {
+          name,
+        };
+      }
+      let category = formValues.category || categoryText;
+      if (typeof category === 'string') {
+        category = {
+          alias: category,
+        };
+      }
       onSearch({
-        name: formValues.name || nameText,
+        name,
         location: formValues.location,
-        category: formValues.categoy || categoryText,
+        category,
+        indicators: formValues.indicators,
       });
     }
   };

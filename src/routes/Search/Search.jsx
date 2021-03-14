@@ -94,6 +94,7 @@ const Search = ({ classes, coords }) => {
     search,
     searchResults,
     loading,
+    pagination,
   } = useSearch({ userLocation: coords, indicators });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
@@ -115,6 +116,30 @@ const Search = ({ classes, coords }) => {
     updateFilters('rating', changedFilters.stars);
   };
 
+  const getResultsString = () => {
+    let text = `${pagination.total_count} results found for`;
+    let comma = '';
+    if (search.searchTerm) {
+      text = `${text} ${search.searchTerm}`;
+      comma = ',';
+    }
+    if (search.category) {
+      text = `${text}${comma} ${search.category}`;
+      comma = ',';
+    }
+
+    const indicatorNames = indicators
+      .filter((indicator) => search.indicators.includes(indicator.value))
+      .map((indicator) => indicator.name);
+
+    if (indicatorNames.length < 3) {
+      text = `${text}${comma} ${indicatorNames.join(' and ')}`;
+    } else {
+      text = `${text}${comma} ${indicatorNames[0]} and ${indicatorNames.length - 1} more`;
+    }
+    return text;
+  };
+
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && (
@@ -134,7 +159,7 @@ const Search = ({ classes, coords }) => {
           <>
             <div className={classes.filterButtonWrapper}>
               <Typography variant="h6" className={classes.searchresultsText}>
-                {`${searchResults.length} results found for ${search.searchTerm}, ${search.category}`}
+                {getResultsString()}
               </Typography>
               <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary" className={classes.filterButton}>FILTER</Button>
             </div>
