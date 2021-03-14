@@ -12,7 +12,6 @@ const Auth0ProviderWithHistory = ({ children }) => {
 
   // where Auth0 redirects back to the app
   const onRedirectCallback = (appState) => {
-    // send users back to where they were before auth
     history.push(appState ? appState.returnTo : window.location.pathname);
   };
 

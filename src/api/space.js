@@ -14,9 +14,9 @@ const getSpace = async (spaceId) => {
 
 const postSpace = async () => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  const userID = await getUserID();
   const token = await getToken();
   url.pathname = '/api/v1/spaces';
+  const userID = getUserID();
   const data = {
     user_id: userID,
   };
@@ -26,7 +26,7 @@ const postSpace = async () => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Authoraization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     redirect: 'follow',
     body: JSON.stringify(data),

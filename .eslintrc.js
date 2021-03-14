@@ -29,5 +29,5 @@ module.exports = {
       */
       'no-undef': 0,
     },
-  ],
+  }],
 };
