@@ -9,6 +9,7 @@ import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
+import Profile from './Profile';
 
 const routes = [{
   label: 'Home',
@@ -27,8 +28,7 @@ const routes = [{
 }, {
   label: 'Profile',
   path: '/profile',
-  // todo: change this/
-  content: Home,
+  content: Profile,
   key: 'profile',
   icon: PersonOutlineIcon,
   // todo: change this
