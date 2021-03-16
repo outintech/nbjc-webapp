@@ -4,28 +4,40 @@ import CheckIcon from '@material-ui/icons/Check';
 import {
   Container,
   Chip,
-  Button,
   Typography,
   TextField,
   InputLabel,
   Box,
 } from '@material-ui/core';
 
-const styles = {
-  chipWrapper: {
-    maxHeight: 80,
+const styles = () => ({
+  root: {
+    maxHeight: 'lg',
     overflow: 'hidden',
+    backgroundColor: 'black',
+    display: 'flex',
   },
-  chip: {
+  container: {
+    maxHeight: 'lg',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  identityChip: {
     marginBottom: 8,
     marginRight: 4,
   },
-};
+  textInput: {
+    width: '100%',
+    margin: '10px 0 20px 0',
+  },
+});
 
 // Should these be abstracted to a different file
 const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aromantic', 'Asexual', 'Asian/Pacific Islander', 'Bicurious', 'Bigender', 'Bisexual', 'Black', 'Cisgender', 'Demisexual', 'Female', 'Gay', 'Gender Fluid', 'Gender Non-Binary', 'Gender Non-Conforming', 'Gender Queer', 'Immigrant', 'Indigenous', 'Intersex', 'Latinx', 'Lesbian', 'Male', 'Middle Eastern', 'Multiracial', 'North Afircan', 'Pangender', 'Pansexual', 'Person Living with a Disablity', 'Person of Color', 'Pilipinx', 'Polyamorous', 'Polygender', 'Queer', 'Skoliosexual', 'Straight', 'Transgender', 'Trigender', 'Two Spirit', 'Veteran', 'White'];
 
-const ProfilePage = () => {
+const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
     selectedLabels: ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aromantic', 'Asexual'],
     name: 'Name',
@@ -64,13 +76,10 @@ const ProfilePage = () => {
   // };
 
   return (
-    <Container maxWidth="lg">
+    <Container className={classes.container}>
       <Typography>
         Users Profile
       </Typography>
-      <Button>
-        Edit Profile
-      </Button>
       <form>
         <InputLabel type="inputLabel">
           <Typography>Name</Typography>
@@ -84,6 +93,7 @@ const ProfilePage = () => {
           placeholder="User Name"
           name="name"
           autoFocus
+          className={classes.textInput}
         />
         <InputLabel type="inputLabel">
           <Typography>Pronouns</Typography>
@@ -96,6 +106,7 @@ const ProfilePage = () => {
           variant="outlined"
           placeholder="User Name"
           name="pronouns"
+          className={classes.textInput}
         />
         <InputLabel type="inputLabel">
           <Typography>Location</Typography>
@@ -108,16 +119,17 @@ const ProfilePage = () => {
           variant="outlined"
           placeholder="User Name"
           name="location"
+          className={classes.textInput}
         />
-        <Typography>Tell us about yourself</Typography>
+        <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {userLabels.map((label) => (
             profileInfo.selectedLabels.includes(label) ? (
               <Chip
+                className={classes.identityChip}
                 key={label}
                 onClick={() => addLabel(label)}
                 color="secondary"
-                className={label}
                 icon={<CheckIcon />}
                 label={
                   (
@@ -130,11 +142,11 @@ const ProfilePage = () => {
             )
               : (
                 <Chip
+                  className={classes.identityChip}
                   key={label}
                   variant="outlined"
                   onClick={() => addLabel(label)}
                   color="primary"
-                  className={label}
                   label={
                     (
                       <Typography variant="body2">
