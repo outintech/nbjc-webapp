@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
-
+import withUser from '../AuthenticatedRoute';
 // todo: change to use api.
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
@@ -112,8 +110,6 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { loadingUser, redirectToCreate } = useAuthenticatedUser();
-  console.log('loadingUser', loadingUser);
 
   const steps = getSteps();
   const onNext = (data) => {
@@ -149,55 +145,43 @@ const AddSpace = ({ classes }) => {
   };
 
   return (
-    <>
-      {redirectToCreate && (
-        <Redirect
-          to={{
-            pathname: '/users/new',
-            search: '?returnTo=/spaces/new',
-          }}
-        />
-      )}
-      {!redirectToCreate && (
-        <div className={classes.root}>
-          {activeStep !== 5 && (
-            <Stepper
-              activeStep={activeStep}
-              connector={null}
-              className={classes.stepper}
+    <div className={classes.root}>
+      {activeStep !== 5 && (
+        <Stepper
+          activeStep={activeStep}
+          connector={null}
+          className={classes.stepper}
+        >
+          {steps.map((label, index) => (
+            <Step
+              color="secondary"
+              key={label}
+              onClick={() => {
+                if (index < activeStep && activeStep !== 5) {
+                  setActiveStep(index);
+                }
+              }}
+              className={classes.step}
             >
-              {steps.map((label, index) => (
-                <Step
-                  color="secondary"
-                  key={label}
-                  onClick={() => {
-                    if (index < activeStep && activeStep !== 5) {
-                      setActiveStep(index);
-                    }
-                  }}
-                  className={classes.step}
-                >
-                  {activeStep === index && (
-                    <StepLabel className={classes.stepLabel} color="secondary">
-                      {label}
-                    </StepLabel>
-                  )}
-                  {activeStep !== index && (
-                    <StepLabel className={classes.stepLabel} color="secondary" />
-                  )}
-                </Step>
-              ))}
-            </Stepper>
-          )}
-          <div>{getStepContent(activeStep, stepProps, formValues)}</div>
-          <ErrorSnackbar
-            snackbarOpen={snackbarOpen}
-            onClose={() => setSnackbarOpen(false)}
-            body="We could not find the space. Please try again or contact Support."
-          />
-        </div>
+              {activeStep === index && (
+                <StepLabel className={classes.stepLabel} color="secondary">
+                  {label}
+                </StepLabel>
+              )}
+              {activeStep !== index && (
+                <StepLabel className={classes.stepLabel} color="secondary" />
+              )}
+            </Step>
+          ))}
+        </Stepper>
       )}
-    </>
+      <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+      <ErrorSnackbar
+        snackbarOpen={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        body="We could not find the space. Please try again or contact Support."
+      />
+    </div>
   );
 };
 
@@ -205,4 +189,4 @@ AddSpace.prototypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default withStyles(styles)(AddSpace);
+export default withUser(withStyles(styles)(AddSpace));
