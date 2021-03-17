@@ -4,17 +4,19 @@ import CheckIcon from '@material-ui/icons/Check';
 import {
   Box,
   Button,
-  Container,
+  Card,
   Chip,
+  Container,
   InputLabel,
   Popper,
+  Snackbar,
   TextField,
   Typography,
 } from '@material-ui/core';
 
 const styles = () => ({
   container: {
-    maxHeight: 'lg',
+    // maxHeight: 'lg',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
@@ -40,6 +42,18 @@ const styles = () => ({
     paddingLeft: '10px',
     color: 'black',
   },
+  popperCard: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '56px',
+    width: '360px',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  popperButton: {
+    height: '36px',
+    width: '140px',
+  },
 });
 
 // Should these be abstracted to a different file
@@ -53,8 +67,24 @@ const ProfilePage = ({ classes }) => {
     location: 'location',
   });
   const [anchorEl, setAnchorEl] = useState(null);
+  const [snackBar, setSnackBar] = useState({
+    openBar: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
 
   // TODO: State needs to pull user info from backend after login, maybe done in the login component
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const openSnackBar = (newState) => {
+    setSnackBar({ ...newState, openBar: true });
+  };
+
+  const closeSnackBar = () => {
+    setSnackBar({ ...snackBar, openBar: false });
+  };
 
   const addLabel = (label) => {
     if (profileInfo.selectedLabels.includes(label)) {
@@ -79,10 +109,6 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
   const open = Boolean(anchorEl);
   const id = open ? 'transitions-popper' : undefined;
 
@@ -91,8 +117,24 @@ const ProfilePage = ({ classes }) => {
   //   // Needs to make a post call to backend to submit profileinfo state as updated user details
   // };
 
+  const { vertical, horizontal, openBar } = snackBar;
+
   return (
     <Container className={classes.container}>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={openBar}
+        onClose={closeSnackBar}
+        message="Your chages have been saved."
+        autoHideDuration={5000}
+        action={
+          (
+            <Button color="secondary" size="small" onClick={closeSnackBar}>
+              CLOSE
+            </Button>
+          )
+        }
+      />
       <Typography variant="h4" className={classes.title}>
         Users Profile
       </Typography>
@@ -131,36 +173,37 @@ const ProfilePage = ({ classes }) => {
               enabled: false,
               boundariesElement: 'scrollParent',
             },
-            // arrow: {
-            //   enabled: false,
-            //   element: arrowRef,
-            // },
           }}
         >
-          <div>
+          <Card className={classes.popperCard}>
             <Button
+              className={classes.popperButton}
               color="primary"
               variant="outlined"
               aria-label="visit space"
               component="span"
+              onClick={handleClick}
             >
               Cancel
             </Button>
             <Button
+              className={classes.popperButton}
               color="secondary"
               variant="contained"
               aria-label="visit space"
               component="span"
+              onClick={() => openSnackBar({ vertical: 'top', horizontal: 'center' })}
             >
               Save
             </Button>
-          </div>
+          </Card>
         </Popper>
         <InputLabel type="inputLabel">
           <Typography className={classes.label}>Pronouns</Typography>
         </InputLabel>
         <TextField
           onChange={handleChange}
+          onClick={handleClick}
           value={profileInfo.pronouns}
           autoComplete="off"
           type="input"
@@ -175,6 +218,7 @@ const ProfilePage = ({ classes }) => {
         </InputLabel>
         <TextField
           onChange={handleChange}
+          onClick={handleClick}
           value={profileInfo.location}
           autoComplete="off"
           type="input"
@@ -194,6 +238,7 @@ const ProfilePage = ({ classes }) => {
                 onClick={() => addLabel(label)}
                 color="secondary"
                 icon={<CheckIcon />}
+                anchorEl={anchorEl}
                 label={
                   (
                     <Typography variant="body2">
@@ -208,8 +253,9 @@ const ProfilePage = ({ classes }) => {
                   className={classes.identityChip}
                   key={label}
                   variant="outlined"
-                  onClick={() => addLabel(label)}
+                  onClick={(e) => { addLabel(label); handleClick(e); }}
                   color="primary"
+                  anchorEl={anchorEl}
                   label={
                     (
                       <Typography variant="body2">
