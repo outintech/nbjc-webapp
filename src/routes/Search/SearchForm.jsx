@@ -62,7 +62,7 @@ const SearchForm = ({
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
     name: undefined,
-    location: '',
+    location,
     category: undefined,
     indicators: chips.map((chip) => ({
       ...chip,

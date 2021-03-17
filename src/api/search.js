@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 const paramMap = {
   searchTerm: 'search',
   category: 'category',
+  location: 'location',
   distance: 'filters[distance]',
   price: 'filters[price]',
   rating: 'filters[rating]',

@@ -9,6 +9,7 @@ import utils from '../../../utils';
 const getSearchCriteria = (query) => ({
   searchTerm: query.get('searchTerm'),
   category: query.get('category'),
+  location: query.get('location'),
   distance: parseInt(query.get('distance'), 10) || 0,
   rating: parseFloat(query.get('rating')) || 0,
   price: parseInt(query.get('price'), 10) || 0,
@@ -51,6 +52,7 @@ const useSearch = ({ indicators, userCoords }) => {
     if (
       (search.searchTerm && search.searchTerm.length > 0)
       || (search.category && search.category.length > 0)
+      || (search.location && search.location.length > 0)
     ) {
       try {
         trackPromise(fetchData());
@@ -91,12 +93,20 @@ const useSearch = ({ indicators, userCoords }) => {
   }, [userCoords]);
 
   const updateSearch = (searchData) => {
-    const { name, category, indicators: searchIndicators } = searchData;
+    const {
+      name,
+      category,
+      indicators: searchIndicators,
+      location,
+    } = searchData;
     if (name) {
       query.set('searchTerm', name.name);
     }
     if (category) {
       query.set('category', category.alias);
+    }
+    if (location) {
+      query.set('location', location);
     }
     query.delete('indicators');
     if (searchIndicators) {

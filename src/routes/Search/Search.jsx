@@ -128,7 +128,10 @@ const Search = ({ classes, coords }) => {
       text = `${text}${comma} ${search.category}`;
       comma = ',';
     }
-
+    if (search.location) {
+      text = `${text}${comma} ${search.location}`;
+      comma = ',';
+    }
     const indicatorNames = indicators
       .filter((indicator) => search.indicators.includes(indicator.value))
       .map((indicator) => indicator.name);
