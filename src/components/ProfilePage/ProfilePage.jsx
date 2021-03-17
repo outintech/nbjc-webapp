@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import {
+  Box,
+  Button,
   Container,
   Chip,
-  Typography,
-  TextField,
   InputLabel,
-  Box,
+  Popper,
+  TextField,
+  Typography,
 } from '@material-ui/core';
 
 const styles = () => ({
@@ -50,6 +52,7 @@ const ProfilePage = ({ classes }) => {
     pronouns: 'pronouns',
     location: 'location',
   });
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // TODO: State needs to pull user info from backend after login, maybe done in the login component
 
@@ -76,6 +79,13 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'transitions-popper' : undefined;
+
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // Needs to make a post call to backend to submit profileinfo state as updated user details
@@ -95,6 +105,7 @@ const ProfilePage = ({ classes }) => {
         </InputLabel>
         <TextField
           onChange={handleChange}
+          onClick={handleClick}
           value={profileInfo.name}
           autoComplete="off"
           type="input"
@@ -105,6 +116,46 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           required
         />
+        <Popper
+          id={id}
+          open={open}
+          placement="bottom"
+          disablePortal={false}
+          anchorEl={anchorEl}
+          transition
+          modifiers={{
+            flip: {
+              enabled: false,
+            },
+            preventOverflow: {
+              enabled: false,
+              boundariesElement: 'scrollParent',
+            },
+            // arrow: {
+            //   enabled: false,
+            //   element: arrowRef,
+            // },
+          }}
+        >
+          <div>
+            <Button
+              color="primary"
+              variant="outlined"
+              aria-label="visit space"
+              component="span"
+            >
+              Cancel
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              aria-label="visit space"
+              component="span"
+            >
+              Save
+            </Button>
+          </div>
+        </Popper>
         <InputLabel type="inputLabel">
           <Typography className={classes.label}>Pronouns</Typography>
         </InputLabel>
