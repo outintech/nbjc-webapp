@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getUser } from '../api';
 // import tokenFile from './token.json';
 
@@ -18,7 +18,8 @@ import { getUser } from '../api';
 const useAuthenticatedUser = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const { promiseInProgress } = usePromiseTracker();
-  // const { history } = useHistory();
+  const history = useHistory();
+  const returnTo = history.location.pathname;
   let registeredUser;
   const [redirectToCreate, setRedirectToCreate] = useState(false);
   useEffect(() => {
@@ -56,6 +57,7 @@ const useAuthenticatedUser = () => {
   return {
     loadingUser: promiseInProgress,
     redirectToCreate,
+    returnTo,
   };
 };
 

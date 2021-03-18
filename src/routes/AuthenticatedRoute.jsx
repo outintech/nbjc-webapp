@@ -5,7 +5,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import useAuthenticatedUser from '../hooks/useAuthenticatedUser';
 
 const withUser = (WrappedComponent) => (props) => {
-  const { loadingUser, redirectToCreate } = useAuthenticatedUser();
+  const {
+    loadingUser,
+    redirectToCreate,
+    returnTo,
+  } = useAuthenticatedUser();
   return (
     <>
       {loadingUser && <CircularProgress color="secondary" />}
@@ -13,7 +17,7 @@ const withUser = (WrappedComponent) => (props) => {
         <Redirect
           to={{
             pathname: '/users/new',
-            search: '?returnTo=/spaces/new',
+            search: `?returnTo=${returnTo}`,
           }}
         />
       )}
