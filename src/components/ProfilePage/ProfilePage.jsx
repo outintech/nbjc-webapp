@@ -156,6 +156,7 @@ const ProfilePage = ({ classes }) => {
           name="name"
           autoFocus
           className={classes.textInput}
+          data-testid="text-field-name"
           required
         />
         <Popper
@@ -180,7 +181,7 @@ const ProfilePage = ({ classes }) => {
               className={classes.popperButton}
               color="primary"
               variant="outlined"
-              aria-label="visit space"
+              aria-label="cancel"
               component="span"
               onClick={handleClick}
             >
@@ -190,7 +191,7 @@ const ProfilePage = ({ classes }) => {
               className={classes.popperButton}
               color="secondary"
               variant="contained"
-              aria-label="visit space"
+              aria-label="save"
               component="span"
               onClick={() => openSnackBar({ vertical: 'top', horizontal: 'center' })}
             >
@@ -211,6 +212,7 @@ const ProfilePage = ({ classes }) => {
           placeholder="User Name"
           name="pronouns"
           className={classes.textInput}
+          data-testid="text-field-pronouns"
           required
         />
         <InputLabel type="inputLabel">
@@ -226,6 +228,7 @@ const ProfilePage = ({ classes }) => {
           placeholder="User Name"
           name="location"
           className={classes.textInput}
+          data-testid="text-field-location"
           required
         />
         <Typography variant="h6">Tell us about yourself</Typography>
@@ -238,7 +241,7 @@ const ProfilePage = ({ classes }) => {
                 onClick={() => addLabel(label)}
                 color="secondary"
                 icon={<CheckIcon />}
-                anchorEl={anchorEl}
+                anchorel={anchorEl}
                 label={
                   (
                     <Typography variant="body2">
@@ -246,6 +249,7 @@ const ProfilePage = ({ classes }) => {
                     </Typography>
                   )
                 }
+                aria-label={`${label} chip`}
               />
             )
               : (
@@ -255,7 +259,7 @@ const ProfilePage = ({ classes }) => {
                   variant="outlined"
                   onClick={(e) => { addLabel(label); handleClick(e); }}
                   color="primary"
-                  anchorEl={anchorEl}
+                  anchorel={anchorEl}
                   label={
                     (
                       <Typography variant="body2">
@@ -263,6 +267,7 @@ const ProfilePage = ({ classes }) => {
                       </Typography>
                     )
                   }
+                  aria-label={`${label} chip`}
                 />
               )
           ))}
