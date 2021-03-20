@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core';
 
@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+import { ArrowBackIos } from '@material-ui/icons';
 
 import { NameContext } from '../../context/NameContext';
 
@@ -46,60 +47,94 @@ const styles = (theme) => ({
 });
 
 const AppBar = ({
-  isLoggedIn, selected, classes, routes,
+  isLoggedIn,
+  selected,
+  classes,
+  routes,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
   const nameContext = useContext(NameContext);
   const history = useHistory();
+  const location = useLocation();
 
-  const showDrawerItems = () => (
-    routes.map((item) => {
-      // todo: add injection security
-      if (item.enforceLogin && !isLoggedIn) {
-        return null;
-      }
-      const otherProps = {
-        selected: item.key === selected,
-        color: item.key === selected ? 'primary' : 'inherit',
-      };
-      return (
-        <ListItem
-          button
-          key={item.key}
-          selected={otherProps.selected}
-          className={cx({ [classes.selected]: otherProps.selected })}
-          onClick={() => {
-            setShowDrawer(false);
-            history.push(item.path);
-          }}
+  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
+
+  const goBack = () => {
+    history.goBack();
+  };
+
+  const showDrawerItems = () => routes.map((item) => {
+    // todo: add injection security
+    if (item.enforceLogin && !isLoggedIn) {
+      return null;
+    }
+    const otherProps = {
+      selected: item.key === selected,
+      color: item.key === selected ? 'primary' : 'inherit',
+    };
+    return (
+      <ListItem
+        button
+        key={item.key}
+        selected={otherProps.selected}
+        className={cx({ [classes.selected]: otherProps.selected })}
+        onClick={() => {
+          setShowDrawer(false);
+          history.push(item.path);
+        }}
+      >
+        <ListItemIcon>
+          <item.icon color={otherProps.color} />
+        </ListItemIcon>
+        <ListItemText>
+          <Typography color={otherProps.color} variant="subtitle2">
+            {item.label}
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    );
+  });
+
+  const NavIcons = () => {
+    let appIcons;
+    if (
+      (location && location.search.length > 0)
+      || selected === 'spaceDetails'
+      || selected === 'addReview'
+      || selected === 'reviews'
+    ) {
+      appIcons = (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="go-back"
+          onClick={goBack}
+          data-testid="appbar-go-back"
         >
-          <ListItemIcon>
-            <item.icon color={otherProps.color} />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography color={otherProps.color} variant="subtitle2">
-              {item.label}
-            </Typography>
-          </ListItemText>
-        </ListItem>
+          <ArrowBackIos />
+        </IconButton>
       );
-    })
-  );
+    } else {
+      appIcons = (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => setShowDrawer(!showDrawer)}
+          data-testid="appbar-menu"
+        >
+          <MenuIcon />
+        </IconButton>
+      );
+    }
+    return appIcons;
+  };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setShowDrawer(!showDrawer)}
-            data-testid="appbar-menu"
-          >
-            <MenuIcon />
-          </IconButton>
+          <NavIcons />
           <Typography variant="h6" data-testid="appbar-title">
             {pageTitle || nameContext.spaceTitle}
           </Typography>
@@ -121,14 +156,24 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf(['home', 'addSpace', 'search', 'profile', 'addReview', 'spaceDetails', 'reviews']),
+  selected: PropTypes.oneOf([
+    'home',
+    'addSpace',
+    'search',
+    'profile',
+    'addReview',
+    'spaceDetails',
+    'reviews',
+  ]),
   classes: PropTypes.shape({}).isRequired,
-  routes: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
-    enforceLogin: PropTypes.bool.isRequired,
-  })).isRequired,
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      enforceLogin: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 
 AppBar.defaultProps = {

@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import AppBar from './AppBar';
 
+
 describe('AppBar', () => {
   const routes = [{
     label: 'Home',
@@ -20,25 +21,44 @@ describe('AppBar', () => {
     icon: SearchIcon,
     enforceLogin: false,
   }];
-
+  
   test('renders with default state', () => {
     const { asFragment } = render(
       <AppBar routes={routes} />,
-    );
-    expect(asFragment()).toMatchSnapshot();
-  });
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+    
+    test('renders the drawer', () => {
+      render(
+        <AppBar selected="search" routes={routes} />,
+        );
+        const pageTitle = screen.getByTestId('appbar-title');
+        expect(pageTitle.textContent).toBe('Search for a space');
+        
+        const menu = screen.getByTestId('appbar-menu');
+        fireEvent.click(menu);
+        
+        const drawer = screen.getByTestId('appbar-drawer');
+        expect(drawer).not.toBe(undefined);
+      });
+    });
 
-  test('renders the drawer', () => {
-    render(
-      <AppBar selected="search" routes={routes} />,
-    );
-    const pageTitle = screen.getByTestId('appbar-title');
-    expect(pageTitle.textContent).toBe('Search for a space');
+    const mockHistoryPush = jest.fn();
+    
+    jest.mock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'),
+      useHistory: () => ({
+        push: mockHistoryPush,
+      }),
+      useLocation: jest.fn().mockReturnValue({
+        path: '/search',
+        search: '',
+        hash: '',
+        state: undefined,
+        key: '',
+      }),
+    }));
+    
+    
 
-    const menu = screen.getByTestId('appbar-menu');
-    fireEvent.click(menu);
-
-    const drawer = screen.getByTestId('appbar-drawer');
-    expect(drawer).not.toBe(undefined);
-  });
-});

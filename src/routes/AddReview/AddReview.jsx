@@ -8,7 +8,11 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
-import { getSpace, postReview } from '../../api';
+import {
+  getReviewForSpaceAndUser,
+  getSpace,
+  postReview,
+} from '../../api';
 import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
@@ -60,16 +64,27 @@ const AddReview = ({ classes }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
 
-  // todo: call backend to verify user does not have review for space
   useEffect(() => {
     async function fetchData() {
       const intId = parseInt(spaceId, 10);
-      // todo: add validation to number.
-      const { data } = await getSpace(intId);
-      setSpace(data);
+      const [spaceData, reviewData] = await Promise.all([
+        getSpace(intId),
+        // todo: add actual user_id
+        getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
+      ]);
+      if (reviewData.data.exists) {
+        setSpace(spaceData.data);
+        setPageStatus('reviewExists');
+      } else {
+        setSpace(spaceData.data);
+      }
     }
-    fetchData();
-    setPageStatus('review');
+    try {
+      fetchData();
+      setPageStatus('review');
+    } catch (e) {
+      setSnackbarOpen(true);
+    }
   }, [spaceId]);
 
   const saveReview = (formData) => {
@@ -83,8 +98,8 @@ const AddReview = ({ classes }) => {
         .then(() => {
           setPageStatus('success');
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          setSnackbarOpen(true);
         }),
     );
   };
@@ -121,6 +136,29 @@ const AddReview = ({ classes }) => {
         <Success
           title="Your Review Was Submitted!"
           subtitle={`Thank you for rating and reviewing ${space.name} on OurGuide.`}
+          primaryButton={(isDesktop) => (
+            <Button
+              variant="contained"
+              align="center"
+              fullWidth={!isDesktop}
+              href={`/spaces/${space.id}`}
+              color="primary"
+              disableElevation
+              className={classes.successButton}
+            >
+              Go to space
+            </Button>
+          )}
+          overrideClasses={{
+            buttonWrapper: classes.successFooter,
+            secondaryButton: classes.successButton,
+          }}
+        />
+      )}
+      {space && pageStatus === 'reviewExists' && (
+        <Success
+          title="Your Review exists for this space"
+          subtitle="You have already submitted your review for this space"
           primaryButton={(isDesktop) => (
             <Button
               variant="contained"
