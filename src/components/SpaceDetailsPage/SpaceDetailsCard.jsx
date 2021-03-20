@@ -252,7 +252,7 @@ const SpaceDetailCard = ({
         ) : (
           ''
         )}
-        <div display="flex">
+        <div className={classes.reviewDiv}>
           <IconButton
             variant="outlined"
             color="primary"
