@@ -91,7 +91,6 @@ const useSearch = ({ indicators, userCoords }) => {
       });
     }
   }, [userCoords]);
-  console.log(userCoords);
   const updateSearch = (searchData) => {
     const {
       name,

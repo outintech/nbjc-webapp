@@ -70,7 +70,11 @@ const styles = (theme) => ({
   },
 });
 
-const Search = ({ classes, coords }) => {
+const Search = ({
+  classes,
+  coords,
+  isGeolocationEnabled,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [indicators, setIndicators] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
@@ -142,10 +146,10 @@ const Search = ({ classes, coords }) => {
     }
     return text;
   };
-
+  const isGeoLoading = isGeolocationEnabled && coords === null;
   return (
     <div className={classes.content}>
-      {indicators.length > 0 && searchResults === null && (
+      {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
         <SearchForm
           chips={indicators}
           onSearch={onSearchSubmit}
@@ -220,7 +224,7 @@ const Search = ({ classes, coords }) => {
               </div>
             </div>
           )}
-        {(loading || indicators.length < 1) && <CircularProgress color="secondary" />}
+        {(loading || indicators.length < 1 || isGeoLoading) && <CircularProgress color="secondary" />}
       </div>
     </div>
   );
