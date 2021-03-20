@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import CheckIcon from '@material-ui/icons/Check';
 import {
   Box,
   Button,
   Card,
-  Chip,
   Container,
-  InputLabel,
   Popper,
   Snackbar,
-  TextField,
   Typography,
 } from '@material-ui/core';
+import { TextInput } from './TextInput';
+import { ProfileChip } from './ProfileChip';
 
 const styles = () => ({
   container: {
@@ -29,10 +27,6 @@ const styles = () => ({
     textAlign: 'center',
     margin: '0 auto 20px auto',
     width: '80%',
-  },
-  identityChip: {
-    marginBottom: '8px',
-    marginRight: '4px',
   },
   textInput: {
     width: '100%',
@@ -62,9 +56,9 @@ const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aroma
 const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
     selectedLabels: ['Bisexual', 'Black', 'Gender Fluid'],
-    name: 'Name',
-    pronouns: 'pronouns',
-    location: 'location',
+    name: 'Shayne',
+    pronouns: 'he/him',
+    location: 'Brooklyn, NY',
   });
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
@@ -115,6 +109,7 @@ const ProfilePage = ({ classes }) => {
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // Needs to make a post call to backend to submit profileinfo state as updated user details
+  // //Remember to trim( empty spaces from the end of strings)
   // };
 
   const { vertical, horizontal, openBar } = snackBar;
@@ -142,22 +137,12 @@ const ProfilePage = ({ classes }) => {
         View and edit your profile. After you make a change, click Save.
       </Typography>
       <form>
-        <InputLabel type="inputLabel">
-          <Typography className={classes.label}>Name</Typography>
-        </InputLabel>
-        <TextField
-          onChange={handleChange}
-          onClick={handleClick}
-          value={profileInfo.name}
-          autoComplete="off"
-          type="input"
-          variant="outlined"
-          placeholder="User Name"
-          name="name"
-          autoFocus
-          className={classes.textInput}
-          data-testid="text-field-name"
-          required
+        <TextInput
+          inputName="Name"
+          profileInfo={profileInfo.name}
+          handleChange={handleChange}
+          handleClick={handleClick}
+          classes={classes}
         />
         <Popper
           id={id}
@@ -199,77 +184,30 @@ const ProfilePage = ({ classes }) => {
             </Button>
           </Card>
         </Popper>
-        <InputLabel type="inputLabel">
-          <Typography className={classes.label}>Pronouns</Typography>
-        </InputLabel>
-        <TextField
-          onChange={handleChange}
-          onClick={handleClick}
-          value={profileInfo.pronouns}
-          autoComplete="off"
-          type="input"
-          variant="outlined"
-          placeholder="User Name"
-          name="pronouns"
-          className={classes.textInput}
-          data-testid="text-field-pronouns"
-          required
+        <TextInput
+          inputName="Pronouns"
+          profileInfo={profileInfo.pronouns}
+          handleChange={handleChange}
+          handleClick={handleClick}
+          classes={classes}
         />
-        <InputLabel type="inputLabel">
-          <Typography className={classes.label}>Location</Typography>
-        </InputLabel>
-        <TextField
-          onChange={handleChange}
-          onClick={handleClick}
-          value={profileInfo.location}
-          autoComplete="off"
-          type="input"
-          variant="outlined"
-          placeholder="User Name"
-          name="location"
-          className={classes.textInput}
-          data-testid="text-field-location"
-          required
+        <TextInput
+          inputName="Location"
+          profileInfo={profileInfo.location}
+          handleChange={handleChange}
+          handleClick={handleClick}
+          classes={classes}
         />
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {userLabels.map((label) => (
-            profileInfo.selectedLabels.includes(label) ? (
-              <Chip
-                className={classes.identityChip}
-                key={label}
-                onClick={() => addLabel(label)}
-                color="secondary"
-                icon={<CheckIcon />}
-                anchorel={anchorEl}
-                label={
-                  (
-                    <Typography variant="body2">
-                      {label}
-                    </Typography>
-                  )
-                }
-                aria-label={`${label} chip`}
-              />
-            )
-              : (
-                <Chip
-                  className={classes.identityChip}
-                  key={label}
-                  variant="outlined"
-                  onClick={(e) => { addLabel(label); handleClick(e); }}
-                  color="primary"
-                  anchorel={anchorEl}
-                  label={
-                    (
-                      <Typography variant="body2">
-                        {label}
-                      </Typography>
-                    )
-                  }
-                  aria-label={`${label} chip`}
-                />
-              )
+            <ProfileChip
+              classes={classes}
+              onClick={(e) => { addLabel(label); handleClick(e); }}
+              anchorel={anchorEl}
+              label={label}
+              selected={profileInfo.selectedLabels.includes(label)}
+            />
           ))}
         </Box>
       </form>
