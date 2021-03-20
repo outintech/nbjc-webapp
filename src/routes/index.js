@@ -30,6 +30,14 @@ const routes = [{
   key: 'search',
   icon: SearchIcon,
 }, {
+  label: 'Search results page',
+  path: '/search/results',
+  content: Search,
+  key: 'searchResults',
+  icon: SearchIcon,
+  enforceLogin: false,
+  skipAppBar: true,
+}, {
   label: 'Profile',
   path: '/profile',
   // todo: change this/
