@@ -87,7 +87,6 @@ const Search = ({ classes, coords }) => {
       console.log(err);
     }
   }, []);
-
   const {
     updateSearch,
     updateFilters,
