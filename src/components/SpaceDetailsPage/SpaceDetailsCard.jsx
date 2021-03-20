@@ -264,7 +264,7 @@ const SpaceDetailCard = ({
             userName={totalReviews[currentReview].userName}
             dateCreated={totalReviews[currentReview].dateCreated}
             rating={totalReviews[currentReview].rating}
-            text={totalReviews[currentReview].text}
+            text={totalReviews[currentReview].content}
             classes={classes}
           />
           <IconButton

@@ -57,4 +57,23 @@ const getReviewForSpaceAndUser = async (reviewOpts) => {
   return results.json();
 };
 
-export { postReview, getReviewForSpaceAndUser };
+/**
+ * Get a space's reviews
+ * @param {string} spaceId - id of the space to fetch the reviews
+ * @returns {Promise} - resolves to array of spaces
+*/
+const getSpaceReviews = async (spaceId) => {
+  const url = new URL(process.env.REACT_APP_API_HOST);
+  url.pathname = `/api/v1/spaces/${spaceId}/reviews`;
+  const results = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
+  return results.json();
+};
+
+export { postReview, getReviewForSpaceAndUser, getSpaceReviews };

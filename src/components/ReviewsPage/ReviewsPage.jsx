@@ -68,14 +68,14 @@ const ReviewsPage = ({
               </Button>
             </div>
           </Paper>
-          <Typography variant="body1">{`${reviews.length} Reviews from the Lavender Book`}</Typography>
-          {reviews.map((review) => (
+          <Typography variant="body1">{`${(reviews || []).length} Reviews from the Lavender Book`}</Typography>
+          {reviews && reviews.map((review) => (
             <div>
               <ReviewCard
                 userName={review.userName}
                 rating={review.rating}
                 dateCreated={review.dateCreated}
-                text={review.text}
+                text={review.content}
                 classes={classes}
               />
               <Divider />

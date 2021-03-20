@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import utils from '../../utils';
 import SpaceDetailsCard from './SpaceDetailsCard';
-import getAllReviews from '../../__mocks__/getAllReviewsMock';
 
 const styles = {
   // root: {
@@ -30,14 +29,14 @@ const SpaceDetailsPage = ({
       setPhoneNumber(utils.formatPhoneNumber(cardData.phone));
     }
   }, [cardData]);
-
+  const totalReviews = space && space.reviews ? space.reviews : [];
   return (
     <div>
       { cardData
         && (
           <div>
             <SpaceDetailsCard
-              totalReviews={getAllReviews().allReviews}
+              totalReviews={totalReviews}
               name={cardData.name}
               id={cardData.id}
               phoneNumber={phoneNumber}
