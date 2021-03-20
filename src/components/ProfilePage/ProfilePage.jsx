@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import CheckIcon from '@material-ui/icons/Check';
 import {
   Box,
   Button,
-  Card,
   Container,
-  Popper,
   Snackbar,
   Typography,
+  Popper,
+  Card,
+  Chip,
+  InputLabel,
+  TextField,
 } from '@material-ui/core';
-import { TextInput } from './TextInput';
-import { ProfileChip } from './ProfileChip';
 
 const styles = () => ({
   container: {
-    // maxHeight: 'lg',
-    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -48,6 +48,10 @@ const styles = () => ({
     height: '36px',
     width: '140px',
   },
+  identityChip: {
+    marginBottom: '8px',
+    marginRight: '4px',
+  },
 });
 
 // Should these be abstracted to a different file
@@ -56,9 +60,9 @@ const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aroma
 const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
     selectedLabels: ['Bisexual', 'Black', 'Gender Fluid'],
-    name: 'Shayne',
-    pronouns: 'he/him',
-    location: 'Brooklyn, NY',
+    name: 'Name Here',
+    pronouns: 'Pronouns Here',
+    location: 'Location Here',
   });
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
@@ -104,7 +108,6 @@ const ProfilePage = ({ classes }) => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'transitions-popper' : undefined;
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -113,6 +116,7 @@ const ProfilePage = ({ classes }) => {
   // };
 
   const { vertical, horizontal, openBar } = snackBar;
+  const id = open ? 'transitions-popper' : undefined;
 
   return (
     <Container className={classes.container}>
@@ -137,12 +141,45 @@ const ProfilePage = ({ classes }) => {
         View and edit your profile. After you make a change, click Save.
       </Typography>
       <form>
-        <TextInput
-          inputName="Name"
-          profileInfo={profileInfo.name}
-          handleChange={handleChange}
-          handleClick={handleClick}
-          classes={classes}
+        <InputLabel type="inputLabel">
+          <Typography>Name</Typography>
+        </InputLabel>
+        <TextField
+          className={classes.textInput}
+          onChange={handleChange}
+          onClick={handleClick}
+          value={profileInfo.name}
+          autoComplete="off"
+          type="input"
+          variant="outlined"
+          name="name"
+          autoFocus
+        />
+        <InputLabel type="inputLabel">
+          <Typography>Pronouns</Typography>
+        </InputLabel>
+        <TextField
+          className={classes.textInput}
+          onChange={handleChange}
+          onClick={handleClick}
+          value={profileInfo.pronouns}
+          autoComplete="off"
+          type="input"
+          variant="outlined"
+          name="pronouns"
+        />
+        <InputLabel type="inputLabel">
+          <Typography>Location</Typography>
+        </InputLabel>
+        <TextField
+          className={classes.textInput}
+          onChange={handleChange}
+          onClick={handleClick}
+          value={profileInfo.location}
+          autoComplete="off"
+          type="input"
+          variant="outlined"
+          name="location"
         />
         <Popper
           id={id}
@@ -184,30 +221,43 @@ const ProfilePage = ({ classes }) => {
             </Button>
           </Card>
         </Popper>
-        <TextInput
-          inputName="Pronouns"
-          profileInfo={profileInfo.pronouns}
-          handleChange={handleChange}
-          handleClick={handleClick}
-          classes={classes}
-        />
-        <TextInput
-          inputName="Location"
-          profileInfo={profileInfo.location}
-          handleChange={handleChange}
-          handleClick={handleClick}
-          classes={classes}
-        />
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {userLabels.map((label) => (
-            <ProfileChip
-              classes={classes}
-              onClick={(e) => { addLabel(label); handleClick(e); }}
-              anchorel={anchorEl}
-              label={label}
-              selected={profileInfo.selectedLabels.includes(label)}
-            />
+            profileInfo.selectedLabels.includes(label) ? (
+              <Chip
+                className={classes.identityChip}
+                key={label}
+                onClick={() => addLabel(label)}
+                color="secondary"
+                icon={<CheckIcon />}
+                anchorEl={anchorEl}
+                label={
+                  (
+                    <Typography variant="body2">
+                      {label}
+                    </Typography>
+                  )
+                }
+              />
+            )
+              : (
+                <Chip
+                  className={classes.identityChip}
+                  key={label}
+                  variant="outlined"
+                  onClick={(e) => { addLabel(label); handleClick(e); }}
+                  color="primary"
+                  anchorEl={anchorEl}
+                  label={
+                    (
+                      <Typography variant="body2">
+                        {label}
+                      </Typography>
+                    )
+                  }
+                />
+              )
           ))}
         </Box>
       </form>
