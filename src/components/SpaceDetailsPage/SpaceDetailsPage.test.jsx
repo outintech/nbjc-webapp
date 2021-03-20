@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import SpaceDetailsPage from './SpaceDetailsPage';
+import getAllReviews from '../../__mocks__/getAllReviewsMock';
 
 jest.mock('react-intersection-observer', () => ({
   useInView: () => [{}, true],
@@ -10,6 +11,7 @@ jest.mock('react-intersection-observer', () => ({
 describe('SpaceDetailsPage', () => { 
 test('renders SpaceDetailsPage', () => {
   const props = {
+    totalReviews: getAllReviews().totalReviews,
     category: 'Restaurant',
     averageRating: '4.5',
     spaceTitle: "Katz's Delicatessen",

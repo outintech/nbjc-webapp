@@ -227,11 +227,11 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <div display="flex">
+        <div className={classes.reviewDiv}>
           <Typography variant="h5" className={classes.featuredReview}>
             Recent Reviews
           </Typography>
-          {totalReviews.length > 0 ? (
+          {totalReviews && totalReviews.length > 0 ? (
             <Button
               variant="outlined"
               color="primary"
@@ -244,7 +244,7 @@ const SpaceDetailCard = ({
             ''
           )}
         </div>
-        {totalReviews.length === 0 ? (
+        {totalReviews && totalReviews.length === 0 ? (
           // eslint-disable-next-line
           <Typography variant="body2" align="center">
             There are no reviews. Be the first to rate and review this space!
@@ -336,7 +336,7 @@ const SpaceDetailCard = ({
         <Typography variant="body1" className={classes.subtitles}>
           Hours Of Operation
         </Typography>
-        {/* TODO:  fix placement of navigate next icon */}
+        {/* FIXME:  fix placement of navigate next icon */}
         <Typography variant="body1" className={classes.mainInformation}>
           {hoursOfOperation ? 'Open Now' : 'Closed'}
         </Typography>
@@ -393,8 +393,8 @@ SpaceDetailCard.propTypes = {
   averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   imageUrl: PropTypes.string.isRequired,
   address: PropTypes.shape({}).isRequired,
-  // TODO: add distance when geocoding
-  // distance,
+  /* TODO: add distance when geocoding
+  distance */
   hoursOfOperation: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),

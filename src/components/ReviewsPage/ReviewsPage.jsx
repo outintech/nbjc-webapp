@@ -6,6 +6,7 @@ import {
   Paper,
   Typography,
   Button,
+  Divider,
 } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
 import ReviewCard from './ReviewCard';
@@ -67,14 +68,18 @@ const ReviewsPage = ({
               </Button>
             </div>
           </Paper>
+          <Typography variant="body1">{`${reviews.length} Reviews from the Lavender Book`}</Typography>
           {reviews.map((review) => (
-            <ReviewCard
-              userName={review.userName}
-              rating={review.rating}
-              dateCreated={review.dateCreated}
-              text={review.text}
-              classes={classes}
-            />
+            <div>
+              <ReviewCard
+                userName={review.userName}
+                rating={review.rating}
+                dateCreated={review.dateCreated}
+                text={review.text}
+                classes={classes}
+              />
+              <Divider />
+            </div>
           ))}
         </Grid>
       </Grid>
