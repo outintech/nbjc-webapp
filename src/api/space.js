@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { getToken, getUserID } from './auth';
 
 /**
  * Fetch a space by id.
@@ -36,4 +37,26 @@ const getSpacesByName = async (spaceOpts) => {
   });
 };
 
-export { getSpace, getSpacesByName };
+const postSpace = async () => {
+  const url = new URL(process.env.REACT_APP_API_HOST);
+  const token = await getToken();
+  url.pathname = '/api/v1/spaces';
+  const userID = getUserID();
+  const data = {
+    user_id: userID,
+  };
+
+  const results = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    redirect: 'follow',
+    body: JSON.stringify(data),
+  });
+  return results.json();
+};
+
+export { getSpace, postSpace, getSpacesByName };

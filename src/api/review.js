@@ -51,7 +51,6 @@ const getReviewForSpaceAndUser = async (reviewOpts) => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
   });
   return results.json();
