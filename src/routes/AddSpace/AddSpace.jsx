@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { trackPromise } from 'react-promise-tracker';
 
 import { withStyles } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-// todo: change to use api.
+import { postYelpSearch } from '../../api';
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
 
@@ -112,11 +113,22 @@ const AddSpace = ({ classes }) => {
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {
-      // todo: call yelp api
       if (data && data.name === 'error') {
         setSnackbarOpen(true);
         return;
       }
+
+      trackPromise(
+        postYelpSearch({
+          name: data.name,
+          city: data.city,
+          state: data.state,
+          zipcode: data.zipcode,
+        })
+          .then((response) => {
+            console.log(response.data);
+          }),
+      );
     }
     setFormValues({
       ...formValues,
@@ -124,9 +136,9 @@ const AddSpace = ({ classes }) => {
     });
     setActiveStep(activeStep + 1);
   };
-  const onSubmit = (space) => {
+  const onSubmit = () => {
     // todo: contact api
-    console.log('Space details', space);
+    // console.log('Space details', space);
     setActiveStep(5);
   };
 

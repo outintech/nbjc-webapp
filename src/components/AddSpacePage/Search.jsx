@@ -232,7 +232,7 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  onNext: () => {},
+  onNext: () => { },
   disableNext: false,
   addSpaceProps: {},
 };

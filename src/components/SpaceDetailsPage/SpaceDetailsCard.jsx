@@ -148,17 +148,19 @@ const SpaceDetailCard = ({
           text: `Check out ${name} at ${document.location.href}`,
         })
         .then(() => {
-          console.log('Successfully shared');
+          // console.log('Successfully shared');
         })
-        .catch((error) => {
-          console.error('Something went wrong sharing the blog', error);
+        .catch((
+          // error
+        ) => {
+          // console.error('Something went wrong sharing the blog', error);
         });
     } else if (navigator.clipboard) {
       setIsCopied(true);
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
         navigator.clipboard.writeText(currentUrl);
-        console.log('Successfully shared');
+        // console.log('Successfully shared');
       }
     }
   };
