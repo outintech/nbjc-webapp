@@ -17,6 +17,8 @@ import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
 
+import withUser from '../AuthenticatedRoute';
+
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
@@ -192,4 +194,4 @@ AddReview.propTypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default withStyles(styles)(AddReview);
+export default withUser(withStyles(styles)(AddReview));

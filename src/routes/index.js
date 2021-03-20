@@ -3,12 +3,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Home from './Home';
 import Search from './Search';
 import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
+import CreateProfile from './CreateProfile';
+
+const ProtectedRoute = (component) => withAuthenticationRequired(component, {
+  // eslint-disable-next-line react/react-in-jsx-scope
+  onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
 
 const routes = [{
   label: 'Home',
@@ -16,14 +23,12 @@ const routes = [{
   content: Home,
   key: 'home',
   icon: HomeIcon,
-  enforceLogin: false,
 }, {
   label: 'Search for a space',
   path: '/search',
   content: Search,
   key: 'search',
   icon: SearchIcon,
-  enforceLogin: false,
 }, {
   label: 'Profile',
   path: '/profile',
@@ -31,35 +36,36 @@ const routes = [{
   content: Home,
   key: 'profile',
   icon: PersonOutlineIcon,
-  // todo: change this
-  enforceLogin: false,
+}, {
+  label: 'Create Profile',
+  path: '/users/new',
+  content: CreateProfile,
+  key: 'createProfile',
+  icon: PersonOutlineIcon,
+  skipAppBar: true,
+  exact: true,
 }];
 
 const spaceRoutes = [{
   label: 'Add Review',
   path: '/:spaceId/reviews/new',
   // todo: change this/
-  content: AddReview,
+  content: ProtectedRoute(AddReview),
   key: 'addReview',
-  // todo: change this
-  enforceLogin: false,
   skipAppBar: true,
   exact: false,
 }, {
   label: 'Add a space',
   path: '/new',
-  content: AddSpace,
+  content: ProtectedRoute(AddSpace),
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
-  // todo: change this
-  enforceLogin: false,
 }, {
   label: 'Space Details',
   path: '/:spaceId',
   content: SpaceDetails,
   key: 'spaceDetails',
   skipAppBar: true,
-  enforceLogin: false,
   /* TODO: check on this
    exact: true */
 },
@@ -69,7 +75,6 @@ const spaceRoutes = [{
   content: Reviews,
   key: 'reviews',
   skipAppBar: true,
-  enforceLogin: false,
 },
 ];
 
