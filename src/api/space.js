@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import wrappedFetch from './wrappedFetch';
 import { getToken, getUserID } from './auth';
 
 /**
@@ -9,8 +9,8 @@ import { getToken, getUserID } from './auth';
 const getSpace = async (spaceId) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = `/api/v1/spaces/${spaceId}`;
-  const result = await fetch(url.href);
-  return result.json();
+  const result = await wrappedFetch(url.href);
+  return result;
 };
 
 /**
@@ -25,13 +25,19 @@ const getSpacesByName = async (spaceOpts) => {
   url.searchParams.append('page', 1);
   url.searchParams.append('per_page', 5);
   url.searchParams.append('fields', 'id,name');
-  const results = await fetch(url.href);
-  // todo: add error handling
-  const { data } = await results.json();
-  const formattedSpaces = data.map((space) => ({
-    name: space.name,
-    value: `${space.id}`,
-  }));
+  const results = await wrappedFetch(url.href);
+  let formattedSpaces = [];
+  try {
+    const { data } = await results;
+    formattedSpaces = data.map((space) => ({
+      name: space.name,
+      value: `${space.id}`,
+    }));
+  } catch (e) {
+    // since this is autocomplete
+    // allow users to search by raw text
+    formattedSpaces = [];
+  }
   return new Promise((resolve) => {
     resolve(formattedSpaces);
   });
@@ -46,7 +52,7 @@ const postSpace = async () => {
     user_id: userID,
   };
 
-  const results = await fetch(url, {
+  const results = await wrappedFetch(url, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -56,7 +62,7 @@ const postSpace = async () => {
     redirect: 'follow',
     body: JSON.stringify(data),
   });
-  return results.json();
+  return results;
 };
 
 export { getSpace, postSpace, getSpacesByName };

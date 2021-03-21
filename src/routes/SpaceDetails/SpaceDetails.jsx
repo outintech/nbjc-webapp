@@ -2,31 +2,26 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { getSpace } from '../../api';
-import useErrors from '../../hooks/useErrors';
 import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
+import useError from '../../hooks/useError';
 
 import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';
 
 const SpaceDetails = () => {
   const { setSpaceTitle, setSpaceData, spaceTitle } = useContext(NameContext);
   const { spaceId } = useParams();
-  const { notFoundError } = useErrors();
   const [space, setSpace] = useState();
+  const throwError = useError();
 
   useEffect(() => {
     async function fetchData() {
       const intId = parseInt(spaceId, 10);
-      // todo: add validation to number.
       try {
         const { data } = await getSpace(intId);
-        if (!data) {
-          notFoundError();
-        } else {
-          setSpace(data);
-        }
-      } catch (err) {
-        console.log(err);
+        setSpace(data);
+      } catch (e) {
+        throwError(e);
       }
     }
     fetchData();

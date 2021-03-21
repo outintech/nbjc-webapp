@@ -14,6 +14,7 @@ import theme from './theme';
 import routes, { spaceRoutes } from './routes';
 import NotFound from './routes/NotFound';
 import UnknownError from './routes/UnknownError';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function Spaces() {
   const match = useRouteMatch();
@@ -35,7 +36,9 @@ function Spaces() {
             }))}
             selected={route.key}
           />
-          <route.content />
+          <ErrorBoundary>
+            <route.content />
+          </ErrorBoundary>
         </Route>
       ))}
     </Switch>
@@ -68,7 +71,9 @@ function App() {
                         }))}
                       selected={route.key}
                     />
-                    <route.content />
+                    <ErrorBoundary>
+                      <route.content />
+                    </ErrorBoundary>
                   </Route>
                 ))}
                 {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}

@@ -39,9 +39,9 @@ const styles = (theme) => ({
 
 const NotFound = ({ classes }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  let src = './mobile-404.svg';
+  let src = '/mobile-404.svg';
   if (matches) {
-    src = './web-404.svg';
+    src = '/web-404.svg';
   }
   return (
     <div className={classes.root}>

@@ -26,9 +26,9 @@ const styles = (theme) => ({
 
 const UnknownError = ({ classes }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  let src = './mobile-500.svg';
+  let src = '/mobile-500.svg';
   if (matches) {
-    src = './web-500.svg';
+    src = '/web-500.svg';
   }
   return (
     <div className={classes.root}>
