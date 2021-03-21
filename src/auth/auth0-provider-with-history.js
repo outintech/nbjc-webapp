@@ -24,6 +24,8 @@ const Auth0ProviderWithHistory = ({ children }) => {
       audience="https://nbjc-app/api"
       scope="openid profile write:spaces"
       onRedirectCallback={onRedirectCallback}
+      cacheLocation="localstorage"
+      useRefreshTokens
     >
       {children}
     </Auth0Provider>

@@ -3,7 +3,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
-import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Home from './Home';
 import Search from './Search';
 import AddSpace from './AddSpace';
@@ -12,10 +11,7 @@ import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
 import CreateProfile from './CreateProfile';
 
-const ProtectedRoute = (component) => withAuthenticationRequired(component, {
-  // eslint-disable-next-line react/react-in-jsx-scope
-  onRedirecting: () => <div>Redirecting you to the login page...</div>,
-});
+import ProtectedRoute from './ProtectedRoute';
 
 const routes = [{
   label: 'Home',
