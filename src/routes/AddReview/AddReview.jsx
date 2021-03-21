@@ -13,7 +13,6 @@ import {
   getSpace,
   postReview,
 } from '../../api';
-import useErrors from '../../hooks/useErrors';
 import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
@@ -63,7 +62,6 @@ const styles = (theme) => ({
 const AddReview = ({ classes }) => {
   const { spaceId } = useParams();
   const [space, setSpace] = useState(null);
-  const { notFoundError } = useErrors();
   const [pageStatus, setPageStatus] = useState('review');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
@@ -76,9 +74,8 @@ const AddReview = ({ classes }) => {
         // todo: add actual user_id
         getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
       ]);
-      if (!spaceData || reviewData || spaceData.data || reviewData.data) {
-        notFoundError();
-      } else if (reviewData.data.exists) {
+      // TODO: Handle error handling after create profile is done
+      if (reviewData.data.exists) {
         setSpace(spaceData.data);
         setPageStatus('reviewExists');
       } else {
