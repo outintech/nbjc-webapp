@@ -12,6 +12,7 @@ import NameContextProvider from './context/NameContext';
 
 import theme from './theme';
 import routes, { spaceRoutes } from './routes';
+import NotFound from './routes/NotFound';
 
 function Spaces() {
   const match = useRouteMatch();
@@ -72,6 +73,20 @@ function App() {
                 {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
                 <Route path="/spaces">
                   <Spaces />
+                </Route>
+                <Route>
+                  <AppBar
+                    routes={[...routes, ...spaceRoutes]
+                      .filter((r) => !r.skipAppBar).map((r) => ({
+                        label: r.label,
+                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
+                        key: r.key,
+                        enforceLogin: r.enforceLogin,
+                        icon: r.icon,
+                      }))}
+                    selected={null}
+                  />
+                  <NotFound />
                 </Route>
               </Switch>
             </div>
