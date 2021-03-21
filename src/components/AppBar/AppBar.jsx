@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core';
 
@@ -55,7 +55,7 @@ const AppBar = ({
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
 
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 
@@ -98,8 +98,7 @@ const AppBar = ({
   const NavIcons = () => {
     let appIcons;
     if (
-      (location && location.search.length > 0)
-      || selected === 'spaceDetails'
+      selected === 'spaceDetails'
       || selected === 'addReview'
       || selected === 'reviews'
     ) {
