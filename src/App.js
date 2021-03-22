@@ -12,6 +12,9 @@ import NameContextProvider from './context/NameContext';
 
 import theme from './theme';
 import routes, { spaceRoutes } from './routes';
+import NotFound from './routes/NotFound';
+import UnknownError from './routes/UnknownError';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function Spaces() {
   const match = useRouteMatch();
@@ -33,7 +36,9 @@ function Spaces() {
             }))}
             selected={route.key}
           />
-          <route.content />
+          <ErrorBoundary>
+            <route.content />
+          </ErrorBoundary>
         </Route>
       ))}
     </Switch>
@@ -66,12 +71,42 @@ function App() {
                         }))}
                       selected={route.key}
                     />
-                    <route.content />
+                    <ErrorBoundary>
+                      <route.content />
+                    </ErrorBoundary>
                   </Route>
                 ))}
                 {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
                 <Route path="/spaces">
                   <Spaces />
+                </Route>
+                <Route path="/500">
+                  <AppBar
+                    routes={[...routes, ...spaceRoutes]
+                      .filter((r) => !r.skipAppBar).map((r) => ({
+                        label: r.label,
+                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
+                        key: r.key,
+                        enforceLogin: r.enforceLogin,
+                        icon: r.icon,
+                      }))}
+                    selected={null}
+                  />
+                  <UnknownError />
+                </Route>
+                <Route>
+                  <AppBar
+                    routes={[...routes, ...spaceRoutes]
+                      .filter((r) => !r.skipAppBar).map((r) => ({
+                        label: r.label,
+                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
+                        key: r.key,
+                        enforceLogin: r.enforceLogin,
+                        icon: r.icon,
+                      }))}
+                    selected={null}
+                  />
+                  <NotFound />
                 </Route>
               </Switch>
             </div>

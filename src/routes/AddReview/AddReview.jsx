@@ -74,6 +74,7 @@ const AddReview = ({ classes }) => {
         // todo: add actual user_id
         getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
       ]);
+      // TODO: Handle error handling after create profile is done
       if (reviewData.data.exists) {
         setSpace(spaceData.data);
         setPageStatus('reviewExists');

@@ -55,7 +55,7 @@ const useAuthenticatedUser = () => {
   }, [user]);
 
   return {
-    loadingUser: promiseInProgress,
+    loadingUser: promiseInProgress || (!registeredUser && !redirectToCreate),
     redirectToCreate,
     returnTo,
   };

@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import wrappedFetch from './wrappedFetch';
 
 /**
  * Get categories by search term
@@ -12,14 +12,20 @@ const getCategories = async (searchOpts) => {
   url.searchParams.append('search', searchOpts.searchTerm);
   url.searchParams.append('page', 1);
   url.searchParams.append('per_page', 5);
-  const results = await fetch(url.href);
-  // todo: add error handling
-  const { data } = await results.json();
-  const formattedCategories = data.map((category) => ({
-    title: category.title,
-    alias: category.alias,
-    value: `${category.id}`,
-  }));
+  const results = await wrappedFetch(url.href);
+  let formattedCategories;
+  try {
+    const { data } = await results;
+    formattedCategories = data.map((category) => ({
+      title: category.title,
+      alias: category.alias,
+      value: `${category.id}`,
+    }));
+  } catch (e) {
+    // since this is just autocomplete no need to
+    // show error to the user
+    formattedCategories = [];
+  }
   return new Promise((resolve) => {
     resolve(formattedCategories);
   });
