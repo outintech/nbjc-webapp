@@ -9,7 +9,9 @@ import AppBar from './components/AppBar';
 import NameContextProvider from './context/NameContext';
 
 import theme from './theme';
-import routes, { spaceRoutes } from './routes';
+import routes, { spaceRoutes, profileRoutes } from './routes';
+// import CreateProfile from './components/CreateProfile/CreateProfile';
+// import ProfileSubmitted from './components/ProfileSubmitted/ProfileSubmitted';
 
 function Spaces() {
   const match = useRouteMatch();
@@ -26,6 +28,34 @@ function Spaces() {
             routes={[...routes, ...spaceRoutes].filter((r) => !r.skipAppBar).map((r) => ({
               label: r.label,
               path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
+              key: r.key,
+              enforceLogin: r.enforceLogin,
+              icon: r.icon,
+            }))}
+            selected={route.key}
+          />
+          <route.content />
+        </Route>
+      ))}
+    </Switch>
+  );
+}
+
+function Profiles() {
+  const match = useRouteMatch();
+  const profileKeys = ['createProfile', 'profileSubmitted'];
+  return (
+    <Switch>
+      {profileRoutes.map((route) => (
+        <Route
+          key={`${match.path}${route.path}`}
+          path={route.path}
+          exact={route.exact === false ? false : true}
+        >
+          <AppBar
+            routes={[...routes, ...profileRoutes].filter((r) => !r.skipAppBar).map((r) => ({
+              label: r.label,
+              path: (profileKeys.includes(r.key) ? `/profile/${r.path}` : r.path),
               key: r.key,
               enforceLogin: r.enforceLogin,
               icon: r.icon,
@@ -70,6 +100,10 @@ function App() {
                 {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
                 <Route path="/spaces">
                   <Spaces />
+                </Route>
+                {/* /login/create, /login/submitted */}
+                <Route path="/login">
+                  <Profiles />
                 </Route>
               </Switch>
             </div>

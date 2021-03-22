@@ -10,6 +10,8 @@ import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
 import Profile from './Profile';
+import CreateProfile from '../components/CreateProfile/CreateProfile';
+import ProfileSubmitted from '../components/ProfileSubmitted/ProfileSubmitted';
 
 const routes = [{
   label: 'Home',
@@ -33,7 +35,27 @@ const routes = [{
   icon: PersonOutlineIcon,
   // todo: change this
   enforceLogin: false,
-}];
+},
+];
+
+const profileRoutes = [
+  {
+    label: 'Create Profile',
+    path: '/login/create',
+    content: CreateProfile,
+    key: 'createProfile',
+    icon: PersonOutlineIcon,
+    enforceLogin: false,
+    skipAppBar: true,
+  }, {
+    label: 'Profile Submitted',
+    path: '/login/submitted',
+    content: ProfileSubmitted,
+    key: 'profileSubmitted',
+    icon: PersonOutlineIcon,
+    enforceLogin: false,
+    skipAppBar: true,
+  }];
 
 const spaceRoutes = [{
   label: 'Add Review',
@@ -74,4 +96,4 @@ const spaceRoutes = [{
 ];
 
 export default routes;
-export { spaceRoutes };
+export { spaceRoutes, profileRoutes };

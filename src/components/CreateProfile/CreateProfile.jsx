@@ -7,8 +7,6 @@ import {
   Container,
   Snackbar,
   Typography,
-  Popper,
-  Card,
   Chip,
   InputLabel,
   TextField,
@@ -53,18 +51,26 @@ const styles = () => ({
     marginBottom: '8px',
     marginRight: '4px',
   },
+  submitButton: {
+    width: '250px',
+    height: '36px',
+    margin: '50px auto',
+  },
+  submitDiv: {
+    display: 'flex',
+  },
 });
 
 const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aromantic', 'Asexual', 'Asian/Pacific Islander', 'Bicurious', 'Bigender', 'Bisexual', 'Black', 'Cisgender', 'Demisexual', 'Female', 'Gay', 'Gender Fluid', 'Gender Non-Binary', 'Gender Non-Conforming', 'Gender Queer', 'Immigrant', 'Indigenous', 'Intersex', 'Latinx', 'Lesbian', 'Male', 'Middle Eastern', 'Multiracial', 'North Afircan', 'Pangender', 'Pansexual', 'Person Living with a Disablity', 'Person of Color', 'Pilipinx', 'Polyamorous', 'Polygender', 'Queer', 'Skoliosexual', 'Straight', 'Transgender', 'Trigender', 'Two Spirit', 'Veteran', 'White'];
 
 const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
-    selectedLabels: ['Bisexual', 'Black', 'Gender Fluid'],
-    name: 'Name Here',
-    pronouns: 'Pronouns Here',
-    location: 'Location Here',
+    selectedLabels: [],
+    name: '',
+    username: '',
+    pronouns: '',
+    location: '',
   });
-  const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
     openBar: false,
     popperMessage: '',
@@ -73,10 +79,6 @@ const ProfilePage = ({ classes }) => {
   });
 
   // TODO: State needs to pull user info from backend after login, maybe done in the login component
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const openSnackBar = (newState) => {
     setSnackBar({ ...newState, openBar: true });
   };
@@ -108,8 +110,6 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
-  const open = Boolean(anchorEl);
-
   const handleSubmit = (e, updatedInfo) => {
     e.preventDefault();
     // Needs to make a post call to backend to submit profileinfo state as updated user details
@@ -117,8 +117,6 @@ const ProfilePage = ({ classes }) => {
     try {
       // eslint-disable-next-line no-console
       console.log(updatedInfo);
-      // eslint-disable-next-line no-console
-      console.log('success');
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -126,20 +124,15 @@ const ProfilePage = ({ classes }) => {
       });
       // call to backend to submit data if successful - show success snackbar
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('fail');
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
         popperMessage: 'Error saving your changes',
       });
-      // if error show error snackbar with some messaging
     }
-    setAnchorEl(null);
   };
 
   const { vertical, horizontal, openBar } = snackBar;
-  const id = open ? 'transitions-popper' : undefined;
 
   return (
     <Container className={classes.container}>
@@ -158,20 +151,38 @@ const ProfilePage = ({ classes }) => {
         }
       />
       <Typography variant="h4" className={classes.title}>
-        Users Profile
+        Create Your Profile
       </Typography>
       <Typography className={classes.blurb}>
-        View and edit your profile. After you make a change, click Save.
+        Please fill out the information below.
+        We will not distribute your personal information.
+        Your safety is our priority.
       </Typography>
       <form onSubmit={handleSubmit}>
+        <InputLabel
+          disableAnimation
+          htmlFor="username"
+        >
+          Create Username
+        </InputLabel>
+        <TextField
+          className={classes.textInput}
+          onChange={handleChange}
+          value={profileInfo.username}
+          placeholder="username"
+          autoComplete="off"
+          variant="outlined"
+          name="username"
+          required
+        />
         <InputLabel type="inputLabel">
           <Typography>Name</Typography>
         </InputLabel>
         <TextField
           className={classes.textInput}
           onChange={handleChange}
-          onClick={handleClick}
           value={profileInfo.name}
+          placeholder="name"
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -185,8 +196,8 @@ const ProfilePage = ({ classes }) => {
         <TextField
           className={classes.textInput}
           onChange={handleChange}
-          onClick={handleClick}
           value={profileInfo.pronouns}
+          placeholder="pronouns"
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -199,61 +210,14 @@ const ProfilePage = ({ classes }) => {
         <TextField
           className={classes.textInput}
           onChange={handleChange}
-          onClick={handleClick}
           value={profileInfo.location}
+          placeholder="location"
           autoComplete="off"
           type="input"
           variant="outlined"
           name="location"
           required
         />
-        <Popper
-          type="submit"
-          id={id}
-          open={open}
-          placement="bottom"
-          disablePortal={false}
-          anchorEl={anchorEl}
-          transition
-          modifiers={{
-            flip: {
-              enabled: true,
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: 'scrollParent',
-            },
-          }}
-        >
-          <Card className={classes.popperCard}>
-            <Button
-              className={classes.popperButton}
-              color="primary"
-              variant="outlined"
-              aria-label="cancel"
-              component="span"
-              onClick={() => setAnchorEl(null)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className={classes.popperButton}
-              color="secondary"
-              variant="contained"
-              aria-label="save"
-              component="span"
-              // onClick={() => openSnackBar({
-              //   vertical: 'top',
-              //   horizontal: 'center',
-              //   popperMessage: 'Your changes have been saved.',
-              // })}
-              onClick={(e) => handleSubmit(e, profileInfo)}
-            >
-              Save
-            </Button>
-          </Card>
-        </Popper>
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {userLabels.map((label) => (
@@ -261,10 +225,9 @@ const ProfilePage = ({ classes }) => {
               <Chip
                 className={classes.identityChip}
                 key={label}
-                onClick={(e) => { addLabel(label); handleClick(e); }}
+                onClick={() => addLabel(label)}
                 color="secondary"
                 icon={<CheckIcon />}
-                anchorEl={anchorEl}
                 label={
                   (
                     <Typography variant="body2">
@@ -279,9 +242,8 @@ const ProfilePage = ({ classes }) => {
                   className={classes.identityChip}
                   key={label}
                   variant="outlined"
-                  onClick={(e) => { addLabel(label); handleClick(e); }}
+                  onClick={() => addLabel(label)}
                   color="primary"
-                  anchorEl={anchorEl}
                   label={
                     (
                       <Typography variant="body2">
@@ -293,6 +255,17 @@ const ProfilePage = ({ classes }) => {
               )
           ))}
         </Box>
+        <div className={classes.submitDiv}>
+          <Button
+            type="submit"
+            color="secondary"
+            className={classes.submitButton}
+            variant="contained"
+            onClick={(e) => handleSubmit(e, profileInfo)}
+          >
+            Submit
+          </Button>
+        </div>
       </form>
     </Container>
   );
