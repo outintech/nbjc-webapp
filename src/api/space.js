@@ -30,6 +30,9 @@ const postYelpSearch = async (spaceOpts) => {
     // todo: add actual user id
     user_id: 1,
   };
+  const spaceSearch = {
+    space_search: data,
+  };
 
   const results = await fetch(url, {
     method: 'POST',
@@ -41,7 +44,7 @@ const postYelpSearch = async (spaceOpts) => {
       Authorization: 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjE3NjcyMjIzfQ.fLtzvF_gYMb_59SV_rDOE3qMqR_RLSvjdXTC_hXPqUs',
     },
     // redirect: 'follow',
-    body: JSON.stringify(data),
+    body: JSON.stringify(spaceSearch),
   });
   return results.json();
 };

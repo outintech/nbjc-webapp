@@ -8,7 +8,6 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
 import { postYelpSearch } from '../../api';
-import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
 
 import {
@@ -50,8 +49,6 @@ const styles = (theme) => ({
   },
 });
 
-const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
-
 const getStepContent = (step, {
   onBack,
   onNext,
@@ -70,7 +67,7 @@ const getStepContent = (step, {
     case 1:
       return (
         <AddSpaceAddress
-          businessList={getMockBusiness()}
+          businessList={formValues.yelpBusinessResponses}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -127,18 +124,24 @@ const AddSpace = ({ classes }) => {
         })
           .then((response) => {
             console.log(response.data);
+            setFormValues({
+              ...formValues,
+              ...data,
+              yelpBusinessResponses: response.data,
+            });
           }),
       );
+    } else {
+      setFormValues({
+        ...formValues,
+        ...data,
+      });
     }
-    setFormValues({
-      ...formValues,
-      ...data,
-    });
     setActiveStep(activeStep + 1);
   };
   const onSubmit = () => {
     // todo: contact api
-    // console.log('Space details', space);
+    console.log('Space details', formValues);
     setActiveStep(5);
   };
 
