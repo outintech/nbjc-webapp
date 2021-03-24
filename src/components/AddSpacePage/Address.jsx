@@ -26,7 +26,7 @@ const styles = (theme) => ({
   footer: {
     margin: 20,
   },
-  yelpfooter: {
+  yelpFooter: {
     marginBottom: 15,
   },
   submitButton: {
@@ -97,7 +97,7 @@ const Address = ({
         </Button>
 
       </div>
-      <div className={classes.yelpfooter}>
+      <div className={classes.yelpFooter}>
         This space information is powered by Yelp.
       </div>
     </>

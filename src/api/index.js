@@ -1,5 +1,5 @@
 import getSearchResults from './search';
-import { getSpace, postYelpSearch } from './space';
+import { getSpace, postYelpSearch, postAddSpace } from './space';
 import { postReview, getReviewForSpaceAndUser } from './review';
 
 export {
@@ -7,5 +7,6 @@ export {
   getSearchResults,
   getSpace,
   postYelpSearch,
+  postAddSpace,
   postReview,
 };

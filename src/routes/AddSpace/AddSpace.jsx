@@ -7,7 +7,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import { postYelpSearch } from '../../api';
+import { postYelpSearch, postAddSpace } from '../../api';
 import chips from '../../api/chips';
 
 import {
@@ -49,6 +49,11 @@ const styles = (theme) => ({
   },
 });
 
+const getBusinessList = (formValues) => {
+  const getSearchResults = () => formValues.yelpBusinessResponses;
+  setTimeout(getSearchResults(), 20000);
+};
+
 const getStepContent = (step, {
   onBack,
   onNext,
@@ -67,7 +72,7 @@ const getStepContent = (step, {
     case 1:
       return (
         <AddSpaceAddress
-          businessList={formValues.yelpBusinessResponses}
+          businessList={getBusinessList(formValues)}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -123,7 +128,6 @@ const AddSpace = ({ classes }) => {
           zipcode: data.zipcode,
         })
           .then((response) => {
-            console.log(response.data);
             setFormValues({
               ...formValues,
               ...data,
@@ -137,11 +141,14 @@ const AddSpace = ({ classes }) => {
         ...data,
       });
     }
-    setActiveStep(activeStep + 1);
+    if (activeStep === 0) {
+      setTimeout(setActiveStep(activeStep + 1), 25000);
+    } else {
+      setActiveStep(activeStep + 1);
+    }
   };
   const onSubmit = () => {
-    // todo: contact api
-    console.log('Space details', formValues);
+    postAddSpace(formValues);
     setActiveStep(5);
   };
 
