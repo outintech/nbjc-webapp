@@ -43,8 +43,6 @@ const createUser = async (userOpts) => {
     pronouns: userOpts.pronouns,
     location: userOpts.location,
   };
-  console.log('userOpts', userOpts);
-  console.log('data', data);
   const results = await wrappedFetch(url, {
     method: 'POST',
     mode: 'cors',

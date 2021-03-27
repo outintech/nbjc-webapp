@@ -18,7 +18,7 @@ import { UserContext } from '../context/UserContext';
 const useAuthenticatedUser = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const { promiseInProgress } = usePromiseTracker();
-  const { setUser } = useContext(UserContext);
+  const { user: contextUser, setUser } = useContext(UserContext);
   const history = useHistory();
   const returnTo = history.location.pathname;
   let registeredUser;
@@ -37,7 +37,11 @@ const useAuthenticatedUser = () => {
             userId: auth0Id,
             token,
           });
-          console.log('registered user', registeredUser);
+          setUser({
+            token,
+            auth0Id,
+            userId: registeredUser.data.id,
+          });
           setRedirectToCreate(false);
         } catch (e) {
           // based on the error, create the user
@@ -54,9 +58,9 @@ const useAuthenticatedUser = () => {
       );
     }
   }, [user]);
-
+  console.log(promiseInProgress, contextUser, redirectToCreate);
   return {
-    loadingUser: promiseInProgress || (!registeredUser && !redirectToCreate),
+    loadingUser: promiseInProgress || (!contextUser.userId && !redirectToCreate),
     redirectToCreate,
     returnTo,
   };
