@@ -35,15 +35,15 @@ const SpaceDetails = () => {
       setSpaceTitle(space.name);
     }
   }, [space]);
-
+  const totalReviews = space && space.reviews ? space.reviews.length : 0;
   return (
     <>
-      {/* TODO: add average Rating & category props & name */}
       <SpaceDetailsPage
         category={getCategoryAndRating().category}
         averageRating={getCategoryAndRating().averageRating}
         space={space}
         spaceTitle={spaceTitle}
+        totalReviews={totalReviews}
       />
     </>
   );

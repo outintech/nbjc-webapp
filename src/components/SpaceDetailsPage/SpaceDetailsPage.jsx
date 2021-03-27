@@ -29,13 +29,14 @@ const SpaceDetailsPage = ({
       setPhoneNumber(utils.formatPhoneNumber(cardData.phone));
     }
   }, [cardData]);
-
+  const totalReviews = space && space.reviews ? space.reviews : [];
   return (
     <div>
       { cardData
         && (
           <div>
             <SpaceDetailsCard
+              totalReviews={totalReviews}
               name={cardData.name}
               id={cardData.id}
               phoneNumber={phoneNumber}

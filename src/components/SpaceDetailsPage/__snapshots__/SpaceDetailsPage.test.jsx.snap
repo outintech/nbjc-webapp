@@ -95,18 +95,170 @@ exports[`SpaceDetailsPage renders SpaceDetailsPage 1`] = `
               <span
                 class="MuiButton-label"
               >
-                See All Reviews
+                See All 3
               </span>
               <span
                 class="MuiTouchRipple-root"
               />
             </button>
           </div>
-          <p
-            class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter"
+          <div
+            class="SpaceDetailCard-reviewDiv-7"
           >
-            There are no reviews. Be the first to rate and review this space!
-          </p>
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary"
+              tabindex="0"
+              type="button"
+              variant="outlined"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <div
+              class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                @first123
+              </p>
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                03/20/2021
+              </p>
+              <span
+                aria-label="5 Stars"
+                class="MuiRating-root MuiRating-readOnly"
+                role="img"
+              >
+                <span>
+                  <span
+                    class="MuiRating-icon MuiRating-iconFilled WithStyles(ForwardRef(Rating))-iconFilled-24"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                  <span
+                    class="MuiRating-icon MuiRating-iconFilled WithStyles(ForwardRef(Rating))-iconFilled-24"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                  <span
+                    class="MuiRating-icon MuiRating-iconFilled WithStyles(ForwardRef(Rating))-iconFilled-24"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                  <span
+                    class="MuiRating-icon MuiRating-iconFilled WithStyles(ForwardRef(Rating))-iconFilled-24"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                  <span
+                    class="MuiRating-icon MuiRating-iconFilled WithStyles(ForwardRef(Rating))-iconFilled-24"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                "La Colombe is was one of the first places I become a regular at in my neighborhood. The baristas are always friendly, the coffee and the vibe superb. My name doesn't match my ID, but I've never expereinced any issues being addressed correctly."
+              </p>
+            </div>
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary"
+              tabindex="0"
+              type="button"
+              variant="outlined"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
           <div
             class="SpaceDetailCard-reviewButton-10"
           >
