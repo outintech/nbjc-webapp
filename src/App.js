@@ -5,10 +5,9 @@ import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 
-import { IndicatorProvider } from './providers/IndicatorContext';
-
 import AppBar from './components/AppBar';
 import NameContextProvider from './context/NameContext';
+import UserContextProvider from './context/UserContext';
 
 import theme from './theme';
 import routes, { spaceRoutes } from './routes';
@@ -49,8 +48,8 @@ function App() {
   const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
   return (
     <>
-      <NameContextProvider>
-        <IndicatorProvider>
+      <UserContextProvider>
+        <NameContextProvider>
           <ThemeProvider theme={theme}>
             <div className="App">
               <Switch>
@@ -111,8 +110,8 @@ function App() {
               </Switch>
             </div>
           </ThemeProvider>
-        </IndicatorProvider>
-      </NameContextProvider>
+        </NameContextProvider>
+      </UserContextProvider>
     </>
   );
 }
