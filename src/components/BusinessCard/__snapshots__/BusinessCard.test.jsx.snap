@@ -5,99 +5,105 @@ exports[`renders the BusinessCardComponent 1`] = `
   <div
     class="MuiPaper-root MuiCard-root BusinessCard-root-1 MuiPaper-outlined MuiPaper-rounded"
   >
-    <div
-      class="MuiCardHeader-root"
+    <a
+      aria-disabled="false"
+      class="MuiButtonBase-root MuiCardActionArea-root"
+      href="/spaces/123"
+      tabindex="0"
     >
       <div
-        class="MuiCardHeader-avatar"
+        class="MuiCardHeader-root"
       >
         <div
-          color="secondary"
+          class="MuiCardHeader-avatar"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root BusinessCard-starIcon-2 MuiSvgIcon-colorSecondary MuiSvgIcon-fontSizeLarge"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <div
+            color="secondary"
           >
-            <path
-              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-            />
-          </svg>
-          <span
-            class="MuiTypography-root BusinessCard-rating-3 MuiTypography-caption MuiTypography-colorSecondary MuiTypography-alignCenter"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root BusinessCard-starIcon-2 MuiSvgIcon-colorSecondary MuiSvgIcon-fontSizeLarge"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              />
+            </svg>
+            <span
+              class="MuiTypography-root BusinessCard-rating-3 MuiTypography-caption MuiTypography-colorSecondary MuiTypography-alignCenter"
+            >
+              4.5
+            </span>
+          </div>
+        </div>
+        <div
+          class="MuiCardHeader-content"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-h6"
           >
-            4.5
-          </span>
+            La colombe coffee roasters
+          </h6>
+          <p
+            class="MuiTypography-root MuiTypography-body2"
+          >
+            Coffee
+          </p>
         </div>
       </div>
       <div
-        class="MuiCardHeader-content"
-      >
-        <h6
-          class="MuiTypography-root MuiTypography-h6"
-        >
-          La colombe coffee roasters
-        </h6>
-        <p
-          class="MuiTypography-root MuiTypography-body2"
-        >
-          Coffee
-        </p>
-      </div>
-      <div
-        class="MuiCardHeader-action BusinessCard-headerAction-4"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-colorSecondary"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"
-          />
-        </svg>
-      </div>
-    </div>
-    <div
-      class="MuiCardMedia-root BusinessCard-cardMedia-5"
-      style="background-image: url(https://s3-media3.fl.yelpcdn.com/bphoto/ONmc2uTWa4W5AAI2irBpXw/o.jpg);"
-    />
+        class="MuiCardMedia-root BusinessCard-cardMedia-5"
+        style="background-image: url(https://s3-media3.fl.yelpcdn.com/bphoto/ONmc2uTWa4W5AAI2irBpXw/o.jpg);"
+      />
+    </a>
     <div
       class="MuiCardContent-root"
     >
-      <div
-        class="BusinessCard-location-6"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiCardActionArea-root"
+        href="/spaces/123"
+        tabindex="0"
       >
         <div
-          class="BusinessCard-address-8"
+          class="BusinessCard-location-6"
         >
-          <p
-            class="MuiTypography-root MuiTypography-body1"
+          <div
+            class="BusinessCard-address-8"
           >
-            924 Blagden Alley Way Washington, D.C. 20001
-          </p>
+            <p
+              class="MuiTypography-root MuiTypography-body1"
+            >
+              924 Blagden Alley Way Washington, D.C. 20001
+            </p>
+          </div>
+          <div
+            class="BusinessCard-distance-7"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1"
+            >
+              0.03mi
+            </p>
+          </div>
         </div>
+        <hr
+          class="MuiDivider-root"
+        />
         <div
-          class="BusinessCard-distance-7"
-        >
-          <p
-            class="MuiTypography-root MuiTypography-body1"
-          >
-            0.03mi
-          </p>
-        </div>
-      </div>
-      <hr
-        class="MuiDivider-root"
-      />
-      <div
-        class="BusinessCard-chipWrapper-9"
-      />
+          class="BusinessCard-chipWrapper-9"
+        />
+      </a>
       <div
         class="BusinessCard-footer-11"
       >
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiCardActionArea-root"
+          href="/spaces/123"
+          tabindex="0"
+        />
         <a
           aria-disabled="false"
           class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
@@ -116,7 +122,7 @@ exports[`renders the BusinessCardComponent 1`] = `
         <a
           aria-disabled="false"
           class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
-          href="/spaces/123/review/new"
+          href="/spaces/123/reviews/new"
           tabindex="0"
         >
           <span
@@ -159,6 +165,9 @@ exports[`renders the BusinessCardComponent 1`] = `
         </span>
       </div>
     </div>
+    <span
+      class="MuiCardActionArea-focusHighlight"
+    />
   </div>
 </DocumentFragment>
 `;

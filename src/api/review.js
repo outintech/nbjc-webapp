@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import wrappedFetch from './wrappedFetch';
 
 /**
  * Post a new review for a space by a user
@@ -10,7 +10,7 @@ import fetch from 'node-fetch';
  */
 const postReview = async (reviewOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = `/api/v1/spaces/${reviewOpts.spaceId}/reviews`;
+  url.pathname = '/api/v1/spaces/reviews';
   const data = {
     rating: reviewOpts.rating,
     content: reviewOpts.detail,
@@ -20,7 +20,7 @@ const postReview = async (reviewOpts) => {
     space_id: reviewOpts.spaceId,
   };
 
-  const results = await fetch(url, {
+  const results = await wrappedFetch(url, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -32,7 +32,7 @@ const postReview = async (reviewOpts) => {
     redirect: 'follow',
     body: JSON.stringify(data),
   });
-  return results.json();
+  return results;
 };
 
 /**
@@ -46,15 +46,14 @@ const getReviewForSpaceAndUser = async (reviewOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = `/api/v1/spaces/${reviewOpts.spaceId}/reviews`;
   url.searchParams.append('user_id', reviewOpts.userId);
-  const results = await fetch(url, {
+  const results = await wrappedFetch(url, {
     method: 'GET',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
   });
-  return results.json();
+  return results;
 };
 
 /**
@@ -65,7 +64,7 @@ const getReviewForSpaceAndUser = async (reviewOpts) => {
 const getSpaceReviews = async (spaceId) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = `/api/v1/spaces/${spaceId}/reviews`;
-  const results = await fetch(url, {
+  const results = await wrappedFetch(url, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -73,7 +72,7 @@ const getSpaceReviews = async (spaceId) => {
       Accept: 'application/json',
     },
   });
-  return results.json();
+  return results;
 };
 
 export { postReview, getReviewForSpaceAndUser, getSpaceReviews };

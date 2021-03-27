@@ -13,13 +13,11 @@ describe('AppBar', () => {
     path: '/',
     key: 'home',
     icon: HomeIcon,
-    enforceLogin: false,
   }, {
     label: 'Search for a space',
     path: '/search',
     key: 'search',
     icon: SearchIcon,
-    enforceLogin: false,
   }];
   
   test('renders with default state', () => {

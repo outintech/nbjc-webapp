@@ -6,6 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import withUser from '../AuthenticatedRoute';
 // todo: change to use api.
 import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
 import chips from '../../api/chips';
@@ -109,6 +110,7 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {
@@ -187,4 +189,4 @@ AddSpace.prototypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default withStyles(styles)(AddSpace);
+export default withUser(withStyles(styles)(AddSpace));

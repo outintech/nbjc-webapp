@@ -6,18 +6,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { Chip, Typography } from '@material-ui/core';
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined';
 
-const styles = (theme) => ({
+const styles = () => ({
   chip: {
     margin: 10,
   },
   wrapper: {
-    [theme.breakpoints.up('xs')]: {
-      display: 'flex',
-      overflow: 'scroll',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      display: 'block',
-    },
+    display: 'block',
   },
 });
 

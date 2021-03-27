@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -8,24 +8,26 @@ import {
   Typography,
   InputLabel,
 } from '@material-ui/core';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withStyles } from '@material-ui/core/styles';
 
-import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
-
-import { searchProps } from '../../types';
+import { searchProps, chipType } from '../../types';
 
 import ChipFilters from '../../components/ChipFilters';
-import FilterDialog from '../../components/FilterDialog';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
+import { getCategories, getSpacesByName } from '../../api';
 
 const styles = (theme) => ({
   form: {
     margin: '10px 0px',
   },
-  filterWrapper: {
-    display: 'flex',
+  autocompleteField: {
+    [theme.breakpoints.up('xs')]: {
+      width: '100%',
+    },
     [theme.breakpoints.up('mobile')]: {
-      flexWrap: 'wrap',
+      width: 326,
     },
   },
   filterButton: {
@@ -38,27 +40,96 @@ const styles = (theme) => ({
       marginTop: 10,
     },
   },
+  submitButtonWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 60,
+    width: '100%',
+  },
+  submitButton: {
+    [theme.breakpoints.up('mobile')]: {
+      width: 250,
+    },
+  },
 });
 
 const SearchForm = ({
   classes,
   onSearch,
-  onFilterApplied,
-  searchCriteria,
+  chips,
+  location,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [formValues, setFormValues] = useState({
-    name: '',
-    location: '',
-    category: '',
-    indicators: searchCriteria.chips.map((chip) => ({
+    name: undefined,
+    location,
+    category: undefined,
+    indicators: chips.map((chip) => ({
       ...chip,
       isSelected: false,
     })),
   });
 
-  const [openFilter, setOpenFilter] = useState(false);
+  useEffect(() => {
+    if (location) {
+      setFormValues({
+        ...formValues,
+        location: `${location.city}, ${location.state}`,
+      });
+    }
+  }, [location]);
   const [showError, setShowError] = useState(false);
+
+  /** Start Name Autocomplete */
+  const [nameText, setNameText] = useState('');
+  const [spaceNames, setSpaceNames] = useState([]);
+  const onNameTextChange = (e) => {
+    setNameText(e.target.value);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getSpacesByName({ name: nameText });
+      setSpaceNames(result);
+    };
+    fetchData();
+  }, [nameText]);
+  const onNameChange = (e, value) => {
+    if (value === null) {
+      setNameText('');
+    }
+    setFormValues({
+      ...formValues,
+      name: value,
+    });
+  };
+  /** End Name Autocomplete */
+
+  /** Start Category Autocomplete */
+  const [categoryText, setCategoryText] = useState('');
+  const [categories, setCategories] = useState([]);
+
+  const onCategoryTextChange = (e) => {
+    setCategoryText(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getCategories({ searchTerm: categoryText });
+      setCategories(result);
+    };
+    fetchData();
+  }, [categoryText]);
+
+  const onCategoryChange = (e, value) => {
+    if (value === null) {
+      setCategoryText('');
+    }
+    setFormValues({
+      ...formValues,
+      category: value,
+    });
+  };
+  /** End Category Autocomplete */
 
   const handleChange = (e) => {
     setFormValues({
@@ -82,28 +153,36 @@ const SearchForm = ({
   const onSearchSubmit = (e) => {
     e.preventDefault();
     if (
-      formValues.name.length === 0
-      && formValues.location.length === 0
-      && formValues.category.length === 0
+      !(formValues.name || nameText)
+      && !formValues.location
+      && !(formValues.category || categoryText)
     ) {
       setShowError(true);
+    } else {
+      // nameText/categoryText is present when the user
+      // typed a free form name or category instead of choosing an
+      // option from the dropdown value.
+      let name = formValues.name || nameText;
+      if (typeof name === 'string') {
+        name = {
+          name,
+        };
+      }
+      let category = formValues.category || categoryText;
+      if (typeof category === 'string') {
+        category = {
+          alias: category,
+        };
+      }
+      onSearch({
+        name,
+        location: formValues.location,
+        category,
+        indicators: formValues.indicators,
+      });
     }
-    onSearch(formValues);
   };
 
-  const filters = {
-    stars: searchCriteria.rating || 0,
-    distance: searchCriteria.distance || 0,
-    price: searchCriteria.price || 0,
-  };
-
-  const setFilters = (changedFilters) => {
-    onFilterApplied('distance', changedFilters.distance);
-    onFilterApplied('price', changedFilters.price);
-    onFilterApplied('rating', changedFilters.stars);
-  };
-
-  const { chips } = searchCriteria;
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
@@ -119,17 +198,28 @@ const SearchForm = ({
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What&apos;s the space?</Typography>
         </InputLabel>
-        <TextField
-          type="input"
-          variant="outlined"
-          fullWidth={!matches}
-          style={{ margin: '8px 0px' }}
-          value={formValues.name}
-          onChange={handleChange}
-          placeholder="Name of the space"
-          helperText="Optional"
-          name="name"
-          autoFocus
+        <Autocomplete
+          getOptionSelected={(option, value) => option.name === value.name}
+          getOptionLabel={(option) => option.name}
+          options={spaceNames}
+          className={classes.autocompleteField}
+          onChange={onNameChange}
+          freeSolo
+          renderInput={(params) => (
+            <TextField
+              type="text"
+              variant="outlined"
+              style={{ margin: '8px 0px' }}
+              value={nameText}
+              onChange={onNameTextChange}
+              placeholder="Space Name"
+              helperText="Optional"
+              name="name"
+              autoFocus
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...params}
+            />
+          )}
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">Where are you looking?</Typography>
@@ -144,42 +234,34 @@ const SearchForm = ({
           placeholder="City, State"
           helperText="Optional"
           name="location"
-          autoFocus
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What type of Space are you looking for? </Typography>
         </InputLabel>
-        <TextField
-          type="text"
-          variant="outlined"
-          fullWidth={!matches}
-          style={{ margin: '8px 0px' }}
-          value={formValues.category}
-          onChange={handleChange}
-          placeholder="Space Category"
-          helperText="Optional"
-          name="category"
-          autoFocus
-        />
-        <div className={classes.filterWrapper}>
-          { false
-            && (
-            <FilterDialog
-              open={openFilter}
-              onClose={() => setOpenFilter(false)}
-              onToggle={() => setOpenFilter(!openFilter)}
-              defaultFilters={filters}
-              setFilters={(changedFilters) => setFilters(changedFilters)}
-              type={matches ? 'desktop' : 'mobile'}
-              overrideClasses={{ root: classes.filterDialog }}
-            />
-            )}
-          {!matches && false && (
-            <FilterListOutlinedIcon
-              onClick={() => setOpenFilter(true)}
-              className={classes.filterButton}
+        <Autocomplete
+          getOptionSelected={(option, value) => option.title === value.title}
+          getOptionLabel={(option) => option.title}
+          options={categories}
+          className={classes.autocompleteField}
+          onChange={onCategoryChange}
+          freeSolo
+          renderInput={(params) => (
+            <TextField
+              type="text"
+              variant="outlined"
+              style={{ margin: '8px 0px' }}
+              value={categoryText}
+              onChange={onCategoryTextChange}
+              placeholder="Space Category"
+              helperText="Optional"
+              name="category"
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...params}
             />
           )}
+        />
+
+        <div className={classes.filterWrapper}>
           <InputLabel type="inputLabel" className={classes.inputLabel}>
             <Typography variant="h6">Select all that apply</Typography>
           </InputLabel>
@@ -188,16 +270,20 @@ const SearchForm = ({
             onChipSelected={(i) => handleIndicatorSelect(chips[i].value)}
           />
         </div>
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          fullWidth={!matches}
-          data-testid="search-searchform-submit"
-          disableElevation
-        >
-          Search
-        </Button>
+        <div className={classes.submitButtonWrapper}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            fullWidth={!matches}
+            data-testid="search-searchform-submit"
+            className={classes.submitButton}
+            align="center"
+            disableElevation
+          >
+            Search
+          </Button>
+        </div>
       </form>
       <ErrorSnackbar
         snackbarOpen={showError}
@@ -214,8 +300,12 @@ SearchForm.propTypes = {
   onSearch: PropTypes.func.isRequired,
   onFilterApplied: PropTypes.func.isRequired,
   searchCriteria: PropTypes.shape(searchProps).isRequired,
+  chips: PropTypes.arrayOf(PropTypes.shape(chipType)).isRequired,
+  location: PropTypes.shape({}),
 };
 
-SearchForm.defaultProps = {};
+SearchForm.defaultProps = {
+  location: {},
+};
 
 export default withStyles(styles)(SearchForm);

@@ -45,8 +45,7 @@ const ErrorSnackbar = ({
       classes={{ message: classes.alertMessage }}
     >
       <Typography variant="body2">{body}</Typography>
-      {showSupport
-        && (
+      {showSupport && (
         <Button
           className={classes.supportButton}
           href="/support"
@@ -55,7 +54,7 @@ const ErrorSnackbar = ({
         >
           Support
         </Button>
-        )}
+      )}
     </Alert>
   </Snackbar>
 );

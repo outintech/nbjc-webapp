@@ -17,6 +17,8 @@ import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
 
+import withUser from '../AuthenticatedRoute';
+
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
@@ -72,6 +74,7 @@ const AddReview = ({ classes }) => {
         // todo: add actual user_id
         getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
       ]);
+      // TODO: Handle error handling after create profile is done
       if (reviewData.data.exists) {
         setSpace(spaceData.data);
         setPageStatus('reviewExists');
@@ -192,4 +195,4 @@ AddReview.propTypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default withStyles(styles)(AddReview);
+export default withUser(withStyles(styles)(AddReview));
