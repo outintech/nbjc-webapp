@@ -1,3 +1,4 @@
+/* eslint react/jsx-props-no-spreading: 0 */
 import React, { useEffect, useState } from 'react';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -23,14 +24,11 @@ const ProtectedRoute = (component) => (props) => {
     return <CircularProgress color="secondary" />;
   }
   if (isAuthenticated || authStatus === 'authenticated') {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     return <Component {...props} />;
   }
   Component = withAuthenticationRequired(component, {
-    // eslint-disable-next-line react/react-in-jsx-scope
     onRedirecting: () => <div>Redirecting you to the login page...</div>,
   });
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Component {...props} />;
 };
 

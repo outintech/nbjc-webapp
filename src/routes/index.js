@@ -20,18 +20,21 @@ const routes = [{
   content: Home,
   key: 'home',
   icon: HomeIcon,
+  prefix: '',
 }, {
   label: 'Search for a space',
   path: '/search',
   content: Search,
   key: 'search',
   icon: SearchIcon,
+  prefix: '',
 }, {
   label: 'Search results page',
   path: '/search/results',
   content: Search,
   key: 'searchResults',
   icon: SearchIcon,
+  prefix: '',
   enforceLogin: false,
   skipAppBar: true,
 }, {
@@ -40,12 +43,14 @@ const routes = [{
   content: Profile,
   key: 'profile',
   icon: PersonOutlineIcon,
+  prefix: '',
 }, {
   label: 'Create Profile',
   path: '/users/new',
   content: CreateProfile,
   key: 'createProfile',
   icon: PersonOutlineIcon,
+  prefix: '',
   skipAppBar: true,
   exact: true,
   // todo: change this
@@ -56,6 +61,7 @@ const routes = [{
   content: ProfileSubmitted,
   key: 'profileSubmitted',
   icon: PersonOutlineIcon,
+  prefix: '',
   enforceLogin: false,
   skipAppBar: true,
 }];
@@ -63,23 +69,25 @@ const routes = [{
 const spaceRoutes = [{
   label: 'Add Review',
   path: '/:spaceId/reviews/new',
-  // todo: change this/
   content: ProtectedRoute(AddReview),
   key: 'addReview',
   skipAppBar: true,
   exact: false,
+  prefix: 'spaces',
 }, {
   label: 'Add a space',
   path: '/new',
   content: ProtectedRoute(AddSpace),
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
+  prefix: 'spaces',
 }, {
   label: 'Space Details',
   path: '/:spaceId',
   content: SpaceDetails,
   key: 'spaceDetails',
   skipAppBar: true,
+  prefix: 'spaces',
   /* TODO: check on this
    exact: true */
 },
@@ -89,6 +97,7 @@ const spaceRoutes = [{
   content: Reviews,
   key: 'reviews',
   skipAppBar: true,
+  prefix: 'spaces',
 },
 ];
 
