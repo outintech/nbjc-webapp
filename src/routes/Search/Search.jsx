@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
@@ -15,7 +15,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import BusinessCard from '../../components/BusinessCard';
 import FilterDialog from '../../components/FilterDialog';
 import Pagination from '../../components/Pagination';
-import { getAllIndicators } from '../../api';
 
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
@@ -77,21 +76,8 @@ const Search = ({
   isGeolocationEnabled,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [indicators, setIndicators] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getAllIndicators();
-      setIndicators(data);
-    }
-    try {
-      fetchData();
-    } catch (err) {
-      // todo: retry?
-      console.log(err);
-    }
-  }, []);
   const {
     updateSearch,
     updateFilters,
@@ -100,7 +86,8 @@ const Search = ({
     loading,
     pagination = {},
     userLocation,
-  } = useSearch({ userCoords: coords, indicators });
+    indicators = [],
+  } = useSearch({ userCoords: coords });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -230,7 +217,7 @@ const Search = ({
               </div>
             </div>
           )}
-        {(loading || indicators.length < 1 || isGeoLoading) && <CircularProgress color="secondary" />}
+        {loading && <CircularProgress color="secondary" />}
       </div>
     </div>
   );

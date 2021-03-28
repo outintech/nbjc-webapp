@@ -3,7 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import useQuery from '../../../hooks/useQuery';
-import { getSearchResults, getLocation } from '../../../api';
+import {
+  getSearchResults,
+  getLocation,
+  getAllIndicators,
+} from '../../../api';
 import utils from '../../../utils';
 
 const getSearchCriteria = (query) => ({
@@ -18,9 +22,10 @@ const getSearchCriteria = (query) => ({
   perPage: parseInt(query.get('perPage'), 10) || 10,
 });
 
-const useSearch = ({ indicators, userCoords }) => {
+const useSearch = ({ userCoords }) => {
   const [searchResults, setSearchResults] = useState(null);
   const [pagination, setPagination] = useState();
+  const [indicators, setIndicators] = useState([]);
   const query = useQuery();
   const history = useHistory();
   const { promiseInProgress } = usePromiseTracker();
@@ -70,20 +75,34 @@ const useSearch = ({ indicators, userCoords }) => {
   });
 
   useEffect(() => {
-    async function fetchLocation() {
+    async function fetchSearchFormData() {
+      const promises = [getAllIndicators()];
       if (userCoords && userCoords !== null) {
-        const locationResult = await getLocation({
-          lat: userCoords.latitude,
-          lng: userCoords.longitude,
-        });
-        setUserLocation({
-          ...userLocation,
-          address: locationResult.data.address,
-        });
+        promises.push(
+          getLocation({
+            lat: userCoords.latitude,
+            lng: userCoords.longitude,
+          }),
+        );
+      } else {
+        promises.push(Promise.resolve({ data: {} }));
       }
+      const [
+        indicatorData,
+        locationData,
+      ] = await Promise.all(promises);
+      setIndicators(indicatorData);
+      setUserLocation({
+        ...userLocation,
+        address: locationData.data.address,
+      });
     }
     try {
-      trackPromise(fetchLocation());
+      // no need to fetch
+      // and indicators if not on search page
+      if (history.location.pathname !== '/search/results') {
+        trackPromise(fetchSearchFormData());
+      }
     } catch (e) {
       setUserLocation({
         ...userLocation,
@@ -153,6 +172,7 @@ const useSearch = ({ indicators, userCoords }) => {
     updateFilters,
     pagination,
     userLocation,
+    indicators,
   };
 };
 

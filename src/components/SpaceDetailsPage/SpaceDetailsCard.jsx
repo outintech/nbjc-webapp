@@ -298,9 +298,9 @@ const SpaceDetailCard = ({
             <Typography variant="body1">{address.postal_code}</Typography>
             <Typography variant="body1">{address.country}</Typography>
           </div>
-          <div className={classes.distance}>
+          {/* <div className={classes.distance}>
             <Typography variant="body1">TBD: distance</Typography>
-          </div>
+          </div> */}
         </div>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>
