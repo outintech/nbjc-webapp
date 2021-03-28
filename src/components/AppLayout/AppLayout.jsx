@@ -6,9 +6,23 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '../AppBar';
 import Footer from '../Footer';
 
-const styles = {};
+const styles = {
+  root: {
+    height: '100%',
+  },
+  content: {
+    height: '100%',
+    overflow: 'scroll',
+    marginBottom: 75,
+  },
+};
 
-const AppLayout = ({ children, routes, selected }) => {
+const AppLayout = ({
+  children,
+  routes,
+  selected,
+  classes,
+}) => {
   const appBarRoutes = routes
     .filter((r) => !r.skipAppBar)
     .map((r) => ({
@@ -19,14 +33,16 @@ const AppLayout = ({ children, routes, selected }) => {
       icon: r.icon,
     }));
   return (
-    <>
+    <div className={classes.root}>
       <AppBar
         routes={appBarRoutes}
         selected={selected}
       />
-      {children}
+      <div className={classes.content}>
+        {children}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 // todo: change this to tertiary color (black)
 const styles = (theme) => ({
   root: {
-    position: 'sticky',
+    position: 'fixed',
     bottom: 0,
     backgroundColor: theme.palette.primary.light,
     display: 'flex',
@@ -36,6 +36,12 @@ const styles = (theme) => ({
   links: {
     marginLeft: 'auto',
     display: 'flex',
+    [theme.breakpoints.up('xs')]: {
+      marginTop: 10,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginTop: 0,
+    },
   },
   externalLink: {
     // whiteSpace: 'nowrap',
