@@ -8,9 +8,8 @@ const paramMap = {
   price: 'filters[price]',
   rating: 'filters[rating]',
   indicators: 'filters[indicators]',
-  page: 'current[page]',
-  pageSize: 'page[size]',
-  pageNumber: 'page',
+  page: 'page',
+  perPage: 'per_page',
 };
 
 /**

@@ -14,6 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
 import FilterDialog from '../../components/FilterDialog';
+import Pagination from '../../components/Pagination';
 import { getAllIndicators } from '../../api';
 
 import useSearch from './hooks/useSearch';
@@ -97,7 +98,7 @@ const Search = ({
     search,
     searchResults,
     loading,
-    pagination,
+    pagination = {},
     userLocation,
   } = useSearch({ userCoords: coords, indicators });
   const onSearchSubmit = async (searchTerm) => {
@@ -198,6 +199,11 @@ const Search = ({
               </div>
             ))}
         </div>
+        <Pagination
+          totalCount={pagination.total_count || 0}
+          page={pagination.page || 1}
+          perPage={pagination.perPage || 10}
+        />
         {searchResults !== null
           && search.searchTerm !== null
           && searchResults.length === 0

@@ -14,13 +14,13 @@ const getSearchCriteria = (query) => ({
   rating: parseFloat(query.get('rating')) || 0,
   price: parseInt(query.get('price'), 10) || 0,
   indicators: query.getAll('indicators'),
-  // pageNumber: parseInt(query.get('pageNumber'), 10) || 1,
-  // pageSize: parseInt(query.get('pageSize'), 10) || 20,
+  page: parseInt(query.get('page'), 10) || 1,
+  perPage: parseInt(query.get('perPage'), 10) || 10,
 });
 
 const useSearch = ({ indicators, userCoords }) => {
   const [searchResults, setSearchResults] = useState(null);
-  const [pagination, setPagination] = useState(null);
+  const [pagination, setPagination] = useState();
   const query = useQuery();
   const history = useHistory();
   const { promiseInProgress } = usePromiseTracker();
