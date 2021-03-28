@@ -41,9 +41,12 @@ const ReviewsPage = ({
   reviews,
 }) => {
   const history = useHistory();
+  let name = '';
   // TODO: fix the linting
   // eslint-disable-next-line
-  const name = history.location.state.name;
+  if (history.location && history.location.state) {
+    name = history.location.state.name;
+  }
   const { spaceId } = useParams();
   const id = parseInt(spaceId, 10);
 

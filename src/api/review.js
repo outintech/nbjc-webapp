@@ -61,11 +61,15 @@ const getReviewForSpaceAndUser = async (reviewOpts) => {
 /**
  * Get a space's reviews
  * @param {string} spaceId - id of the space to fetch the reviews
+ * @param {number} page - page number
+ * @param {number} perPage - count per page
  * @returns {Promise} - resolves to array of spaces
 */
-const getSpaceReviews = async (spaceId) => {
+const getSpaceReviews = async (spaceId, page, perPage) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = `/api/v1/spaces/${spaceId}/reviews`;
+  url.searchParams.append('page', page);
+  url.searchParams.append('per_page', perPage);
   const results = await wrappedFetch(url, {
     method: 'GET',
     mode: 'cors',
