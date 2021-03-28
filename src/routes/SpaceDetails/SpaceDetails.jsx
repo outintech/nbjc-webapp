@@ -6,8 +6,6 @@ import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
 import useError from '../../hooks/useError';
 
-import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';
-
 const SpaceDetails = () => {
   const { setSpaceTitle, setSpaceData, spaceTitle } = useContext(NameContext);
   const { spaceId } = useParams();
@@ -36,11 +34,15 @@ const SpaceDetails = () => {
     }
   }, [space]);
   const totalReviews = space && space.reviews ? space.reviews.length : 0;
+  const {
+    category_buckets: categoryBuckets = [],
+    avg_rating: averageRating,
+  } = space || {};
   return (
     <>
       <SpaceDetailsPage
-        category={getCategoryAndRating().category}
-        averageRating={getCategoryAndRating().averageRating}
+        category={(categoryBuckets[0] || {}).name}
+        averageRating={averageRating}
         space={space}
         spaceTitle={spaceTitle}
         totalReviews={totalReviews}
