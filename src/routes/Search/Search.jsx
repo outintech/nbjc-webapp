@@ -87,7 +87,7 @@ const Search = ({
     pagination = {},
     userLocation,
     indicators = [],
-  } = useSearch({ userCoords: coords });
+  } = useSearch({ userCoords: coords, isGeolocationEnabled });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
