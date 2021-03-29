@@ -14,7 +14,7 @@ const styles = (theme) => ({
     display: 'flex',
     color: theme.palette.primary.contrastText,
     minHeight: 75,
-    padding: 20,
+    width: '100%',
     backgroundClip: 'padding-box',
     [theme.breakpoints.up('xs')]: {
       flexWrap: 'wrap',
@@ -25,22 +25,25 @@ const styles = (theme) => ({
   },
   info: {
     marginTop: 10,
+    marginLeft: 20,
     [theme.breakpoints.up('xs')]: {
       marginRight: 0,
       width: '100%',
     },
     [theme.breakpoints.up('mobile')]: {
-      width: '75%',
+      width: 'unset',
     },
   },
   links: {
-    marginLeft: 'auto',
     display: 'flex',
+    marginRight: 20,
     [theme.breakpoints.up('xs')]: {
       marginTop: 10,
+      marginLeft: 20,
     },
     [theme.breakpoints.up('mobile')]: {
       marginTop: 0,
+      marginLeft: 'auto',
     },
   },
   externalLink: {

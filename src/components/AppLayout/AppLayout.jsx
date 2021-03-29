@@ -13,7 +13,7 @@ const styles = {
   content: {
     height: '100%',
     overflow: 'scroll',
-    marginBottom: 75,
+    marginBottom: 125,
   },
 };
 
