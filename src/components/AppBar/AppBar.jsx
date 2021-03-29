@@ -55,7 +55,6 @@ const AppBar = ({
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
   const history = useHistory();
-  // const location = useLocation();
 
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 

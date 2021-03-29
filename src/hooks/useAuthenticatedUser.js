@@ -49,7 +49,6 @@ const useAuthenticatedUser = () => {
         }
       } catch (e) {
         // todo : error handling
-        console.log(e);
       }
     }
     if (!registeredUser) {
@@ -58,7 +57,6 @@ const useAuthenticatedUser = () => {
       );
     }
   }, [user]);
-  console.log(promiseInProgress, contextUser, redirectToCreate);
   return {
     loadingUser: promiseInProgress || (!contextUser.userId && !redirectToCreate),
     redirectToCreate,

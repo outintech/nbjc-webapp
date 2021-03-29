@@ -27,7 +27,7 @@ const AppLayout = ({
     .filter((r) => !r.skipAppBar)
     .map((r) => ({
       label: r.label,
-      path: `/${r.prefix}${r.path}`,
+      path: `${r.prefix}${r.path}`,
       key: r.key,
       enforceLogin: r.enforceLogin,
       icon: r.icon,

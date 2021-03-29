@@ -73,21 +73,21 @@ const spaceRoutes = [{
   key: 'addReview',
   skipAppBar: true,
   exact: false,
-  prefix: 'spaces',
+  prefix: '/spaces',
 }, {
   label: 'Add a space',
   path: '/new',
   content: ProtectedRoute(AddSpace),
   key: 'addSpace',
   icon: AddCircleOutlineIcon,
-  prefix: 'spaces',
+  prefix: '/spaces',
 }, {
   label: 'Space Details',
   path: '/:spaceId',
   content: SpaceDetails,
   key: 'spaceDetails',
   skipAppBar: true,
-  prefix: 'spaces',
+  prefix: '/spaces',
   /* TODO: check on this
    exact: true */
 },
@@ -97,7 +97,7 @@ const spaceRoutes = [{
   content: Reviews,
   key: 'reviews',
   skipAppBar: true,
-  prefix: 'spaces',
+  prefix: '/spaces',
 },
 ];
 
