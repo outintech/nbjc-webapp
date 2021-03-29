@@ -8,6 +8,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
 import { postYelpSearch, postAddSpace } from '../../api';
+import withUser from '../AuthenticatedRoute';
+
 import chips from '../../api/chips';
 
 import {
@@ -112,6 +114,7 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {
@@ -209,4 +212,4 @@ AddSpace.prototypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default withStyles(styles)(AddSpace);
+export default withUser(withStyles(styles)(AddSpace));

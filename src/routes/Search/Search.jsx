@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
@@ -12,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
+import FilterDialog from '../../components/FilterDialog';
+import Pagination from '../../components/Pagination';
 
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
@@ -55,42 +58,121 @@ const styles = (theme) => ({
       marginRight: 20,
     },
   },
+  filterButtonWrapper: {
+    display: 'flex',
+  },
+  searchresultsText: {
+    flexGrow: 2,
+  },
+  filterButton: {
+    width: '100px !important',
+    height: 36,
+  },
 });
 
-const Search = ({ classes, coords }) => {
+const Search = ({
+  classes,
+  coords,
+  isGeolocationEnabled,
+}) => {
   const matches = useMediaQuery('(min-width:376px)');
+  const [openFilter, setOpenFilter] = useState(false);
+
   const {
     updateSearch,
+    updateFilters,
     search,
     searchResults,
     loading,
-  } = useSearch({ useLocation: coords });
-
+    pagination = {},
+    userLocation,
+    indicators = [],
+  } = useSearch({ userCoords: coords });
   const onSearchSubmit = async (searchTerm) => {
-    updateSearch('searchTerm', searchTerm);
+    updateSearch(searchTerm);
   };
 
   const onFilterApplied = (filter, value) => {
     updateSearch(filter, value);
   };
 
+  const filters = {
+    stars: search.rating || 0,
+    distance: search.distance || 0,
+    price: search.price || 0,
+  };
+
+  const setFilters = (changedFilters) => {
+    updateFilters('distance', changedFilters.distance);
+    updateFilters('price', changedFilters.price);
+    updateFilters('rating', changedFilters.stars);
+  };
+
+  const getResultsString = () => {
+    let text = `${pagination.total_count} results found for`;
+    let comma = '';
+    if (search.searchTerm) {
+      text = `${text} ${search.searchTerm}`;
+      comma = ',';
+    }
+    if (search.category) {
+      text = `${text}${comma} ${search.category}`;
+      comma = ',';
+    }
+    if (search.location) {
+      text = `${text}${comma} ${search.location}`;
+      comma = ',';
+    }
+    const indicatorNames = indicators
+      .filter((indicator) => search.indicators.includes(indicator.value))
+      .map((indicator) => indicator.name);
+
+    if (indicatorNames.length < 3) {
+      text = `${text}${comma} ${indicatorNames.join(' and ')}`;
+    } else {
+      text = `${text}${comma} ${indicatorNames[0]} and ${indicatorNames.length - 1} more`;
+    }
+    return text;
+  };
+  const isGeoLoading = isGeolocationEnabled && coords === null;
   return (
     <div className={classes.content}>
-      <SearchForm
-        chips={search.chips}
-        onSearch={onSearchSubmit}
-        onFilterApplied={onFilterApplied}
-        searchCriteria={search}
-      />
+      {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
+        <SearchForm
+          chips={indicators}
+          onSearch={onSearchSubmit}
+          onFilterApplied={onFilterApplied}
+          searchCriteria={search}
+          location={userLocation.address}
+        />
+      )}
       <div
         className={cx(classes.resultsWrapper, {
           [classes.desktop]: matches,
         })}
       >
-        {searchResults.length > 0 && (
-          <Typography variant="h6">
-            {`${searchResults.length} results found for ${search.searchTerm}`}
-          </Typography>
+        {searchResults !== null && searchResults.length > 0 && (
+          <>
+            <div className={classes.filterButtonWrapper}>
+              <Typography variant="h6" className={classes.searchresultsText}>
+                {getResultsString()}
+              </Typography>
+              <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary" className={classes.filterButton}>FILTER</Button>
+            </div>
+            <div className={classes.filterWrapper}>
+              {openFilter && (
+                <FilterDialog
+                  open={openFilter}
+                  onClose={() => setOpenFilter(false)}
+                  onToggle={() => setOpenFilter(!openFilter)}
+                  defaultFilters={filters}
+                  setFilters={(changedFilters) => setFilters(changedFilters)}
+                  type={matches ? 'desktop' : 'mobile'}
+                  overrideClasses={{ root: classes.filterDialog }}
+                />
+              )}
+            </div>
+          </>
         )}
         <div className={classes.searchResultsWrapper}>
           {searchResults !== null && searchResults.length > 0
@@ -104,6 +186,11 @@ const Search = ({ classes, coords }) => {
               </div>
             ))}
         </div>
+        <Pagination
+          totalCount={pagination.total_count || 0}
+          page={pagination.page || 1}
+          perPage={pagination.perPage || 10}
+        />
         {searchResults !== null
           && search.searchTerm !== null
           && searchResults.length === 0

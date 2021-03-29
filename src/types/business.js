@@ -26,7 +26,7 @@ const businessProps = {
 
 const spaceProps = {
   ...businessProps,
-  averageRating: PropTypes.number.isRequired,
+  averageRating: PropTypes.number,
   imageUrl: PropTypes.string,
   url: PropTypes.string,
   filters: PropTypes.arrayOf(
