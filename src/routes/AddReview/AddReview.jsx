@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,6 +16,7 @@ import {
 import Review from '../../components/AddSpacePage/Review';
 import Success from '../../components/AddSpacePage/Success';
 import ErrorSnackbar from '../../components/ErrorSnackbar';
+import { UserContext } from '../../context/UserContext';
 
 import withUser from '../AuthenticatedRoute';
 
@@ -65,16 +66,18 @@ const AddReview = ({ classes }) => {
   const [pageStatus, setPageStatus] = useState('review');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
       const intId = parseInt(spaceId, 10);
       const [spaceData, reviewData] = await Promise.all([
         getSpace(intId),
-        // todo: add actual user_id
-        getReviewForSpaceAndUser({ spaceId: intId, userId: 1 }),
+        getReviewForSpaceAndUser({
+          spaceId: intId,
+          userId: user.userId,
+        }),
       ]);
-      // TODO: Handle error handling after create profile is done
       if (reviewData.data.exists) {
         setSpace(spaceData.data);
         setPageStatus('reviewExists');
@@ -97,6 +100,7 @@ const AddReview = ({ classes }) => {
         rating: formData.rating,
         detail: formData.review,
         anonymous: formData.anon,
+        ...user,
       })
         .then(() => {
           setPageStatus('success');

@@ -252,29 +252,31 @@ const SpaceDetailCard = ({
         ) : (
           ''
         )}
-        <div className={classes.reviewDiv}>
-          <IconButton
-            variant="outlined"
-            color="primary"
-            onClick={() => setCurrentReview(previousReview(currentReview, totalReviews.length))}
-          >
-            <NavigateBeforeIcon color="primary" />
-          </IconButton>
-          <ReviewCard
-            userName={totalReviews[currentReview].userName}
-            dateCreated={totalReviews[currentReview].dateCreated}
-            rating={totalReviews[currentReview].rating}
-            text={totalReviews[currentReview].content}
-            classes={classes}
-          />
-          <IconButton
-            variant="outlined"
-            color="primary"
-            onClick={() => setCurrentReview(nextReview(currentReview, totalReviews.length))}
-          >
-            <NavigateNextIcon color="primary" />
-          </IconButton>
-        </div>
+        {totalReviews && totalReviews.length > 0 && (
+          <div className={classes.reviewDiv}>
+            <IconButton
+              variant="outlined"
+              color="primary"
+              onClick={() => setCurrentReview(previousReview(currentReview, totalReviews.length))}
+            >
+              <NavigateBeforeIcon color="primary" />
+            </IconButton>
+            <ReviewCard
+              userName={totalReviews[currentReview].userName}
+              dateCreated={totalReviews[currentReview].dateCreated}
+              rating={totalReviews[currentReview].rating}
+              text={totalReviews[currentReview].content}
+              classes={classes}
+            />
+            <IconButton
+              variant="outlined"
+              color="primary"
+              onClick={() => setCurrentReview(nextReview(currentReview, totalReviews.length))}
+            >
+              <NavigateNextIcon color="primary" />
+            </IconButton>
+          </div>
+        )}
         <div className={classes.reviewButton}>
           <Button
             variant="contained"
@@ -296,9 +298,9 @@ const SpaceDetailCard = ({
             <Typography variant="body1">{address.postal_code}</Typography>
             <Typography variant="body1">{address.country}</Typography>
           </div>
-          <div className={classes.distance}>
+          {/* <div className={classes.distance}>
             <Typography variant="body1">TBD: distance</Typography>
-          </div>
+          </div> */}
         </div>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>
@@ -390,7 +392,7 @@ SpaceDetailCard.propTypes = {
   yelpUrl: PropTypes.string
   */
   category: PropTypes.string.isRequired,
-  averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   imageUrl: PropTypes.string.isRequired,
   address: PropTypes.shape({}).isRequired,
   /* TODO: add distance when geocoding
@@ -403,6 +405,7 @@ SpaceDetailCard.propTypes = {
 SpaceDetailCard.defaultProps = {
   overrideClasses: {},
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  averageRating: null,
 };
 
 export default withStyles(styles)(SpaceDetailCard);

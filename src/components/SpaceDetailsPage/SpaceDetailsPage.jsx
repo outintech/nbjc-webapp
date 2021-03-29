@@ -57,11 +57,12 @@ const SpaceDetailsPage = ({
 
 SpaceDetailsPage.propTypes = {
   category: PropTypes.string.isRequired,
-  averageRating: PropTypes.string.isRequired,
+  averageRating: PropTypes.number,
   space: PropTypes.shape({}).isRequired,
 };
 
 SpaceDetailsPage.defaultProps = {
+  averageRating: null,
 };
 
 export default withStyles(styles)(SpaceDetailsPage);

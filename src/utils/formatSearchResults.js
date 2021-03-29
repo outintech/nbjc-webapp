@@ -19,7 +19,7 @@ const formatSearchResults = (space) => {
     name: space.name,
     category: space.category || '',
     address: stitchedAddress,
-    averageRating: 4,
+    averageRating: space.avg_rating,
     phoneNumber: space.phone,
     filters: space.indicators.map((i) => ({ name: i.name })),
     imageUrl: (space.photos[0] || {}).url,

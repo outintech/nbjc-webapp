@@ -7,7 +7,7 @@ import {
   getSpaceReviews,
 } from './review';
 import { getSpace, postSpace, getSpacesByName } from './space';
-import getUser from './user';
+import { getUser, createUser } from './user';
 import getLocation from './location';
 
 export {
@@ -22,4 +22,5 @@ export {
   getLocation,
   postSpace,
   getUser,
+  createUser,
 };

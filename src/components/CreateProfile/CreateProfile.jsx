@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import {
@@ -11,6 +11,10 @@ import {
   InputLabel,
   TextField,
 } from '@material-ui/core';
+import { trackPromise } from 'react-promise-tracker';
+
+import { createUser } from '../../api';
+import { UserContext } from '../../context/UserContext';
 
 const styles = () => ({
   container: {
@@ -77,7 +81,7 @@ const ProfilePage = ({ classes }) => {
     vertical: 'top',
     horizontal: 'center',
   });
-
+  const { user } = useContext(UserContext);
   // TODO: State needs to pull user info from backend after login, maybe done in the login component
   const openSnackBar = (newState) => {
     setSnackBar({ ...newState, openBar: true });
@@ -114,22 +118,29 @@ const ProfilePage = ({ classes }) => {
     e.preventDefault();
     // Needs to make a post call to backend to submit profileinfo state as updated user details
     // Remember to trim( empty spaces from the end of strings)
-    try {
-      // eslint-disable-next-line no-console
-      console.log(updatedInfo);
-      openSnackBar({
-        vertical: 'top',
-        horizontal: 'center',
-        popperMessage: 'Your changes have been saved.',
-      });
-      // call to backend to submit data if successful - show success snackbar
-    } catch (error) {
-      openSnackBar({
-        vertical: 'top',
-        horizontal: 'center',
-        popperMessage: 'Error saving your changes',
-      });
-    }
+    // eslint-disable-next-line no-console
+    console.log(updatedInfo, user);
+    trackPromise(
+      createUser({
+        ...updatedInfo,
+        ...user,
+      })
+        .then(() => {
+          openSnackBar({
+            vertical: 'top',
+            horizontal: 'center',
+            popperMessage: 'Your changes have been saved.',
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          openSnackBar({
+            vertical: 'top',
+            horizontal: 'center',
+            popperMessage: 'Error saving your changes',
+          });
+        }),
+    );
   };
 
   const { vertical, horizontal, openBar } = snackBar;
