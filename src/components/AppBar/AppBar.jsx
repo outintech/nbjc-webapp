@@ -32,9 +32,11 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: '#000',
+    color: '#FFF',
   },
   selected: {
-    background: 'rgba(98, 0, 238, 0.08) !important',
+    background: '#DBC1FA!important',
   },
   drawer: {
     width: 375,
@@ -55,7 +57,6 @@ const AppBar = ({
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
   const history = useHistory();
-  // const location = useLocation();
 
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 

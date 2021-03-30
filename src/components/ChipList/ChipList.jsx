@@ -30,7 +30,7 @@ const ChipList = ({ chips, classes }) => {
       inViewList.push(inView);
       return (
         <Chip
-          color="secondary"
+          color="primary"
           label={
             <Typography variant="body2">{chip.name}</Typography>
           }
@@ -48,7 +48,7 @@ const ChipList = ({ chips, classes }) => {
       </div>
       {moreChips > 0 && (
         <Chip
-          color="secondary"
+          color="primary"
           variant="outlined"
           label={`+${moreChips} More`}
         />
