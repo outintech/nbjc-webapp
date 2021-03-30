@@ -77,13 +77,13 @@ const postSpace = async () => {
 const postYelpSearch = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/create_space_search';
-  const userID = getUserID();
   const token = await getToken();
   const data = {
     location: `${spaceOpts.city}, ${spaceOpts.state}`,
     zipcode: spaceOpts.zipcode,
     term: spaceOpts.name,
-    user_id: userID,
+    // to do - actual user id
+    user_id: '',
   };
   const spaceSearch = {
     space_search: data,
@@ -104,7 +104,6 @@ const postYelpSearch = async (spaceOpts) => {
 const postAddSpace = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
-  const userID = getUserID();
   const token = await getToken();
   console.log(spaceOpts.chips);
 
@@ -131,9 +130,11 @@ const postAddSpace = async (spaceOpts) => {
       vibe_check: 1,
       rating: spaceOpts.rating,
       content: spaceOpts.content,
-      user_id: userID,
+      // to do - actual user id
+      user_id: '',
     }],
-    user_id: userID,
+    // to do - actual user id
+    user_id: '',
   };
   const addSpace = {
     space: data,
