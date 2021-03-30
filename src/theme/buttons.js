@@ -1,6 +1,6 @@
 const buttons = {
   buttons: {
-    backgroundColor: '#8224E3',
+    backgroundColor: '#633AA3',
   },
 };
 

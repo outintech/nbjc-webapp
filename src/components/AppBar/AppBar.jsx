@@ -38,6 +38,9 @@ const styles = (theme) => ({
   selected: {
     background: '#DBC1FA!important',
   },
+  icons: {
+    color: '#000',
+  },
   drawer: {
     width: 375,
     flexShrink: 0,
@@ -85,10 +88,10 @@ const AppBar = ({
         }}
       >
         <ListItemIcon>
-          <item.icon color={otherProps.color} />
+          <item.icon className={classes.icons} />
         </ListItemIcon>
         <ListItemText>
-          <Typography color={otherProps.color} variant="subtitle2">
+          <Typography className={classes.icons} variant="subtitle2">
             {item.label}
           </Typography>
         </ListItemText>
@@ -164,6 +167,7 @@ AppBar.propTypes = {
     'addReview',
     'spaceDetails',
     'reviews',
+    'createProfile',
   ]),
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(

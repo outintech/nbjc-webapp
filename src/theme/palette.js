@@ -4,7 +4,7 @@ const palette = {
       light: '#DBC1FA',
       main: '#633AA3',
       dark: '#633AA3',
-      contrastText: '#FFFFFF',
+      contrastText: '#000000',
     },
     secondary: {
       light: '#DBC1FA',
@@ -14,6 +14,10 @@ const palette = {
     },
     error: {
       main: '#B00020',
+    },
+    action: {
+      selected: '#DBC1FA',
+      hover: '#DBC1FA',
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
