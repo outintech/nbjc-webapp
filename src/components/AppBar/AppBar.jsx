@@ -55,7 +55,6 @@ const AppBar = ({
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
   const history = useHistory();
-  // const location = useLocation();
 
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 
@@ -155,15 +154,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf([
-    'home',
-    'addSpace',
-    'search',
-    'profile',
-    'addReview',
-    'spaceDetails',
-    'reviews',
-  ]),
+  selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(
     PropTypes.shape({

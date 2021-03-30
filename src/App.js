@@ -5,7 +5,8 @@ import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 
-import AppBar from './components/AppBar';
+// import AppBar from './components/AppBar';
+import AppLayout from './components/AppLayout';
 import NameContextProvider from './context/NameContext';
 import UserContextProvider from './context/UserContext';
 
@@ -17,7 +18,6 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 function Spaces() {
   const match = useRouteMatch();
-  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
   return (
     <Switch>
       {spaceRoutes.map((route) => (
@@ -26,18 +26,14 @@ function Spaces() {
           path={`${match.path}${route.path}`}
           exact={route.exact === false ? false : true}
         >
-          <AppBar
-            routes={[...routes, ...spaceRoutes].filter((r) => !r.skipAppBar).map((r) => ({
-              label: r.label,
-              path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
-              key: r.key,
-              icon: r.icon,
-            }))}
+          <AppLayout
+            routes={[...routes, ...spaceRoutes]}
             selected={route.key}
-          />
-          <ErrorBoundary>
-            <route.content />
-          </ErrorBoundary>
+          >
+            <ErrorBoundary>
+              <route.content />
+            </ErrorBoundary>
+          </AppLayout>
         </Route>
       ))}
     </Switch>
@@ -45,7 +41,6 @@ function Spaces() {
 }
 
 function App() {
-  const spaceKeys = ['addSpace', 'addReview', 'spaceDetails', 'reviews'];
   return (
     <>
       <UserContextProvider>
@@ -59,20 +54,14 @@ function App() {
                     path={route.path}
                     exact={route.exact === false ? false : true}
                   >
-                    <AppBar
-                      routes={[...routes, ...spaceRoutes]
-                        .filter((r) => !r.skipAppBar).map((r) => ({
-                          label: r.label,
-                          path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
-                          key: r.key,
-                          enforceLogin: r.enforceLogin,
-                          icon: r.icon,
-                        }))}
+                    <AppLayout
+                      routes={[...routes, ...spaceRoutes]}
                       selected={route.key}
-                    />
-                    <ErrorBoundary>
-                      <route.content />
-                    </ErrorBoundary>
+                    >
+                      <ErrorBoundary>
+                        <route.content />
+                      </ErrorBoundary>
+                    </AppLayout>
                   </Route>
                 ))}
                 {/* /spaces, /spaces/:id, /spaces/new, /spaces/ */}
@@ -80,32 +69,21 @@ function App() {
                   <Spaces />
                 </Route>
                 <Route path="/500">
-                  <AppBar
-                    routes={[...routes, ...spaceRoutes]
-                      .filter((r) => !r.skipAppBar).map((r) => ({
-                        label: r.label,
-                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
-                        key: r.key,
-                        enforceLogin: r.enforceLogin,
-                        icon: r.icon,
-                      }))}
+                  <AppLayout
+                    routes={[...routes, ...spaceRoutes]}
                     selected={null}
-                  />
-                  <UnknownError />
+                  >
+                    <UnknownError />
+                  </AppLayout>
                 </Route>
+                {/* Catch all 404 must remain at end */}
                 <Route>
-                  <AppBar
-                    routes={[...routes, ...spaceRoutes]
-                      .filter((r) => !r.skipAppBar).map((r) => ({
-                        label: r.label,
-                        path: (spaceKeys.includes(r.key) ? `/spaces${r.path}` : r.path),
-                        key: r.key,
-                        enforceLogin: r.enforceLogin,
-                        icon: r.icon,
-                      }))}
+                  <AppLayout
+                    routes={[...routes, ...spaceRoutes]}
                     selected={null}
-                  />
-                  <NotFound />
+                  >
+                    <NotFound />
+                  </AppLayout>
                 </Route>
               </Switch>
             </div>

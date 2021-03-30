@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 
 export const NameContext = createContext();
 
-const NameContextProvider = (props) => {
+const NameContextProvider = ({ children }) => {
   const [spaceTitle, setSpaceTitle] = useState('');
   const [spaceData, setSpaceData] = useState();
 
@@ -12,8 +12,7 @@ const NameContextProvider = (props) => {
         spaceTitle, setSpaceTitle, spaceData, setSpaceData,
       }}
     >
-      {/* eslint-disable-next-line */}
-      { props.children }
+      {children}
     </NameContext.Provider>
   );
 };

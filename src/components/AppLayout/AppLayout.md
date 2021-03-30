@@ -1,0 +1,5 @@
+## AppLayout
+
+```jsx
+<AppLayout />
+```

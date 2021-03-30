@@ -74,10 +74,11 @@ const Search = ({
   classes,
   coords,
   isGeolocationEnabled,
+  isGeolocationAvailable,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
   const [openFilter, setOpenFilter] = useState(false);
-
+  console.log('available', isGeolocationAvailable, coords);
   const {
     updateSearch,
     updateFilters,
@@ -87,7 +88,7 @@ const Search = ({
     pagination = {},
     userLocation,
     indicators = [],
-  } = useSearch({ userCoords: coords });
+  } = useSearch({ userCoords: coords, isGeolocationEnabled });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -229,4 +230,4 @@ Search.props = {
 
 Search.props = { ...Search.props, ...geoPropTypes };
 
-export default geolocated()(withStyles(styles)(Search));
+export default geolocated({ positionOptions: { timeout: 5000 } })(withStyles(styles)(Search));
