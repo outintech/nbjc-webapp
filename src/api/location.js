@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import wrappedFetch from './wrappedFetch';
 
 /**
  * Get a location based on lat and lng
@@ -12,8 +12,15 @@ const getLocation = async (locationParams) => {
   url.pathname = '/api/v1/geolocations';
   url.searchParams.append('lat', locationParams.lat);
   url.searchParams.append('lng', locationParams.lng);
-  const result = await fetch(url.href);
-  return result.json();
+  let result;
+  try {
+    result = await wrappedFetch(url.href);
+  } catch (e) {
+    // if reverse geocode fails allow user to still
+    // search by other fields
+    result = {};
+  }
+  return result;
 };
 
 export default getLocation;

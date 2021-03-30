@@ -9,9 +9,10 @@ import AddSpace from './AddSpace';
 import AddReview from './AddReview';
 import SpaceDetails from './SpaceDetails';
 import Reviews from './Reviews';
-import CreateProfile from './CreateProfile';
-
 import ProtectedRoute from './ProtectedRoute';
+import Profile from './Profile';
+import CreateProfile from '../components/CreateProfile/CreateProfile';
+import ProfileSubmitted from '../components/ProfileSubmitted/ProfileSubmitted';
 
 const routes = [{
   label: 'Home',
@@ -36,8 +37,7 @@ const routes = [{
 }, {
   label: 'Profile',
   path: '/profile',
-  // todo: change this/
-  content: Home,
+  content: Profile,
   key: 'profile',
   icon: PersonOutlineIcon,
 }, {
@@ -48,6 +48,16 @@ const routes = [{
   icon: PersonOutlineIcon,
   skipAppBar: true,
   exact: true,
+  // todo: change this
+  enforceLogin: false,
+}, {
+  label: 'Profile Submitted',
+  path: '/users/new/submitted',
+  content: ProfileSubmitted,
+  key: 'profileSubmitted',
+  icon: PersonOutlineIcon,
+  enforceLogin: false,
+  skipAppBar: true,
 }];
 
 const spaceRoutes = [{

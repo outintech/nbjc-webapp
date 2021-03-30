@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
-
 import {
   Button,
   Card,
@@ -14,13 +13,18 @@ import {
   Typography,
   IconButton,
   Link,
+  Snackbar,
 } from '@material-ui/core';
+
 import StarIcon from '@material-ui/icons/Star';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import ShareIcon from '@material-ui/icons/Share';
 
 import useMobileDevice from '../../hooks/useMobileDevice';
 import ChipList from '../ChipList';
+import ReviewCard from '../ReviewsPage/ReviewCard';
+import { previousReview, nextReview } from '../../utils/reviewPreview';
 
 const styles = () => ({
   root: {
@@ -61,7 +65,7 @@ const styles = () => ({
   seeAllButton: {
     display: 'inline-flex',
     float: 'right',
-    margin: 0,
+    margin: '10px 10px',
   },
   reviewButton: {
     display: 'flex',
@@ -118,6 +122,7 @@ const styles = () => ({
 });
 
 const SpaceDetailCard = ({
+  totalReviews,
   id,
   name,
   category,
@@ -133,12 +138,23 @@ const SpaceDetailCard = ({
   yelpUrl,
   overrideClasses,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [snackBar, setSnackBar] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [currentReview, setCurrentReview] = useState(0);
   const [isMobileOrTablet] = useMobileDevice();
 
   const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   /* if desktop, copy to clipboard unique url for the space.
-   if mobile, share sheet to text, email, whatever is on your phone or tablet
+  if mobile, share sheet to text, email, whatever is on your phone or tablet
   */
   const handleShare = () => {
     /* navigator */
@@ -148,7 +164,8 @@ const SpaceDetailCard = ({
           text: `Check out ${name} at ${document.location.href}`,
         })
         .then(() => {
-          console.log('Successfully shared');
+          setOpen(true);
+          setSnackBar(true);
         })
         .catch((error) => {
           console.error('Something went wrong sharing the blog', error);
@@ -158,7 +175,8 @@ const SpaceDetailCard = ({
       const currentUrl = document.location.href || window.location.href;
       if (isCopied) {
         navigator.clipboard.writeText(currentUrl);
-        console.log('Successfully shared');
+        setOpen(true);
+        setSnackBar(true);
       }
     }
   };
@@ -170,6 +188,7 @@ const SpaceDetailCard = ({
     };
     history.push(location);
   };
+
   return (
     <Card
       className={cx(classes.root, overrideClasses.root, classes.card)}
@@ -202,11 +221,7 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia
-        // component="img"
-        image={imageUrl}
-        className={classes.cardMedia}
-      />
+      <CardMedia image={imageUrl} className={classes.cardMedia} />
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
@@ -216,15 +231,52 @@ const SpaceDetailCard = ({
           <Typography variant="h5" className={classes.featuredReview}>
             Recent Reviews
           </Typography>
-          {/*  TODO:  Conditional logic for if there are reviews or not! Fix sizing! */}
-          <Button variant="outlined" color="primary" onClick={handleClick} className={classes.seeAllButton}>
-            See All Reviews
-            {/* See All {numberOfReviews} */}
-          </Button>
+          {totalReviews && totalReviews.length > 0 ? (
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleClick}
+              className={classes.seeAllButton}
+            >
+              {`See All ${totalReviews.length}`}
+            </Button>
+          ) : (
+            ''
+          )}
         </div>
-        <Typography variant="body2" align="center">
-          There are no reviews. Be the first to rate and review this space!
-        </Typography>
+        {totalReviews && totalReviews.length === 0 ? (
+          // eslint-disable-next-line
+          <Typography variant="body2" align="center">
+            There are no reviews. Be the first to rate and review this space!
+          </Typography>
+        ) : (
+          ''
+        )}
+        {totalReviews && totalReviews.length > 0 && (
+          <div className={classes.reviewDiv}>
+            <IconButton
+              variant="outlined"
+              color="primary"
+              onClick={() => setCurrentReview(previousReview(currentReview, totalReviews.length))}
+            >
+              <NavigateBeforeIcon color="primary" />
+            </IconButton>
+            <ReviewCard
+              userName={totalReviews[currentReview].userName}
+              dateCreated={totalReviews[currentReview].dateCreated}
+              rating={totalReviews[currentReview].rating}
+              text={totalReviews[currentReview].content}
+              classes={classes}
+            />
+            <IconButton
+              variant="outlined"
+              color="primary"
+              onClick={() => setCurrentReview(nextReview(currentReview, totalReviews.length))}
+            >
+              <NavigateNextIcon color="primary" />
+            </IconButton>
+          </div>
+        )}
         <div className={classes.reviewButton}>
           <Button
             variant="contained"
@@ -246,9 +298,9 @@ const SpaceDetailCard = ({
             <Typography variant="body1">{address.postal_code}</Typography>
             <Typography variant="body1">{address.country}</Typography>
           </div>
-          <div className={classes.distance}>
+          {/* <div className={classes.distance}>
             <Typography variant="body1">TBD: distance</Typography>
-          </div>
+          </div> */}
         </div>
         <Divider />
         <Typography variant="body1" className={classes.subtitles}>
@@ -286,7 +338,7 @@ const SpaceDetailCard = ({
         <Typography variant="body1" className={classes.subtitles}>
           Hours Of Operation
         </Typography>
-        {/* TODO:  fix placement of navigate next icon */}
+        {/* FIXME:  fix placement of navigate next icon */}
         <Typography variant="body1" className={classes.mainInformation}>
           {hoursOfOperation ? 'Open Now' : 'Closed'}
         </Typography>
@@ -318,6 +370,9 @@ const SpaceDetailCard = ({
         <Typography variant="body1" className={classes.mainInformation}>
           Share this Space with your network
         </Typography>
+        {snackBar ? (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} message="Copied Link to the Clipboard." />
+        ) : null}
       </CardContent>
     </Card>
   );
@@ -337,11 +392,11 @@ SpaceDetailCard.propTypes = {
   yelpUrl: PropTypes.string
   */
   category: PropTypes.string.isRequired,
-  averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   imageUrl: PropTypes.string.isRequired,
   address: PropTypes.shape({}).isRequired,
-  // TODO: add distance when geocoding
-  // distance,
+  /* TODO: add distance when geocoding
+  distance */
   hoursOfOperation: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
@@ -350,6 +405,7 @@ SpaceDetailCard.propTypes = {
 SpaceDetailCard.defaultProps = {
   overrideClasses: {},
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  averageRating: null,
 };
 
 export default withStyles(styles)(SpaceDetailCard);

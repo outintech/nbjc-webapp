@@ -1,7 +1,7 @@
 const getCategoryAndRating = (overrides = {}) => {
   const categoryAndRating = {
     category: 'Restaurant',
-    averageRating: '4.5',
+    averageRating: 4.5,
   };
   return {
     ...categoryAndRating,

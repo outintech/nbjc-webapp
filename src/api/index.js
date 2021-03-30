@@ -1,9 +1,13 @@
 import getAllIndicators from './indicators';
 import getCategories from './categories';
 import getSearchResults from './search';
+import {
+  postReview,
+  getReviewForSpaceAndUser,
+  getSpaceReviews,
+} from './review';
 import { getSpace, postSpace, getSpacesByName } from './space';
-import { postReview, getReviewForSpaceAndUser } from './review';
-import getUser from './user';
+import { getUser, createUser } from './user';
 import getLocation from './location';
 
 export {
@@ -14,7 +18,9 @@ export {
   getSpace,
   getSpacesByName,
   postReview,
+  getSpaceReviews,
   getLocation,
   postSpace,
   getUser,
+  createUser,
 };

@@ -1,0 +1,5 @@
+## ErrorBoundary
+
+```jsx
+<ErrorBoundary />
+```

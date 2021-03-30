@@ -4,20 +4,23 @@ import { useParams } from 'react-router-dom';
 import { getSpace } from '../../api';
 import SpaceDetailsPage from '../../components/SpaceDetailsPage';
 import { NameContext } from '../../context/NameContext';
-
-import getCategoryAndRating from '../../__mocks__/getCategoryAndRating';
+import useError from '../../hooks/useError';
 
 const SpaceDetails = () => {
   const { setSpaceTitle, setSpaceData, spaceTitle } = useContext(NameContext);
   const { spaceId } = useParams();
   const [space, setSpace] = useState();
+  const throwError = useError();
 
   useEffect(() => {
     async function fetchData() {
       const intId = parseInt(spaceId, 10);
-      // todo: add validation to number.
-      const { data } = await getSpace(intId);
-      setSpace(data);
+      try {
+        const { data } = await getSpace(intId);
+        setSpace(data);
+      } catch (e) {
+        throwError(e);
+      }
     }
     fetchData();
     // setPageStatus('spaceDetail');
@@ -30,15 +33,19 @@ const SpaceDetails = () => {
       setSpaceTitle(space.name);
     }
   }, [space]);
-
+  const totalReviews = space && space.reviews ? space.reviews.length : 0;
+  const {
+    category_buckets: categoryBuckets = [],
+    avg_rating: averageRating,
+  } = space || {};
   return (
     <>
-      {/* TODO: add average Rating & category props & name */}
       <SpaceDetailsPage
-        category={getCategoryAndRating().category}
-        averageRating={getCategoryAndRating().averageRating}
+        category={(categoryBuckets[0] || {}).name}
+        averageRating={averageRating}
         space={space}
         spaceTitle={spaceTitle}
+        totalReviews={totalReviews}
       />
     </>
   );

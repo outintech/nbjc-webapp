@@ -29,13 +29,14 @@ const SpaceDetailsPage = ({
       setPhoneNumber(utils.formatPhoneNumber(cardData.phone));
     }
   }, [cardData]);
-
+  const totalReviews = space && space.reviews ? space.reviews : [];
   return (
     <div>
       { cardData
         && (
           <div>
             <SpaceDetailsCard
+              totalReviews={totalReviews}
               name={cardData.name}
               id={cardData.id}
               phoneNumber={phoneNumber}
@@ -56,11 +57,12 @@ const SpaceDetailsPage = ({
 
 SpaceDetailsPage.propTypes = {
   category: PropTypes.string.isRequired,
-  averageRating: PropTypes.string.isRequired,
+  averageRating: PropTypes.number,
   space: PropTypes.shape({}).isRequired,
 };
 
 SpaceDetailsPage.defaultProps = {
+  averageRating: null,
 };
 
 export default withStyles(styles)(SpaceDetailsPage);

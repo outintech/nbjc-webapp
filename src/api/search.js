@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import wrappedFetch from './wrappedFetch';
 
 const paramMap = {
   searchTerm: 'search',
@@ -8,9 +8,8 @@ const paramMap = {
   price: 'filters[price]',
   rating: 'filters[rating]',
   indicators: 'filters[indicators]',
-  page: 'current[page]',
-  pageSize: 'page[size]',
-  pageNumber: 'page',
+  page: 'page',
+  perPage: 'per_page',
 };
 
 /**
@@ -36,8 +35,8 @@ const getSearchResults = async (searchOpts) => {
     }
   });
   url.searchParams.append('include', 'address,photos,indicators,reviews,languages');
-  const results = await fetch(url.href);
-  return results.json();
+  const results = await wrappedFetch(url.href);
+  return results;
 };
 
 export default getSearchResults;

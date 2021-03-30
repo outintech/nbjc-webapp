@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
@@ -14,7 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
 import FilterDialog from '../../components/FilterDialog';
-import { getAllIndicators } from '../../api';
+import Pagination from '../../components/Pagination';
 
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
@@ -76,30 +76,18 @@ const Search = ({
   isGeolocationEnabled,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [indicators, setIndicators] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getAllIndicators();
-      setIndicators(data);
-    }
-    try {
-      fetchData();
-    } catch (err) {
-      // todo: retry?
-      console.log(err);
-    }
-  }, []);
   const {
     updateSearch,
     updateFilters,
     search,
     searchResults,
     loading,
-    pagination,
+    pagination = {},
     userLocation,
-  } = useSearch({ userCoords: coords, indicators });
+    indicators = [],
+  } = useSearch({ userCoords: coords });
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -198,6 +186,11 @@ const Search = ({
               </div>
             ))}
         </div>
+        <Pagination
+          totalCount={pagination.total_count || 0}
+          page={pagination.page || 1}
+          perPage={pagination.perPage || 10}
+        />
         {searchResults !== null
           && search.searchTerm !== null
           && searchResults.length === 0
@@ -224,7 +217,7 @@ const Search = ({
               </div>
             </div>
           )}
-        {(loading || indicators.length < 1 || isGeoLoading) && <CircularProgress color="secondary" />}
+        {loading && <CircularProgress color="secondary" />}
       </div>
     </div>
   );

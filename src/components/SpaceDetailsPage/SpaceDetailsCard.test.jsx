@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import SpaceDetailsCard from './SpaceDetailsCard';
+import getAllReviews from '../../__mocks__/getAllReviewsMock';
 
 jest.mock('react-intersection-observer', () => ({
   useInView: () => [{}, true],
@@ -10,6 +11,7 @@ jest.mock('react-intersection-observer', () => ({
 describe('SpaceDetailsCard', () => { 
   test('renders ', () => {
     const props = {
+        totalReviews: getAllReviews().totalReviews,
         address: {
             address_1: '205 E Houston St',
             address_2: '',

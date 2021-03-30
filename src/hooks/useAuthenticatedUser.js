@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useHistory } from 'react-router-dom';
 import { getUser } from '../api';
-// import tokenFile from './token.json';
+import { UserContext } from '../context/UserContext';
 
 // TODO check if user is already registered by hitting
 // /users params user: auth0_id: dsfjs endpoint
@@ -18,6 +18,7 @@ import { getUser } from '../api';
 const useAuthenticatedUser = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const { promiseInProgress } = usePromiseTracker();
+  const { user: contextUser, setUser } = useContext(UserContext);
   const history = useHistory();
   const returnTo = history.location.pathname;
   let registeredUser;
@@ -26,21 +27,25 @@ const useAuthenticatedUser = () => {
     async function fetchData() {
       try {
         const token = await getAccessTokenSilently();
-        const auth0ID = user.sub;
-        // const { token } = tokenFile;
+        const auth0Id = user.sub;
+        setUser({
+          token,
+          auth0Id,
+        });
         try {
           registeredUser = await getUser({
-            userId: auth0ID,
+            userId: auth0Id,
             token,
           });
-          console.log(registeredUser);
-          setRedirectToCreate(true);
+          setUser({
+            token,
+            auth0Id,
+            userId: registeredUser.data.id,
+          });
+          setRedirectToCreate(false);
         } catch (e) {
           // based on the error, create the user
-          registeredUser = 'blah';
           setRedirectToCreate(true);
-          // history.push({ pathname: '/users/new', search: `returnTo=${returnTo}` });
-          console.log(e);
         }
       } catch (e) {
         // todo : error handling
@@ -53,9 +58,9 @@ const useAuthenticatedUser = () => {
       );
     }
   }, [user]);
-
+  console.log(promiseInProgress, contextUser, redirectToCreate);
   return {
-    loadingUser: promiseInProgress,
+    loadingUser: promiseInProgress || (!contextUser.userId && !redirectToCreate),
     redirectToCreate,
     returnTo,
   };
