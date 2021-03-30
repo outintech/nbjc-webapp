@@ -1,6 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { usePromiseTracker } from 'react-promise-tracker';
 
 import { withStyles } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -111,43 +115,49 @@ const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review',
 const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
+  const [businessSearch, setBusinessSearch] = useState(undefined);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
   const { user } = useContext(UserContext);
 
   const steps = getSteps();
+
+  useEffect(() => {
+    async function fetchYelpResults() {
+      const results = await postYelpSearch({
+        ...businessSearch,
+        user,
+      });
+      setFormValues({
+        ...formValues,
+        ...businessSearch,
+        yelpBusinessResponses: results.data,
+      });
+      setActiveStep(activeStep + 1);
+    }
+
+    if (!businessSearch) {
+      return;
+    }
+    try {
+      fetchYelpResults();
+    } catch (e) {
+      setSnackbarOpen(true);
+    }
+  }, [businessSearch]);
+
   const onNext = (data) => {
     if (activeStep === 0) {
       if (data && data.name === 'error') {
         setSnackbarOpen(true);
         return;
       }
-
-      trackPromise(
-        postYelpSearch({
-          name: data.name,
-          city: data.city,
-          state: data.state,
-          zipcode: data.zipcode,
-          user,
-        })
-          .then((response) => {
-            setFormValues({
-              ...formValues,
-              ...data,
-              yelpBusinessResponses: response.data,
-            });
-          }),
-      );
+      setBusinessSearch(data);
     } else {
       setFormValues({
         ...formValues,
         ...data,
       });
-    }
-    if (activeStep === 0) {
-      setTimeout(setActiveStep(activeStep + 1), 25000);
-    } else {
       setActiveStep(activeStep + 1);
     }
   };
@@ -169,7 +179,8 @@ const AddSpace = ({ classes }) => {
     onNext,
     onSubmit,
     disableNext: snackbarOpen,
-    loading: promiseInProgress,
+    // todo: add conditional for business search
+    loading: promiseInProgress || (businessSearch && !formValues.yelpBusinessResponses),
   };
 
   return (
@@ -203,13 +214,15 @@ const AddSpace = ({ classes }) => {
           ))}
         </Stepper>
       )}
-      <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+      {!stepProps.loading && (
+        <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+      )}
+      {stepProps.loading && <CircularProgress color="secondary" />}
       <ErrorSnackbar
         snackbarOpen={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
         body="We could not find the space. Please try again or contact Support."
       />
-      {stepProps.loading && <CircularProgress color="secondary" />}
     </div>
   );
 };
