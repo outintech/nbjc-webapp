@@ -72,18 +72,18 @@ const postSpace = async () => {
  * @param {string} spaceOpts.city - space city
  * @param {string} spaceOpts.state - space state
  * @param {string} spaceOpts.zipcode - space zipcode
+ * @param {Object} spaceOpts.user
  * @returns {Promise}
  */
 const postYelpSearch = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/create_space_search';
-  const token = await getToken();
   const data = {
     location: `${spaceOpts.city}, ${spaceOpts.state}`,
     zipcode: spaceOpts.zipcode,
     term: spaceOpts.name,
-    // to do - actual user id
-    user_id: '',
+    user_id: spaceOpts.user.userId,
+    auth0_id: spaceOpts.user.auth0Id,
   };
   const spaceSearch = {
     space_search: data,
@@ -93,7 +93,7 @@ const postYelpSearch = async (spaceOpts) => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${spaceOpts.user.token}`,
     },
     redirect: 'follow',
     body: JSON.stringify(spaceSearch),
@@ -104,7 +104,6 @@ const postYelpSearch = async (spaceOpts) => {
 const postAddSpace = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
-  const token = await getToken();
   console.log(spaceOpts.chips);
 
   const data = {
@@ -130,11 +129,9 @@ const postAddSpace = async (spaceOpts) => {
       vibe_check: 1,
       rating: spaceOpts.rating,
       content: spaceOpts.content,
-      // to do - actual user id
-      user_id: '',
+      user_id: spaceOpts.user.userId,
     }],
-    // to do - actual user id
-    user_id: '',
+    user_id: spaceOpts.user.userId,
   };
   const addSpace = {
     space: data,
@@ -145,7 +142,7 @@ const postAddSpace = async (spaceOpts) => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${spaceOpts.user.token}`,
     },
     redirect: 'follow',
     body: JSON.stringify(addSpace),

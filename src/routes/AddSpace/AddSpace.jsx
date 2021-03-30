@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
@@ -9,6 +9,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
 import { postYelpSearch, postAddSpace } from '../../api';
+
+import { UserContext } from '../../context/UserContext';
 import withUser from '../AuthenticatedRoute';
 
 import chips from '../../api/chips';
@@ -111,6 +113,8 @@ const AddSpace = ({ classes }) => {
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { promiseInProgress } = usePromiseTracker();
+  const { user } = useContext(UserContext);
+
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {
@@ -125,6 +129,7 @@ const AddSpace = ({ classes }) => {
           city: data.city,
           state: data.state,
           zipcode: data.zipcode,
+          user,
         })
           .then((response) => {
             setFormValues({
@@ -147,7 +152,10 @@ const AddSpace = ({ classes }) => {
     }
   };
   const onSubmit = () => {
-    postAddSpace(formValues);
+    postAddSpace({
+      ...formValues,
+      ...user,
+    });
     setActiveStep(5);
   };
 
