@@ -98,6 +98,7 @@ const Address = ({
 
       </div>
       <div className={classes.yelpFooter}>
+        <img src="/yelp_burst_icon.png" alt="Yelp Burst Icon" />
         This space information is powered by Yelp.
       </div>
     </>

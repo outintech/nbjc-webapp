@@ -1,7 +1,9 @@
 import getAllIndicators from './indicators';
 import getCategories from './categories';
 import getSearchResults from './search';
-import { getSpace, postYelpSearch, postAddSpace, postSpace, getSpacesByName } from './space';
+import {
+  getSpace, postYelpSearch, postAddSpace, postSpace, getSpacesByName,
+} from './space';
 import {
   postReview,
   getReviewForSpaceAndUser,

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { withStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -51,11 +52,6 @@ const styles = (theme) => ({
   },
 });
 
-const getBusinessList = (formValues) => {
-  const getSearchResults = () => formValues.yelpBusinessResponses;
-  setTimeout(getSearchResults(), 20000);
-};
-
 const getStepContent = (step, {
   onBack,
   onNext,
@@ -74,7 +70,7 @@ const getStepContent = (step, {
     case 1:
       return (
         <AddSpaceAddress
-          businessList={getBusinessList(formValues)}
+          businessList={formValues.yelpBusinessResponses}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -114,7 +110,7 @@ const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const { promiseInProgress } = usePromiseTracker();
   const steps = getSteps();
   const onNext = (data) => {
     if (activeStep === 0) {
@@ -165,6 +161,7 @@ const AddSpace = ({ classes }) => {
     onNext,
     onSubmit,
     disableNext: snackbarOpen,
+    loading: promiseInProgress,
   };
 
   return (
@@ -204,6 +201,7 @@ const AddSpace = ({ classes }) => {
         onClose={() => setSnackbarOpen(false)}
         body="We could not find the space. Please try again or contact Support."
       />
+      {stepProps.loading && <CircularProgress color="secondary" />}
     </div>
   );
 };
