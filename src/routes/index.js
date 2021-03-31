@@ -40,7 +40,7 @@ const routes = [{
 }, {
   label: 'Profile',
   path: '/profile',
-  content: Profile,
+  content: ProtectedRoute(Profile),
   key: 'profile',
   icon: PersonOutlineIcon,
   prefix: '',

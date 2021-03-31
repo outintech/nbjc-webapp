@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <p>Home Page</p>
-      {/* pass a redirect */}
+      {/* move logout to app bar */}
       <button
         type="button"
         onClick={() => logout({
