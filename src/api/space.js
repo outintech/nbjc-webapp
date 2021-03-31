@@ -115,16 +115,13 @@ const postYelpSearch = async (spaceOpts) => {
 const postAddSpace = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
-  const indicators = spaceOpts.chips.map((element) => {
-    const indicatorFormat = { name: '' };
-    indicatorFormat.name = element.name;
-    return indicatorFormat;
-  });
-  const categoryAliases = spaceOpts.business.categories.map((element) => {
-    const aliasFormat = { alias: '' };
-    aliasFormat.alias = element.alias;
-    return aliasFormat;
-  });
+
+  // const indicators = Object.assign({}, ...spaceOpts.chips.map((element) => {
+  //   const indicatorFormat = { name: '' };
+  //   indicatorFormat.name = element.name;
+  //   return indicatorFormat;
+  // }));
+
   const data = {
     phone: spaceOpts.business.phone,
     name: spaceOpts.business.name,
@@ -133,26 +130,27 @@ const postAddSpace = async (spaceOpts) => {
     provider_url: spaceOpts.business.provider_url,
     latitude: spaceOpts.business.coordinates.latitude,
     longitude: spaceOpts.business.coordinates.longitude,
-    category_aliases_attributes: categoryAliases,
-    address_attributes: [{
+    address_attributes: {
       address_1: spaceOpts.business.location.address1,
-      address_2: `${spaceOpts.business.location.address2} ${spaceOpts.business.location.address3}`,
+      address_2: `${spaceOpts.business.location.address2 !== null
+        ? spaceOpts.business.location.address2 : ''} ${spaceOpts.business.location.address3 !== null
+        ? spaceOpts.business.location.address3 : ''}`,
       city: spaceOpts.business.location.city,
       postal_code: spaceOpts.business.location.zipcode,
       country: spaceOpts.business.location.country,
       state: spaceOpts.business.location.state,
-    }],
-    indicators_attributes: indicators,
-    reviews_attributes: [{
+    },
+    // indicators_attributes: indicators,
+    reviews_attributes: {
       anonymous: spaceOpts.anon,
       rating: spaceOpts.rating,
       content: spaceOpts.review,
-    }],
+      user_id: spaceOpts.user.userId,
+    },
   };
   const addSpace = {
     space: data,
   };
-  console.log(addSpace);
   const results = await wrappedFetch(url, {
     method: 'POST',
     mode: 'cors',
