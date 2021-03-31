@@ -39,6 +39,9 @@ const styles = (theme) => ({
     cursor: 'pointer',
   },
   stepLabel: {
+    '& .MuiStepLabel-label.MuiStepLabel-active': {
+      color: theme.palette.primary.main,
+    },
     '& .MuiStepIcon-root': {
       width: 30,
       height: 30,
@@ -154,7 +157,7 @@ const AddSpace = ({ classes }) => {
         >
           {steps.map((label, index) => (
             <Step
-              color="secondary"
+              color="primary"
               key={label}
               onClick={() => {
                 if (index < activeStep && activeStep !== 5) {
@@ -164,12 +167,12 @@ const AddSpace = ({ classes }) => {
               className={classes.step}
             >
               {activeStep === index && (
-                <StepLabel className={classes.stepLabel} color="secondary">
+                <StepLabel className={classes.stepLabel}>
                   {label}
                 </StepLabel>
               )}
               {activeStep !== index && (
-                <StepLabel className={classes.stepLabel} color="secondary" />
+                <StepLabel className={classes.stepLabel} />
               )}
             </Step>
           ))}

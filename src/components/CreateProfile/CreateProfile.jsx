@@ -237,7 +237,7 @@ const ProfilePage = ({ classes }) => {
                 className={classes.identityChip}
                 key={label}
                 onClick={() => addLabel(label)}
-                color="secondary"
+                color="primary"
                 icon={<CheckIcon />}
                 label={
                   (
@@ -269,7 +269,7 @@ const ProfilePage = ({ classes }) => {
         <div className={classes.submitDiv}>
           <Button
             type="submit"
-            color="secondary"
+            color="primary"
             className={classes.submitButton}
             variant="contained"
             onClick={(e) => handleSubmit(e, profileInfo)}

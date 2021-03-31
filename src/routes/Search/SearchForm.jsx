@@ -274,7 +274,7 @@ const SearchForm = ({
           <Button
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             fullWidth={!matches}
             data-testid="search-searchform-submit"
             className={classes.submitButton}

@@ -4,7 +4,7 @@ const palette = {
       light: '#DBC1FA',
       main: '#633AA3',
       dark: '#633AA3',
-      contrastText: '#000000',
+      contrastText: '#FFFFFF',
     },
     secondary: {
       light: '#DBC1FA',

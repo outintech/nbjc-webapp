@@ -75,12 +75,7 @@ const styles = (theme) => ({
     display: 'block',
   },
   submitButton: {
-    [theme.breakpoints.up('xs')]: {
-      marginBottom: 25,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      float: 'right',
-    },
+    float: 'right',
     marginTop: 20,
   },
 });
@@ -128,7 +123,7 @@ const Search = ({
         align="center"
         className={classes.pageSubtitle}
       >
-        Add your favorite space to OurGuide. The information you enter will be
+        Add your favorite space to The Lavender Book. The information you enter will be
         reviewed by an administrator. Thank you for helping your community find
         and enjoy spaces.
       </Typography>
@@ -207,7 +202,7 @@ const Search = ({
           <Button
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={onSearch}
             className={cx(classes.inputField, classes.submitButton)}
             fullWidth={!matches}

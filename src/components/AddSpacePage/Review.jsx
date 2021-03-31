@@ -143,7 +143,7 @@ const Review = ({
           <Button
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             className={cx(classes.submitButton, overrideClasses.submitButton)}
             fullWidth={!matches}
             onClick={onFormSubmit}
@@ -156,7 +156,7 @@ const Review = ({
             <Button
               type="cancel"
               variant="outlined"
-              color="secondary"
+              color="primary"
               fullWidth={!matches}
               onClick={onBack}
               disableElevation
