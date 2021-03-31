@@ -29,6 +29,12 @@ const styles = (theme) => ({
   yelpFooter: {
     marginBottom: 15,
   },
+  yelpIcon: {
+    width: 45,
+  },
+  yelpText: {
+    display: 'inline-block',
+  },
   submitButton: {
     float: 'right',
     marginBottom: 20,
@@ -98,8 +104,8 @@ const Address = ({
 
       </div>
       <div className={classes.yelpFooter}>
-        <img src="/yelp_burst_icon.png" alt="Yelp Burst Icon" />
-        This space information is powered by Yelp.
+        <img src="/yelp_burst_icon.png" alt="Yelp Burst Icon" className={classes.yelpIcon} />
+        <span className={classes.yelpText}>This space information is powered by Yelp.</span>
       </div>
     </>
   );

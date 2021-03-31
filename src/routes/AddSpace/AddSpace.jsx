@@ -12,12 +12,14 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import { postYelpSearch, postAddSpace } from '../../api';
+import {
+  postYelpSearch,
+  postAddSpace,
+  getAllIndicators,
+} from '../../api';
 
 import { UserContext } from '../../context/UserContext';
 import withUser from '../AuthenticatedRoute';
-
-import chips from '../../api/chips';
 
 import {
   AddSpaceSearch,
@@ -63,7 +65,7 @@ const getStepContent = (step, {
   onNext,
   onSubmit,
   disableNext,
-}, formValues) => {
+}, formValues, indicators) => {
   switch (step) {
     case 0:
       return (
@@ -85,7 +87,7 @@ const getStepContent = (step, {
     case 2:
       return (
         <AddSpaceAttributes
-          chips={chips}
+          chips={indicators}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -117,6 +119,7 @@ const AddSpace = ({ classes }) => {
   const [formValues, setFormValues] = useState({});
   const [businessSearch, setBusinessSearch] = useState(undefined);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [indicators, setIndicators] = useState([]);
   const { promiseInProgress } = usePromiseTracker();
   const { user } = useContext(UserContext);
 
@@ -146,6 +149,13 @@ const AddSpace = ({ classes }) => {
     }
   }, [businessSearch]);
 
+  useEffect(() => {
+    async function fetchData() {
+      const results = await getAllIndicators();
+      setIndicators(results);
+    }
+    fetchData();
+  }, []);
   const onNext = (data) => {
     if (activeStep === 0) {
       if (data && data.name === 'error') {
@@ -161,12 +171,22 @@ const AddSpace = ({ classes }) => {
       setActiveStep(activeStep + 1);
     }
   };
+  const [spaceSubmitStatus, setSpaceSubmitStatus] = useState();
+  useEffect(() => {
+    async function postSpaceData() {
+      postAddSpace({ ...formValues, user });
+      setActiveStep(5);
+    }
+    if (spaceSubmitStatus) {
+      try {
+        postSpaceData();
+      } catch (e) {
+        setSnackbarOpen(true);
+      }
+    }
+  }, [spaceSubmitStatus]);
   const onSubmit = () => {
-    postAddSpace({
-      ...formValues,
-      ...user,
-    });
-    setActiveStep(5);
+    setSpaceSubmitStatus(true);
   };
 
   const stepProps = {
@@ -179,8 +199,10 @@ const AddSpace = ({ classes }) => {
     onNext,
     onSubmit,
     disableNext: snackbarOpen,
-    // todo: add conditional for business search
-    loading: promiseInProgress || (businessSearch && !formValues.yelpBusinessResponses),
+    loading: promiseInProgress
+      || (businessSearch && !formValues.yelpBusinessResponses)
+      || indicators.length === 0
+      || (spaceSubmitStatus && activeStep !== 5),
   };
 
   return (
@@ -215,7 +237,7 @@ const AddSpace = ({ classes }) => {
         </Stepper>
       )}
       {!stepProps.loading && (
-        <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+        <div>{getStepContent(activeStep, stepProps, formValues, indicators)}</div>
       )}
       {stepProps.loading && <CircularProgress color="secondary" />}
       <ErrorSnackbar

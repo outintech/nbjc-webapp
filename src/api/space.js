@@ -101,37 +101,53 @@ const postYelpSearch = async (spaceOpts) => {
   return results;
 };
 
+/**
+ * Post a new Yelp API search for a space by a user
+ * @param {Object} spaceOpts
+ * @param {Array} spaceOpts.chips
+ * @param {Boolean} spaceOpts.anonymous
+ * @param {Number} spaceOpts.rating
+ * @param {string} spaceOpts.content
+ * @param {Object} spaceOpts.user
+ * @param {Object} spaceOpts.business
+ * @returns {Promise}
+ */
 const postAddSpace = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
-  console.log(spaceOpts.chips);
-
+  const indicators = spaceOpts.chips.map((element) => {
+    const indicatorFormat = { name: '' };
+    indicatorFormat.name = element.name;
+    return indicatorFormat;
+  });
+  const categoryAliases = spaceOpts.business.categories.map((element) => {
+    const aliasFormat = { alias: '' };
+    aliasFormat.alias = element.alias;
+    return aliasFormat;
+  });
   const data = {
     phone: spaceOpts.business.phone,
     name: spaceOpts.business.name,
     price_level: spaceOpts.business.price_level,
     provider_urn: spaceOpts.business.provider_urn,
     provider_url: spaceOpts.business.provider_url,
-    categories: spaceOpts.business.categories,
+    latitude: spaceOpts.business.coordinates.latitude,
+    longitude: spaceOpts.business.coordinates.longitude,
+    category_aliases_attributes: categoryAliases,
     address_attributes: [{
-      address_1: spaceOpts.business.location.address_1,
-      address_2: spaceOpts.business.location.address_2,
-      address_3: spaceOpts.business.location.address_3,
+      address_1: spaceOpts.business.location.address1,
+      address_2: `${spaceOpts.business.location.address2} ${spaceOpts.business.location.address3}`,
       city: spaceOpts.business.location.city,
       postal_code: spaceOpts.business.location.zipcode,
       country: spaceOpts.business.location.country,
       state: spaceOpts.business.location.state,
     }],
-    languages_attributes: [],
-    indicators_attributes: [],
+    indicators_attributes: indicators,
     reviews_attributes: [{
       anonymous: spaceOpts.anon,
-      vibe_check: 1,
       rating: spaceOpts.rating,
-      content: spaceOpts.content,
-      user_id: spaceOpts.user.userId,
+      content: spaceOpts.review,
     }],
-    user_id: spaceOpts.user.userId,
   };
   const addSpace = {
     space: data,
