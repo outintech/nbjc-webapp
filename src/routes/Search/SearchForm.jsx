@@ -72,9 +72,13 @@ const SearchForm = ({
 
   useEffect(() => {
     if (location) {
+      let locationString = '';
+      if (location.city && location.state) {
+        locationString = `${location.city}, ${location.state}`;
+      }
       setFormValues({
         ...formValues,
-        location: `${location.city}, ${location.state}`,
+        location: locationString,
       });
     }
   }, [location]);

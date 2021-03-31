@@ -167,8 +167,10 @@ const SpaceDetailCard = ({
           setOpen(true);
           setSnackBar(true);
         })
-        .catch((error) => {
-          console.error('Something went wrong sharing the blog', error);
+        .catch((
+          // error
+        ) => {
+          // console.error('Something went wrong sharing the blog', error);
         });
     } else if (navigator.clipboard) {
       setIsCopied(true);

@@ -22,7 +22,7 @@ const getSearchCriteria = (query) => ({
   perPage: parseInt(query.get('perPage'), 10) || 10,
 });
 
-const useSearch = ({ userCoords }) => {
+const useSearch = ({ isGeolocationEnabled, userCoords }) => {
   const [searchResults, setSearchResults] = useState(null);
   const [pagination, setPagination] = useState();
   const [indicators, setIndicators] = useState([]);
@@ -162,13 +162,18 @@ const useSearch = ({ userCoords }) => {
       })),
     });
   };
-
+  let loading = false;
+  if (history.location.pathname === '/search/results') {
+    loading = promiseInProgress;
+  } else {
+    loading = promiseInProgress || (isGeolocationEnabled && userCoords === null);
+  }
   return {
     searchResults,
     searchCriteria,
     search,
     updateSearch,
-    loading: promiseInProgress,
+    loading,
     updateFilters,
     pagination,
     userLocation,

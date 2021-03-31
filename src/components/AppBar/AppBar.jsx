@@ -159,16 +159,7 @@ const AppBar = ({
 
 AppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  selected: PropTypes.oneOf([
-    'home',
-    'addSpace',
-    'search',
-    'profile',
-    'addReview',
-    'spaceDetails',
-    'reviews',
-    'createProfile',
-  ]),
+  selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(
     PropTypes.shape({

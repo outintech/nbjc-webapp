@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
-const UserContextProvider = (props) => {
+const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({
     userId: undefined,
     auth0Id: undefined,
@@ -14,8 +14,7 @@ const UserContextProvider = (props) => {
         user, setUser,
       }}
     >
-      {/* eslint-disable-next-line */}
-      { props.children }
+      {children}
     </UserContext.Provider>
   );
 };
