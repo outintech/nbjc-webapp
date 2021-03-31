@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import {
@@ -15,6 +16,8 @@ import { trackPromise } from 'react-promise-tracker';
 
 import { createUser } from '../../api';
 import { UserContext } from '../../context/UserContext';
+
+import useQuery from '../../hooks/useQuery';
 
 const styles = () => ({
   container: {
@@ -81,8 +84,10 @@ const ProfilePage = ({ classes }) => {
     vertical: 'top',
     horizontal: 'center',
   });
+  const [userCreated, setUserCreated] = useState(false);
   const { user } = useContext(UserContext);
-  // TODO: State needs to pull user info from backend after login, maybe done in the login component
+  const history = useHistory();
+
   const openSnackBar = (newState) => {
     setSnackBar({ ...newState, openBar: true });
   };
@@ -90,6 +95,13 @@ const ProfilePage = ({ classes }) => {
   const closeSnackBar = () => {
     setSnackBar({ ...snackBar, openBar: false });
   };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     const {name, }
+  //     setProfileInfo(prevState => (...prevState,))
+  //   }
+  // }, [])
 
   const addLabel = (label) => {
     if (profileInfo.selectedLabels.includes(label)) {
@@ -114,6 +126,11 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
+  // const handleReturn = () => {
+  //   const query = useQuery();
+  //   console.log(query);
+  // };
+
   const handleSubmit = (e, updatedInfo) => {
     e.preventDefault();
     // Needs to make a post call to backend to submit profileinfo state as updated user details
@@ -132,6 +149,9 @@ const ProfilePage = ({ classes }) => {
             popperMessage: 'Your changes have been saved.',
           });
         })
+        .then(() => {
+          setUserCreated(true);
+        })
         .catch((err) => {
           console.log(err);
           openSnackBar({
@@ -144,7 +164,11 @@ const ProfilePage = ({ classes }) => {
   };
 
   const { vertical, horizontal, openBar } = snackBar;
-
+  if (userCreated) {
+    const query = useQuery();
+    console.log(query.get('returnTo'));
+    history.push(`${query.get('returnTo')}`);
+  }
   return (
     <Container className={classes.container}>
       <Snackbar
