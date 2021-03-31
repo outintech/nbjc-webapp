@@ -155,7 +155,7 @@ const ProfilePage = ({ classes }) => {
         autoHideDuration={5000}
         action={
           (
-            <Button color="secondary" size="small" onClick={closeSnackBar}>
+            <Button color="primary" size="small" onClick={closeSnackBar}>
               CLOSE
             </Button>
           )
