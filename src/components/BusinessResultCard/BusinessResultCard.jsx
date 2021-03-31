@@ -48,11 +48,11 @@ const BusinessResultCard = ({
         <Typography variant="caption">{business.category}</Typography>
         <div className={classes.wrapper}>
           <Typography variant="subtitle2">Address:</Typography>
-          <Typography variant="body2">{business.address}</Typography>
+          <Typography variant="body2">{business.location.display_address.join(' ')}</Typography>
         </div>
         <div className={classes.wrapper}>
           <Typography variant="subtitle2">Phone number:</Typography>
-          <Typography variant="body2">{business.phoneNumber}</Typography>
+          <Typography variant="body2">{business.phone}</Typography>
         </div>
       </CardContent>
     </Card>
