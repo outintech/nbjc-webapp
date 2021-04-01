@@ -24,7 +24,7 @@ const styles = (theme) => ({
     margin: '20px',
   },
   footer: {
-    margin: 20,
+    display: 'block',
   },
   yelpFooter: {
     marginBottom: 15,
@@ -65,7 +65,7 @@ const Address = ({
 
   return (
     <>
-      <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">Select the location of the space you want to submit to OurGuide</Typography>
+      <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">Select the location of the space you want to submit to The Lavender Book.</Typography>
       <div className={classes.listWrapper}>
         {businessList.map((business, index) => (
           <BusinessResultCard
@@ -81,7 +81,7 @@ const Address = ({
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.submitButton}
           fullWidth={!matches}
           disabled={selected === undefined}
@@ -94,7 +94,8 @@ const Address = ({
         <Button
           type="cancel"
           variant="outlined"
-          color="secondary"
+          color="primary"
+          className={classes.backButton}
           fullWidth={!matches}
           onClick={onBack}
           disableElevation

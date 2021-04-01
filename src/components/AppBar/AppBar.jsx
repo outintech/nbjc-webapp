@@ -32,9 +32,14 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: '#000',
+    color: '#FFF',
   },
   selected: {
-    background: 'rgba(98, 0, 238, 0.08) !important',
+    background: '#DBC1FA!important',
+  },
+  icons: {
+    color: '#000',
   },
   drawer: {
     width: 375,
@@ -83,10 +88,10 @@ const AppBar = ({
         }}
       >
         <ListItemIcon>
-          <item.icon color={otherProps.color} />
+          <item.icon className={classes.icons} />
         </ListItemIcon>
         <ListItemText>
-          <Typography color={otherProps.color} variant="subtitle2">
+          <Typography className={classes.icons} variant="subtitle2">
             {item.label}
           </Typography>
         </ListItemText>

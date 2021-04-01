@@ -1,19 +1,23 @@
 const palette = {
   palette: {
     primary: {
-      light: '#A96EB8',
-      main: '#9276b5',
-      dark: '#480658',
-      // contrastText: will be calculated to contrast with palette.primary.main
+      light: '#DBC1FA',
+      main: '#633AA3',
+      dark: '#633AA3',
+      contrastText: '#FFFFFF',
     },
     secondary: {
-      light: '#694CA0',
-      main: '#6F49AA',
-      dark: '#270C5B',
-      // contrastText: '#000000',
+      light: '#DBC1FA',
+      main: '#8665aE',
+      dark: '#8665aE',
+      contrastText: '#000000',
     },
     error: {
       main: '#B00020',
+    },
+    action: {
+      selected: '#DBC1FA',
+      hover: '#DBC1FA',
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.

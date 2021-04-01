@@ -42,8 +42,8 @@ const styles = (theme) => ({
     margin: '40px 0',
   },
   submitButton: {
-    float: 'right',
     marginBottom: 20,
+    float: 'right',
   },
 });
 
@@ -119,7 +119,7 @@ const Submit = ({
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.submitButton}
           fullWidth={!matches}
           onClick={() => onSubmit({ ...addSpaceProps })}
@@ -130,7 +130,7 @@ const Submit = ({
         <Button
           type="cancel"
           variant="outlined"
-          color="secondary"
+          color="primary"
           fullWidth={!matches}
           onClick={onBack}
           disableElevation

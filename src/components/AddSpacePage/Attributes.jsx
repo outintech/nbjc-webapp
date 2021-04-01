@@ -22,6 +22,7 @@ const styles = (theme) => ({
   },
   footer: {
     margin: '40px 0',
+    display: 'block',
   },
   submitButton: {
     float: 'right',
@@ -61,7 +62,7 @@ const Attributes = ({
   return (
     <>
       <Typography variant="subtitle1" align="center">
-        What are the attributes that make this an OurGuide space?
+        What are the attributes that make this a space for The Lavender Book?
       </Typography>
       <Typography variant="h6">Select all that apply</Typography>
       <ChipFilters
@@ -74,7 +75,7 @@ const Attributes = ({
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.submitButton}
           fullWidth={!matches}
           onClick={onSubmit}
@@ -86,7 +87,7 @@ const Attributes = ({
         <Button
           type="cancel"
           variant="outlined"
-          color="secondary"
+          color="primary"
           fullWidth={!matches}
           onClick={onBack}
           disableElevation
