@@ -1,11 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-// import Button from '@material-ui/core/Button';
 
-// todo: change this to tertiary color (black)
 const styles = (theme) => ({
   root: {
     position: 'fixed',

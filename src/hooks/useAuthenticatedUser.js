@@ -4,8 +4,8 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useHistory } from 'react-router-dom';
 import { getUser } from '../api';
 import { UserContext } from '../context/UserContext';
+import useError from './useError';
 
-// TODO check if user is already registered by hitting
 // /users params user: auth0_id: dsfjs endpoint
 // if userID comes back, send users back to where they were before auth
 // otherwise, send users to finish their profile and register
@@ -15,6 +15,7 @@ import { UserContext } from '../context/UserContext';
 // 3. Else skip to 5
 // 4. Create a user profile -> submit handler check return to and send there or /
 // 5. Go to appState.returnTo
+
 const useAuthenticatedUser = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const { promiseInProgress } = usePromiseTracker();
@@ -23,32 +24,34 @@ const useAuthenticatedUser = () => {
   const returnTo = history.location.pathname;
   let registeredUser;
   const [redirectToCreate, setRedirectToCreate] = useState(false);
+  const throwError = useError();
   useEffect(() => {
     async function fetchData() {
+      const token = await getAccessTokenSilently();
+      const auth0Id = user.sub;
+      setUser({
+        token,
+        auth0Id,
+      });
       try {
-        const token = await getAccessTokenSilently();
-        const auth0Id = user.sub;
+        registeredUser = await getUser({
+          userId: auth0Id,
+          token,
+        });
         setUser({
           token,
           auth0Id,
+          userId: registeredUser.data.id,
         });
-        try {
-          registeredUser = await getUser({
-            userId: auth0Id,
-            token,
-          });
-          setUser({
-            token,
-            auth0Id,
-            userId: registeredUser.data.id,
-          });
-          setRedirectToCreate(false);
-        } catch (e) {
-          // based on the error, create the user
-          setRedirectToCreate(true);
-        }
+        setRedirectToCreate(false);
       } catch (e) {
-        // todo : error handling
+        // if it is 404 then user is not found
+        // so redirect to create. Otherwise throw error
+        if (e.status === 404) {
+          setRedirectToCreate(true);
+        } else {
+          throwError(e);
+        }
       }
     }
     if (!registeredUser) {
