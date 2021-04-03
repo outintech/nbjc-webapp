@@ -10,9 +10,9 @@ const styles = (theme) => ({
   root: {
     position: 'fixed',
     bottom: 0,
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.navBlack.main,
     display: 'flex',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.navBlack.contrastText,
     minHeight: 75,
     width: '100%',
     backgroundClip: 'padding-box',

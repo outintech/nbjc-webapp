@@ -32,11 +32,11 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: '#000',
-    color: '#FFF',
+    backgroundColor: theme.palette.navBlack.main,
+    color: theme.palette.navBlack.contrastText,
   },
   selected: {
-    background: '#DBC1FA!important',
+    background: theme.palette.action.selected,
   },
   icons: {
     color: '#000',

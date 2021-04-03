@@ -19,6 +19,12 @@ const palette = {
       selected: '#DBC1FA',
       hover: '#DBC1FA',
     },
+    navBlack: {
+      light: '#000000',
+      main: '#000000',
+      dark: '#000000',
+      contrastText: '#FFFFFF',
+    },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
     contrastThreshold: 3,
