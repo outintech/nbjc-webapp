@@ -7,7 +7,7 @@ import {
 
 const typography = {
   typography: {
-    fontFamily: 'Omnes, Arial',
+    fontFamily: 'Omnes',
   },
   overrides: {
     MuiCssBaseline: {
