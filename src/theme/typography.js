@@ -1,15 +1,36 @@
+import {
+  omnesBold,
+  omnesSemiBold,
+  omnesMedium,
+  omnes,
+} from './omnes';
+
 const typography = {
-  // TODO: Add font.
+  typography: {
+    fontFamily: 'Omnes, Arial',
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [
+          omnesBold,
+          omnesSemiBold,
+          omnesMedium,
+          omnes,
+        ],
+      },
+    },
+  },
   h1: {
-    fontWeight: 'bold',
+    fontWeight: 700,
     fontSize: 96,
   },
   h2: {
-    fontWeight: 600,
+    fontWeight: 400,
     fontSize: 60,
   },
   h3: {
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: 48,
   },
   h4: {

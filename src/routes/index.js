@@ -22,14 +22,14 @@ const routes = [{
   icon: HomeIcon,
   prefix: '',
 }, {
-  label: 'Search for a space',
+  label: 'Search For A Space',
   path: '/search',
   content: Search,
   key: 'search',
   icon: SearchIcon,
   prefix: '',
 }, {
-  label: 'Search results page',
+  label: 'Search Results Page',
   path: '/search/results',
   content: Search,
   key: 'searchResults',
@@ -75,7 +75,7 @@ const spaceRoutes = [{
   exact: false,
   prefix: '/spaces',
 }, {
-  label: 'Add a space',
+  label: 'Add A Space',
   path: '/new',
   content: ProtectedRoute(AddSpace),
   key: 'addSpace',
