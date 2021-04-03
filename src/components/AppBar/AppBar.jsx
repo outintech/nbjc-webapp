@@ -52,7 +52,6 @@ const styles = (theme) => ({
 });
 
 const AppBar = ({
-  isLoggedIn,
   selected,
   classes,
   routes,
@@ -68,10 +67,6 @@ const AppBar = ({
   };
 
   const showDrawerItems = () => routes.map((item) => {
-    // todo: add injection security
-    if (item.enforceLogin && !isLoggedIn) {
-      return null;
-    }
     const otherProps = {
       selected: item.key === selected,
       color: item.key === selected ? 'primary' : 'inherit',
@@ -158,7 +153,6 @@ const AppBar = ({
 };
 
 AppBar.propTypes = {
-  isLoggedIn: PropTypes.bool,
   selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(
@@ -166,14 +160,12 @@ AppBar.propTypes = {
       label: PropTypes.string.isRequired,
       path: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
-      enforceLogin: PropTypes.bool.isRequired,
     }),
   ).isRequired,
 };
 
 AppBar.defaultProps = {
   selected: 'home',
-  isLoggedIn: false,
 };
 
 export default withStyles(styles)(AppBar);

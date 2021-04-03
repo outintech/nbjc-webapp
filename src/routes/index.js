@@ -35,7 +35,6 @@ const routes = [{
   key: 'searchResults',
   icon: SearchIcon,
   prefix: '',
-  enforceLogin: false,
   skipAppBar: true,
 }, {
   label: 'Profile',
@@ -47,14 +46,12 @@ const routes = [{
 }, {
   label: 'Create Profile',
   path: '/users/new',
-  content: CreateProfile,
+  content: ProtectedRoute(CreateProfile),
   key: 'createProfile',
   icon: PersonOutlineIcon,
   prefix: '',
   skipAppBar: true,
   exact: true,
-  // todo: change this
-  enforceLogin: false,
 }, {
   label: 'Profile Submitted',
   path: '/users/new/submitted',
@@ -62,7 +59,6 @@ const routes = [{
   key: 'profileSubmitted',
   icon: PersonOutlineIcon,
   prefix: '',
-  enforceLogin: false,
   skipAppBar: true,
 }];
 
