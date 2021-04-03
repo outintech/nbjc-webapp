@@ -22,61 +22,61 @@ const typography = {
     },
   },
   h1: {
-    fontWeight: 700,
+    fontWeight: 800,
     fontSize: 96,
   },
   h2: {
-    fontWeight: 400,
+    fontWeight: 700,
     fontSize: 60,
   },
   h3: {
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: 48,
   },
   h4: {
-    fontWeight: 'normal',
+    fontWeight: 500,
     fontSize: 34,
   },
   h5: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: 24,
   },
   h6: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: 20,
   },
   subtitle1: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: 16,
   },
   subtitle2: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: 14,
   },
   body1: {
-    fontWeight: 'normal',
+    fontWeight: 500,
     fontSize: 16,
   },
   body2: {
-    fontWeight: 'normal',
+    fontWeight: 500,
     fontSize: 14,
   },
   button: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: 14,
     textTransform: 'uppercase',
   },
   allCaps: {
-    fontWeight: 'normal',
+    fontWeight: 600,
     fontSize: 12,
     textTransform: 'uppercase',
   },
   caption: {
-    fontWeight: 'normal',
+    fontWeight: 500,
     fontSize: 12,
   },
   overline: {
-    fontWeight: 'normal',
+    fontWeight: 500,
     fontSize: 10,
   },
 };
