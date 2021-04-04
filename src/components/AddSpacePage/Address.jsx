@@ -73,7 +73,7 @@ const Address = ({
         {businessList.map((business, index) => (
           <BusinessResultCard
             business={business}
-            key={business.id}
+            key={business.yelp_id}
             checked={selected === index}
             onCheck={() => onCheck(index)}
             overrideClasses={{ resultCard: classes.card }}

@@ -164,7 +164,7 @@ const AddSpace = ({ classes }) => {
       setActiveStep(activeStep + 1);
     }
 
-    if (!businessSearch) {
+    if (!businessSearch && activeStep !== 0) {
       return;
     }
     try {

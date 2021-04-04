@@ -93,7 +93,7 @@ const Submit = ({
           <EditIcon
             color="primary"
             className={classes.edit}
-            onClick={() => onBack(1)}
+            onClick={() => onBack(2)}
           />
         </div>
         <ChipList chips={addSpaceProps.chips} />
@@ -110,7 +110,7 @@ const Submit = ({
           <EditIcon
             color="primary"
             className={classes.edit}
-            onClick={() => onBack(1)}
+            onClick={() => onBack(3)}
           />
         </div>
         <StarRating numberFilled={addSpaceProps.rating} editable={false} />
