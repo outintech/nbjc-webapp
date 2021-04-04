@@ -54,7 +54,7 @@ const Pagination = ({
     backButton = (
       <Button
         variant="outlined"
-        color="secondary"
+        color="primary"
         align="center"
         fullWidth={!matches}
         href={`${backLink}?${query.toString()}`}
@@ -73,7 +73,7 @@ const Pagination = ({
     nextButton = (
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         align="center"
         fullWidth={!matches}
         href={`${nextLink}?${query.toString()}`}

@@ -65,9 +65,18 @@ const styles = (theme) => ({
   },
   successButton: {
     [theme.breakpoints.up('mobile')]: {
-      width: 254,
+      width: 250,
     },
     margin: '0 auto',
+    display: 'block',
+  },
+  secondarySuccessButton: {
+    margin: '0 auto',
+    display: 'block',
+    marginTop: 20,
+    [theme.breakpoints.up('mobile')]: {
+      width: 250,
+    },
   },
 });
 
@@ -130,6 +139,7 @@ const getStepContent = (step, {
               Add another space
             </Button>
           )}
+          overrideClasses={{ secondaryButton: classes.secondarySuccessButton }}
         />
       );
     default:
@@ -140,7 +150,7 @@ const getStepContent = (step, {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(5);
   const [formValues, setFormValues] = useState({});
   const [businessSearch, setBusinessSearch] = useState(undefined);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -164,7 +174,7 @@ const AddSpace = ({ classes }) => {
       setActiveStep(activeStep + 1);
     }
 
-    if (!businessSearch && activeStep !== 0) {
+    if (!businessSearch) {
       return;
     }
     try {

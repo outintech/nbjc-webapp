@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   pageTitle: {
-    marginTop: 60,
+    [theme.breakpoints.up('mobile')]: {
+      marginTop: 60,
+    },
     marginBottom: 28,
   },
   check: {
@@ -26,8 +28,7 @@ const styles = (theme) => ({
     marginBottom: 60,
   },
   buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'block',
   },
   image: {
     [theme.breakpoints.up('xs')]: {
