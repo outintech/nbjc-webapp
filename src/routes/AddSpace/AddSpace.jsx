@@ -177,7 +177,7 @@ const AddSpace = ({ classes }) => {
   const [spaceSubmitStatus, setSpaceSubmitStatus] = useState();
   useEffect(() => {
     async function postSpaceData() {
-      postAddSpace({ ...formValues, user });
+      await postAddSpace({ ...formValues, user });
       setActiveStep(5);
     }
     if (spaceSubmitStatus) {

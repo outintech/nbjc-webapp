@@ -22,39 +22,36 @@ const routes = [{
   icon: HomeIcon,
   prefix: '',
 }, {
-  label: 'Search for a space',
+  label: 'Search For A Space',
   path: '/search',
   content: Search,
   key: 'search',
   icon: SearchIcon,
   prefix: '',
 }, {
-  label: 'Search results page',
+  label: 'Search Results Page',
   path: '/search/results',
   content: Search,
   key: 'searchResults',
   icon: SearchIcon,
   prefix: '',
-  enforceLogin: false,
   skipAppBar: true,
 }, {
   label: 'Profile',
   path: '/profile',
-  content: Profile,
+  content: ProtectedRoute(Profile),
   key: 'profile',
   icon: PersonOutlineIcon,
   prefix: '',
 }, {
   label: 'Create Profile',
   path: '/users/new',
-  content: CreateProfile,
+  content: ProtectedRoute(CreateProfile),
   key: 'createProfile',
   icon: PersonOutlineIcon,
   prefix: '',
   skipAppBar: true,
   exact: true,
-  // todo: change this
-  enforceLogin: false,
 }, {
   label: 'Profile Submitted',
   path: '/users/new/submitted',
@@ -62,7 +59,6 @@ const routes = [{
   key: 'profileSubmitted',
   icon: PersonOutlineIcon,
   prefix: '',
-  enforceLogin: false,
   skipAppBar: true,
 }];
 
@@ -75,7 +71,7 @@ const spaceRoutes = [{
   exact: false,
   prefix: '/spaces',
 }, {
-  label: 'Add a space',
+  label: 'Add A Space',
   path: '/new',
   content: ProtectedRoute(AddSpace),
   key: 'addSpace',

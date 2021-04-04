@@ -5,7 +5,7 @@ import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 
-// import AppBar from './components/AppBar';
+import { CssBaseline } from '@material-ui/core';
 import AppLayout from './components/AppLayout';
 import NameContextProvider from './context/NameContext';
 import UserContextProvider from './context/UserContext';
@@ -46,6 +46,7 @@ function App() {
       <UserContextProvider>
         <NameContextProvider>
           <ThemeProvider theme={theme}>
+            <CssBaseline />
             <div className="App">
               <Switch>
                 {routes.map((route) => (

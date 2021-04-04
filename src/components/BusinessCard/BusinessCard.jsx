@@ -52,7 +52,6 @@ const styles = (theme) => ({
       height: 222,
     },
   },
-  // todo: this needs to be a hyrperlink
   location: {
     display: 'flex',
     'flex-direction': 'row',

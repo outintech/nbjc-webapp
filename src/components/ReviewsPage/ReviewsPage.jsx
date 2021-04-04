@@ -42,8 +42,6 @@ const ReviewsPage = ({
 }) => {
   const history = useHistory();
   let name = '';
-  // TODO: fix the linting
-  // eslint-disable-next-line
   if (history.location && history.location.state) {
     name = history.location.state.name;
   }
