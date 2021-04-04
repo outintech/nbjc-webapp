@@ -96,13 +96,6 @@ const ProfilePage = ({ classes }) => {
     setSnackBar({ ...snackBar, openBar: false });
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     const {name, }
-  //     setProfileInfo(prevState => (...prevState,))
-  //   }
-  // }, [])
-
   const addLabel = (label) => {
     if (profileInfo.selectedLabels.includes(label)) {
       setProfileInfo((prevState) => ({
@@ -126,17 +119,8 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
-  // const handleReturn = () => {
-  //   const query = useQuery();
-  //   console.log(query);
-  // };
-
   const handleSubmit = (e, updatedInfo) => {
     e.preventDefault();
-    // Needs to make a post call to backend to submit profileinfo state as updated user details
-    // Remember to trim( empty spaces from the end of strings)
-    // eslint-disable-next-line no-console
-    console.log(updatedInfo, user);
     trackPromise(
       createUser({
         ...updatedInfo,

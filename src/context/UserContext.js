@@ -8,10 +8,18 @@ const UserContextProvider = ({ children }) => {
     auth0Id: undefined,
     token: undefined,
   });
+
+  const [userProfile, setUserProfile] = useState({
+    name: undefined,
+    username: undefined,
+    pronouns: undefined,
+    location: undefined,
+  });
+
   return (
     <UserContext.Provider
       value={{
-        user, setUser,
+        user, setUser, userProfile, setUserProfile,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import {
@@ -10,9 +10,9 @@ import {
   Popper,
   Card,
   Chip,
-  InputLabel,
   TextField,
 } from '@material-ui/core';
+import { UserContext } from '../../context/UserContext';
 
 const styles = () => ({
   container: {
@@ -72,7 +72,8 @@ const ProfilePage = ({ classes }) => {
     horizontal: 'center',
   });
 
-  // TODO: State needs to pull user info from backend after login, maybe done in the login component
+  const { userProfile } = useContext(UserContext);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -112,7 +113,7 @@ const ProfilePage = ({ classes }) => {
 
   const handleSubmit = (e, updatedInfo) => {
     e.preventDefault();
-    // Needs to make a post call to backend to submit profileinfo state as updated user details
+    // TODO:make post call to backend to submit profileinfo state as updated user details
     // Remember to trim( empty spaces from the end of strings)
     try {
       // eslint-disable-next-line no-console
@@ -124,7 +125,6 @@ const ProfilePage = ({ classes }) => {
         horizontal: 'center',
         popperMessage: 'Your changes have been saved.',
       });
-      // call to backend to submit data if successful - show success snackbar
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('fail');
@@ -133,7 +133,6 @@ const ProfilePage = ({ classes }) => {
         horizontal: 'center',
         popperMessage: 'Error saving your changes',
       });
-      // if error show error snackbar with some messaging
     }
     setAnchorEl(null);
   };
@@ -164,14 +163,13 @@ const ProfilePage = ({ classes }) => {
         View and edit your profile. After you make a change, click Save.
       </Typography>
       <form onSubmit={handleSubmit}>
-        <InputLabel type="inputLabel">
-          <Typography>Name</Typography>
-        </InputLabel>
         <TextField
+          label="Name"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={profileInfo.name}
+          value={userProfile.username}
+          placeholder={userProfile.usernmae}
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -179,28 +177,26 @@ const ProfilePage = ({ classes }) => {
           autoFocus
           required
         />
-        <InputLabel type="inputLabel">
-          <Typography>Pronouns</Typography>
-        </InputLabel>
         <TextField
+          label="Pronouns"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={profileInfo.pronouns}
+          value={userProfile.pronouns}
+          placeholder={userProfile.pronouns}
           autoComplete="off"
           type="input"
           variant="outlined"
           name="pronouns"
           required
         />
-        <InputLabel type="inputLabel">
-          <Typography>Location</Typography>
-        </InputLabel>
         <TextField
+          label="Location"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={profileInfo.location}
+          value={userProfile.location}
+          placeholder={userProfile.locaiton}
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -243,11 +239,6 @@ const ProfilePage = ({ classes }) => {
               variant="contained"
               aria-label="save"
               component="span"
-              // onClick={() => openSnackBar({
-              //   vertical: 'top',
-              //   horizontal: 'center',
-              //   popperMessage: 'Your changes have been saved.',
-              // })}
               onClick={(e) => handleSubmit(e, profileInfo)}
             >
               Save
