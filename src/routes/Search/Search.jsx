@@ -74,11 +74,10 @@ const Search = ({
   classes,
   coords,
   isGeolocationEnabled,
-  isGeolocationAvailable,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
+
   const [openFilter, setOpenFilter] = useState(false);
-  console.log('available', isGeolocationAvailable, coords);
   const {
     updateSearch,
     updateFilters,
@@ -187,11 +186,13 @@ const Search = ({
               </div>
             ))}
         </div>
-        <Pagination
-          totalCount={pagination.total_count || 0}
-          page={pagination.page || 1}
-          perPage={pagination.perPage || 10}
-        />
+        {pagination && pagination !== null && (
+          <Pagination
+            totalCount={pagination.total_count || 0}
+            page={pagination.page || 1}
+            perPage={pagination.perPage || 10}
+          />
+        )}
         {searchResults !== null
           && search.searchTerm !== null
           && searchResults.length === 0

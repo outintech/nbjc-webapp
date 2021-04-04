@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -64,21 +63,21 @@ const AddReview = ({ classes }) => {
   const { spaceId } = useParams();
   const [space, setSpace] = useState(null);
   const [pageStatus, setPageStatus] = useState('review');
+  const [reviewData, setReviewData] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { promiseInProgress } = usePromiseTracker();
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
       const intId = parseInt(spaceId, 10);
-      const [spaceData, reviewData] = await Promise.all([
+      const [spaceData, userReview] = await Promise.all([
         getSpace(intId),
         getReviewForSpaceAndUser({
           spaceId: intId,
           userId: user.userId,
         }),
       ]);
-      if (reviewData.data.exists) {
+      if (userReview.data.exists) {
         setSpace(spaceData.data);
         setPageStatus('reviewExists');
       } else {
@@ -93,23 +92,32 @@ const AddReview = ({ classes }) => {
     }
   }, [spaceId]);
 
+  useEffect(() => {
+    async function postReviewData(data) {
+      await postReview(data);
+      setPageStatus('success');
+    }
+    if (pageStatus === 'reviewSubmitted') {
+      try {
+        postReviewData({
+          spaceId,
+          rating: reviewData.rating,
+          detail: reviewData.review,
+          anonymous: reviewData.anon,
+          ...user,
+        });
+      } catch (e) {
+        setPageStatus('review');
+        setSnackbarOpen(true);
+      }
+    }
+  });
+
   const saveReview = (formData) => {
-    trackPromise(
-      postReview({
-        spaceId,
-        rating: formData.rating,
-        detail: formData.review,
-        anonymous: formData.anon,
-        ...user,
-      })
-        .then(() => {
-          setPageStatus('success');
-        })
-        .catch(() => {
-          setSnackbarOpen(true);
-        }),
-    );
+    setReviewData(formData);
+    setPageStatus('reviewSubmitted');
   };
+  const loading = !space || pageStatus === 'reviewSubmitted';
 
   return (
     <div className={classes.root}>
@@ -132,7 +140,7 @@ const AddReview = ({ classes }) => {
           showBack={false}
           submitLabel="Submit"
           onNext={saveReview}
-          disableSubmit={() => promiseInProgress}
+          disableSubmit={() => loading}
           overrideClasses={{
             footer: classes.reviewFooter,
             submitButton: classes.reviewSubmit,
@@ -185,7 +193,7 @@ const AddReview = ({ classes }) => {
           }}
         />
       )}
-      {!space && <CircularProgress color="secondary" />}
+      {loading && <CircularProgress color="secondary" />}
       <ErrorSnackbar
         snackbarOpen={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}

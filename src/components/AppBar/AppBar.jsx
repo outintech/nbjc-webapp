@@ -32,9 +32,14 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: theme.palette.navBlack.main,
+    color: theme.palette.navBlack.contrastText,
   },
   selected: {
-    background: 'rgba(98, 0, 238, 0.08) !important',
+    background: theme.palette.action.selected,
+  },
+  icons: {
+    color: '#000',
   },
   drawer: {
     width: 375,
@@ -47,7 +52,6 @@ const styles = (theme) => ({
 });
 
 const AppBar = ({
-  isLoggedIn,
   selected,
   classes,
   routes,
@@ -63,10 +67,6 @@ const AppBar = ({
   };
 
   const showDrawerItems = () => routes.map((item) => {
-    // todo: add injection security
-    if (item.enforceLogin && !isLoggedIn) {
-      return null;
-    }
     const otherProps = {
       selected: item.key === selected,
       color: item.key === selected ? 'primary' : 'inherit',
@@ -83,10 +83,10 @@ const AppBar = ({
         }}
       >
         <ListItemIcon>
-          <item.icon color={otherProps.color} />
+          <item.icon className={classes.icons} />
         </ListItemIcon>
         <ListItemText>
-          <Typography color={otherProps.color} variant="subtitle2">
+          <Typography className={classes.icons} variant="subtitle2">
             {item.label}
           </Typography>
         </ListItemText>
@@ -153,7 +153,6 @@ const AppBar = ({
 };
 
 AppBar.propTypes = {
-  isLoggedIn: PropTypes.bool,
   selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   routes: PropTypes.arrayOf(
@@ -161,14 +160,12 @@ AppBar.propTypes = {
       label: PropTypes.string.isRequired,
       path: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
-      enforceLogin: PropTypes.bool.isRequired,
     }),
   ).isRequired,
 };
 
 AppBar.defaultProps = {
   selected: 'home',
-  isLoggedIn: false,
 };
 
 export default withStyles(styles)(AppBar);

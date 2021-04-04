@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -44,8 +42,8 @@ const styles = (theme) => ({
     margin: '40px 0',
   },
   submitButton: {
-    float: 'right',
     marginBottom: 20,
+    float: 'right',
   },
 });
 
@@ -56,7 +54,6 @@ const Submit = ({
   addSpaceProps,
 }) => {
   const matches = useMediaQuery('(min-width:376px)');
-  const [contact, setContact] = useState(false);
   return (
     <>
       <Typography variant={matches ? 'h4' : 'subtitle1'} align="center" className={classes.pageTitle}>
@@ -118,24 +115,14 @@ const Submit = ({
         </div>
         <StarRating numberFilled={addSpaceProps.rating} editable={false} />
       </div>
-      <FormControlLabel
-        className={classes.checkbox}
-        control={<Checkbox name="anon" color="primary" onChange={() => setContact(!contact)} checked={contact} />}
-        label={(
-          <Typography variant="body2">
-            A National Black Justice Coalition administrator can contact me at
-            user@email.com about my submission.
-          </Typography>
-        )}
-      />
       <div className={classes.footer}>
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.submitButton}
           fullWidth={!matches}
-          onClick={() => onSubmit({ ...addSpaceProps, canContact: contact })}
+          onClick={() => onSubmit({ ...addSpaceProps })}
           disableElevation
         >
           Submit
@@ -143,7 +130,7 @@ const Submit = ({
         <Button
           type="cancel"
           variant="outlined"
-          color="secondary"
+          color="primary"
           fullWidth={!matches}
           onClick={onBack}
           disableElevation

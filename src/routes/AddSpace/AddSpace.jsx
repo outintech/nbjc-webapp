@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
+import { usePromiseTracker } from 'react-promise-tracker';
 
 import { withStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import {
+  postYelpSearch,
+  postAddSpace,
+  getAllIndicators,
+} from '../../api';
+
+import { UserContext } from '../../context/UserContext';
 import withUser from '../AuthenticatedRoute';
-// todo: change to use api.
-import getYelpResultsMock from '../../__mocks__/getYelpResultMock';
-import chips from '../../api/chips';
 
 import {
   AddSpaceSearch,
@@ -39,6 +49,9 @@ const styles = (theme) => ({
     cursor: 'pointer',
   },
   stepLabel: {
+    '& .MuiStepLabel-label.MuiStepLabel-active': {
+      color: theme.palette.primary.main,
+    },
     '& .MuiStepIcon-root': {
       width: 30,
       height: 30,
@@ -50,14 +63,12 @@ const styles = (theme) => ({
   },
 });
 
-const getMockBusiness = (count = 10) => [...Array(count)].map((_, i) => getYelpResultsMock({ id: `${i}` }));
-
 const getStepContent = (step, {
   onBack,
   onNext,
   onSubmit,
   disableNext,
-}, formValues) => {
+}, formValues, indicators) => {
   switch (step) {
     case 0:
       return (
@@ -70,7 +81,7 @@ const getStepContent = (step, {
     case 1:
       return (
         <AddSpaceAddress
-          businessList={getMockBusiness()}
+          businessList={formValues.yelpBusinessResponses}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -79,7 +90,7 @@ const getStepContent = (step, {
     case 2:
       return (
         <AddSpaceAttributes
-          chips={chips}
+          chips={indicators}
           onBack={onBack}
           onNext={onNext}
           addSpaceProps={formValues}
@@ -109,27 +120,76 @@ const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review',
 const AddSpace = ({ classes }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
+  const [businessSearch, setBusinessSearch] = useState(undefined);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [indicators, setIndicators] = useState([]);
+  const { promiseInProgress } = usePromiseTracker();
+  const { user } = useContext(UserContext);
 
   const steps = getSteps();
+
+  useEffect(() => {
+    async function fetchYelpResults() {
+      const results = await postYelpSearch({
+        ...businessSearch,
+        user,
+      });
+      setFormValues({
+        ...formValues,
+        ...businessSearch,
+        yelpBusinessResponses: results.data,
+      });
+      setActiveStep(activeStep + 1);
+    }
+
+    if (!businessSearch) {
+      return;
+    }
+    try {
+      fetchYelpResults();
+    } catch (e) {
+      setSnackbarOpen(true);
+    }
+  }, [businessSearch]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const results = await getAllIndicators();
+      setIndicators(results);
+    }
+    fetchData();
+  }, []);
   const onNext = (data) => {
     if (activeStep === 0) {
-      // todo: call yelp api
       if (data && data.name === 'error') {
         setSnackbarOpen(true);
         return;
       }
+      setBusinessSearch(data);
+    } else {
+      setFormValues({
+        ...formValues,
+        ...data,
+      });
+      setActiveStep(activeStep + 1);
     }
-    setFormValues({
-      ...formValues,
-      ...data,
-    });
-    setActiveStep(activeStep + 1);
   };
-  const onSubmit = (space) => {
-    // todo: contact api
-    console.log('Space details', space);
-    setActiveStep(5);
+  const [spaceSubmitStatus, setSpaceSubmitStatus] = useState();
+  useEffect(() => {
+    async function postSpaceData() {
+      await postAddSpace({ ...formValues, user });
+      setActiveStep(5);
+    }
+    if (spaceSubmitStatus) {
+      try {
+        postSpaceData();
+      } catch (e) {
+        setSnackbarOpen(true);
+      }
+    }
+  }, [spaceSubmitStatus]);
+  const onSubmit = () => {
+    setSpaceSubmitStatus(true);
   };
 
   const stepProps = {
@@ -142,6 +202,10 @@ const AddSpace = ({ classes }) => {
     onNext,
     onSubmit,
     disableNext: snackbarOpen,
+    loading: promiseInProgress
+      || (businessSearch && !formValues.yelpBusinessResponses)
+      || indicators.length === 0
+      || (spaceSubmitStatus && activeStep !== 5),
   };
 
   return (
@@ -154,7 +218,7 @@ const AddSpace = ({ classes }) => {
         >
           {steps.map((label, index) => (
             <Step
-              color="secondary"
+              color="primary"
               key={label}
               onClick={() => {
                 if (index < activeStep && activeStep !== 5) {
@@ -164,18 +228,21 @@ const AddSpace = ({ classes }) => {
               className={classes.step}
             >
               {activeStep === index && (
-                <StepLabel className={classes.stepLabel} color="secondary">
+                <StepLabel className={classes.stepLabel}>
                   {label}
                 </StepLabel>
               )}
               {activeStep !== index && (
-                <StepLabel className={classes.stepLabel} color="secondary" />
+                <StepLabel className={classes.stepLabel} />
               )}
             </Step>
           ))}
         </Stepper>
       )}
-      <div>{getStepContent(activeStep, stepProps, formValues)}</div>
+      {!stepProps.loading && (
+        <div>{getStepContent(activeStep, stepProps, formValues, indicators)}</div>
+      )}
+      {stepProps.loading && <CircularProgress color="secondary" />}
       <ErrorSnackbar
         snackbarOpen={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}

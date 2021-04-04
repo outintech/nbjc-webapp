@@ -179,7 +179,7 @@ const ProfilePage = ({ classes }) => {
         autoHideDuration={5000}
         action={
           (
-            <Button color="secondary" size="small" onClick={closeSnackBar}>
+            <Button color="primary" size="small" onClick={closeSnackBar}>
               CLOSE
             </Button>
           )
@@ -261,7 +261,7 @@ const ProfilePage = ({ classes }) => {
                 className={classes.identityChip}
                 key={label}
                 onClick={() => addLabel(label)}
-                color="secondary"
+                color="primary"
                 icon={<CheckIcon />}
                 label={
                   (
@@ -293,7 +293,7 @@ const ProfilePage = ({ classes }) => {
         <div className={classes.submitDiv}>
           <Button
             type="submit"
-            color="secondary"
+            color="primary"
             className={classes.submitButton}
             variant="contained"
             onClick={(e) => handleSubmit(e, profileInfo)}

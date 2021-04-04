@@ -239,7 +239,7 @@ const ProfilePage = ({ classes }) => {
             <Button
               type="submit"
               className={classes.popperButton}
-              color="secondary"
+              color="primary"
               variant="contained"
               aria-label="save"
               component="span"
@@ -262,7 +262,7 @@ const ProfilePage = ({ classes }) => {
                 className={classes.identityChip}
                 key={label}
                 onClick={(e) => { addLabel(label); handleClick(e); }}
-                color="secondary"
+                color="primary"
                 icon={<CheckIcon />}
                 anchorEl={anchorEl}
                 label={

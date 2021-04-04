@@ -73,7 +73,6 @@ const styles = () => ({
     alignItems: 'center',
     margin: '30px',
   },
-  // todo: this needs to be a hyperlink
   location: {
     display: 'flex',
     'flex-direction': 'row',
@@ -167,8 +166,10 @@ const SpaceDetailCard = ({
           setOpen(true);
           setSnackBar(true);
         })
-        .catch((error) => {
-          console.error('Something went wrong sharing the blog', error);
+        .catch((
+          // error
+        ) => {
+          // console.error('Something went wrong sharing the blog', error);
         });
     } else if (navigator.clipboard) {
       setIsCopied(true);
@@ -387,15 +388,12 @@ SpaceDetailCard.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  /* TODO: make conditional rendering for prop types?
-   website: PropTypes.string,
-  yelpUrl: PropTypes.string
-  */
+
   category: PropTypes.string.isRequired,
   averageRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   imageUrl: PropTypes.string.isRequired,
   address: PropTypes.shape({}).isRequired,
-  /* TODO: add distance when geocoding
+  /* TODO: POST MVP add distance when geocoding
   distance */
   hoursOfOperation: PropTypes.bool.isRequired,
   classes: PropTypes.shape({}).isRequired,

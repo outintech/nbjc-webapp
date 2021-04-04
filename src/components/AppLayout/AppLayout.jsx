@@ -29,7 +29,6 @@ const AppLayout = ({
       label: r.label,
       path: `${r.prefix}${r.path}`,
       key: r.key,
-      enforceLogin: r.enforceLogin,
       icon: r.icon,
     }));
   return (
