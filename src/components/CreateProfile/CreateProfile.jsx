@@ -9,7 +9,6 @@ import {
   Snackbar,
   Typography,
   Chip,
-  InputLabel,
   TextField,
 } from '@material-ui/core';
 import { trackPromise } from 'react-promise-tracker';
@@ -68,8 +67,6 @@ const styles = () => ({
   },
 });
 
-const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aromantic', 'Asexual', 'Asian/Pacific Islander', 'Bicurious', 'Bigender', 'Bisexual', 'Black', 'Cisgender', 'Demisexual', 'Female', 'Gay', 'Gender Fluid', 'Gender Non-Binary', 'Gender Non-Conforming', 'Gender Queer', 'Immigrant', 'Indigenous', 'Intersex', 'Latinx', 'Lesbian', 'Male', 'Middle Eastern', 'Multiracial', 'North Afircan', 'Pangender', 'Pansexual', 'Person Living with a Disablity', 'Person of Color', 'Pilipinx', 'Polyamorous', 'Polygender', 'Queer', 'Skoliosexual', 'Straight', 'Transgender', 'Trigender', 'Two Spirit', 'Veteran', 'White'];
-
 const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
     selectedLabels: [],
@@ -85,7 +82,7 @@ const ProfilePage = ({ classes }) => {
     horizontal: 'center',
   });
   const [userCreated, setUserCreated] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, profileChips } = useContext(UserContext);
   const history = useHistory();
 
   const openSnackBar = (newState) => {
@@ -178,30 +175,21 @@ const ProfilePage = ({ classes }) => {
         Your safety is our priority.
       </Typography>
       <form onSubmit={handleSubmit}>
-        <InputLabel
-          disableAnimation
-          htmlFor="username"
-        >
-          Create Username
-        </InputLabel>
         <TextField
+          label="username"
           className={classes.textInput}
           onChange={handleChange}
           value={profileInfo.username}
-          placeholder="username"
           autoComplete="off"
           variant="outlined"
           name="username"
           required
         />
-        <InputLabel type="inputLabel">
-          <Typography>Name</Typography>
-        </InputLabel>
         <TextField
+          label="name"
           className={classes.textInput}
           onChange={handleChange}
           value={profileInfo.name}
-          placeholder="name"
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -209,28 +197,22 @@ const ProfilePage = ({ classes }) => {
           autoFocus
           required
         />
-        <InputLabel type="inputLabel">
-          <Typography>Pronouns</Typography>
-        </InputLabel>
         <TextField
+          label="pronouns"
           className={classes.textInput}
           onChange={handleChange}
           value={profileInfo.pronouns}
-          placeholder="pronouns"
           autoComplete="off"
           type="input"
           variant="outlined"
           name="pronouns"
           required
         />
-        <InputLabel type="inputLabel">
-          <Typography>Location</Typography>
-        </InputLabel>
         <TextField
+          label="location"
           className={classes.textInput}
           onChange={handleChange}
           value={profileInfo.location}
-          placeholder="location"
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -239,18 +221,18 @@ const ProfilePage = ({ classes }) => {
         />
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
-          {userLabels.map((label) => (
-            profileInfo.selectedLabels.includes(label) ? (
+          {profileChips.map((chip) => (
+            profileInfo.selectedLabels.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}
-                key={label}
-                onClick={() => addLabel(label)}
+                key={chip.name}
+                onClick={() => addLabel(chip.name)}
                 color="primary"
                 icon={<CheckIcon />}
                 label={
                   (
                     <Typography variant="body2">
-                      {label}
+                      {chip.name}
                     </Typography>
                   )
                 }
@@ -259,14 +241,14 @@ const ProfilePage = ({ classes }) => {
               : (
                 <Chip
                   className={classes.identityChip}
-                  key={label}
+                  key={chip.name}
                   variant="outlined"
-                  onClick={() => addLabel(label)}
+                  onClick={() => addLabel(chip.name)}
                   color="primary"
                   label={
                     (
                       <Typography variant="body2">
-                        {label}
+                        {chip.name}
                       </Typography>
                     )
                   }
