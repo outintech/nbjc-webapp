@@ -40,7 +40,6 @@ const useAuthenticatedUser = () => {
           userId: auth0Id,
           token,
         });
-        console.log(registeredUser.data.id);
         profile = await getUserProfile(registeredUser.data.id, token);
         setUserProfile(profile.data.user);
         setUser({

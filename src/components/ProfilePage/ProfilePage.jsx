@@ -13,6 +13,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { UserContext } from '../../context/UserContext';
+import { updateUser } from '../../api/user';
 
 const styles = () => ({
   container: {
@@ -55,14 +56,21 @@ const styles = () => ({
   },
 });
 
-const userLabels = ['Agender', 'Aliagender', 'Ally', 'Androgyne', 'Arab', 'Aromantic', 'Asexual', 'Asian/Pacific Islander', 'Bicurious', 'Bigender', 'Bisexual', 'Black', 'Cisgender', 'Demisexual', 'Female', 'Gay', 'Gender Fluid', 'Gender Non-Binary', 'Gender Non-Conforming', 'Gender Queer', 'Immigrant', 'Indigenous', 'Intersex', 'Latinx', 'Lesbian', 'Male', 'Middle Eastern', 'Multiracial', 'North Afircan', 'Pangender', 'Pansexual', 'Person Living with a Disablity', 'Person of Color', 'Pilipinx', 'Polyamorous', 'Polygender', 'Queer', 'Skoliosexual', 'Straight', 'Transgender', 'Trigender', 'Two Spirit', 'Veteran', 'White'];
-
 const ProfilePage = ({ classes }) => {
+  const { userProfile, user, profileChips } = useContext(UserContext);
+
+  const {
+    username,
+    pronouns,
+    location,
+    identities = [],
+  } = userProfile;
+
   const [profileInfo, setProfileInfo] = useState({
-    selectedLabels: ['Bisexual', 'Black', 'Gender Fluid'],
-    name: 'Name Here',
-    pronouns: 'Pronouns Here',
-    location: 'Location Here',
+    identities,
+    username,
+    pronouns,
+    location,
   });
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
@@ -71,8 +79,6 @@ const ProfilePage = ({ classes }) => {
     vertical: 'top',
     horizontal: 'center',
   });
-
-  const { userProfile } = useContext(UserContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,16 +93,16 @@ const ProfilePage = ({ classes }) => {
   };
 
   const addLabel = (label) => {
-    if (profileInfo.selectedLabels.includes(label)) {
+    if (profileInfo.identities.includes(label)) {
       setProfileInfo((prevState) => ({
         ...prevState,
-        selectedLabels: prevState.selectedLabels
+        identities: prevState.identities
           .filter((labelFilter) => labelFilter !== label),
       }));
     } else {
       setProfileInfo((prevState) => ({
         ...prevState,
-        selectedLabels: [...prevState.selectedLabels, label],
+        identities: [...prevState.identities, label],
       }));
     }
   };
@@ -111,14 +117,13 @@ const ProfilePage = ({ classes }) => {
 
   const open = Boolean(anchorEl);
 
-  const handleSubmit = (e, updatedInfo) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO:make post call to backend to submit profileinfo state as updated user details
-    // Remember to trim( empty spaces from the end of strings)
+    // TODO: Still having trouble making post request to update user
+    // Remember to trim(empty spaces from the end of strings)
     try {
-      // eslint-disable-next-line no-console
-      console.log(updatedInfo);
-      // eslint-disable-next-line no-console
+      updateUser({ username, pronouns, location }, user.token);
+      console.log({ username, pronouns, location });
       console.log('success');
       openSnackBar({
         vertical: 'top',
@@ -126,8 +131,7 @@ const ProfilePage = ({ classes }) => {
         popperMessage: 'Your changes have been saved.',
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('fail');
+      console.error(error);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -164,26 +168,28 @@ const ProfilePage = ({ classes }) => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
+          InputLabelProps={{ shrink: true }}
           label="Name"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={userProfile.username}
-          placeholder={userProfile.usernmae}
+          defaultValue={username}
+          placeholder={username}
           autoComplete="off"
           type="input"
           variant="outlined"
-          name="name"
+          name="username"
           autoFocus
           required
         />
         <TextField
+          InputLabelProps={{ shrink: true }}
           label="Pronouns"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={userProfile.pronouns}
-          placeholder={userProfile.pronouns}
+          defaultValue={pronouns}
+          placeholder={pronouns}
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -191,12 +197,13 @@ const ProfilePage = ({ classes }) => {
           required
         />
         <TextField
+          InputLabelProps={{ shrink: true }}
           label="Location"
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          value={userProfile.location}
-          placeholder={userProfile.locaiton}
+          defaultValue={location}
+          placeholder={location}
           autoComplete="off"
           type="input"
           variant="outlined"
@@ -239,7 +246,7 @@ const ProfilePage = ({ classes }) => {
               variant="contained"
               aria-label="save"
               component="span"
-              onClick={(e) => handleSubmit(e, profileInfo)}
+              onClick={(e) => handleSubmit(e)}
             >
               Save
             </Button>
@@ -247,19 +254,19 @@ const ProfilePage = ({ classes }) => {
         </Popper>
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
-          {userLabels.map((label) => (
-            profileInfo.selectedLabels.includes(label) ? (
+          {profileChips.map((chip) => (
+            identities && profileInfo.identities.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}
-                key={label}
-                onClick={(e) => { addLabel(label); handleClick(e); }}
+                key={chip.name}
+                onClick={(e) => { addLabel(chip.name); handleClick(e); }}
                 color="primary"
                 icon={<CheckIcon />}
                 anchorEl={anchorEl}
                 label={
                   (
                     <Typography variant="body2">
-                      {label}
+                      {chip.name}
                     </Typography>
                   )
                 }
@@ -268,15 +275,15 @@ const ProfilePage = ({ classes }) => {
               : (
                 <Chip
                   className={classes.identityChip}
-                  key={label}
+                  key={chip.name}
                   variant="outlined"
-                  onClick={(e) => { addLabel(label); handleClick(e); }}
+                  onClick={(e) => { addLabel(chip.name); handleClick(e); }}
                   color="primary"
                   anchorEl={anchorEl}
                   label={
                     (
                       <Typography variant="body2">
-                        {label}
+                        {chip.name}
                       </Typography>
                     )
                   }

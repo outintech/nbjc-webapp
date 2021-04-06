@@ -32,8 +32,7 @@ const getUser = async ({ userId, token }) => {
 */
 const getUserProfile = async (userId, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = `/api/v1/users/${userId}`;
-  // url.searchParams.append('auth0_id', userId);
+  url.pathname = `/api/v1/users/${userId}?include=identites`;
   const results = await wrappedFetch(url, {
     method: 'GET',
     mode: 'cors',
@@ -43,7 +42,6 @@ const getUserProfile = async (userId, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(results);
   return results;
 };
 
@@ -90,11 +88,10 @@ const createUser = async (userOpts) => {
  * @param {string} userOpts.location - User's location
  * @param {Array} userOpts.identities - User identities
 */
-const updateUser = async (userOpts) => {
+const updateUser = async (userOpts, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/users';
   const data = {
-    auth0_id: userOpts.auth0Id,
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
@@ -105,7 +102,7 @@ const updateUser = async (userOpts) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${userOpts.token}`,
+      Authorization: `Bearer ${token}`,
     },
     redirect: 'follow',
     body: JSON.stringify(data),
