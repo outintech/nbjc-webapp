@@ -81,12 +81,11 @@ const createUser = async (userOpts) => {
 /**
  * Update an existing user
  * @param {Object} userOpts
- * @param {string} userOpts.token - User's Auth0 token
- * @param {string} userOpts.authOId - User's Auth0 Id
  * @param {string} userOpts.username - User's username
  * @param {string} userOpts.pronouns - User's pronouns
  * @param {string} userOpts.location - User's location
  * @param {Array} userOpts.identities - User identities
+ * @param {string} token - User's Auth0 token
 */
 const updateUser = async (userOpts, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
