@@ -31,6 +31,7 @@ const Reviews = () => {
     <>
       <ReviewsPage
         reviews={spaceReviews}
+        reviewsCount={pagination.total_count}
       />
       <Pagination
         totalCount={pagination.total_count}

@@ -51,11 +51,20 @@ const styles = () => ({
     margin: 'auto',
     height: '300px',
   },
-  reviewDiv: {
+  reviewHeader: {
     width: '100%',
     display: 'inline-flex',
     flexFlow: 'row',
     justifyContent: 'space-between',
+  },
+  reviewDiv: {
+    width: '100%',
+    display: 'inline-flex',
+    flexFlow: 'row',
+    justifyContent: 'left',
+  },
+  reviewContent: {
+    flexGrow: 2,
   },
   featuredReview: {
     margin: '20px',
@@ -229,7 +238,7 @@ const SpaceDetailCard = ({
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <div className={classes.reviewDiv}>
+        <div className={classes.reviewHeader}>
           <Typography variant="h5" className={classes.featuredReview}>
             Recent Reviews
           </Typography>
@@ -268,7 +277,7 @@ const SpaceDetailCard = ({
               dateCreated={totalReviews[currentReview].dateCreated}
               rating={totalReviews[currentReview].rating}
               text={totalReviews[currentReview].content}
-              classes={classes}
+              overrideClasses={classes}
             />
             <IconButton
               variant="outlined"

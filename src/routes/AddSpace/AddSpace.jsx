@@ -150,7 +150,7 @@ const getStepContent = (step, {
 const getSteps = () => ['Add space', 'Address', 'Attributes', 'Rate and Review', 'Submit'];
 
 const AddSpace = ({ classes }) => {
-  const [activeStep, setActiveStep] = useState(5);
+  const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [businessSearch, setBusinessSearch] = useState(undefined);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
