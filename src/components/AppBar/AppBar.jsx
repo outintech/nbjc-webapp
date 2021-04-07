@@ -45,6 +45,9 @@ const styles = (theme) => ({
     width: 375,
     flexShrink: 0,
     position: 'static !important',
+    '& .MuiBackdrop-root': {
+      zIndex: 1,
+    },
   },
   drawerPaper: {
     width: 375,
@@ -143,7 +146,10 @@ const AppBar = ({
         onClose={() => setShowDrawer(false)}
         data-testid="appbar-drawer"
         className={classes.drawer}
-        classes={{ paper: classes.drawerPaper }}
+        classes={{
+          paper: classes.drawerPaper,
+          backdrop: classes.backdrop,
+        }}
       >
         <Toolbar />
         <List>{showDrawerItems()}</List>

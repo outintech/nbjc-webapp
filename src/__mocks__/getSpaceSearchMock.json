@@ -1,0 +1,472 @@
+{
+  "data": [
+    {
+      "yelp_id": "8b7Nr6624zlBJTf8zYyrLw",
+      "provider_urn": "yelp:8b7Nr6624zlBJTf8zYyrLw",
+      "phone": "+12125440003",
+      "name": "Mama Sushi",
+      "provider_url": "https://www.yelp.com/biz/mama-sushi-new-york?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.8661259, "longitude": -73.9277212 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "cocktailbars", "title": "Cocktail Bars" }
+      ],
+      "location": {
+        "address1": "237 Dyckman St",
+        "address2": "",
+        "address3": "",
+        "city": "New York",
+        "zip_code": "10034",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["237 Dyckman St", "New York, NY 10034"]
+      },
+      "distance": 18739.29317883745
+    },
+    {
+      "yelp_id": "4c2THphDR7C1f-zvJJDkgw",
+      "provider_urn": "yelp:4c2THphDR7C1f-zvJJDkgw",
+      "phone": "+17186848666",
+      "name": "Mamasushi - Bronx",
+      "provider_url": "https://www.yelp.com/biz/mamasushi-bronx-bronx?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.83146, "longitude": -73.827275 },
+      "price_level": null,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "cocktailbars", "title": "Cocktail Bars" }
+      ],
+      "location": {
+        "address1": "3478 E Tremont Ave",
+        "address2": null,
+        "address3": "",
+        "city": "Bronx",
+        "zip_code": "10465",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["3478 E Tremont Ave", "Bronx, NY 10465"]
+      },
+      "distance": 19853.807331145636
+    },
+    {
+      "yelp_id": "lKNN4sZxtDlGZwYYwIaZ2Q",
+      "provider_urn": "yelp:lKNN4sZxtDlGZwYYwIaZ2Q",
+      "phone": "+12015532051",
+      "name": "MamaSushi - Union City",
+      "provider_url": "https://www.yelp.com/biz/mamasushi-union-city-union-city?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.77101, "longitude": -74.02305 },
+      "price_level": null,
+      "categories": [
+        { "alias": "asianfusion", "title": "Asian Fusion" },
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" }
+      ],
+      "location": {
+        "address1": "3417 Park Ave",
+        "address2": "",
+        "address3": null,
+        "city": "Union City",
+        "zip_code": "07087",
+        "country": "US",
+        "state": "NJ",
+        "display_address": ["3417 Park Ave", "Union City, NJ 07087"]
+      },
+      "distance": 7684.971500163336
+    },
+    {
+      "yelp_id": "MdQEeMVMy550nAKsNzy7UA",
+      "provider_urn": "yelp:MdQEeMVMy550nAKsNzy7UA",
+      "phone": "+19737773824",
+      "name": "MamaSushi",
+      "provider_url": "https://www.yelp.com/biz/mamasushi-passaic?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.8610428, "longitude": -74.1265177 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "asianfusion", "title": "Asian Fusion" }
+      ],
+      "location": {
+        "address1": "663 Main Ave",
+        "address2": "",
+        "address3": null,
+        "city": "Passaic",
+        "zip_code": "07055",
+        "country": "US",
+        "state": "NJ",
+        "display_address": ["663 Main Ave", "Passaic, NJ 07055"]
+      },
+      "distance": 20566.269163529298
+    },
+    {
+      "yelp_id": "3sQPGzWl0PMi2ULZ4DbEAg",
+      "provider_urn": "yelp:3sQPGzWl0PMi2ULZ4DbEAg",
+      "phone": "+13475133649",
+      "name": "Sushi Mambo",
+      "provider_url": "https://www.yelp.com/biz/sushi-mambo-new-york-2?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.86106, "longitude": -73.92036 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "bars", "title": "Bars" }
+      ],
+      "location": {
+        "address1": "431 W 202nd St",
+        "address2": null,
+        "address3": "",
+        "city": "New York",
+        "zip_code": "10034",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["431 W 202nd St", "New York, NY 10034"]
+      },
+      "distance": 18419.131866273274
+    },
+    {
+      "yelp_id": "NRrAKeAiQQkHv02NMfHrxA",
+      "provider_urn": "yelp:NRrAKeAiQQkHv02NMfHrxA",
+      "phone": "+19084681225",
+      "name": "Mamasushi - Elizabeth",
+      "provider_url": "https://www.yelp.com/biz/mamasushi-elizabeth-elizabeth?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.670467, "longitude": -74.215229 },
+      "price_level": null,
+      "categories": [{ "alias": "sushi", "title": "Sushi Bars" }],
+      "location": {
+        "address1": "323 N Broad St",
+        "address2": "",
+        "address3": null,
+        "city": "Elizabeth",
+        "zip_code": "07208",
+        "country": "US",
+        "state": "NJ",
+        "display_address": ["323 N Broad St", "Elizabeth, NJ 07208"]
+      },
+      "distance": 19017.575670901297
+    },
+    {
+      "yelp_id": "idrW7tjzKCsEudlxAmJmhw",
+      "provider_urn": "yelp:idrW7tjzKCsEudlxAmJmhw",
+      "phone": "+17185656454",
+      "name": "Mamajuana Cafe Queens",
+      "provider_url": "https://www.yelp.com/biz/mamajuana-cafe-queens-woodside-3?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.752815, "longitude": -73.904854 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "latin", "title": "Latin American" },
+        { "alias": "spanish", "title": "Spanish" },
+        { "alias": "tapas", "title": "Tapas Bars" }
+      ],
+      "location": {
+        "address1": "33-15 56th St",
+        "address2": "",
+        "address3": "",
+        "city": "Woodside",
+        "zip_code": "11377",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["33-15 56th St", "Woodside, NY 11377"]
+      },
+      "distance": 9194.733057213354
+    },
+    {
+      "yelp_id": "ZaJS8EKQNSaQpwpmgN-vVw",
+      "provider_urn": "yelp:ZaJS8EKQNSaQpwpmgN-vVw",
+      "phone": "+17185996161",
+      "name": "Samurai Mama",
+      "provider_url": "https://www.yelp.com/biz/samurai-mama-brooklyn?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": {
+        "latitude": 40.7140208838114,
+        "longitude": -73.960325717926
+      },
+      "price_level": 2,
+      "categories": [
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "noodles", "title": "Noodles" }
+      ],
+      "location": {
+        "address1": "205 Grand St",
+        "address2": "",
+        "address3": "",
+        "city": "Brooklyn",
+        "zip_code": "11211",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["205 Grand St", "Brooklyn, NY 11211"]
+      },
+      "distance": 3017.69647092549
+    },
+    {
+      "yelp_id": "3BYgbjo8MtaIyLZMdTxrOQ",
+      "provider_urn": "yelp:3BYgbjo8MtaIyLZMdTxrOQ",
+      "phone": "+12128627800",
+      "name": "Geisha Sushi",
+      "provider_url": "https://www.yelp.com/biz/geisha-sushi-new-york?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.8241613, "longitude": -73.9519775 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "sushi", "title": "Sushi Bars" }
+      ],
+      "location": {
+        "address1": "3468 Broadway",
+        "address2": "",
+        "address3": "",
+        "city": "New York",
+        "zip_code": "10031",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["3468 Broadway", "New York, NY 10031"]
+      },
+      "distance": 13673.243995893179
+    },
+    {
+      "yelp_id": "K84FS4X-Hj2Xt_uUCjwNIA",
+      "provider_urn": "yelp:K84FS4X-Hj2Xt_uUCjwNIA",
+      "phone": "",
+      "name": "Kissaki Sushi",
+      "provider_url": "https://www.yelp.com/biz/kissaki-sushi-new-york?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.778571, "longitude": -73.978209 },
+      "price_level": null,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "desserts", "title": "Desserts" }
+      ],
+      "location": {
+        "address1": "286 Columbus Ave",
+        "address2": null,
+        "address3": "",
+        "city": "New York",
+        "zip_code": "10023",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["286 Columbus Ave", "New York, NY 10023"]
+      },
+      "distance": 8239.494885798758
+    },
+    {
+      "yelp_id": "CKzqUwRmUMNJqaVu-zUB4A",
+      "provider_urn": "yelp:CKzqUwRmUMNJqaVu-zUB4A",
+      "phone": "+17186841309",
+      "name": "Made In Puerto Rico Latin Cuisine",
+      "provider_url": "https://www.yelp.com/biz/made-in-pr-latin-cuisine-and-sports-bar-bronx?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.83451, "longitude": -73.82907 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "cocktailbars", "title": "Cocktail Bars" },
+        { "alias": "puertorican", "title": "Puerto Rican" },
+        { "alias": "latin", "title": "Latin American" }
+      ],
+      "location": {
+        "address1": "3363 E Tremont Ave",
+        "address2": null,
+        "address3": "",
+        "city": "Bronx",
+        "zip_code": "10461",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["3363 E Tremont Ave", "Bronx, NY 10461"]
+      },
+      "distance": 19992.85916402092
+    },
+    {
+      "yelp_id": "rN347NNwQ0hDSlbedzI9BQ",
+      "provider_urn": "yelp:rN347NNwQ0hDSlbedzI9BQ",
+      "phone": "+17188637900",
+      "name": "Kai Sushi Asian Fusion",
+      "provider_url": "https://www.yelp.com/biz/kai-sushi-asian-fusion-bronx?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.84362, "longitude": -73.84565 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "asianfusion", "title": "Asian Fusion" },
+        { "alias": "chinese", "title": "Chinese" },
+        { "alias": "japanese", "title": "Japanese" }
+      ],
+      "location": {
+        "address1": "1475 Williamsbridge Rd",
+        "address2": null,
+        "address3": "",
+        "city": "Bronx",
+        "zip_code": "10461",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["1475 Williamsbridge Rd", "Bronx, NY 10461"]
+      },
+      "distance": 19797.529893592415
+    },
+    {
+      "yelp_id": "T2fE7hGS83Ba-QNCOqbK4A",
+      "provider_urn": "yelp:T2fE7hGS83Ba-QNCOqbK4A",
+      "phone": "+17183022035",
+      "name": "Ako",
+      "provider_url": "https://www.yelp.com/biz/ako-brooklyn-5?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.7168599, "longitude": -73.95845 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "wine_bars", "title": "Wine Bars" }
+      ],
+      "location": {
+        "address1": "205 Bedford Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Brooklyn",
+        "zip_code": "11211",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["205 Bedford Ave", "Brooklyn, NY 11211"]
+      },
+      "distance": 3275.340512544691
+    },
+    {
+      "yelp_id": "fqr2YzqzG7q1ZsuP2klxww",
+      "provider_urn": "yelp:fqr2YzqzG7q1ZsuP2klxww",
+      "phone": "+19178327911",
+      "name": "LUNA  Asian Bistro \u0026 Lounge",
+      "provider_url": "https://www.yelp.com/biz/luna-asian-bistro-and-lounge-astoria?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.7573, "longitude": -73.92068 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "lounges", "title": "Lounges" },
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "japanese", "title": "Japanese" }
+      ],
+      "location": {
+        "address1": "32-72 Steinway St",
+        "address2": null,
+        "address3": "",
+        "city": "Astoria",
+        "zip_code": "11103",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["32-72 Steinway St", "Astoria, NY 11103"]
+      },
+      "distance": 8473.617575783908
+    },
+    {
+      "yelp_id": "9yvIxnZbRcMg-TqskkRTQQ",
+      "provider_urn": "yelp:9yvIxnZbRcMg-TqskkRTQQ",
+      "phone": "+17186686838",
+      "name": "Shishito",
+      "provider_url": "https://www.yelp.com/biz/shishito-staten-island?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.5942999, "longitude": -74.0987899 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "ramen", "title": "Ramen" },
+        { "alias": "sushi", "title": "Sushi Bars" }
+      ],
+      "location": {
+        "address1": "1434D Richmond Rd",
+        "address2": null,
+        "address3": "",
+        "city": "Staten Island",
+        "zip_code": "10304",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["1434D Richmond Rd", "Staten Island, NY 10304"]
+      },
+      "distance": 15193.898080696501
+    },
+    {
+      "yelp_id": "-PgbZKX-ObBEGg_mJ8N-qA",
+      "provider_urn": "yelp:-PgbZKX-ObBEGg_mJ8N-qA",
+      "phone": "+19295107009",
+      "name": "Kissaki Sushi",
+      "provider_url": "https://www.yelp.com/biz/kissaki-sushi-long-island-city?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": {
+        "latitude": 40.748650977899594,
+        "longitude": -73.93829307763797
+      },
+      "price_level": null,
+      "categories": [{ "alias": "sushi", "title": "Sushi Bars" }],
+      "location": {
+        "address1": "28-17 Jackson Ave",
+        "address2": null,
+        "address3": "",
+        "city": "Long Island City",
+        "zip_code": "11101",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["28-17 Jackson Ave", "Long Island City, NY 11101"]
+      },
+      "distance": 6751.420846049661
+    },
+    {
+      "yelp_id": "fyVLkWQ5CP5q1yP8nnsj5g",
+      "provider_urn": "yelp:fyVLkWQ5CP5q1yP8nnsj5g",
+      "phone": "+17185616161",
+      "name": "Salsa Con Fuego",
+      "provider_url": "https://www.yelp.com/biz/salsa-con-fuego-bronx?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.86227, "longitude": -73.91149 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "bars", "title": "Bars" },
+        { "alias": "latin", "title": "Latin American" },
+        { "alias": "venues", "title": "Venues \u0026 Event Spaces" }
+      ],
+      "location": {
+        "address1": "2297 Cedar Ave",
+        "address2": null,
+        "address3": "",
+        "city": "Bronx",
+        "zip_code": "10468",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["2297 Cedar Ave", "Bronx, NY 10468"]
+      },
+      "distance": 18770.188923836726
+    },
+    {
+      "yelp_id": "igQ9CK71aQZyNXNbfNhVtQ",
+      "provider_urn": "yelp:igQ9CK71aQZyNXNbfNhVtQ",
+      "phone": "+12124252233",
+      "name": "Cafe 11",
+      "provider_url": "https://www.yelp.com/biz/cafe-11-new-york-4?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.7052529, "longitude": -74.0140703 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "kosher", "title": "Kosher" },
+        { "alias": "sandwiches", "title": "Sandwiches" },
+        { "alias": "sushi", "title": "Sushi Bars" }
+      ],
+      "location": {
+        "address1": "11 Broadway",
+        "address2": "",
+        "address3": "",
+        "city": "New York",
+        "zip_code": "10004",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["11 Broadway", "New York, NY 10004"]
+      },
+      "distance": 1667.223040359403
+    },
+    {
+      "yelp_id": "ZrzSDDj54aUlPqn4MQMKeQ",
+      "provider_urn": "yelp:ZrzSDDj54aUlPqn4MQMKeQ",
+      "phone": "+17184186666",
+      "name": "Momo Sushi Shack",
+      "provider_url": "https://www.yelp.com/biz/momo-sushi-shack-brooklyn?adjust_creative=cZpSYyZPR1LaxFGR9syHlQ\u0026utm_campaign=yelp_api_v3\u0026utm_medium=api_v3_business_search\u0026utm_source=cZpSYyZPR1LaxFGR9syHlQ",
+      "coordinates": { "latitude": 40.70512, "longitude": -73.933463 },
+      "price_level": 2,
+      "categories": [
+        { "alias": "japanese", "title": "Japanese" },
+        { "alias": "sushi", "title": "Sushi Bars" },
+        { "alias": "asianfusion", "title": "Asian Fusion" }
+      ],
+      "location": {
+        "address1": "43 Bogart St",
+        "address2": "",
+        "address3": "",
+        "city": "Brooklyn",
+        "zip_code": "11206",
+        "country": "US",
+        "state": "NY",
+        "display_address": ["43 Bogart St", "Brooklyn, NY 11206"]
+      },
+      "distance": 5127.743805999164
+    }
+  ]
+}
