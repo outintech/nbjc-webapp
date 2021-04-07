@@ -69,7 +69,7 @@ const styles = () => ({
 
 const ProfilePage = ({ classes }) => {
   const [profileInfo, setProfileInfo] = useState({
-    selectedLabels: [],
+    identities_attributes: [],
     name: '',
     username: '',
     pronouns: '',
@@ -81,6 +81,7 @@ const ProfilePage = ({ classes }) => {
     vertical: 'top',
     horizontal: 'center',
   });
+  const [selectedLabels, setSelectedLabels] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
   const { user, profileChips } = useContext(UserContext);
   const history = useHistory();
@@ -94,17 +95,21 @@ const ProfilePage = ({ classes }) => {
   };
 
   const addLabel = (label) => {
-    if (profileInfo.selectedLabels.includes(label)) {
+    if (selectedLabels.includes(label)) {
       setProfileInfo((prevState) => ({
         ...prevState,
-        selectedLabels: prevState.selectedLabels
-          .filter((labelFilter) => labelFilter !== label),
+        identities_attributes: prevState.identities_attributes
+          .filter((labelFilter) => labelFilter.name !== label),
       }));
+      setSelectedLabels((prevState) => prevState
+        .filter((labelFilter) => labelFilter !== label));
     } else {
       setProfileInfo((prevState) => ({
         ...prevState,
-        selectedLabels: [...prevState.selectedLabels, label],
+        identities_attributes: [...prevState.identities_attributes, { name: label }],
       }));
+      console.log(selectedLabels);
+      setSelectedLabels((prevState) => [...prevState, label]);
     }
   };
 
@@ -222,7 +227,7 @@ const ProfilePage = ({ classes }) => {
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {profileChips.map((chip) => (
-            profileInfo.selectedLabels.includes(chip.name) ? (
+            selectedLabels.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}
                 key={chip.name}
