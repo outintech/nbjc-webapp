@@ -222,7 +222,8 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia image={imageUrl} className={classes.cardMedia} />
+      {/* TODO: add a fallback image if imageUrl is empty */}
+      {imageUrl !== '' ? <CardMedia image={imageUrl} className={classes.cardMedia} /> : ''}
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
@@ -395,7 +396,7 @@ SpaceDetailCard.propTypes = {
   address: PropTypes.shape({}).isRequired,
   /* TODO: POST MVP add distance when geocoding
   distance */
-  hoursOfOperation: PropTypes.bool.isRequired,
+  hoursOfOperation: PropTypes.shape([]).isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };
