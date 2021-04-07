@@ -222,6 +222,7 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
+      {/* TODO: add a fallback image if imageUrl is empty */}
       {imageUrl !== '' ? <CardMedia image={imageUrl} className={classes.cardMedia} /> : ''}
       <CardContent>
         <div className={classes.chipWrapper}>
