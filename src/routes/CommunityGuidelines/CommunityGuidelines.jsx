@@ -13,17 +13,6 @@ const styles = (theme) => ({
       margin: '0 100px',
     },
   },
-  image: {
-    [theme.breakpoints.up('xs')]: {
-      width: '100%',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      width: '85%',
-    },
-    height: 'auto',
-    display: 'inherit',
-    margin: '0 auto',
-  },
 });
 
 const CommunityGuidelines = ({ classes }) => (
