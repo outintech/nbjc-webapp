@@ -58,6 +58,7 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
       (search.searchTerm && search.searchTerm.length > 0)
       || (search.category && search.category.length > 0)
       || (search.location && search.location.length > 0)
+      || (search.indicators && search.indicators.length > 0)
     ) {
       try {
         trackPromise(fetchData());
