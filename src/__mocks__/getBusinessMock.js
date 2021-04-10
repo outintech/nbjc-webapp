@@ -6,7 +6,9 @@ const getBusinessMock = (overrides = {}) => {
     averageRating: '4.5',
     imageUrl: 'https://s3-media3.fl.yelpcdn.com/bphoto/ONmc2uTWa4W5AAI2irBpXw/o.jpg',
     address: '924 Blagden Alley Way Washington, D.C. 20001',
+    display_address: '924 Blagden Alley Way Washington, D.C. 20001',
     distance: '0.03mi',
+    phone: '+12122444281',
     filters: [{
       name: 'Black Friendly',
     }, {
