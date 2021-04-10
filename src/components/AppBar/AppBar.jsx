@@ -16,8 +16,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
-import { ArrowBackIos } from '@material-ui/icons';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { NameContext } from '../../context/NameContext';
 import { UserContext } from '../../context/UserContext';
@@ -80,8 +81,11 @@ const AppBar = ({
     history.goBack();
   };
   // if there is no username, the user might not be signed in
-  // so fallback to 'U'
-  const avatar = (userContext.user.username || 'U')[0];
+  // so fallback to icon
+  let avatar = <PersonIcon color="primary" />;
+  if (userContext.user.username) {
+    avatar = userContext.user.username[0];
+  }
   const showDrawerItems = () => routes.map((item) => {
     const otherProps = {
       selected: item.key === selected,
