@@ -16,8 +16,6 @@ const styles = (theme) => ({
     },
     [theme.breakpoints.up('mobile')]: {
       flexWrap: 'nowrap',
-      position: 'fixed',
-      bottom: 0,
     },
   },
   info: {

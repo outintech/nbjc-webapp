@@ -8,11 +8,14 @@ import Footer from '../Footer';
 
 const styles = (theme) => ({
   root: {
-    height: '100%',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
   },
   content: {
     height: '100%',
     overflow: 'scroll',
+    flex: 1,
     [theme.breakpoints.up('xs')]: {
       marginBottom: 20,
     },
