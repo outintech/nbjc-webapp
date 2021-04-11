@@ -170,8 +170,8 @@ const ProfilePage = ({ classes }) => {
         .then(() => {
           setUserCreated(true);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((err, results) => {
+          console.log(err, results);
           openSnackBar({
             vertical: 'top',
             horizontal: 'center',
@@ -223,7 +223,7 @@ const ProfilePage = ({ classes }) => {
           name="username"
           error={inputError.usernameError}
           helperText={inputError.usernameErrorMessage}
-          validate
+          autoFocus
           required
         />
         <TextField
@@ -238,7 +238,6 @@ const ProfilePage = ({ classes }) => {
           name="name"
           error={inputError.nameError}
           helperText={inputError.nameErrorMessage}
-          autoFocus
           required
         />
         <TextField
@@ -275,7 +274,7 @@ const ProfilePage = ({ classes }) => {
             selectedLabels.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}
-                key={chip.name}
+                key={chip.id}
                 onClick={() => addLabel(chip.name)}
                 color="primary"
                 icon={<CheckIcon />}
@@ -291,7 +290,7 @@ const ProfilePage = ({ classes }) => {
               : (
                 <Chip
                   className={classes.identityChip}
-                  key={chip.name}
+                  key={chip.id}
                   variant="outlined"
                   onClick={() => addLabel(chip.name)}
                   color="primary"
