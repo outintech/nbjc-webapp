@@ -81,6 +81,14 @@ const ProfilePage = ({ classes }) => {
     vertical: 'top',
     horizontal: 'center',
   });
+  const [inputError, setInputError] = useState({
+    usernameError: false,
+    usernameErrorMessage: '',
+    pronounsError: false,
+    pronounsErrorMessage: '',
+    locationError: false,
+    locationErrorMessage: '',
+  });
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
   const { user, profileChips } = useContext(UserContext);
@@ -108,7 +116,6 @@ const ProfilePage = ({ classes }) => {
         ...prevState,
         identities_attributes: [...prevState.identities_attributes, { name: label }],
       }));
-      console.log(selectedLabels);
       setSelectedLabels((prevState) => [...prevState, label]);
     }
   };
@@ -121,8 +128,33 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
+  const fieldValidation = (fieldName, fieldValue) => {
+    if (fieldValue.trim() === '' || !fieldValue) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: `${fieldName} is required`,
+      }));
+    } else {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: false,
+        [`${fieldName}ErrorMessage`]: '',
+      }));
+    }
+    return null;
+  };
+
   const handleSubmit = (e, updatedInfo) => {
     e.preventDefault();
+    if (Object.values(inputError).some((el) => el === true)) {
+      openSnackBar({
+        vertical: 'top',
+        horizontal: 'center',
+        popperMessage: 'Please fix errors before submitting',
+      });
+      return;
+    }
     trackPromise(
       createUser({
         ...updatedInfo,
@@ -184,21 +216,28 @@ const ProfilePage = ({ classes }) => {
           label="username"
           className={classes.textInput}
           onChange={handleChange}
+          onBlur={() => fieldValidation('username', profileInfo.username)}
           value={profileInfo.username}
           autoComplete="off"
           variant="outlined"
           name="username"
+          error={inputError.usernameError}
+          helperText={inputError.usernameErrorMessage}
+          validate
           required
         />
         <TextField
           label="name"
           className={classes.textInput}
           onChange={handleChange}
+          onBlur={() => fieldValidation('name', profileInfo.name)}
           value={profileInfo.name}
           autoComplete="off"
           type="input"
           variant="outlined"
           name="name"
+          error={inputError.nameError}
+          helperText={inputError.nameErrorMessage}
           autoFocus
           required
         />
@@ -206,27 +245,33 @@ const ProfilePage = ({ classes }) => {
           label="pronouns"
           className={classes.textInput}
           onChange={handleChange}
+          onBlur={() => fieldValidation('pronouns', profileInfo.pronouns)}
           value={profileInfo.pronouns}
           autoComplete="off"
           type="input"
           variant="outlined"
           name="pronouns"
+          error={inputError.pronounsError}
+          helperText={inputError.pronounsErrorMessage}
           required
         />
         <TextField
           label="location"
           className={classes.textInput}
           onChange={handleChange}
+          onBlur={() => fieldValidation('location', profileInfo.location)}
           value={profileInfo.location}
           autoComplete="off"
           type="input"
           variant="outlined"
           name="location"
+          error={inputError.locationError}
+          helperText={inputError.locationErrorMessage}
           required
         />
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
-          {profileChips.map((chip) => (
+          {profileChips && profileChips.map((chip) => (
             selectedLabels.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}

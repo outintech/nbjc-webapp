@@ -96,7 +96,7 @@ const updateUser = async (userOpts, token) => {
     location: userOpts.location,
   };
   const results = await wrappedFetch(url, {
-    method: 'POST',
+    method: 'PUT',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
