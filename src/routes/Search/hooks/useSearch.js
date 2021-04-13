@@ -45,7 +45,12 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
         setSearchResults([]);
         return;
       }
-      const { data, meta } = await getSearchResults(searchCriteria);
+      const promises = [
+        getAllIndicators(),
+        getSearchResults(searchCriteria),
+      ];
+      const [indicatorData, { data, meta }] = await Promise.all(promises);
+      setIndicators(indicatorData);
       if (data.length === 0) {
         setSearchResults([]);
         setPagination(null);
@@ -58,6 +63,7 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
       (search.searchTerm && search.searchTerm.length > 0)
       || (search.category && search.category.length > 0)
       || (search.location && search.location.length > 0)
+      || (search.indicators && search.indicators.length > 0)
     ) {
       try {
         trackPromise(fetchData());

@@ -156,10 +156,14 @@ const SearchForm = ({
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
+    const hasSelectedIndicators = formValues
+      .indicators
+      .filter((indicator) => indicator.isSelected);
     if (
       !(formValues.name || nameText)
       && !formValues.location
       && !(formValues.category || categoryText)
+      && !(hasSelectedIndicators)
     ) {
       setShowError(true);
     } else {
