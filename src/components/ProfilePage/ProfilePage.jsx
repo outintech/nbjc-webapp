@@ -136,7 +136,7 @@ const ProfilePage = ({ classes }) => {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
-        [`${fieldName}ErrorMessage`]: `${fieldName} is required`,
+        [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
     } else {
       setInputError((prevState) => ({
@@ -236,7 +236,7 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          onBlur={() => fieldValidation('name', profileInfo.pronouns)}
+          onBlur={() => fieldValidation('pronouns', profileInfo.pronouns)}
           error={inputError.pronounsError}
           helperText={inputError.pronounsErrorMessage}
           defaultValue={pronouns}
@@ -253,7 +253,7 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          onBlur={() => fieldValidation('name', profileInfo.pronouns)}
+          onBlur={() => fieldValidation('location', profileInfo.location)}
           error={inputError.locationError}
           helperText={inputError.locationErrorMessage}
           defaultValue={location}
@@ -308,7 +308,7 @@ const ProfilePage = ({ classes }) => {
         </Popper>
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
-          {profileChips.map((chip) => (
+          {profileChips && profileChips.map((chip) => (
             identities && profileInfo.identities.includes(chip.name) ? (
               <Chip
                 className={classes.identityChip}

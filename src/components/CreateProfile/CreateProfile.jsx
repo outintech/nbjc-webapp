@@ -133,7 +133,7 @@ const ProfilePage = ({ classes }) => {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
-        [`${fieldName}ErrorMessage`]: `${fieldName} is required`,
+        [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
     } else {
       setInputError((prevState) => ({
