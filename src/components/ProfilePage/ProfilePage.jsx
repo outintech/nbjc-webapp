@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   Box,
   Button,
@@ -54,6 +55,11 @@ const styles = () => ({
     marginBottom: '8px',
     marginRight: '4px',
   },
+  submitButton: {
+    width: '250px',
+    height: '36px',
+    margin: '50px auto',
+  },
 });
 
 const ProfilePage = ({ classes }) => {
@@ -78,6 +84,14 @@ const ProfilePage = ({ classes }) => {
     popperMessage: '',
     vertical: 'top',
     horizontal: 'center',
+  });
+  const [inputError, setInputError] = useState({
+    usernameError: false,
+    usernameErrorMessage: '',
+    pronounsError: false,
+    pronounsErrorMessage: '',
+    locationError: false,
+    locationErrorMessage: '',
   });
 
   const handleClick = (event) => {
@@ -117,10 +131,33 @@ const ProfilePage = ({ classes }) => {
 
   const open = Boolean(anchorEl);
 
+  const fieldValidation = (fieldName, fieldValue) => {
+    if (fieldValue.trim() === '' || !fieldValue) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: `${fieldName} is required`,
+      }));
+    } else {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: false,
+        [`${fieldName}ErrorMessage`]: '',
+      }));
+    }
+    return null;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Still having trouble making post request to update user
-    // Remember to trim(empty spaces from the end of strings)
+    if (Object.values(inputError).some((el) => el === true)) {
+      openSnackBar({
+        vertical: 'top',
+        horizontal: 'center',
+        popperMessage: 'Please fix errors before submitting',
+      });
+      return;
+    }
     try {
       updateUser({ username, pronouns, location }, user.token);
       console.log({ username, pronouns, location });
@@ -131,18 +168,26 @@ const ProfilePage = ({ classes }) => {
         popperMessage: 'Your changes have been saved.',
       });
     } catch (error) {
-      console.error(error);
-      openSnackBar({
-        vertical: 'top',
-        horizontal: 'center',
-        popperMessage: 'Error saving your changes',
-      });
+      if (error.message.exception.includes('Username has already been taken')) {
+        openSnackBar({
+          vertical: 'top',
+          horizontal: 'center',
+          popperMessage: 'Username has already been taken',
+        });
+      } else {
+        openSnackBar({
+          vertical: 'top',
+          horizontal: 'center',
+          popperMessage: 'Error saving your changes',
+        });
+      }
     }
     setAnchorEl(null);
   };
 
   const { vertical, horizontal, openBar } = snackBar;
   const id = open ? 'transitions-popper' : undefined;
+  const { logout } = useAuth0();
 
   return (
     <Container className={classes.container}>
@@ -173,6 +218,9 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
+          onBlur={() => fieldValidation('name', profileInfo.username)}
+          error={inputError.nameError}
+          helperText={inputError.nameErrorMessage}
           defaultValue={username}
           placeholder={username}
           autoComplete="off"
@@ -188,6 +236,9 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
+          onBlur={() => fieldValidation('name', profileInfo.pronouns)}
+          error={inputError.pronounsError}
+          helperText={inputError.pronounsErrorMessage}
           defaultValue={pronouns}
           placeholder={pronouns}
           autoComplete="off"
@@ -202,6 +253,9 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
+          onBlur={() => fieldValidation('name', profileInfo.pronouns)}
+          error={inputError.locationError}
+          helperText={inputError.locationErrorMessage}
           defaultValue={location}
           placeholder={location}
           autoComplete="off"
@@ -292,6 +346,19 @@ const ProfilePage = ({ classes }) => {
           ))}
         </Box>
       </form>
+      <Button
+        type="button"
+        color="primary"
+        className={classes.submitButton}
+        variant="contained"
+        onClick={() => logout({
+          returnTo: 'http://localhost:3000',
+          client_id: 'AJfV70psKlUrEckGzlcoGj0iK50drkQt',
+          federated: 'https://dev-inz0b2tv.us.auth0.com/v2/logout?federated',
+        })}
+      >
+        logout
+      </Button>
     </Container>
   );
 };

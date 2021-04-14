@@ -170,13 +170,20 @@ const ProfilePage = ({ classes }) => {
         .then(() => {
           setUserCreated(true);
         })
-        .catch((err, results) => {
-          console.log(err, results);
-          openSnackBar({
-            vertical: 'top',
-            horizontal: 'center',
-            popperMessage: 'Error saving your changes',
-          });
+        .catch((error) => {
+          if (error.message.exception.includes('Username has already been taken')) {
+            openSnackBar({
+              vertical: 'top',
+              horizontal: 'center',
+              popperMessage: 'Username has already been taken',
+            });
+          } else {
+            openSnackBar({
+              vertical: 'top',
+              horizontal: 'center',
+              popperMessage: 'Error saving your changes',
+            });
+          }
         }),
     );
   };
