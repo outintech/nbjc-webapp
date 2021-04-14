@@ -53,7 +53,7 @@ const routes = [{
   prefix: '',
   skipAppBar: true,
   exact: true,
-},
+}, 
 {
   label: 'Profile Submitted',
   path: '/users/new/submitted',

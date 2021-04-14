@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useHistory } from 'react-router-dom';
-import { getUser } from '../api';
+import { getUser, getUserProfile } from '../api/user';
 import { UserContext } from '../context/UserContext';
 import useError from './useError';
 
@@ -20,9 +20,11 @@ const useAuthenticatedUser = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const { promiseInProgress } = usePromiseTracker();
   const { user: contextUser, setUser } = useContext(UserContext);
+  const { setUserProfile } = useContext(UserContext);
   const history = useHistory();
   const returnTo = history.location.pathname;
   let registeredUser;
+  let profile;
   const [redirectToCreate, setRedirectToCreate] = useState(false);
   const throwError = useError();
   useEffect(() => {
@@ -38,6 +40,8 @@ const useAuthenticatedUser = () => {
           userId: auth0Id,
           token,
         });
+        profile = await getUserProfile(registeredUser.data.id, token);
+        setUserProfile(profile.data.user);
         setUser({
           token,
           auth0Id,

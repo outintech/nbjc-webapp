@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   root: {
+    position: 'fixed',
+    bottom: 0,
     backgroundColor: theme.palette.navBlack.main,
     display: 'flex',
     color: theme.palette.navBlack.contrastText,
