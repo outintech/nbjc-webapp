@@ -116,11 +116,22 @@ const postAddSpace = async (spaceOpts) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
   url.pathname = '/api/v1/spaces';
 
-  // const indicators = Object.assign({}, ...spaceOpts.chips.map((element) => {
-  //   const indicatorFormat = { name: '' };
-  //   indicatorFormat.name = element.name;
-  //   return indicatorFormat;
-  // }));
+  const indicators = spaceOpts.chips.map((element) => {
+    const indicatorFormat = { name: '' };
+    indicatorFormat.name = element.name;
+    return indicatorFormat;
+  });
+
+  const address2Exists = spaceOpts.business.location.address2 === null;
+  const address3Exists = spaceOpts.business.location.address3 === null;
+  let address2Formatted = '';
+  if (address2Exists && address3Exists) {
+    address2Formatted = `${spaceOpts.business.location.address2} ${spaceOpts.business.location.address3}`;
+  } else if (address2Exists && !address3Exists) {
+    address2Formatted = spaceOpts.business.location.address2;
+  } else {
+    address2Formatted = '';
+  }
 
   const data = {
     phone: spaceOpts.business.phone,
@@ -132,15 +143,13 @@ const postAddSpace = async (spaceOpts) => {
     longitude: spaceOpts.business.coordinates.longitude,
     address_attributes: {
       address_1: spaceOpts.business.location.address1,
-      address_2: `${spaceOpts.business.location.address2 !== null
-        ? spaceOpts.business.location.address2 : ''} ${spaceOpts.business.location.address3 !== null
-        ? spaceOpts.business.location.address3 : ''}`,
+      address_2: address2Formatted,
       city: spaceOpts.business.location.city,
-      postal_code: spaceOpts.business.location.zipcode,
+      postal_code: spaceOpts.business.location.zip_code,
       country: spaceOpts.business.location.country,
       state: spaceOpts.business.location.state,
     },
-    // indicators_attributes: indicators,
+    indicators_attributes: indicators,
     reviews_attributes: {
       anonymous: spaceOpts.anon,
       rating: spaceOpts.rating,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import utils from '../../utils';
+import formatReview from '../../utils/formatReview';
 import SpaceDetailsCard from './SpaceDetailsCard';
 
 const styles = {
@@ -29,7 +30,7 @@ const SpaceDetailsPage = ({
       setPhoneNumber(utils.formatPhoneNumber(cardData.phone));
     }
   }, [cardData]);
-  const totalReviews = space && space.reviews ? space.reviews : [];
+  const totalReviews = space && space.reviews ? space.reviews.map(formatReview) : [];
   return (
     <div>
       { cardData
@@ -42,8 +43,8 @@ const SpaceDetailsPage = ({
               phoneNumber={phoneNumber}
               filters={cardData.indicators}
               website={cardData.url}
-              yelpUrl={cardData.yelp_url}
-              imageUrl={cardData.photos[0].url}
+              yelpUrl={cardData.provider_url}
+              imageUrl={cardData.photos[0] && cardData.photos[0].url ? cardData.photos[0].url : ''}
               address={cardData.address}
               averageRating={averageRating}
               category={category}

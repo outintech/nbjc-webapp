@@ -213,7 +213,7 @@ const Search = ({
                 <Button variant="outlined" href="/" color="secondary">
                   Home
                 </Button>
-                <Button variant="contained" href="/space/new" color="secondary" disableElevation>
+                <Button variant="contained" href="/spaces/new" color="secondary" disableElevation>
                   Add space
                 </Button>
               </div>

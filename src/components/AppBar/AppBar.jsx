@@ -6,18 +6,22 @@ import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
-import { ArrowBackIos } from '@material-ui/icons';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { NameContext } from '../../context/NameContext';
+import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
@@ -45,9 +49,19 @@ const styles = (theme) => ({
     width: 375,
     flexShrink: 0,
     position: 'static !important',
+    '& .MuiBackdrop-root': {
+      zIndex: 1,
+    },
   },
   drawerPaper: {
     width: 375,
+  },
+  avatar: {
+    backgroundColor: '#ffffff',
+    color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    marginLeft: 'auto',
+    textTransform: 'uppercase',
   },
 });
 
@@ -58,6 +72,7 @@ const AppBar = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const nameContext = useContext(NameContext);
+  const userContext = useContext(UserContext);
   const history = useHistory();
 
   const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
@@ -65,7 +80,12 @@ const AppBar = ({
   const goBack = () => {
     history.goBack();
   };
-
+  // if there is no username, the user might not be signed in
+  // so fallback to icon
+  let avatar = <PersonIcon color="primary" />;
+  if (userContext.user.username) {
+    avatar = userContext.user.username[0];
+  }
   const showDrawerItems = () => routes.map((item) => {
     const otherProps = {
       selected: item.key === selected,
@@ -136,6 +156,11 @@ const AppBar = ({
           <Typography variant="h6" data-testid="appbar-title">
             {pageTitle || nameContext.spaceTitle}
           </Typography>
+          <Avatar className={classes.avatar}>
+            <Link href="/profile" underline="none">
+              {avatar}
+            </Link>
+          </Avatar>
         </Toolbar>
       </MaterialAppBar>
       <Drawer
@@ -143,7 +168,10 @@ const AppBar = ({
         onClose={() => setShowDrawer(false)}
         data-testid="appbar-drawer"
         className={classes.drawer}
-        classes={{ paper: classes.drawerPaper }}
+        classes={{
+          paper: classes.drawerPaper,
+          backdrop: classes.backdrop,
+        }}
       >
         <Toolbar />
         <List>{showDrawerItems()}</List>

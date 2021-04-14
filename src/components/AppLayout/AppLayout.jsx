@@ -6,16 +6,24 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '../AppBar';
 import Footer from '../Footer';
 
-const styles = {
+const styles = (theme) => ({
   root: {
-    height: '100%',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
   },
   content: {
     height: '100%',
     overflow: 'scroll',
-    marginBottom: 125,
+    flex: 1,
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 20,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: 125,
+    },
   },
-};
+});
 
 const AppLayout = ({
   children,

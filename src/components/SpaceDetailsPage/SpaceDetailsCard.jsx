@@ -51,11 +51,20 @@ const styles = () => ({
     margin: 'auto',
     height: '300px',
   },
-  reviewDiv: {
+  reviewHeader: {
     width: '100%',
     display: 'inline-flex',
     flexFlow: 'row',
     justifyContent: 'space-between',
+  },
+  reviewDiv: {
+    width: '100%',
+    display: 'inline-flex',
+    flexFlow: 'row',
+    justifyContent: 'left',
+  },
+  reviewContent: {
+    flexGrow: 2,
   },
   featuredReview: {
     margin: '20px',
@@ -222,13 +231,14 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia image={imageUrl} className={classes.cardMedia} />
+      {/* TODO: add a fallback image if imageUrl is empty */}
+      {imageUrl !== '' ? <CardMedia image={imageUrl} className={classes.cardMedia} /> : ''}
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
         </div>
         <Divider />
-        <div className={classes.reviewDiv}>
+        <div className={classes.reviewHeader}>
           <Typography variant="h5" className={classes.featuredReview}>
             Recent Reviews
           </Typography>
@@ -267,7 +277,7 @@ const SpaceDetailCard = ({
               dateCreated={totalReviews[currentReview].dateCreated}
               rating={totalReviews[currentReview].rating}
               text={totalReviews[currentReview].content}
-              classes={classes}
+              overrideClasses={classes}
             />
             <IconButton
               variant="outlined"
@@ -395,7 +405,7 @@ SpaceDetailCard.propTypes = {
   address: PropTypes.shape({}).isRequired,
   /* TODO: POST MVP add distance when geocoding
   distance */
-  hoursOfOperation: PropTypes.bool.isRequired,
+  hoursOfOperation: PropTypes.shape([]).isRequired,
   classes: PropTypes.shape({}).isRequired,
   overrideClasses: PropTypes.shape({}),
 };

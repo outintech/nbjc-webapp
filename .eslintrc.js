@@ -5,6 +5,7 @@ module.exports = {
     'react/prop-types': 0,
     'import/no-extraneous-dependencies': 0,
     'no-plusplus': 0,
+    'prefer-destructuring': 0,
   },
   globals: {
     window: true,

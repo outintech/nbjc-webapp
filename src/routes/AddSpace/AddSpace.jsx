@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { usePromiseTracker } from 'react-promise-tracker';
 
 import { withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -61,6 +63,21 @@ const styles = (theme) => ({
       },
     },
   },
+  successButton: {
+    [theme.breakpoints.up('mobile')]: {
+      width: 250,
+    },
+    margin: '0 auto',
+    display: 'block',
+  },
+  secondarySuccessButton: {
+    margin: '0 auto',
+    display: 'block',
+    marginTop: 20,
+    [theme.breakpoints.up('mobile')]: {
+      width: 250,
+    },
+  },
 });
 
 const getStepContent = (step, {
@@ -68,7 +85,7 @@ const getStepContent = (step, {
   onNext,
   onSubmit,
   disableNext,
-}, formValues, indicators) => {
+}, formValues, indicators, classes) => {
   switch (step) {
     case 0:
       return (
@@ -108,7 +125,22 @@ const getStepContent = (step, {
       );
     case 5:
       return (
-        <AddSpaceSuccess />
+        <AddSpaceSuccess
+          primaryButton={(isDesktop) => (
+            <Button
+              variant="contained"
+              align="center"
+              fullWidth={!isDesktop}
+              href="/spaces/new"
+              color="primary"
+              className={classes.successButton}
+              disableElevation
+            >
+              Add another space
+            </Button>
+          )}
+          overrideClasses={{ secondaryButton: classes.secondarySuccessButton }}
+        />
       );
     default:
       return 'Unknown step';
@@ -240,7 +272,7 @@ const AddSpace = ({ classes }) => {
         </Stepper>
       )}
       {!stepProps.loading && (
-        <div>{getStepContent(activeStep, stepProps, formValues, indicators)}</div>
+        <div>{getStepContent(activeStep, stepProps, formValues, indicators, classes)}</div>
       )}
       {stepProps.loading && <CircularProgress color="secondary" />}
       <ErrorSnackbar

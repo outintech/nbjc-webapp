@@ -6,16 +6,21 @@ import cx from 'classnames';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-const styles = () => ({
+const styles = (theme) => ({
   pageTitle: {
-    marginTop: 60,
+    [theme.breakpoints.up('mobile')]: {
+      marginTop: 60,
+    },
     marginBottom: 28,
   },
   check: {
-    width: 63,
-    height: 63,
+    [theme.breakpoints.up('xs')]: {
+      width: 320,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: 480,
+    },
     margin: '0 auto',
   },
   body: {
@@ -23,8 +28,18 @@ const styles = () => ({
     marginBottom: 60,
   },
   buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'block',
+  },
+  image: {
+    [theme.breakpoints.up('xs')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: '70%',
+    },
+    height: 'auto',
+    display: 'inherit',
+    margin: '0 auto',
   },
 });
 
@@ -42,7 +57,7 @@ const Success = ({
         {title}
       </Typography>
       <div className={classes.check}>
-        <CheckCircleIcon color="primary" className={classes.check} />
+        <img src="/success.svg" alt="Submisison Success" className={classes.image} />
       </div>
       <Typography variant={matches ? 'h4' : 'subtitle1'} align="center" className={classes.body}>
         {subtitle}

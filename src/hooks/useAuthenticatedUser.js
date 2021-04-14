@@ -48,7 +48,6 @@ const useAuthenticatedUser = () => {
           userId: registeredUser.data.id,
         });
         setRedirectToCreate(false);
-        console.log(token);
       } catch (e) {
         // if it is 404 then user is not found
         // so redirect to create. Otherwise throw error

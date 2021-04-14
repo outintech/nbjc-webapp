@@ -13,6 +13,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
 import CreateProfile from '../components/CreateProfile/CreateProfile';
 import ProfileSubmitted from '../components/ProfileSubmitted/ProfileSubmitted';
+import CommunityGuidelines from './CommunityGuidelines';
 
 const routes = [{
   label: 'Home',
@@ -52,7 +53,8 @@ const routes = [{
   prefix: '',
   skipAppBar: true,
   exact: true,
-}, {
+}, 
+{
   label: 'Profile Submitted',
   path: '/users/new/submitted',
   content: ProfileSubmitted,
@@ -60,7 +62,16 @@ const routes = [{
   icon: PersonOutlineIcon,
   prefix: '',
   skipAppBar: true,
-}];
+},
+{
+  label: 'Community Guidelines',
+  path: '/community-guidelines',
+  content: CommunityGuidelines,
+  key: 'communityGuidelines',
+  skipAppBar: true,
+  prefix: '',
+},
+];
 
 const spaceRoutes = [{
   label: 'Add Review',

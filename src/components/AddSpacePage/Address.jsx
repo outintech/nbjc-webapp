@@ -11,13 +11,13 @@ import BusinessResultCard from '../BusinessResultCard';
 
 const styles = (theme) => ({
   listWrapper: {
-    display: 'flex',
-    flexBasis: 'auto',
-    flexWrap: 'wrap',
-    maxHeight: 500,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 290px)',
+    maxHeight: 460,
     overflow: 'scroll',
+    marginBottom: 20,
     [theme.breakpoints.up('mobile')]: {
-      maxHeight: 560,
+      maxHeight: 500,
     },
   },
   card: {
@@ -25,15 +25,18 @@ const styles = (theme) => ({
   },
   footer: {
     display: 'block',
+    marginBottom: 20,
   },
   yelpFooter: {
     marginBottom: 15,
+    display: 'flex',
   },
   yelpIcon: {
     width: 45,
   },
   yelpText: {
-    display: 'inline-block',
+    lineHeight: '45px',
+    marginLeft: 5,
   },
   submitButton: {
     float: 'right',
@@ -70,7 +73,7 @@ const Address = ({
         {businessList.map((business, index) => (
           <BusinessResultCard
             business={business}
-            key={business.id}
+            key={business.yelp_id}
             checked={selected === index}
             onCheck={() => onCheck(index)}
             overrideClasses={{ resultCard: classes.card }}
