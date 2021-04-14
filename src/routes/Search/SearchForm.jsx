@@ -163,7 +163,7 @@ const SearchForm = ({
       !(formValues.name || nameText)
       && !formValues.location
       && !(formValues.category || categoryText)
-      && !(hasSelectedIndicators)
+      && !(hasSelectedIndicators.length > 0)
     ) {
       setShowError(true);
     } else {
