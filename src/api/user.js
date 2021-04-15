@@ -63,6 +63,7 @@ const createUser = async (userOpts) => {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
+    name: userOpts.name,
   };
   const results = await wrappedFetch(url, {
     method: 'POST',

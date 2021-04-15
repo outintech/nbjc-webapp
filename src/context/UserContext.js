@@ -23,7 +23,6 @@ const UserContextProvider = ({ children }) => {
   useEffect(() => {
     async function fetchIdentities() {
       const results = await getProfileChips();
-      console.log(results);
       setProfileChips(results.data);
     }
     fetchIdentities();

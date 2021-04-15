@@ -160,8 +160,6 @@ const ProfilePage = ({ classes }) => {
     }
     try {
       updateUser({ username, pronouns, location }, user.token);
-      console.log({ username, pronouns, location });
-      console.log('success');
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',

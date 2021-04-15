@@ -191,7 +191,6 @@ const ProfilePage = ({ classes }) => {
   const { vertical, horizontal, openBar } = snackBar;
   if (userCreated) {
     const query = useQuery();
-    console.log(query.get('returnTo'));
     history.push(`${query.get('returnTo')}`);
   }
   return (
