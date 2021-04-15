@@ -2,6 +2,7 @@ import wrappedFetch from './wrappedFetch';
 
 const getProfileChips = async () => {
   const url = new URL(process.env.REACT_APP_API_HOST);
+  url.pathname = '/api/v1/identities';
   // TODO: Not getting the data back with the URL env variable, need to update this url
 
   const results = await wrappedFetch(url, {
