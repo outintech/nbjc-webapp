@@ -19,23 +19,11 @@ const styles = (theme) => ({
       width: '100%',
     },
     [theme.breakpoints.up('mobile')]: {
-      width: '70%',
+      width: '500px',
     },
     height: 'auto',
     display: 'inherit',
     margin: '0 auto',
-  },
-  buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  button: {
-    width: 200,
-  },
-  break: {
-    flexBasis: '100%',
-    height: 25,
   },
 });
 
@@ -52,42 +40,39 @@ const Home = ({ classes }) => {
     <div className={classes.root}>
       <img src={src} alt="Home page" className={classes.image} />
       <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant}>
+        <Typography variant={variant} align="center">
           Welcome! The Lavender Book is a community-driven platform built for the
           Black Queer, Black Trans, and Black Gender Non-Binary communities.
         </Typography>
       </Box>
       <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant}>
+        <Typography variant={variant} align="center">
           It’s mission is to spread the word about spaces where people can be themselves.
           All spaces and reviews are published by Lavender Book members.
         </Typography>
       </Box>
-      <div className={classes.buttonWrapper}>
-        <Button
-          variant="contained"
-          color="secondary"
-          align="center"
-          fullWidth={!matches}
-          href="/search"
-          className={classes.button}
-          disableElevation
-        >
-          Search for a Space
-        </Button>
-        <div className={classes.break} />
-        <Button
-          variant="outlined"
-          color="secondary"
-          align="center"
-          fullWidth={!matches}
-          href="/spaces/new"
-          className={classes.button}
-          disableElevation
-        >
-          Add a Space
-        </Button>
-      </div>
+      <Button
+        variant="outlined"
+        color="secondary"
+        align="center"
+        fullWidth={!matches}
+        href="/spaces/new"
+        className={classes.button}
+        disableElevation
+      >
+        Add a Space
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        align="center"
+        fullWidth={!matches}
+        href="/search"
+        className={classes.button}
+        disableElevation
+      >
+        Search for a Space
+      </Button>
     </div>
   );
 };
