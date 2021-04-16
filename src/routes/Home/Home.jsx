@@ -25,6 +25,16 @@ const styles = (theme) => ({
     display: 'inherit',
     margin: '0 auto',
   },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  button: {
+    width: '250px',
+  },
+  break: {
+    width: '25px',
+  },
 });
 
 const Home = ({ classes }) => {
@@ -51,28 +61,31 @@ const Home = ({ classes }) => {
           All spaces and reviews are published by Lavender Book members.
         </Typography>
       </Box>
-      <Button
-        variant="outlined"
-        color="secondary"
-        align="center"
-        fullWidth={!matches}
-        href="/spaces/new"
-        className={classes.button}
-        disableElevation
-      >
-        Add a Space
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        align="center"
-        fullWidth={!matches}
-        href="/search"
-        className={classes.button}
-        disableElevation
-      >
-        Search for a Space
-      </Button>
+      <div className={classes.buttonWrapper}>
+        <Button
+          variant="outlined"
+          color="primary"
+          align="center"
+          fullWidth={!matches}
+          href="/spaces/new"
+          className={classes.button}
+          disableElevation
+        >
+          Add a Space
+        </Button>
+        <div className={classes.break} />
+        <Button
+          variant="contained"
+          color="primary"
+          align="center"
+          fullWidth={!matches}
+          href="/search"
+          className={classes.button}
+          disableElevation
+        >
+          Search for a Space
+        </Button>
+      </div>
     </div>
   );
 };
