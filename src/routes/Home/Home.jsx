@@ -26,14 +26,31 @@ const styles = (theme) => ({
     margin: '0 auto',
   },
   buttonWrapper: {
+    [theme.breakpoints.up('xs')]: {
+      flexWrap: 'wrap-reverse',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      flexWrap: 'no-wrap',
+    },
     display: 'flex',
     justifyContent: 'center',
   },
   button: {
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: '25px',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: '0px',
+    },
     width: '250px',
   },
   break: {
-    width: '25px',
+    [theme.breakpoints.up('xs')]: {
+      width: '0px',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: '25px',
+    },
   },
 });
 
