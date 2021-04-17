@@ -64,6 +64,7 @@ const createUser = async (userOpts) => {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
+    identities_attributes: userOpts.identities.map((identity) => ({ name: identity })),
     name: userOpts.name,
   };
   const results = await wrappedFetch(url, {
@@ -84,18 +85,22 @@ const createUser = async (userOpts) => {
  * Update an existing user
  * @param {Object} userOpts
  * @param {string} userOpts.username - User's username
+ * @param {string} userOpts.name - User's name
  * @param {string} userOpts.pronouns - User's pronouns
  * @param {string} userOpts.location - User's location
  * @param {Array} userOpts.identities - User identities
+ * @param {string} userOpts.userId - User's identity
  * @param {string} token - User's Auth0 token
 */
 const updateUser = async (userOpts, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = '/api/v1/users';
+  url.pathname = `/api/v1/users/${userOpts.userId}`;
   const data = {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
+    identities_attributes: userOpts.identities.map((identity) => ({ name: identity })),
+    name: userOpts.name,
   };
   const results = await wrappedFetch(url, {
     method: 'PUT',
