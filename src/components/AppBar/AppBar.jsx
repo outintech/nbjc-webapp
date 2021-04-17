@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core';
+import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -62,6 +62,10 @@ const styles = (theme) => ({
     borderColor: theme.palette.primary.main,
     marginLeft: 'auto',
     textTransform: 'uppercase',
+  },
+  logo: {
+    flexGrow: 1,
+    textAlign: 'center',
   },
 });
 
@@ -148,6 +152,19 @@ const AppBar = ({
     return appIcons;
   };
 
+  const Logo = () => {
+    const matches = useMediaQuery('(min-width:376px)');
+    let logoSrc = '/mobile-appBar-logo.svg';
+    if (matches) {
+      logoSrc = '/web-appBar-logo.svg';
+    }
+    return (
+      <div className={classes.logo}>
+        <img src={logoSrc} alt="logo" />
+      </div>
+    );
+  };
+
   return (
     <div className={classes.root} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={classes.appBar}>
@@ -156,6 +173,7 @@ const AppBar = ({
           <Typography variant="h6" data-testid="appbar-title">
             {pageTitle || nameContext.spaceTitle}
           </Typography>
+          {pageTitle !== 'undefined' && pageTitle === 'Home' ? <Logo /> : null}
           <Avatar className={classes.avatar}>
             <Link href="/profile" underline="none">
               {avatar}
