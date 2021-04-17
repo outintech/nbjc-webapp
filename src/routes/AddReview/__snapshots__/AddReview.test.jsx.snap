@@ -96,7 +96,7 @@ exports[`AddReview should show success page when a review is submitted 1`] = `
     <h6
       class="MuiTypography-root Success-body-85 MuiTypography-subtitle1 MuiTypography-alignCenter"
     >
-      Thank you for rating and reviewing abc on OurGuide.
+      Thank you for rating and reviewing abc on Lavender Book.
     </h6>
     <div
       class="Success-buttonWrapper-86 AddReview-successFooter-61"

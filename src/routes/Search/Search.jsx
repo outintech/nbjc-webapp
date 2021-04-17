@@ -207,7 +207,7 @@ const Search = ({
               </div>
               <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
                 We couldn’t find what you’re looking for.
-                Please try again or add a space to OurGuide.
+                Please try again or add a space to Lavender Book.
               </Typography>
               <div className={classes.emptyStateFooter}>
                 <Button variant="outlined" href="/" color="secondary">

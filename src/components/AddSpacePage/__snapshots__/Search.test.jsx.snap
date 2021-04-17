@@ -10,7 +10,7 @@ exports[`Search renders with default values 1`] = `
   <h6
     class="MuiTypography-root Search-pageSubtitle-2 MuiTypography-subtitle1 MuiTypography-alignCenter"
   >
-    Add your favorite space to OurGuide. The information you enter will be reviewed by an administrator. Thank you for helping your community find and enjoy spaces.
+    Add your favorite space to Lavender Book. The information you enter will be reviewed by an administrator. Thank you for helping your community find and enjoy spaces.
   </h6>
   <form
     class="Search-form-3"

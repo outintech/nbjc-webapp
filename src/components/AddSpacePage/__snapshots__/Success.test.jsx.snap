@@ -24,7 +24,7 @@ exports[`Success renders 1`] = `
   <h6
     class="MuiTypography-root Success-body-3 MuiTypography-subtitle1 MuiTypography-alignCenter"
   >
-    Thank you for adding a space to OurGuide. An administrator will review your submission. Check back soon to see your space in the application.
+    Thank you for adding a space to Lavender Book. An administrator will review your submission. Check back soon to see your space in the application.
   </h6>
   <div
     class="Success-buttonWrapper-4"
