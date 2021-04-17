@@ -32,7 +32,8 @@ const getUser = async ({ userId, token }) => {
 */
 const getUserProfile = async (userId, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = `/api/v1/users/${userId}?include=identites`;
+  url.pathname = `/api/v1/users/${userId}`;
+  url.searchParams.append('include', 'identities');
   const results = await wrappedFetch(url, {
     method: 'GET',
     mode: 'cors',
