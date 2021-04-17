@@ -30,6 +30,14 @@ const styles = (theme) => ({
       width: 326,
     },
   },
+  location: {
+    [theme.breakpoints.up('xs')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('mobile')]: {
+      width: 326,
+    },
+  },
   filterButton: {
     margin: '10px 0px',
   },
@@ -50,6 +58,17 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       width: 250,
     },
+  },
+  header: {
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: 40,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: 60,
+    },
+  },
+  inputLabel: {
+    color: '#000000',
   },
 });
 
@@ -121,7 +140,11 @@ const SearchForm = ({
       const result = await getCategories({ searchTerm: categoryText });
       setCategories(result);
     };
-    fetchData();
+    if (categoryText.length) {
+      fetchData();
+    } else {
+      setCategories([]);
+    }
   }, [categoryText]);
 
   const onCategoryChange = (e, value) => {
@@ -194,15 +217,17 @@ const SearchForm = ({
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
-        <Typography variant={matches ? 'h2' : 'h4'} align="center">
-          Search for a Space
-        </Typography>
-        <Typography
-          variant={matches ? 'h4' : 'subtitle1'}
-          align="center"
-        >
-          Search for spaces by name, location, category, or attributes.
-        </Typography>
+        <header className={classes.header}>
+          <Typography variant={matches ? 'h2' : 'h4'} align="center">
+            Search for a Space
+          </Typography>
+          <Typography
+            variant={matches ? 'h4' : 'subtitle1'}
+            align="center"
+          >
+            Search for spaces by name, location, category, or attributes.
+          </Typography>
+        </header>
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What&apos;s the space?</Typography>
         </InputLabel>
@@ -242,6 +267,7 @@ const SearchForm = ({
           placeholder="City, State"
           helperText="Optional"
           name="location"
+          className={classes.location}
         />
         <InputLabel type="inputLabel" className={classes.inputLabel}>
           <Typography variant="h6">What type of Space are you looking for? </Typography>
@@ -276,6 +302,7 @@ const SearchForm = ({
           <ChipFilters
             chips={formValues.indicators}
             onChipSelected={(i) => handleIndicatorSelect(chips[i].value)}
+            chipSize="medium"
           />
         </div>
         <div className={classes.submitButtonWrapper}>
