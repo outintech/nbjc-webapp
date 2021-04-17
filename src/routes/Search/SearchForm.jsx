@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
 
 import {
   Button,
@@ -213,7 +215,6 @@ const SearchForm = ({
       });
     }
   };
-
   return (
     <>
       <form className={classes.form} onSubmit={onSearchSubmit}>
@@ -293,6 +294,19 @@ const SearchForm = ({
               {...params}
             />
           )}
+          renderOption={(option, { inputValue }) => {
+            const textMatches = match(option.title, inputValue);
+            const parts = parse(option.title, textMatches);
+            return (
+              <div>
+                {parts.map((part) => (
+                  <span key={part.text} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                    {part.text}
+                  </span>
+                ))}
+              </div>
+            );
+          }}
         />
 
         <div className={classes.filterWrapper}>
