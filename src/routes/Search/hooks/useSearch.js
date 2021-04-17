@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import useQuery from '../../../hooks/useQuery';
+import useError from '../../../hooks/useError';
+
 import {
   getSearchResults,
   getLocation,
@@ -28,6 +30,7 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
   const [indicators, setIndicators] = useState([]);
   const query = useQuery();
   const history = useHistory();
+  const throwError = useError();
   const { promiseInProgress } = usePromiseTracker();
 
   const searchCriteria = getSearchCriteria(query);
@@ -68,7 +71,7 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
       try {
         trackPromise(fetchData());
       } catch (e) {
-        setSearchResults([]);
+        throwError(e);
       }
     } else {
       setSearchResults(null);
