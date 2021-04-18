@@ -87,8 +87,8 @@ const AppBar = ({
   // if there is no username, the user might not be signed in
   // so fallback to icon
   let avatar = <PersonIcon color="primary" />;
-  if (userContext.user.username) {
-    avatar = userContext.user.username[0];
+  if (userContext.userProfile.username) {
+    avatar = userContext.userProfile.username[0];
   }
   const showDrawerItems = () => routes.map((item) => {
     const otherProps = {

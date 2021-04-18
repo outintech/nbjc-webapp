@@ -42,7 +42,7 @@ const typography = {
     fontSize: 24,
   },
   h6: {
-    fontWeight: 600,
+    fontWeight: 400,
     fontSize: 20,
   },
   subtitle1: {

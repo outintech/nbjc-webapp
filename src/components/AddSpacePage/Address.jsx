@@ -87,7 +87,7 @@ const Address = ({
           color="primary"
           className={classes.submitButton}
           fullWidth={!matches}
-          disabled={selected === undefined}
+          disabled={selected === undefined || selected === null}
           onClick={() => onNext({ business: businessList[selected] })}
           data-testid="addspace-business-next"
           disableElevation

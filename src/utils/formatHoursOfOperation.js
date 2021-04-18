@@ -7,6 +7,9 @@
 */
 
 const formatHoursOfOperation = (hoursOfOperation) => {
+  if (!hoursOfOperation) {
+    return false;
+  }
   const currentDate = new Date();
   const currentDay = currentDate.getDay();
   const currentTime = currentDate.getHours() * 100;

@@ -66,17 +66,20 @@ const ProfilePage = ({ classes }) => {
   const { userProfile, user, profileChips } = useContext(UserContext);
 
   const {
+    name,
     username,
     pronouns,
     location,
-    identities = [],
+    identities: userIdentites = [],
   } = userProfile;
+  const identities = userIdentites.map((identity) => identity.name);
 
   const [profileInfo, setProfileInfo] = useState({
     identities,
     username,
     pronouns,
     location,
+    name,
   });
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
@@ -86,6 +89,8 @@ const ProfilePage = ({ classes }) => {
     horizontal: 'center',
   });
   const [inputError, setInputError] = useState({
+    nameError: false,
+    nameErrorMessage: '',
     usernameError: false,
     usernameErrorMessage: '',
     pronounsError: false,
@@ -122,17 +127,17 @@ const ProfilePage = ({ classes }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name: targetName, value } = e.target;
     setProfileInfo((prevState) => ({
       ...prevState,
-      [name]: value,
+      [targetName]: value,
     }));
   };
 
   const open = Boolean(anchorEl);
 
   const fieldValidation = (fieldName, fieldValue) => {
-    if (fieldValue.trim() === '' || !fieldValue) {
+    if (!fieldValue || fieldValue.trim() === '') {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
@@ -159,7 +164,14 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      updateUser({ username, pronouns, location }, user.token);
+      updateUser({
+        username: profileInfo.username,
+        pronouns: profileInfo.pronouns,
+        location: profileInfo.location,
+        userId: user.userId,
+        identities: profileInfo.identities,
+        name: profileInfo.name,
+      }, user.token);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -216,9 +228,27 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          onBlur={() => fieldValidation('name', profileInfo.username)}
+          onBlur={() => fieldValidation('name', profileInfo.name)}
           error={inputError.nameError}
           helperText={inputError.nameErrorMessage}
+          defaultValue={name}
+          placeholder={name}
+          autoComplete="off"
+          type="input"
+          variant="outlined"
+          name="name"
+          autoFocus
+          required
+        />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          label="Username"
+          className={classes.textInput}
+          onChange={handleChange}
+          onClick={handleClick}
+          onBlur={() => fieldValidation('username', profileInfo.username)}
+          error={inputError.usernameError}
+          helperText={inputError.usernameErrorMessage}
           defaultValue={username}
           placeholder={username}
           autoComplete="off"

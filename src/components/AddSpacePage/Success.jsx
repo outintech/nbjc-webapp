@@ -90,7 +90,7 @@ Success.propTypes = {
 
 Success.defaultProps = {
   title: 'Space Submitted',
-  subtitle: 'Thank you for adding a space to OurGuide. An administrator will review your submission. Check back soon to see your space in the application.',
+  subtitle: 'Thank you for adding a space to Lavender Book. An administrator will review your submission. Check back soon to see your space in the application.',
   primaryButton: undefined,
   overrideClasses: {},
 };

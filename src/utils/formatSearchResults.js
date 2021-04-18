@@ -12,12 +12,13 @@ const formatSearchResults = (space) => {
       state,
       postal_code: zipcode,
     },
+    category_aliases: categories = [],
   } = space;
   const stitchedAddress = `${line1} ${line2} ${city} ${state} ${zipcode}`;
   return {
     id: `${space.id}`,
     name: space.name,
-    category: space.category || '',
+    category: (categories[0] || {}).title || '',
     address: stitchedAddress,
     averageRating: space.avg_rating,
     phoneNumber: space.phone,

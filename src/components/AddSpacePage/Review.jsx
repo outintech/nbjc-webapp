@@ -89,6 +89,8 @@ const Review = ({
   };
 
   const validateForm = () => formValues.review.length > 0 && formValues.rating > 0;
+  // eslint-disable-next-line
+  const reviewPlaceholder = 'Did the staff ask for your pronouns? How would you describe the service you received? Did you feel safe entering or being inside the space? Did anyone specific help you? What languages were spoken? Was the space accurate to the listing on The Lavender Book? Was the space accessible? Would you go back?';
 
   return (
     <>
@@ -123,6 +125,7 @@ const Review = ({
               </Typography>
             </>
           )}
+          placeholder={reviewPlaceholder}
           name="review"
           rows={5}
           className={classes.review}

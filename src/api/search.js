@@ -34,7 +34,7 @@ const getSearchResults = async (searchOpts) => {
       url.searchParams.append(paramMap[key], searchOpts[key]);
     }
   });
-  url.searchParams.append('include', 'address,photos,indicators,reviews,languages');
+  url.searchParams.append('include', 'address,photos,indicators,reviews,languages,category_aliases');
   const results = await wrappedFetch(url.href);
   return results;
 };
