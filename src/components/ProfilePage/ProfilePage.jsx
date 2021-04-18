@@ -63,7 +63,12 @@ const styles = () => ({
 });
 
 const ProfilePage = ({ classes }) => {
-  const { userProfile, user, profileChips } = useContext(UserContext);
+  const {
+    userProfile,
+    setUserProfile,
+    user,
+    profileChips,
+  } = useContext(UserContext);
 
   const {
     username,
@@ -160,7 +165,7 @@ const ProfilePage = ({ classes }) => {
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.values(inputError).some((el) => el === true)) {
       openSnackBar({
@@ -171,12 +176,13 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      updateUser({
+      const updatedProfile = await updateUser({
         username,
         pronouns,
         location,
         id: user.userId,
       }, user.token);
+      setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -236,12 +242,12 @@ const ProfilePage = ({ classes }) => {
           onBlur={() => fieldValidation('name', profileInfo.username)}
           error={inputError.nameError}
           helperText={inputError.nameErrorMessage}
-          defaultValue={username}
-          placeholder={username}
+          defaultValue={userProfile.name}
+          placeholder={userProfile.name}
           autoComplete="off"
           type="input"
           variant="outlined"
-          name="username"
+          name="name"
           autoFocus
           required
         />
