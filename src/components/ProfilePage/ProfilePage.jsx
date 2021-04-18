@@ -138,6 +138,18 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
+    } else if (/[^a-zA-Z -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Invalid characters',
+      }));
+    } else if (fieldValue.trim().length > 20) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
+      }));
     } else {
       setInputError((prevState) => ({
         ...prevState,
@@ -159,7 +171,12 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      updateUser({ username, pronouns, location }, user.token);
+      updateUser({
+        username,
+        pronouns,
+        location,
+        id: user.userId,
+      }, user.token);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',

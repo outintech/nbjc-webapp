@@ -90,7 +90,7 @@ const createUser = async (userOpts) => {
 */
 const updateUser = async (userOpts, token) => {
   const url = new URL(process.env.REACT_APP_API_HOST);
-  url.pathname = '/api/v1/users';
+  url.pathname = `/api/v1/users/${userOpts.id}`;
   const data = {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
