@@ -150,7 +150,7 @@ const AddReview = ({ classes }) => {
       {space && pageStatus === 'success' && (
         <Success
           title="Your Review Was Submitted!"
-          subtitle={`Thank you for rating and reviewing ${space.name} on OurGuide.`}
+          subtitle={`Thank you for rating and reviewing ${space.name} on Lavender Book.`}
           primaryButton={(isDesktop) => (
             <Button
               variant="contained"

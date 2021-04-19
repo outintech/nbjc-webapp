@@ -5,7 +5,7 @@ exports[`Attributes renders with default values 1`] = `
   <h6
     class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-alignCenter"
   >
-    What are the attributes that make this an OurGuide space?
+    What are the attributes that make this an Lavender Book space?
   </h6>
   <h6
     class="MuiTypography-root MuiTypography-h6"

@@ -5,7 +5,7 @@ exports[`Address renders with default values 1`] = `
   <h6
     class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-alignCenter"
   >
-    Select the location of the space you want to submit to OurGuide
+    Select the location of the space you want to submit to Lavender Book
   </h6>
   <div
     class="Address-listWrapper-1"

@@ -71,17 +71,20 @@ const ProfilePage = ({ classes }) => {
   } = useContext(UserContext);
 
   const {
+    name,
     username,
     pronouns,
     location,
-    identities = [],
+    identities: userIdentites = [],
   } = userProfile;
+  const identities = userIdentites.map((identity) => identity.name);
 
   const [profileInfo, setProfileInfo] = useState({
     identities,
     username,
     pronouns,
     location,
+    name,
   });
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackBar, setSnackBar] = useState({
@@ -91,6 +94,8 @@ const ProfilePage = ({ classes }) => {
     horizontal: 'center',
   });
   const [inputError, setInputError] = useState({
+    nameError: false,
+    nameErrorMessage: '',
     usernameError: false,
     usernameErrorMessage: '',
     pronounsError: false,
@@ -127,17 +132,17 @@ const ProfilePage = ({ classes }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name: targetName, value } = e.target;
     setProfileInfo((prevState) => ({
       ...prevState,
-      [name]: value,
+      [targetName]: value,
     }));
   };
 
   const open = Boolean(anchorEl);
 
   const fieldValidation = (fieldName, fieldValue) => {
-    if (fieldValue.trim() === '' || !fieldValue) {
+    if (!fieldValue || fieldValue.trim() === '') {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
@@ -177,10 +182,12 @@ const ProfilePage = ({ classes }) => {
     }
     try {
       const updatedProfile = await updateUser({
-        username,
-        pronouns,
-        location,
-        id: user.userId,
+        username: profileInfo.username,
+        pronouns: profileInfo.pronouns,
+        location: profileInfo.location,
+        userId: user.userId,
+        identities: profileInfo.identities,
+        name: profileInfo.name,
       }, user.token);
       setUserProfile(updatedProfile.data.user);
       openSnackBar({
@@ -239,11 +246,29 @@ const ProfilePage = ({ classes }) => {
           className={classes.textInput}
           onChange={handleChange}
           onClick={handleClick}
-          onBlur={() => fieldValidation('name', profileInfo.username)}
+          onBlur={() => fieldValidation('name', profileInfo.name)}
           error={inputError.nameError}
           helperText={inputError.nameErrorMessage}
-          defaultValue={userProfile.name}
-          placeholder={userProfile.name}
+          defaultValue={name}
+          placeholder={name}
+          autoComplete="off"
+          type="input"
+          variant="outlined"
+          name="name"
+          autoFocus
+          required
+        />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          label="Username"
+          className={classes.textInput}
+          onChange={handleChange}
+          onClick={handleClick}
+          onBlur={() => fieldValidation('username', profileInfo.username)}
+          error={inputError.usernameError}
+          helperText={inputError.usernameErrorMessage}
+          defaultValue={username}
+          placeholder={username}
           autoComplete="off"
           type="input"
           variant="outlined"
