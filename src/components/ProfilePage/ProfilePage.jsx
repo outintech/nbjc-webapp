@@ -63,7 +63,12 @@ const styles = () => ({
 });
 
 const ProfilePage = ({ classes }) => {
-  const { userProfile, user, profileChips } = useContext(UserContext);
+  const {
+    userProfile,
+    setUserProfile,
+    user,
+    profileChips,
+  } = useContext(UserContext);
 
   const {
     name,
@@ -143,6 +148,18 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
+    } else if (/[^a-zA-Z -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Invalid characters',
+      }));
+    } else if (fieldValue.trim().length > 20) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
+      }));
     } else {
       setInputError((prevState) => ({
         ...prevState,
@@ -153,7 +170,7 @@ const ProfilePage = ({ classes }) => {
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.values(inputError).some((el) => el === true)) {
       openSnackBar({
@@ -164,7 +181,7 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      updateUser({
+      const updatedProfile = await updateUser({
         username: profileInfo.username,
         pronouns: profileInfo.pronouns,
         location: profileInfo.location,
@@ -172,6 +189,7 @@ const ProfilePage = ({ classes }) => {
         identities: profileInfo.identities,
         name: profileInfo.name,
       }, user.token);
+      setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -254,7 +272,7 @@ const ProfilePage = ({ classes }) => {
           autoComplete="off"
           type="input"
           variant="outlined"
-          name="username"
+          name="name"
           autoFocus
           required
         />

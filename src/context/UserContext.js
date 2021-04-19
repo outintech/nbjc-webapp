@@ -19,7 +19,6 @@ const UserContextProvider = ({ children }) => {
 
   const [profileChips, setProfileChips] = useState();
 
-  // TODO: Some of the indentities are duplicated
   useEffect(() => {
     async function fetchIdentities() {
       const results = await getProfileChips();
