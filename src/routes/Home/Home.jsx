@@ -74,7 +74,7 @@ const Home = ({ classes }) => {
       </Box>
       <Box component="span" display="block" p={1} m={1}>
         <Typography variant={variant} align="center">
-          It’s mission is to spread the word about spaces where people can be themselves.
+          Its mission is to spread the word about spaces where people can be themselves.
           All spaces and reviews are published by Lavender Book members.
         </Typography>
       </Box>
