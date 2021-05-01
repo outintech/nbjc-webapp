@@ -398,9 +398,9 @@ const ProfilePage = ({ classes }) => {
         className={classes.submitButton}
         variant="contained"
         onClick={() => logout({
-          returnTo: 'http://localhost:3000',
-          client_id: 'AJfV70psKlUrEckGzlcoGj0iK50drkQt',
-          federated: 'https://dev-inz0b2tv.us.auth0.com/v2/logout?federated',
+          returnTo: `http://${process.env.REACT_APP_DOMAIN}/`,
+          client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+          federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
         })}
       >
         logout
