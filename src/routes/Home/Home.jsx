@@ -19,7 +19,7 @@ const styles = (theme) => ({
       width: '100%',
     },
     [theme.breakpoints.up('mobile')]: {
-      width: '500px',
+      maxWidth: '500px',
     },
     height: 'auto',
     display: 'inherit',
@@ -55,7 +55,9 @@ const styles = (theme) => ({
 });
 
 const Home = ({ classes }) => {
-  const matches = useMediaQuery('(min-width:376px)');
+  // since this is a copy heavy page
+  // switch to smaller dimensions sooner
+  const matches = useMediaQuery('(min-width:500px)');
   let src = '/mobile-home-icon.svg';
   let variant = 'h5';
   if (matches) {
