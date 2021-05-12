@@ -64,7 +64,7 @@ const createUser = async (userOpts) => {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
-    identities_attributes: userOpts.identities.map((identity) => ({ name: identity })),
+    identities_attributes: userOpts.identities_attributes.map((identity) => ({ name: identity })),
     name: userOpts.name,
   };
   const results = await wrappedFetch(url, {

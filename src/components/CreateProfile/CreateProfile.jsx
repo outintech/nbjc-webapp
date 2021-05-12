@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
@@ -11,11 +11,9 @@ import {
   Chip,
   TextField,
 } from '@material-ui/core';
-import { trackPromise } from 'react-promise-tracker';
 
 import { createUser } from '../../api';
 import { UserContext } from '../../context/UserContext';
-
 import useQuery from '../../hooks/useQuery';
 
 const styles = () => ({
@@ -91,6 +89,7 @@ const ProfilePage = ({ classes }) => {
   });
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
+  const [pageStatus, setPageStatus] = useState('');
   const { user, profileChips } = useContext(UserContext);
   const history = useHistory();
 
@@ -145,8 +144,41 @@ const ProfilePage = ({ classes }) => {
     return null;
   };
 
-  const handleSubmit = (e, updatedInfo) => {
-    e.preventDefault();
+  useEffect(() => {
+    async function postUserData(data) {
+      await createUser(data);
+      openSnackBar({
+        vertical: 'top',
+        horizontal: 'center',
+        popperMessage: 'Your changes have been saved.',
+      });
+    }
+    if (pageStatus === 'userSubmitted') {
+      try {
+        postUserData({
+          ...profileInfo,
+          ...user,
+        });
+        setUserCreated(true);
+      } catch (error) {
+        if (error.message.exception.includes('Username has already been taken')) {
+          openSnackBar({
+            vertical: 'top',
+            horizontal: 'center',
+            popperMessage: 'Username has already been taken',
+          });
+        } else {
+          openSnackBar({
+            vertical: 'top',
+            horizontal: 'center',
+            popperMessage: 'Error saving your changes',
+          });
+        }
+      }
+    }
+  });
+
+  const saveUser = () => {
     if (Object.values(inputError).some((el) => el === true)) {
       openSnackBar({
         vertical: 'top',
@@ -155,37 +187,7 @@ const ProfilePage = ({ classes }) => {
       });
       return;
     }
-    trackPromise(
-      createUser({
-        ...updatedInfo,
-        ...user,
-      })
-        .then(() => {
-          openSnackBar({
-            vertical: 'top',
-            horizontal: 'center',
-            popperMessage: 'Your changes have been saved.',
-          });
-        })
-        .then(() => {
-          setUserCreated(true);
-        })
-        .catch((error) => {
-          if (error.message.exception.includes('Username has already been taken')) {
-            openSnackBar({
-              vertical: 'top',
-              horizontal: 'center',
-              popperMessage: 'Username has already been taken',
-            });
-          } else {
-            openSnackBar({
-              vertical: 'top',
-              horizontal: 'center',
-              popperMessage: 'Error saving your changes',
-            });
-          }
-        }),
-    );
+    setPageStatus('userSubmitted');
   };
 
   const { vertical, horizontal, openBar } = snackBar;
@@ -217,7 +219,7 @@ const ProfilePage = ({ classes }) => {
         We will not distribute your personal information.
         Your safety is our priority.
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form>
         <TextField
           label="username"
           className={classes.textInput}
@@ -317,7 +319,7 @@ const ProfilePage = ({ classes }) => {
             color="primary"
             className={classes.submitButton}
             variant="contained"
-            onClick={(e) => handleSubmit(e, profileInfo)}
+            onClick={(e) => saveUser(e, profileInfo)}
           >
             Submit
           </Button>
