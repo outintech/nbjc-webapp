@@ -159,6 +159,7 @@ const ProfilePage = ({ classes }) => {
           ...profileInfo,
           ...user,
         });
+        setPageStatus('');
         setUserCreated(true);
       } catch (error) {
         if (error.message.exception.includes('Username has already been taken')) {
@@ -168,6 +169,7 @@ const ProfilePage = ({ classes }) => {
             popperMessage: 'Username has already been taken',
           });
         } else {
+          setPageStatus('');
           openSnackBar({
             vertical: 'top',
             horizontal: 'center',
@@ -191,10 +193,12 @@ const ProfilePage = ({ classes }) => {
   };
 
   const { vertical, horizontal, openBar } = snackBar;
+
   if (userCreated) {
     const query = useQuery();
     history.push(`${query.get('returnTo')}`);
   }
+
   return (
     <Container className={classes.container}>
       <Snackbar

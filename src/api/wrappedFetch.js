@@ -20,6 +20,7 @@ const wrappedFetch = async (url, opts) => {
     error.status = 404;
     throw error;
   } else {
+    console.log(result);
     error.status = 500;
     throw error;
   }
