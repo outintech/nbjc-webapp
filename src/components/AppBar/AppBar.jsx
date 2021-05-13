@@ -7,7 +7,13 @@ import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
@@ -19,6 +25,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 import { NameContext } from '../../context/NameContext';
 import { UserContext } from '../../context/UserContext';
@@ -75,6 +82,7 @@ const AppBar = ({
   routes,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showSupportDialog, setShowSupportDialog] = useState(false);
   const nameContext = useContext(NameContext);
   const userContext = useContext(UserContext);
   const history = useHistory();
@@ -166,35 +174,85 @@ const AppBar = ({
   };
 
   return (
-    <div className={classes.root} data-testid="app-bar">
-      <MaterialAppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <NavIcons />
-          <Typography variant="h6" data-testid="appbar-title">
-            {pageTitle || nameContext.spaceTitle}
-          </Typography>
-          {pageTitle !== 'undefined' && pageTitle === 'Home' ? <Logo /> : null}
-          <Avatar className={classes.avatar}>
-            <Link href="/profile" underline="none">
-              {avatar}
-            </Link>
-          </Avatar>
-        </Toolbar>
-      </MaterialAppBar>
-      <Drawer
-        open={showDrawer}
-        onClose={() => setShowDrawer(false)}
-        data-testid="appbar-drawer"
-        className={classes.drawer}
-        classes={{
-          paper: classes.drawerPaper,
-          backdrop: classes.backdrop,
-        }}
+    <>
+      <div className={classes.root} data-testid="app-bar">
+        <MaterialAppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <NavIcons />
+            <Typography variant="h6" data-testid="appbar-title">
+              {pageTitle || nameContext.spaceTitle}
+            </Typography>
+            {pageTitle !== 'undefined' && pageTitle === 'Home' ? <Logo /> : null}
+            <Avatar className={classes.avatar}>
+              <Link href="/profile" underline="none">
+                {avatar}
+              </Link>
+            </Avatar>
+          </Toolbar>
+        </MaterialAppBar>
+        <Drawer
+          open={showDrawer}
+          onClose={() => setShowDrawer(false)}
+          data-testid="appbar-drawer"
+          className={classes.drawer}
+          classes={{
+            paper: classes.drawerPaper,
+            backdrop: classes.backdrop,
+          }}
+        >
+          <Toolbar />
+          <List>
+            {showDrawerItems()}
+            <ListItem
+              button
+              key="support"
+              onClick={() => {
+                setShowSupportDialog(true);
+              }}
+            >
+              <ListItemIcon>
+                <HelpOutlineOutlinedIcon color="tertiary" className={classes.icons} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography className={classes.icons} variant="subtitle2">
+                  Support
+                </Typography>
+              </ListItemText>
+            </ListItem>
+          </List>
+        </Drawer>
+      </div>
+      <Dialog
+        open={showSupportDialog}
+        onClose={() => setShowSupportDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <Toolbar />
-        <List>{showDrawerItems()}</List>
-      </Drawer>
-    </div>
+        <DialogTitle id="alert-dialog-title">Leave The Lavender Book?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to leave The Lavender Book?
+            You will be taken to Google Forms to contact Support.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowSupportDialog(false)} color="primary">
+            Disagree
+          </Button>
+          <Button
+            onClick={() => {
+              window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
+              setShowSupportDialog(false);
+              setShowDrawer(false);
+            }}
+            color="primary"
+            autoFocus
+          >
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

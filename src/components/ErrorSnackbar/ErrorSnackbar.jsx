@@ -48,7 +48,8 @@ const ErrorSnackbar = ({
       {showSupport && (
         <Button
           className={classes.supportButton}
-          href="/support"
+          href="https://forms.gle/mLDNTMGxMojuiKKLA"
+          target="_blank"
           disableElevation
           disableRipple
         >
