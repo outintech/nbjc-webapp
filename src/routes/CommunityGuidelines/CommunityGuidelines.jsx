@@ -24,25 +24,21 @@ const CommunityGuidelines = ({ classes }) => (
     </Box>
     <Box component="span" display="block" p={1} m={1}>
       <Typography align="left">
-        People come to The Lavender Book to find local businesses that are safe for the Black LGBTQIA+ community. We know that people won’t always agree, but we expect everyone on the platform to treat one another and the platform with honesty and respect. We’ve put together these general guidelines to help set the tone for discourse on the site—just in case.
+        Members of our community come to the Lavender Book to find businesses, non-profits, places of worship, and spaces to simply be, that are owned and operated by folx who demonstrate consistency in competence and compassion in their approach to providing inclusive, safe, and affirming experiences for Black LGBTQ+/SGL people. We know that people will not always agree, but we expect everyone in the user community to treat one another and the platform with honesty and respect. We drafted these guidelines to help set the tone for discourse on the site:
       </Typography>
     </Box>
     <Box component="span" display="block" p={1} m={1}>
       <Typography align="left">
         <strong>Relevance: </strong>
-        Please make sure your contributions are appropriate to the forum. For example, reviews aren’t the place for rants about political ideologies, a business’s employment practices, extraordinary circumstances, or other matters that don’t address the core of the consumer experience. This platform is meant to identify local businesses that are safe for the Black LGBTQIA+ community as consumers, keep this in mind when writing a business review.
-      </Typography>
-      <Typography align="left">
-        <strong>Inappropriate content: </strong>
-        Colorful language and imagery are fine, but there’s no place for threats, harassment, lewdness, hate speech, or other displays of bigotry. When they go low, we go high.
+        Please make sure your contributions are appropriate to the forum. This site is meant to identify resources and services that are inclusive, safe, and affirming for this community. Please keep this in mind when writing a review.
       </Typography>
       <Typography align="left">
         <strong>Conflicts of interest: </strong>
-        Your contributions to The Lavender Book should be unbiased and objective. For example, you shouldn’t write reviews of your own business or employer, your friends’ or relatives’ business, your peers or competitors in your industry, or businesses in your networking group.
+        Colorful language and imagery are fine, but there’s no place for threats, harassment, lewdness, hate speech, or other displays of bigotry, bias, or hate.
       </Typography>
       <Typography align="left">
         <strong>Privacy: </strong>
-        Do not publicize people’s private information. Do not post photographs or videos of other consumers in the establishment.
+        Do not publicize people’s private information. Do not post photographs or videos of employees or other customers in the establishment.
       </Typography>
       <Typography align="left">
         <strong>Promotional content: </strong>
@@ -50,7 +46,7 @@ const CommunityGuidelines = ({ classes }) => (
       </Typography>
       <Typography align="left">
         <strong>Intellectual property: </strong>
-        Don’t swipe content from other sites, users, or businesses. You’re here to provide accurate reviews about your experiences with local businesses, no need to subject the community to lawsuits for swiping content, your words are enough to help others.
+        Don’t swipe content from other sites, users, or businesses. You’re here to provide accurate reviews about your experiences with local businesses. No need to subject the community to lawsuits for swiping content. Your words are enough to help others.
       </Typography>
     </Box>
   </div>
