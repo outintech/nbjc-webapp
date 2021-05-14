@@ -398,7 +398,7 @@ const ProfilePage = ({ classes }) => {
         className={classes.submitButton}
         variant="contained"
         onClick={() => logout({
-          returnTo: `http://${process.env.REACT_APP_DOMAIN}/`,
+          returnTo: window.location.origin,
           client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
         })}

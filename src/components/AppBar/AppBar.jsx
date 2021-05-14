@@ -80,6 +80,7 @@ const AppBar = ({
   selected,
   classes,
   routes,
+  isLoading,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showSupportDialog, setShowSupportDialog] = useState(false);
@@ -180,9 +181,9 @@ const AppBar = ({
           <Toolbar>
             <NavIcons />
             <Typography variant="h6" data-testid="appbar-title">
-              {pageTitle || nameContext.spaceTitle}
+              {isLoading ? '' : pageTitle || nameContext.spaceTitle}
             </Typography>
-            {pageTitle !== 'undefined' && pageTitle === 'Home' ? <Logo /> : null}
+            {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? <Logo /> : null}
             <Avatar className={classes.avatar}>
               <Link href="/profile" underline="none">
                 {avatar}
@@ -259,6 +260,7 @@ const AppBar = ({
 AppBar.propTypes = {
   selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool,
   routes: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -270,6 +272,7 @@ AppBar.propTypes = {
 
 AppBar.defaultProps = {
   selected: 'home',
+  isLoading: false,
 };
 
 export default withStyles(styles)(AppBar);
