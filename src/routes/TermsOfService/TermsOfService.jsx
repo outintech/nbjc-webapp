@@ -530,7 +530,7 @@ const TermsOfService = ({ classes }) => (
           <strong>Copyright and Trademark Disputes. </strong>
           You agree to follow our
           {' '}
-          <a href="/infringement-policy">Infringement Policy</a>
+          <a href="/infringement-policies">Infringement Policies</a>
           {' '}
           in notifying us about copyright and trademark disputes concerning User Content. You agree we may forward any notification sent pursuant to our Infringement Policy to the user who submitted the User Content at issue.
         </Typography>

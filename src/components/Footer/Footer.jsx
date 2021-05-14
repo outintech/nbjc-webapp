@@ -98,6 +98,9 @@ const Footer = ({ classes }) => (
         <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank" disableRipple disableFocusRipple disableTouchRipple>
           Privacy Policy
         </a>
+        <a size="small" href="/infringement-policies" disableRipple disableFocusRipple disableTouchRipple>
+          Infringement Policies
+        </a>
         <Box component="span" className={classes.copyright}>
           Copyright 2021 NBJC
         </Box>
