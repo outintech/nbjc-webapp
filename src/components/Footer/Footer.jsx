@@ -95,7 +95,7 @@ const Footer = ({ classes }) => (
         <a size="small" href="/terms-of-service" disableRipple disableFocusRipple disableTouchRipple>
           Terms of Services
         </a>
-        <a size="small" href="/privacy-policy" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank" disableRipple disableFocusRipple disableTouchRipple>
           Privacy Policy
         </a>
         <Box component="span" className={classes.copyright}>
