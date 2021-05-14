@@ -14,6 +14,7 @@ import Profile from './Profile';
 import CreateProfile from '../components/CreateProfile/CreateProfile';
 import ProfileSubmitted from '../components/ProfileSubmitted/ProfileSubmitted';
 import CommunityGuidelines from './CommunityGuidelines';
+import TermsOfService from './TermsOfService';
 
 const routes = [{
   label: 'Home',
@@ -68,6 +69,14 @@ const routes = [{
   path: '/community-guidelines',
   content: CommunityGuidelines,
   key: 'communityGuidelines',
+  skipAppBar: true,
+  prefix: '',
+},
+{
+  label: 'Terms of Service',
+  path: '/terms-of-service',
+  content: TermsOfService,
+  key: 'termsOfService',
   skipAppBar: true,
   prefix: '',
 },

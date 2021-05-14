@@ -92,7 +92,7 @@ const Footer = ({ classes }) => (
         <a size="small" href="/community-guidelines" disableRipple disableFocusRipple disableTouchRipple>
           Community Guidelines
         </a>
-        <a size="small" href="/tos" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="/terms-of-service" disableRipple disableFocusRipple disableTouchRipple>
           Terms of Services
         </a>
         <a size="small" href="/privacy-policy" disableRipple disableFocusRipple disableTouchRipple>
