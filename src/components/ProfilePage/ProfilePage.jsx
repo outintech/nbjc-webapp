@@ -63,7 +63,7 @@ const styles = () => ({
 const ProfilePage = ({ classes }) => {
   const {
     userProfile,
-    setUserProfile,
+    // setUserProfile,
     user,
     profileChips,
   } = useContext(UserContext);
@@ -138,11 +138,11 @@ const ProfilePage = ({ classes }) => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name: targetName, value } = e.target;
+  const handleChange = (e, fieldName) => {
+    const { value } = e.target;
     setProfileInfo((prevState) => ({
       ...prevState,
-      [targetName]: value,
+      [fieldName]: value,
     }));
   };
 
@@ -153,7 +153,7 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
-    } else if (/[^a-zA-Z -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+    } else if (/[^a-zA-Z0-9_ -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
@@ -186,7 +186,7 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      const updatedProfile = await updateUser({
+      await updateUser({
         username: profileInfo.username,
         pronouns: profileInfo.pronouns,
         location: profileInfo.location,
@@ -194,7 +194,7 @@ const ProfilePage = ({ classes }) => {
         identities: profileInfo.identities,
         name: profileInfo.name,
       }, user.token);
-      setUserProfile(updatedProfile.data.user);
+      // setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -248,7 +248,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Name"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'name')}
           onClick={handleClick}
           onBlur={() => fieldValidation('name', profileInfo.name)}
           error={inputError.nameError}
@@ -266,7 +266,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Username"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'username')}
           onClick={handleClick}
           onBlur={() => fieldValidation('username', profileInfo.username)}
           error={inputError.usernameError}
@@ -284,7 +284,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Pronouns"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'pronouns')}
           onClick={handleClick}
           onBlur={() => fieldValidation('pronouns', profileInfo.pronouns)}
           error={inputError.pronounsError}
