@@ -56,14 +56,13 @@ const styles = () => ({
   submitButton: {
     width: '250px',
     height: '36px',
-    margin: '50px auto',
+    margin: '20px auto',
   },
 });
 
 const ProfilePage = ({ classes }) => {
   const {
     userProfile,
-    // setUserProfile,
     user,
     profileChips,
   } = useContext(UserContext);
@@ -194,7 +193,6 @@ const ProfilePage = ({ classes }) => {
         identities: profileInfo.identities,
         name: profileInfo.name,
       }, user.token);
-      // setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -370,7 +368,7 @@ const ProfilePage = ({ classes }) => {
         variant="contained"
         onClick={() => logout({
           // Need to update env variable
-          returnTo: 'http://localhost:3000',
+          returnTo: process.env.REACT_APP_AUTH0_DOMAIN,
           client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
         })}

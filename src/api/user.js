@@ -99,7 +99,7 @@ const updateUser = async (userOpts, token) => {
     username: userOpts.username,
     pronouns: userOpts.pronouns,
     location: userOpts.location,
-    identities_attributes: userOpts.identities,
+    identities_attributes: userOpts.identities.map((identity) => ({ name: identity[1] })),
     name: userOpts.name,
   };
   const results = await wrappedFetch(url, {
