@@ -15,11 +15,11 @@ const UserContextProvider = ({ children }) => {
     username: undefined,
     pronouns: undefined,
     location: undefined,
+    identities: undefined,
   });
 
   const [profileChips, setProfileChips] = useState();
 
-  // TODO: Some of the indentities are duplicated
   useEffect(() => {
     async function fetchIdentities() {
       const results = await getProfileChips();

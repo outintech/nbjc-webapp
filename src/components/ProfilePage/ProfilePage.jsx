@@ -8,8 +8,6 @@ import {
   Container,
   Snackbar,
   Typography,
-  Popper,
-  Card,
   Chip,
   TextField,
 } from '@material-ui/core';
@@ -63,7 +61,12 @@ const styles = () => ({
 });
 
 const ProfilePage = ({ classes }) => {
-  const { userProfile, user, profileChips } = useContext(UserContext);
+  const {
+    userProfile,
+    setUserProfile,
+    user,
+    profileChips,
+  } = useContext(UserContext);
 
   const {
     name,
@@ -72,7 +75,8 @@ const ProfilePage = ({ classes }) => {
     location,
     identities: userIdentites = [],
   } = userProfile;
-  const identities = userIdentites.map((identity) => identity.name);
+
+  const identities = userIdentites.map((identity) => [identity.id, identity.name]);
 
   const [profileInfo, setProfileInfo] = useState({
     identities,
@@ -111,17 +115,25 @@ const ProfilePage = ({ classes }) => {
     setSnackBar({ ...snackBar, openBar: false });
   };
 
+  const labelExists = (identityAttributes, label) => {
+    const exists = identityAttributes.find((el) => el[1] === label);
+    if (exists) {
+      return true;
+    }
+    return false;
+  };
+
   const addLabel = (label) => {
-    if (profileInfo.identities.includes(label)) {
+    if (labelExists(profileInfo.identities, label.name)) {
       setProfileInfo((prevState) => ({
         ...prevState,
         identities: prevState.identities
-          .filter((labelFilter) => labelFilter !== label),
+          .filter((labelFilter) => labelFilter[1] !== label.name),
       }));
     } else {
       setProfileInfo((prevState) => ({
         ...prevState,
-        identities: [...prevState.identities, label],
+        identities: [...prevState.identities, [label.id, label.name]],
       }));
     }
   };
@@ -134,14 +146,24 @@ const ProfilePage = ({ classes }) => {
     }));
   };
 
-  const open = Boolean(anchorEl);
-
   const fieldValidation = (fieldName, fieldValue) => {
     if (!fieldValue || fieldValue.trim() === '') {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
+      }));
+    } else if (/[^a-zA-Z -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Invalid characters',
+      }));
+    } else if (fieldValue.trim().length > 20) {
+      setInputError((prevState) => ({
+        ...prevState,
+        [`${fieldName}Error`]: true,
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
       }));
     } else {
       setInputError((prevState) => ({
@@ -153,7 +175,7 @@ const ProfilePage = ({ classes }) => {
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.values(inputError).some((el) => el === true)) {
       openSnackBar({
@@ -164,7 +186,7 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      updateUser({
+      const updatedProfile = await updateUser({
         username: profileInfo.username,
         pronouns: profileInfo.pronouns,
         location: profileInfo.location,
@@ -172,6 +194,7 @@ const ProfilePage = ({ classes }) => {
         identities: profileInfo.identities,
         name: profileInfo.name,
       }, user.token);
+      setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -196,7 +219,6 @@ const ProfilePage = ({ classes }) => {
   };
 
   const { vertical, horizontal, openBar } = snackBar;
-  const id = open ? 'transitions-popper' : undefined;
   const { logout } = useAuth0();
 
   return (
@@ -216,7 +238,7 @@ const ProfilePage = ({ classes }) => {
         }
       />
       <Typography variant="h4" className={classes.title}>
-        User Profile
+        Users Profile
       </Typography>
       <Typography className={classes.blurb}>
         View and edit your profile. After you make a change, click Save.
@@ -254,7 +276,7 @@ const ProfilePage = ({ classes }) => {
           autoComplete="off"
           type="input"
           variant="outlined"
-          name="username"
+          name="name"
           autoFocus
           required
         />
@@ -292,56 +314,14 @@ const ProfilePage = ({ classes }) => {
           name="location"
           required
         />
-        <Popper
-          type="submit"
-          id={id}
-          open={open}
-          placement="bottom"
-          disablePortal={false}
-          anchorEl={anchorEl}
-          transition
-          modifiers={{
-            flip: {
-              enabled: true,
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: 'scrollParent',
-            },
-          }}
-        >
-          <Card className={classes.popperCard}>
-            <Button
-              className={classes.popperButton}
-              color="primary"
-              variant="outlined"
-              aria-label="cancel"
-              component="span"
-              onClick={() => setAnchorEl(null)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className={classes.popperButton}
-              color="primary"
-              variant="contained"
-              aria-label="save"
-              component="span"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Save
-            </Button>
-          </Card>
-        </Popper>
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {profileChips && profileChips.map((chip) => (
-            identities && profileInfo.identities.includes(chip.name) ? (
+            identities && labelExists(profileInfo.identities, chip.name) ? (
               <Chip
                 className={classes.identityChip}
                 key={chip.name}
-                onClick={(e) => { addLabel(chip.name); handleClick(e); }}
+                onClick={(e) => { addLabel(chip); handleClick(e); }}
                 color="primary"
                 icon={<CheckIcon />}
                 anchorEl={anchorEl}
@@ -359,7 +339,7 @@ const ProfilePage = ({ classes }) => {
                   className={classes.identityChip}
                   key={chip.name}
                   variant="outlined"
-                  onClick={(e) => { addLabel(chip.name); handleClick(e); }}
+                  onClick={(e) => { addLabel(chip); handleClick(e); }}
                   color="primary"
                   anchorEl={anchorEl}
                   label={
@@ -379,10 +359,20 @@ const ProfilePage = ({ classes }) => {
         color="primary"
         className={classes.submitButton}
         variant="contained"
+        onClick={(e) => handleSubmit(e)}
+      >
+        save changes
+      </Button>
+      <Button
+        type="button"
+        color="primary"
+        className={classes.submitButton}
+        variant="contained"
         onClick={() => logout({
+          // Need to update env variable
           returnTo: 'http://localhost:3000',
-          client_id: 'AJfV70psKlUrEckGzlcoGj0iK50drkQt',
-          federated: 'https://dev-inz0b2tv.us.auth0.com/v2/logout?federated',
+          client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+          federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
         })}
       >
         logout
