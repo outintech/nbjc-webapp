@@ -152,7 +152,7 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
-    } else if (/[^a-zA-Z0-9_ -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+    } else if (/[^a-zA-Z0-9 -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
@@ -367,8 +367,7 @@ const ProfilePage = ({ classes }) => {
         className={classes.submitButton}
         variant="contained"
         onClick={() => logout({
-          // Need to update env variable
-          returnTo: process.env.REACT_APP_AUTH0_DOMAIN,
+          returnTo: window.location.origin,
           client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
         })}

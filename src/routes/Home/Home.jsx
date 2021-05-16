@@ -19,7 +19,7 @@ const styles = (theme) => ({
       width: '100%',
     },
     [theme.breakpoints.up('mobile')]: {
-      width: '500px',
+      maxWidth: '500px',
     },
     height: 'auto',
     display: 'inherit',
@@ -55,7 +55,9 @@ const styles = (theme) => ({
 });
 
 const Home = ({ classes }) => {
-  const matches = useMediaQuery('(min-width:376px)');
+  // since this is a copy heavy page
+  // switch to smaller dimensions sooner
+  const matches = useMediaQuery('(min-width:500px)');
   let src = '/mobile-home-icon.svg';
   let variant = 'h5';
   if (matches) {
@@ -74,7 +76,7 @@ const Home = ({ classes }) => {
       </Box>
       <Box component="span" display="block" p={1} m={1}>
         <Typography variant={variant} align="center">
-          It’s mission is to spread the word about spaces where people can be themselves.
+          Its mission is to spread the word about spaces where people can be themselves.
           All spaces and reviews are published by Lavender Book members.
         </Typography>
       </Box>

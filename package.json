@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
     "node-fetch": "^2.6.1",
     "prop-types": "^15.7.2",

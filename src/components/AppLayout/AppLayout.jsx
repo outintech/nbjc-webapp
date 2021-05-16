@@ -1,7 +1,8 @@
 /* eslint-disable arrow-body-style */
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { useAuth0 } from '@auth0/auth0-react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import AppBar from '../AppBar';
 import Footer from '../Footer';
@@ -39,14 +40,23 @@ const AppLayout = ({
       key: r.key,
       icon: r.icon,
     }));
+  const { isLoading } = useAuth0();
   return (
     <div className={classes.root}>
       <AppBar
         routes={appBarRoutes}
         selected={selected}
+        isLoading={isLoading}
       />
       <div className={classes.content}>
-        {children}
+        {isLoading && (
+          <CircularProgress color="secondary" />
+        )}
+        {!isLoading && (
+          <>
+            {children}
+          </>
+        )}
       </div>
       <Footer />
     </div>
