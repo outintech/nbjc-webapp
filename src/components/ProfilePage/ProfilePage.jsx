@@ -8,8 +8,6 @@ import {
   Container,
   Snackbar,
   Typography,
-  Popper,
-  Card,
   Chip,
   TextField,
 } from '@material-ui/core';
@@ -58,14 +56,13 @@ const styles = () => ({
   submitButton: {
     width: '250px',
     height: '36px',
-    margin: '50px auto',
+    margin: '20px auto',
   },
 });
 
 const ProfilePage = ({ classes }) => {
   const {
     userProfile,
-    setUserProfile,
     user,
     profileChips,
   } = useContext(UserContext);
@@ -77,7 +74,8 @@ const ProfilePage = ({ classes }) => {
     location,
     identities: userIdentites = [],
   } = userProfile;
-  const identities = userIdentites.map((identity) => identity.name);
+
+  const identities = userIdentites.map((identity) => [identity.id, identity.name]);
 
   const [profileInfo, setProfileInfo] = useState({
     identities,
@@ -116,30 +114,36 @@ const ProfilePage = ({ classes }) => {
     setSnackBar({ ...snackBar, openBar: false });
   };
 
+  const labelExists = (identityAttributes, label) => {
+    const exists = identityAttributes.find((el) => el[1] === label);
+    if (exists) {
+      return true;
+    }
+    return false;
+  };
+
   const addLabel = (label) => {
-    if (profileInfo.identities.includes(label)) {
+    if (labelExists(profileInfo.identities, label.name)) {
       setProfileInfo((prevState) => ({
         ...prevState,
         identities: prevState.identities
-          .filter((labelFilter) => labelFilter !== label),
+          .filter((labelFilter) => labelFilter[1] !== label.name),
       }));
     } else {
       setProfileInfo((prevState) => ({
         ...prevState,
-        identities: [...prevState.identities, label],
+        identities: [...prevState.identities, [label.id, label.name]],
       }));
     }
   };
 
-  const handleChange = (e) => {
-    const { name: targetName, value } = e.target;
+  const handleChange = (e, fieldName) => {
+    const { value } = e.target;
     setProfileInfo((prevState) => ({
       ...prevState,
-      [targetName]: value,
+      [fieldName]: value,
     }));
   };
-
-  const open = Boolean(anchorEl);
 
   const fieldValidation = (fieldName, fieldValue) => {
     if (!fieldValue || fieldValue.trim() === '') {
@@ -148,7 +152,7 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: `${fieldName} required`,
       }));
-    } else if (/[^a-zA-Z -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
+    } else if (/[^a-zA-Z0-9 -]/.test(fieldValue) && (fieldName === 'name' || fieldName === 'username')) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
@@ -181,7 +185,7 @@ const ProfilePage = ({ classes }) => {
       return;
     }
     try {
-      const updatedProfile = await updateUser({
+      await updateUser({
         username: profileInfo.username,
         pronouns: profileInfo.pronouns,
         location: profileInfo.location,
@@ -189,7 +193,6 @@ const ProfilePage = ({ classes }) => {
         identities: profileInfo.identities,
         name: profileInfo.name,
       }, user.token);
-      setUserProfile(updatedProfile.data.user);
       openSnackBar({
         vertical: 'top',
         horizontal: 'center',
@@ -214,7 +217,6 @@ const ProfilePage = ({ classes }) => {
   };
 
   const { vertical, horizontal, openBar } = snackBar;
-  const id = open ? 'transitions-popper' : undefined;
   const { logout } = useAuth0();
 
   return (
@@ -244,7 +246,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Name"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'name')}
           onClick={handleClick}
           onBlur={() => fieldValidation('name', profileInfo.name)}
           error={inputError.nameError}
@@ -262,7 +264,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Username"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'username')}
           onClick={handleClick}
           onBlur={() => fieldValidation('username', profileInfo.username)}
           error={inputError.usernameError}
@@ -280,7 +282,7 @@ const ProfilePage = ({ classes }) => {
           InputLabelProps={{ shrink: true }}
           label="Pronouns"
           className={classes.textInput}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'pronouns')}
           onClick={handleClick}
           onBlur={() => fieldValidation('pronouns', profileInfo.pronouns)}
           error={inputError.pronounsError}
@@ -310,56 +312,14 @@ const ProfilePage = ({ classes }) => {
           name="location"
           required
         />
-        <Popper
-          type="submit"
-          id={id}
-          open={open}
-          placement="bottom"
-          disablePortal={false}
-          anchorEl={anchorEl}
-          transition
-          modifiers={{
-            flip: {
-              enabled: true,
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: 'scrollParent',
-            },
-          }}
-        >
-          <Card className={classes.popperCard}>
-            <Button
-              className={classes.popperButton}
-              color="primary"
-              variant="outlined"
-              aria-label="cancel"
-              component="span"
-              onClick={() => setAnchorEl(null)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className={classes.popperButton}
-              color="primary"
-              variant="contained"
-              aria-label="save"
-              component="span"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Save
-            </Button>
-          </Card>
-        </Popper>
         <Typography variant="h6">Tell us about yourself</Typography>
         <Box>
           {profileChips && profileChips.map((chip) => (
-            identities && profileInfo.identities.includes(chip.name) ? (
+            identities && labelExists(profileInfo.identities, chip.name) ? (
               <Chip
                 className={classes.identityChip}
                 key={chip.name}
-                onClick={(e) => { addLabel(chip.name); handleClick(e); }}
+                onClick={(e) => { addLabel(chip); handleClick(e); }}
                 color="primary"
                 icon={<CheckIcon />}
                 anchorEl={anchorEl}
@@ -377,7 +337,7 @@ const ProfilePage = ({ classes }) => {
                   className={classes.identityChip}
                   key={chip.name}
                   variant="outlined"
-                  onClick={(e) => { addLabel(chip.name); handleClick(e); }}
+                  onClick={(e) => { addLabel(chip); handleClick(e); }}
                   color="primary"
                   anchorEl={anchorEl}
                   label={
@@ -392,6 +352,15 @@ const ProfilePage = ({ classes }) => {
           ))}
         </Box>
       </form>
+      <Button
+        type="button"
+        color="primary"
+        className={classes.submitButton}
+        variant="contained"
+        onClick={(e) => handleSubmit(e)}
+      >
+        save changes
+      </Button>
       <Button
         type="button"
         color="primary"

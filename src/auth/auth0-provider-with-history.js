@@ -22,7 +22,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       redirectUri={window.location.origin}
       responseType="token id_token"
       audience="https://nbjc-app/api"
-      scope="openid profile write:spaces"
+      scope="openid profile write:spaces offline_access"
       onRedirectCallback={onRedirectCallback}
       cacheLocation="localstorage"
       useRefreshTokens
