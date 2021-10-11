@@ -43,6 +43,7 @@ const styles = (theme) => ({
   },
   cardMedia: {
     margin: 'auto',
+    backgroundRepeat: 'repeat-x',
     [theme.breakpoints.up('xs')]: {
       width: 344,
       height: 194,
@@ -121,7 +122,7 @@ const BusinessCard = ({
         classes={{ action: classes.headerAction }}
       />
       <CardMedia
-        image={imageUrl}
+        image={imageUrl || '/web-no-image.png'}
         className={classes.cardMedia}
       />
       <CardContent>
