@@ -43,7 +43,6 @@ const styles = (theme) => ({
   },
   cardMedia: {
     margin: 'auto',
-    backgroundRepeat: 'repeat-x',
     [theme.breakpoints.up('xs')]: {
       width: 344,
       height: 194,

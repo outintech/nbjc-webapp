@@ -51,6 +51,11 @@ const styles = () => ({
     margin: 'auto',
     height: '300px',
   },
+  defaultMedia: {
+    margin: 'auto',
+    height: '300px',
+    width: '50%',
+  },
   reviewHeader: {
     width: '100%',
     display: 'inline-flex',
@@ -231,7 +236,7 @@ const SpaceDetailCard = ({
         subheader={<Typography variant="body2">{category}</Typography>}
         classes={{ action: classes.headerAction }}
       />
-      <CardMedia image={imageUrl || '/web-no-image.png'} className={classes.cardMedia} />
+      <CardMedia image={imageUrl || '/web-no-image.png'} className={(imageUrl ? classes.cardMedia : classes.defaultMedia)} />
       <CardContent>
         <div className={classes.chipWrapper}>
           <ChipList chips={filters} />
