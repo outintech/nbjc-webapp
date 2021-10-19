@@ -15,7 +15,6 @@ const styles = (theme) => ({
   },
   content: {
     height: '100%',
-    overflow: 'scroll',
     flex: 1,
     [theme.breakpoints.up('xs')]: {
       marginBottom: 20,
