@@ -32,8 +32,10 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       flexWrap: 'no-wrap',
     },
+    height: '120px',
     display: 'flex',
     justifyContent: 'center',
+    alignContent: 'space-evenly',
   },
   button: {
     [theme.breakpoints.up('xs')]: {
