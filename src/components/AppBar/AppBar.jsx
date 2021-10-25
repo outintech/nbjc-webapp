@@ -74,9 +74,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     textAlign: 'center',
   },
-  test: {
-    color: 'white',
-  },
 });
 
 const AppBar = ({

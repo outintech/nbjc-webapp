@@ -23,6 +23,7 @@ const getUser = async ({ userId, token }) => {
   });
   return results;
 };
+
 /**
   * Get a user's profile based on user's db id
   * @param {string} token - User's auth0 token

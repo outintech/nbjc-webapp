@@ -269,6 +269,7 @@ const ProfilePage = ({ classes }) => {
           error={inputError.usernameError}
           helperText={inputError.usernameErrorMessage}
           required
+          autoFocus
         />
         <TextField
           label="name"
@@ -283,7 +284,6 @@ const ProfilePage = ({ classes }) => {
           error={inputError.nameError}
           helperText={inputError.nameErrorMessage}
           required
-          autoFocus
         />
         <TextField
           label="pronouns"
