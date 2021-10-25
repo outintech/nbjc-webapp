@@ -23,15 +23,16 @@ const useAuthenticatedUser = () => {
   const { setUserProfile } = useContext(UserContext);
   const history = useHistory();
   const returnTo = history.location.pathname;
-  let registeredUser;
+  let registeredUser = null;
   let profile;
   const [redirectToCreate, setRedirectToCreate] = useState(false);
   const throwError = useError();
+
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
       const auth0Id = user.sub;
-      setUser({
+      await setUser({
         token,
         auth0Id,
       });
@@ -58,7 +59,7 @@ const useAuthenticatedUser = () => {
         }
       }
     }
-    if (!registeredUser) {
+    if (registeredUser === null) {
       trackPromise(
         fetchData(),
       );
@@ -70,5 +71,6 @@ const useAuthenticatedUser = () => {
     returnTo,
   };
 };
+/* eslint-disable */
 
 export default useAuthenticatedUser;
