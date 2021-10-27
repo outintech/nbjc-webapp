@@ -90,7 +90,7 @@ const ProfilePage = ({ classes }) => {
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
   const [pageStatus, setPageStatus] = useState('');
-  const { user, profileChips } = useContext(UserContext);
+  const { user, profileChips, setProfileCreated } = useContext(UserContext);
   const history = useHistory();
 
   const openSnackBar = (newState) => {
@@ -159,11 +159,6 @@ const ProfilePage = ({ classes }) => {
   useEffect(() => {
     async function postUserData(data) {
       await createUser(data);
-      openSnackBar({
-        vertical: 'top',
-        horizontal: 'center',
-        popperMessage: 'Your changes have been saved.',
-      });
     }
     if (pageStatus === 'userSubmitted') {
       try {
@@ -173,6 +168,7 @@ const ProfilePage = ({ classes }) => {
         });
         setPageStatus('');
         setUserCreated(true);
+        setProfileCreated('profile created');
       } catch (error) {
         if (error.message.exception.includes('Username has already been taken')) {
           openSnackBar({
