@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import { useAuth0 } from '@auth0/auth0-react';
 import CheckIcon from '@material-ui/icons/Check';
 import {
   Box,
@@ -91,7 +92,9 @@ const ProfilePage = ({ classes }) => {
   const [userCreated, setUserCreated] = useState(false);
   const [pageStatus, setPageStatus] = useState('');
   const { user, profileChips, setProfileCreated } = useContext(UserContext);
+
   const history = useHistory();
+  const auth0User = useAuth0().user;
 
   const openSnackBar = (newState) => {
     setSnackBar({ ...newState, openBar: true });
@@ -188,6 +191,16 @@ const ProfilePage = ({ classes }) => {
     }
   });
 
+  useEffect(() => {
+    const subMethod = auth0User && auth0User.sub.slice(0, 5);
+    if (subMethod !== 'auth0') {
+      setProfileInfo((prevState) => ({
+        ...prevState,
+        name: auth0User.name,
+      }));
+    }
+  }, []);
+
   const saveUser = () => {
     if (Object.values(inputError).some((el) => el === true)) {
       openSnackBar({
@@ -243,8 +256,8 @@ const ProfilePage = ({ classes }) => {
           name="username"
           error={inputError.usernameError}
           helperText={inputError.usernameErrorMessage}
-          autoFocus
           required
+          autoFocus
         />
         <TextField
           label="name"
