@@ -25,14 +25,17 @@ const styles = (theme) => ({
   },
   content: {
     margin: '0 15px',
+    display: 'flex',
+    flexDirection: 'column',
     [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
+      margin: '0 15px',
     },
   },
   searchResultsWrapper: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, 350px)',
     gridGap: 50,
+    justifyContent: 'center',
   },
   searchResult: {
     [theme.breakpoints.up('xs')]: {
