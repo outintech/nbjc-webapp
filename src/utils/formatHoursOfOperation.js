@@ -13,9 +13,13 @@ const formatHoursOfOperation = (hoursOfOperation) => {
   const currentDate = new Date();
   const currentDay = currentDate.getDay();
   const currentTime = currentDate.getHours() * 100;
-  if (parseInt(hoursOfOperation.open[currentDay].start, 10)
+  const currentDayHours = hoursOfOperation.open.find((hop) => hop.day === currentDay);
+  if (!currentDayHours) {
+    return false;
+  }
+  if (parseInt(currentDayHours.start, 10)
   <= currentTime
-  <= parseInt(hoursOfOperation.open[currentDay].end, 10)) {
+  <= parseInt(currentDayHours.end, 10)) {
     return true;
   }
   return false;
