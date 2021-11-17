@@ -16,6 +16,11 @@ $ cd nbjc-webapp
 $ yarn install
 ```
 
+#### Installation Issue with multiple react-router-dom
+If you have issues with compiling with multiple versions of react-router-dom installed locally, downgrade to version 5 by using:
+
+```yarn add react-router-dom@5```
+
 ### Running the repo locally
 The following will start the repo locally with watchers and hmr in localhost:3000
 
