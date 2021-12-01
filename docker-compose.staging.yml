@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  webapp-staging:
+    container_name: webapp-staging
+    build:
+      context: .
+      dockerfile: Dockerfile.staging
+    ports:
+      - '80:80'
+    env_file:
+      - .env
