@@ -1,5 +1,7 @@
 # dependencies
 /node_modules
+/.pnp
+.pnp.js
 
 # testing
 /coverage
@@ -10,8 +12,8 @@
 # misc
 .DS_Store
 .idea
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
+
+.dockerignore
+Dockerfile.dev
+Dockerfile

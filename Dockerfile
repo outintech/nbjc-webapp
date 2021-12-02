@@ -10,15 +10,27 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci --silent --production # exclude dev dependencies
+RUN npm ci --silent
 RUN npm install react-scripts@4.0.3 -g --silent
 
 # add app
 COPY . ./
 
+ARG REACT_APP_API_DOMAIN
+ENV REACT_APP_API_DOMAIN ${REACT_APP_API_DOMAIN}
+
+ARG REACT_APP_API_HOST
+ENV REACT_APP_API_HOST ${REACT_APP_API_HOST}
+
+ARG REACT_APP_AUTH0_DOMAIN
+ENV REACT_APP_AUTH0_DOMAIN ${REACT_APP_AUTH0_DOMAIN}
+
+ARG REACT_APP_AUTH0_CLIENT_ID
+ENV REACT_APP_AUTH0_CLIENT_ID ${REACT_APP_AUTH0_CLIENT_ID}
+
 RUN npm run build
 
-# production environment
+# production environment with reverse proxy
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 # for react-route
