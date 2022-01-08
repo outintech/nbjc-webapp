@@ -129,7 +129,7 @@ const Search = ({
       </Typography>
       <form onSubmit={onSearch} className={classes.form}>
         <InputLabel type="inputLabel" className={classes.inputLabel}>
-          <Typography variant="h6">What&apos;s the space?</Typography>
+          <Typography variant="h6">What&apos;s the Space?</Typography>
         </InputLabel>
         <TextField
           type="input"
