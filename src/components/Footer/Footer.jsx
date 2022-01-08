@@ -93,7 +93,7 @@ const Footer = ({ classes }) => (
           Community Guidelines
         </a>
         <a size="small" href="/terms-of-service" disableRipple disableFocusRipple disableTouchRipple>
-          Terms of Services
+          Terms of Service
         </a>
         <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank" disableRipple disableFocusRipple disableTouchRipple>
           Privacy Policy

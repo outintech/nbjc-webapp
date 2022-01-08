@@ -226,11 +226,11 @@ const SearchForm = ({
             variant={matches ? 'h4' : 'subtitle1'}
             align="center"
           >
-            Search for spaces by name, location, category, or attributes.
+            Search for Spaces by name, location, category, or attributes.
           </Typography>
         </header>
         <InputLabel type="inputLabel" className={classes.inputLabel}>
-          <Typography variant="h6">What&apos;s the space?</Typography>
+          <Typography variant="h6">What&apos;s the Space?</Typography>
         </InputLabel>
         <Autocomplete
           getOptionSelected={(option, value) => option.name === value.name}

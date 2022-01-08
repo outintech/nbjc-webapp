@@ -236,10 +236,10 @@ const ProfilePage = ({ classes }) => {
         }
       />
       <Typography variant="h4" className={classes.title}>
-        Users Profile
+        User Profile
       </Typography>
       <Typography className={classes.blurb}>
-        View and edit your profile. After you make a change, click Save.
+        View and edit your profile. After you make a change, click Save Changes.
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
