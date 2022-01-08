@@ -135,6 +135,7 @@ const Review = ({
         />
         <FormControlLabel
           className={classes.checkbox}
+          checked={formValues.anon}
           control={<Checkbox name="anon" color="primary" onChange={onChange} />}
           label={(
             <Typography variant="body2">
