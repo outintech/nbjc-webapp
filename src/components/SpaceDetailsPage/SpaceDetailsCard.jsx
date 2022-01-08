@@ -26,7 +26,7 @@ import ChipList from '../ChipList';
 import ReviewCard from '../ReviewsPage/ReviewCard';
 import { previousReview, nextReview } from '../../utils/reviewPreview';
 
-const styles = () => ({
+const styles = (theme) => ({
   root: {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
@@ -53,6 +53,12 @@ const styles = () => ({
     width: '100%',
     minWidth: '50%',
     backgroundSize: 'contain',
+    [theme.breakpoints.up('md')]: {
+      height: '400px',
+    },
+    [theme.breakpoints.up('lg')]: {
+      height: '500px',
+    },
   },
   reviewHeader: {
     width: '100%',
