@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -65,6 +65,8 @@ const ProfilePage = ({ classes }) => {
     userProfile,
     user,
     profileChips,
+    profileCreated,
+    setProfileCreated,
   } = useContext(UserContext);
 
   const {
@@ -215,6 +217,17 @@ const ProfilePage = ({ classes }) => {
     }
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (profileCreated === 'profile created') {
+      openSnackBar({
+        vertical: 'top',
+        horizontal: 'center',
+        popperMessage: 'Your profile has been created.',
+      });
+      setProfileCreated('');
+    }
+  }, []);
 
   const { vertical, horizontal, openBar } = snackBar;
   const { logout } = useAuth0();
