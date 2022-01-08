@@ -50,6 +50,9 @@ const styles = () => ({
   cardMedia: {
     margin: 'auto',
     height: '300px',
+    width: '100%',
+    minWidth: '50%',
+    backgroundSize: 'contain',
   },
   reviewHeader: {
     width: '100%',
