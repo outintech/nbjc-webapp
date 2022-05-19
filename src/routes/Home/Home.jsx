@@ -60,16 +60,13 @@ const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
   const matches = useMediaQuery('(min-width:500px)');
-  let src = '/mobile-home-icon.svg';
   let variant = 'h5';
   if (matches) {
-    src = '/web-home-icon.svg';
     variant = 'h4';
   }
 
   return (
     <div className={classes.root}>
-      <img src={src} alt="Home page" className={classes.image} />
       <Box component="span" display="block" p={1} m={1}>
         <Typography variant={variant} align="center">
           Welcome! The Lavender Book is a community-driven platform built for the
