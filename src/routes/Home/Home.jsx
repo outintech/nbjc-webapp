@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
+import Container from '@mui/material/Container';
 import Button from '@material-ui/core/Button';
 import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
 import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
@@ -24,19 +24,21 @@ const Img = styled('img')({
   margin: 'auto',
   display: 'block',
   maxWidth: '100%',
-  maxHeight: '100%',
+  maxHeight: 'auto',
 });
 
 export default function ComplexGrid() {
   return (
-    <Paper
+    <Container
       sx={{
-        p: 2,
+        p: 10,
         margin: 'auto',
         maxWidth: '100%',
+        justifyContent: 'center',
         flexGrow: 1,
         backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
       }}
+      maxWidth="xl"
     >
       <Grid
         container
@@ -45,12 +47,12 @@ export default function ComplexGrid() {
         alignItems="center"
       >
         <Grid item>
-          <ButtonBase sx={{ width: 379, height: 379 }}>
-            <Img alt="black woman smiling at pride" src={Image1} />
+          <ButtonBase>
+            <Img alt="happy black person smiling at pride" src={Image1} />
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
+        <Grid item sm container>
+          <Grid item>
             <Grid item>
               <Typography
                 gutterBottom
@@ -66,7 +68,7 @@ export default function ComplexGrid() {
                 gutterBottom
                 variant="subtitle1"
                 component="div"
-                margin="2px"
+                Wrap
               >
                 Our mission is to spread the word about spaces where people can
                 be themselves. All spaces and reviews are published by Lavender
@@ -77,7 +79,7 @@ export default function ComplexGrid() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} direction="row" alignItems="center" justifyContent="flex-start">
         <Grid item>
           <Typography
             gutterBottom
@@ -97,7 +99,13 @@ export default function ComplexGrid() {
             Lavender Book is here whether you are traveling or looking for a new
             local hangout spot.
           </Typography>
-          <Grid container spacing={2} direction="row" justify="space-between">
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            direction="row"
+            justify="space-between"
+          >
             <Grid item>
               <Button variant="outlined">
                 <SolIcon className="sol" />
@@ -130,10 +138,10 @@ export default function ComplexGrid() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs>
-          <ButtonBase sx={{ width: 379, height: 379 }}>
+        <Grid item>
+          <ButtonBase>
             <Img
-              alt="stylish black man in front of rainbow wall"
+              alt="stylish black person in front of rainbow wall"
               src={Image3}
             />
           </ButtonBase>
@@ -146,7 +154,7 @@ export default function ComplexGrid() {
         alignItems="center"
       >
         <Grid item>
-          <ButtonBase sx={{ width: 379, height: 379 }}>
+          <ButtonBase>
             <Img alt="group of people at pride" src={Image2} />
           </ButtonBase>
         </Grid>
@@ -168,15 +176,16 @@ export default function ComplexGrid() {
               </Typography>
               <Grid
                 container
-                rowSpacing={1}
-                columnSpacing={1}
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
                 direction="row"
-                margin="2px"
+                justifyContent="flex-start"
+                alignItems="center"
               >
                 <Grid item>
                   <Button variant="outlined">
                     <CafeIcon className="cafe" />
-                    Coffeeshops
+                    <Typography fontSize="12px" fontWeight="bold"> Coffeeshops </Typography>
                   </Button>
                 </Grid>
                 <Grid item>
@@ -191,15 +200,6 @@ export default function ComplexGrid() {
                     Restaurants
                   </Button>
                 </Grid>
-              </Grid>
-
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={1}
-                direction="row"
-                margin="2px"
-              >
                 <Grid item>
                   <Button variant="outlined">
                     <WellnessIcon className="wellness" />
@@ -223,6 +223,6 @@ export default function ComplexGrid() {
           </Grid>
         </Grid>
       </Grid>
-    </Paper>
+    </Container>
   );
 }
