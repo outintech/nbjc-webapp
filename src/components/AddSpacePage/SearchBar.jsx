@@ -70,6 +70,7 @@ const SearchBar = ({ classes }) => {
         </Typography>
         <InputBase
           className={classes.input}
+          data-testid="searchbar-input"
           placeholder={placeholder}
           inputProps={{ 'aria-label': ariaLabel }}
           value={location}
@@ -77,6 +78,7 @@ const SearchBar = ({ classes }) => {
         />
         <Box
           display="flex"
+          data-testid="searchbar-submit"
           style={{ color: 'white', backgroundColor: '#1E1131' }}
         >
           <IconButton
