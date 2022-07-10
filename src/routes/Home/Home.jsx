@@ -4,7 +4,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Header from '../../components/Header/Header';
 
 const styles = (theme) => ({
   root: {
@@ -70,7 +69,7 @@ const Home = ({ classes }) => {
 
   return (
     <Box>
-      <Header />
+
       <div className={classes.root}>
         <img src={src} alt="Home page" className={classes.image} />
         <Box component="span" display="block" p={1} m={1}>

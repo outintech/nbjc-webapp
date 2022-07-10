@@ -33,7 +33,12 @@ import { UserContext } from '../../context/UserContext';
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    height: 56,
+    [theme.breakpoints.up('xs')]: {
+      height: 64,
+    },
+    [theme.breakpoints.up('mobile')]: {
+      height: 56,
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
