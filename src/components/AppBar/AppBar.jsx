@@ -34,10 +34,10 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     [theme.breakpoints.up('xs')]: {
-      height: 64,
-    },
-    [theme.breakpoints.up('mobile')]: {
       height: 56,
+    },
+    [theme.breakpoints.up('md')]: {
+      height: 64,
     },
   },
   appBar: {
