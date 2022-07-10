@@ -68,51 +68,48 @@ const Home = ({ classes }) => {
   }
 
   return (
-    <Box>
-
-      <div className={classes.root}>
-        <img src={src} alt="Home page" className={classes.image} />
-        <Box component="span" display="block" p={1} m={1}>
-          <Typography variant={variant} align="center">
-            Welcome! The Lavender Book is a community-driven platform built for
-            the Black Queer, Black Trans, and Black Gender Non-Binary
-            communities.
-          </Typography>
-        </Box>
-        <Box component="span" display="block" p={1} m={1}>
-          <Typography variant={variant} align="center">
-            Its mission is to spread the word about spaces where people can be
-            themselves. All spaces and reviews are published by Lavender Book
-            members.
-          </Typography>
-        </Box>
-        <div className={classes.buttonWrapper}>
-          <Button
-            variant="outlined"
-            color="primary"
-            align="center"
-            fullWidth={!matches}
-            href="/spaces/new"
-            className={classes.button}
-            disableElevation
-          >
-            Add a Space
-          </Button>
-          <div className={classes.break} />
-          <Button
-            variant="contained"
-            color="primary"
-            align="center"
-            fullWidth={!matches}
-            href="/search"
-            className={classes.button}
-            disableElevation
-          >
-            Search for a Space
-          </Button>
-        </div>
+    <div className={classes.root}>
+      <img src={src} alt="Home page" className={classes.image} />
+      <Box component="span" display="block" p={1} m={1}>
+        <Typography variant={variant} align="center">
+          Welcome! The Lavender Book is a community-driven platform built for
+          the Black Queer, Black Trans, and Black Gender Non-Binary
+          communities.
+        </Typography>
+      </Box>
+      <Box component="span" display="block" p={1} m={1}>
+        <Typography variant={variant} align="center">
+          Its mission is to spread the word about spaces where people can be
+          themselves. All spaces and reviews are published by Lavender Book
+          members.
+        </Typography>
+      </Box>
+      <div className={classes.buttonWrapper}>
+        <Button
+          variant="outlined"
+          color="primary"
+          align="center"
+          fullWidth={!matches}
+          href="/spaces/new"
+          className={classes.button}
+          disableElevation
+        >
+          Add a Space
+        </Button>
+        <div className={classes.break} />
+        <Button
+          variant="contained"
+          color="primary"
+          align="center"
+          fullWidth={!matches}
+          href="/search"
+          className={classes.button}
+          disableElevation
+        >
+          Search for a Space
+        </Button>
       </div>
-    </Box>
+    </div>
   );
 };
 
