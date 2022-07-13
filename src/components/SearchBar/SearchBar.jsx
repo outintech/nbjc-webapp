@@ -95,4 +95,8 @@ const SearchBar = ({ classes }) => {
   );
 };
 
+SearchBar.propTypes = {};
+
+SearchBar.defaultProps = {};
+
 export default withStyles(styles)(SearchBar);

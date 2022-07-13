@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
-import SearchBar from '../AddSpacePage/SearchBar';
+import SearchBar from '../SearchBar';
 import useMobileDevice from '../../hooks/useMobileDevice';
 
 const styles = (theme) => ({
@@ -45,7 +45,7 @@ const Header = ({ classes }) => {
         <Box className={classes.container}>
           <Typography
             variant={isMobileOrTablet ? 'body1' : 'h4'}
-            style={{ lineHeight: 2 }}
+            gutterBottom
           >
             <b>Find spaces for Black Queer Folx</b>
           </Typography>
