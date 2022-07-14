@@ -88,7 +88,7 @@ To add styleguide to component in the `src/components` folder simply add a `.md`
 * Standalone components use snapshot testing to test the rendered component.
 
 ## Environment variables
-* Copy into `.env.sample` file into `.env`
+* Copy into `.env` file into `.env.local` 
 * Replace `REACT_APP_API_HOST` with host for the API server you wish to hit.
 * Replace placeholder values for `REACT_APP_AUTH0_DOMAIN` and  `REACT_APP_AUTH0_CLIENT_ID`
 
