@@ -67,6 +67,9 @@ const SearchBar = ({ classes }) => {
       }
     };
     fetchData();
+    if (location === '') {
+      setLocationNames([{ name: 'Current Location ' }]);
+    }
   }, [location]);
 
   const handleTextInputChange = (event) => {
@@ -95,15 +98,22 @@ const SearchBar = ({ classes }) => {
         <Autocomplete
           options={locationNames}
           getOptionSelected={(option, value) => option.name === value.name}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => {
+            let label = option.name;
+            if (option.abbreviation) {
+              label += `, ${option.abbreviation}`;
+            }
+            return label;
+          }}
           onChange={(event, newLocation) => {
-            if (newLocation) {
-              setLocation(newLocation.name);
+            if (newLocation.name && newLocation.abbreviation) {
+              setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
+            } else {
+              setLocation(`${newLocation.name}`);
             }
           }}
           className={classes.input}
           forcePopupIcon={false}
-          freeSolo
           disableClearable
           renderOption={(props, options) => (
             <Box
