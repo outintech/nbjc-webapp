@@ -7,6 +7,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
+
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -115,7 +116,7 @@ const SearchBar = ({ classes }) => {
           className={classes.input}
           forcePopupIcon={false}
           disableClearable
-          renderOption={(props, options) => (
+          renderOption={(props) => (
             <Box
               component="li"
               sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
@@ -125,7 +126,7 @@ const SearchBar = ({ classes }) => {
               <LocationOnIcon
                 className={classes.icon}
               />
-              {options.name}
+              {props.name}
             </Box>
           )}
           renderInput={(params) => (
