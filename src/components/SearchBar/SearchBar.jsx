@@ -17,6 +17,13 @@ import { withStyles } from '@material-ui/core/styles';
 
 import States from '../../api/states';
 
+/*
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+  padding: 5px;}
+*/
+
+// Or .MuiIconButton-root padding 16px
+
 const styles = (theme) => ({
   root: {
     display: 'flex',
@@ -53,15 +60,12 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
     fontWeight: 'bold',
   },
-  menuItem: {
-    background: '#F2F2F2;',
-  }
 });
 
 const SearchBar = ({ classes }) => {
   const history = useHistory();
   // const title = 'Where';
-  const placeholder = '    City, state, or zip code';
+  const placeholder = 'City, state, or zip code';
   // const ariaLabel = `Search ${placeholder}`;
 
   const minResultsToDisplay = 1;
@@ -98,7 +102,7 @@ const SearchBar = ({ classes }) => {
   };
 
   return (
-    <Paper component="form" onSubmit={handleSubmit} alignItems="stretch">
+    <Paper component="form" onSubmit={handleSubmit}>
       <Box className={classes.root}>
         <Autocomplete
           sx={{ p: '10px' }}
@@ -122,22 +126,42 @@ const SearchBar = ({ classes }) => {
           forcePopupIcon={false}
           disableClearable
           filterSelectedOptions
-          renderOption={(props) => (
-            <Box
-              component="li"
-              sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-              className={classes.dropdown}
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...props}
-            >
-              <LocationOnIcon className={classes.icon} /> {props.name}, {props.abbreviation}
-            </Box>
-          )}
+          renderOption={(props) => {
+            if (props.abbreviation) {
+              const label = `${props.name}, ${props.abbreviation}`;
+              return (
+                <Box
+                  component="li"
+                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                  className={classes.dropdown}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...props}
+                >
+                  <LocationOnIcon className={classes.icon} />
+                  {label}
+                </Box>
+              );
+            }
+            return (
+              <Box
+                component="li"
+                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                className={classes.dropdown}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...props}
+              >
+                <LocationOnIcon className={classes.icon} />
+                {props.name}
+              </Box>
+            );
+          }}
           renderInput={(params) => (
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
+              id="outlined-basic"
               label="Where"
+              variant="outlined"
               InputProps={{ ...params.InputProps, disableUnderline: true }}
               onChange={handleTextInputChange}
               placeholder={placeholder}
@@ -168,22 +192,3 @@ SearchBar.propTypes = {};
 SearchBar.defaultProps = {};
 
 export default withStyles(styles)(SearchBar);
-
-/*
-        <Autocomplete
-          getOptionSelected={(option, value) => option.name === value.name}
-          getOptionLabel={(option) => option.name}
-          options={locationNames}
-          onChange={handleTextInputChange}
-          className={classes.input}
-          freeSolo
-          renderInput={(params) => (
-            <TextField
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...params}
-              onChange={handleTextInputChange}
-              placeholder={placeholder}
-            />
-          )}
-        />
-*/
