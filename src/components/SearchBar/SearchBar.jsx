@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { geolocated } from 'react-geolocated';
+
 import {
   Box,
   IconButton,
@@ -15,13 +17,7 @@ import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
 import States from '../../api/states';
-
-/*
-.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
-  padding: 5px;}
-*/
-
-// Or .MuiIconButton-root padding 16px
+import useSearch from '../../routes/Search/hooks/useSearch';
 
 const styles = (theme) => ({
   root: {
@@ -48,9 +44,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     alignItems: 'left',
   },
-  autocomplete: {
-    padding: 5,
-  },
   icon: {
     color: theme.palette.primary.main,
     display: 'flex',
@@ -63,13 +56,15 @@ const styles = (theme) => ({
   },
 });
 
-const SearchBar = ({ classes }) => {
+const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
   const history = useHistory();
   const placeholder = 'City, state, or zip code';
+  const { userLocation } = useSearch({ userCoords: coords, isGeolocationEnabled });
 
   const minResultsToDisplay = 1;
   const maxResultsToDisplay = 5;
-  const currentLocationObj = [{ name: 'Current Location' }];
+
+  const currentLocationObj = isGeolocationEnabled && userLocation.address !== null ? [{ name: 'Current Location' }] : [];
 
   const [location, setLocation] = useState('');
   const [locationNames, setLocationNames] = useState(currentLocationObj);
@@ -104,7 +99,7 @@ const SearchBar = ({ classes }) => {
     <Paper component="form" onSubmit={handleSubmit}>
       <Box className={classes.root}>
         <Autocomplete
-          className={[{ inputRoot: classes.autocomplete }, classes.input]}
+          className={classes.input}
           options={locationNames}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => {
@@ -115,7 +110,11 @@ const SearchBar = ({ classes }) => {
             return label;
           }}
           onChange={(event, newLocation) => {
-            if (newLocation.abbreviation) {
+            if (newLocation.name === 'Current Location' && isGeolocationEnabled && userLocation !== null) {
+              // Needs to update the textfield.
+              // Needs to hide if its not available. Use promise tracker.
+              setLocation(userLocation.address.city);
+            } else if (newLocation.abbreviation) {
               setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
             } else {
               setLocation(`${newLocation.name}`);
@@ -131,11 +130,9 @@ const SearchBar = ({ classes }) => {
             }
             return (
               <Box
-                component="li"
+                component="div"
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 className={classes.dropdown}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...props}
               >
                 <LocationOnIcon className={classes.icon} />
                 {dropdownText}
@@ -148,7 +145,8 @@ const SearchBar = ({ classes }) => {
               {...params}
               id="outlined-basic"
               variant="outlined"
-              InputProps={{ ...params.InputProps, disableUnderline: true, style: { padding: 5 } }}
+              disableunderline="true"
+              InputProps={{ ...params.InputProps, style: { padding: 5 } }}
               onChange={handleTextInputChange}
               placeholder={placeholder}
             />
@@ -177,4 +175,4 @@ SearchBar.propTypes = {};
 
 SearchBar.defaultProps = {};
 
-export default withStyles(styles)(SearchBar);
+export default geolocated({ positionOptions: { timeout: 5000 } })(withStyles(styles)(SearchBar));
