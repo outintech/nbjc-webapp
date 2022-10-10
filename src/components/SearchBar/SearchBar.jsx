@@ -5,7 +5,6 @@ import {
   IconButton,
   TextField,
   Paper,
-  // Typography,
 } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -28,7 +27,6 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    // width: theme.spacing(80),
     [theme.breakpoints.up('xs')]: {
       width: theme.spacing(34),
     },
@@ -50,6 +48,9 @@ const styles = (theme) => ({
     flexGrow: 1,
     alignItems: 'left',
   },
+  autocomplete: {
+    padding: 5,
+  },
   icon: {
     color: theme.palette.primary.main,
     display: 'flex',
@@ -64,28 +65,26 @@ const styles = (theme) => ({
 
 const SearchBar = ({ classes }) => {
   const history = useHistory();
-  // const title = 'Where';
   const placeholder = 'City, state, or zip code';
-  // const ariaLabel = `Search ${placeholder}`;
 
   const minResultsToDisplay = 1;
   const maxResultsToDisplay = 5;
+  const currentLocationObj = [{ name: 'Current Location' }];
 
   const [location, setLocation] = useState('');
-  const [locationNames, setLocationNames] = useState([{ name: 'Current Location' }]);
+  const [locationNames, setLocationNames] = useState(currentLocationObj);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (location) {
+      if (location === '') {
+        setLocationNames(currentLocationObj);
+      } else if (location) {
         const trimmedInput = location.trim().toLowerCase();
         const autofill = States.filter((obj) => obj.name.toLowerCase().includes(trimmedInput));
         setLocationNames(autofill.slice(minResultsToDisplay - 1, maxResultsToDisplay));
       }
     };
     fetchData();
-    if (location === '') {
-      setLocationNames([{ name: 'Current Location ' }]);
-    }
   }, [location]);
 
   const handleTextInputChange = (event) => {
@@ -105,7 +104,7 @@ const SearchBar = ({ classes }) => {
     <Paper component="form" onSubmit={handleSubmit}>
       <Box className={classes.root}>
         <Autocomplete
-          sx={{ p: '10px' }}
+          className={[{ inputRoot: classes.autocomplete }, classes.input]}
           options={locationNames}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => {
@@ -116,31 +115,19 @@ const SearchBar = ({ classes }) => {
             return label;
           }}
           onChange={(event, newLocation) => {
-            if (newLocation.name && newLocation.abbreviation) {
+            if (newLocation.abbreviation) {
               setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
             } else {
               setLocation(`${newLocation.name}`);
             }
           }}
-          className={classes.input}
           forcePopupIcon={false}
           disableClearable
           filterSelectedOptions
           renderOption={(props) => {
+            let dropdownText = `${props.name}`;
             if (props.abbreviation) {
-              const label = `${props.name}, ${props.abbreviation}`;
-              return (
-                <Box
-                  component="li"
-                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                  className={classes.dropdown}
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...props}
-                >
-                  <LocationOnIcon className={classes.icon} />
-                  {label}
-                </Box>
-              );
+              dropdownText += `, ${props.abbreviation}`;
             }
             return (
               <Box
@@ -151,7 +138,7 @@ const SearchBar = ({ classes }) => {
                 {...props}
               >
                 <LocationOnIcon className={classes.icon} />
-                {props.name}
+                {dropdownText}
               </Box>
             );
           }}
@@ -160,9 +147,8 @@ const SearchBar = ({ classes }) => {
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
               id="outlined-basic"
-              label="Where"
               variant="outlined"
-              InputProps={{ ...params.InputProps, disableUnderline: true }}
+              InputProps={{ ...params.InputProps, disableUnderline: true, style: { padding: 5 } }}
               onChange={handleTextInputChange}
               placeholder={placeholder}
             />
