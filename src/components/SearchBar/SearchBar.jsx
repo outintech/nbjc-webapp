@@ -5,7 +5,7 @@ import {
   IconButton,
   TextField,
   Paper,
-  Typography,
+  // Typography,
 } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -47,24 +47,35 @@ const styles = (theme) => ({
     color: theme.palette.primary.main,
     display: 'flex',
   },
+  dropdown: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    fontWeight: 'bold',
+  },
+  menuItem: {
+    background: '#F2F2F2;',
+  }
 });
 
 const SearchBar = ({ classes }) => {
   const history = useHistory();
-  const title = 'Where';
-  const placeholder = 'City, state, or zip code';
+  // const title = 'Where';
+  const placeholder = '    City, state, or zip code';
   // const ariaLabel = `Search ${placeholder}`;
+
+  const minResultsToDisplay = 1;
+  const maxResultsToDisplay = 5;
+
   const [location, setLocation] = useState('');
   const [locationNames, setLocationNames] = useState([{ name: 'Current Location' }]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (location) {
-        const userInput = location.toLowerCase();
-        let autofill = States.filter((obj) => (obj.name.toLowerCase().includes(userInput)));
-        autofill = autofill.filter((obj) => obj.name.toLowerCase()[0] === userInput[0]);
-        autofill = autofill.slice(0, 5);
-        setLocationNames(autofill);
+        const trimmedInput = location.trim().toLowerCase();
+        const autofill = States.filter((obj) => obj.name.toLowerCase().includes(trimmedInput));
+        setLocationNames(autofill.slice(minResultsToDisplay - 1, maxResultsToDisplay));
       }
     };
     fetchData();
@@ -82,21 +93,15 @@ const SearchBar = ({ classes }) => {
     event.preventDefault();
     history.push({
       pathname: '/search/results',
-      search: `?searchTerm=&category=&location=${location}`,
+      search: `?searchTerm=&category=&location=${location.trim()}`,
     });
   };
 
   return (
-    <Paper component="form" onSubmit={handleSubmit}>
+    <Paper component="form" onSubmit={handleSubmit} alignItems="stretch">
       <Box className={classes.root}>
-        <Typography
-          className={classes.title}
-          color="secondary"
-          style={{ fontWeight: 'bolder' }}
-        >
-          {title}
-        </Typography>
         <Autocomplete
+          sx={{ p: '10px' }}
           options={locationNames}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => {
@@ -116,23 +121,23 @@ const SearchBar = ({ classes }) => {
           className={classes.input}
           forcePopupIcon={false}
           disableClearable
+          filterSelectedOptions
           renderOption={(props) => (
             <Box
               component="li"
               sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+              className={classes.dropdown}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
             >
-              <LocationOnIcon
-                className={classes.icon}
-              />
-              {props.name}
+              <LocationOnIcon className={classes.icon} /> {props.name}, {props.abbreviation}
             </Box>
           )}
           renderInput={(params) => (
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
+              label="Where"
               InputProps={{ ...params.InputProps, disableUnderline: true }}
               onChange={handleTextInputChange}
               placeholder={placeholder}
