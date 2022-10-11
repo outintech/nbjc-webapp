@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { usePromiseTracker } from 'react-promise-tracker';
+import { useHistory } from 'react-router-dom';
 
 import { geolocated } from 'react-geolocated';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import {
   Box,
@@ -13,9 +16,6 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
-import { useHistory } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
 
 import States from '../../api/states';
 import useSearch from '../../routes/Search/hooks/useSearch';
@@ -57,7 +57,11 @@ const styles = (theme) => ({
   },
 });
 
-const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
+const SearchBar = ({
+  classes,
+  coords,
+  isGeolocationEnabled,
+}) => {
   const history = useHistory();
   const placeholder = 'City, state, or zip code';
   const { promiseInProgress } = usePromiseTracker();
@@ -68,26 +72,23 @@ const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
   const maxResultsToDisplay = 5;
 
   const [location, setLocation] = useState('');
-  const [currentLocationObj, setCurrentLocationObj] = useState([]);
-  const [locationNames, setLocationNames] = useState(currentLocationObj);
+  const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
+  const [autofillResults, setAutofillResults] = useState(autofillWithBlankInput);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (location === '' && isGeolocationEnabled && !geopositionLoading) {
-        setLocationNames(currentLocationObj);
-      } else if (location) {
-        const trimmedInput = location.trim().toLowerCase();
-        const autofill = States.filter((obj) => obj.name.toLowerCase().includes(trimmedInput));
-        setLocationNames(autofill.slice(minResultsToDisplay - 1, maxResultsToDisplay));
-      }
-    };
-    fetchData();
+    if (location === '' && isGeolocationEnabled && !geopositionLoading) {
+      setAutofillResults(autofillWithBlankInput);
+    } else if (location) {
+      const userInput = location.trim().toLowerCase();
+      const autofillArray = States.filter((obj) => obj.name.toLowerCase().includes(userInput));
+      setAutofillResults(autofillArray.slice(minResultsToDisplay - 1, maxResultsToDisplay));
+    }
   }, [location]);
 
   useEffect(() => {
     if (isGeolocationEnabled) {
-      setCurrentLocationObj([{ name: 'Current Location' }]);
-      setLocationNames(currentLocationObj);
+      setAutoFillWithBlankInput([{ name: 'Current Location' }]);
+      setAutofillResults(autofillWithBlankInput);
     }
   }, [geopositionLoading]);
 
@@ -109,7 +110,7 @@ const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
       <Box className={classes.root}>
         <Autocomplete
           className={classes.input}
-          options={locationNames}
+          options={autofillResults}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => {
             let label = option.name;
@@ -118,9 +119,8 @@ const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
             }
             return label;
           }}
-          onChange={(event, newLocation) => {
+          onChange={(newLocation) => {
             if (newLocation.name === 'Current Location' && !geopositionLoading && isGeolocationEnabled) {
-              // TODO: Needs to update the textfield.
               setLocation(userLocation.address.city);
             } else if (newLocation.abbreviation) {
               setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
