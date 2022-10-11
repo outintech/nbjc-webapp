@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { usePromiseTracker } from 'react-promise-tracker';
 
 import { geolocated } from 'react-geolocated';
 
@@ -59,19 +60,20 @@ const styles = (theme) => ({
 const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
   const history = useHistory();
   const placeholder = 'City, state, or zip code';
+  const { promiseInProgress } = usePromiseTracker();
   const { userLocation } = useSearch({ userCoords: coords, isGeolocationEnabled });
+  const geopositionLoading = promiseInProgress || (isGeolocationEnabled && coords === null);
 
   const minResultsToDisplay = 1;
   const maxResultsToDisplay = 5;
 
-  const currentLocationObj = isGeolocationEnabled && userLocation.address !== null ? [{ name: 'Current Location' }] : [];
-
   const [location, setLocation] = useState('');
+  const [currentLocationObj, setCurrentLocationObj] = useState([]);
   const [locationNames, setLocationNames] = useState(currentLocationObj);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (location === '') {
+      if (location === '' && isGeolocationEnabled && !geopositionLoading) {
         setLocationNames(currentLocationObj);
       } else if (location) {
         const trimmedInput = location.trim().toLowerCase();
@@ -81,6 +83,13 @@ const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
     };
     fetchData();
   }, [location]);
+
+  useEffect(() => {
+    if (isGeolocationEnabled) {
+      setCurrentLocationObj([{ name: 'Current Location' }]);
+      setLocationNames(currentLocationObj);
+    }
+  }, [geopositionLoading]);
 
   const handleTextInputChange = (event) => {
     setLocation(event.target.value);
@@ -110,9 +119,8 @@ const SearchBar = ({ classes, coords, isGeolocationEnabled }) => {
             return label;
           }}
           onChange={(event, newLocation) => {
-            if (newLocation.name === 'Current Location' && isGeolocationEnabled && userLocation !== null) {
-              // Needs to update the textfield.
-              // Needs to hide if its not available. Use promise tracker.
+            if (newLocation.name === 'Current Location' && !geopositionLoading && isGeolocationEnabled) {
+              // TODO: Needs to update the textfield.
               setLocation(userLocation.address.city);
             } else if (newLocation.abbreviation) {
               setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
