@@ -86,11 +86,14 @@ const SearchBar = ({
   }, [location]);
 
   useEffect(() => {
-    if (isGeolocationEnabled) {
-      setAutoFillWithBlankInput([{ name: 'Current Location' }]);
-      setAutofillResults(autofillWithBlankInput);
+    if (isGeolocationEnabled && !geopositionLoading && userLocation !== null) {
+      setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
     }
   }, [geopositionLoading]);
+
+  useEffect(() => {
+    setAutofillResults(autofillWithBlankInput);
+  }, [autofillWithBlankInput]);
 
   const handleTextInputChange = (event) => {
     setLocation(event.target.value);
@@ -119,7 +122,7 @@ const SearchBar = ({
             }
             return label;
           }}
-          onChange={(newLocation) => {
+          onChange={(event, newLocation) => {
             if (newLocation.name === 'Current Location' && !geopositionLoading && isGeolocationEnabled) {
               setLocation(userLocation.address.city);
             } else if (newLocation.abbreviation) {
