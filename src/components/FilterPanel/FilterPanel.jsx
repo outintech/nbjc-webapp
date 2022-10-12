@@ -8,6 +8,9 @@ import {
   IconButton,
   Toolbar,
   Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -27,6 +30,10 @@ const styles = {
   clearButton: {
     marginLeft: 'auto',
   },
+  indicators: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 };
 
 const FilterPanel = ({
@@ -34,8 +41,7 @@ const FilterPanel = ({
   onClose,
   type,
   classes,
-  filters,
-  setFilters,
+  indicators,
 }) => {
   const checkedFilters = 2;
   const header = (
@@ -52,10 +58,32 @@ const FilterPanel = ({
     </div>
   );
 
+  const nameFilter = (
+    <TextField
+      type="text"
+      variant="outlined"
+      label="Search by name within results"
+      fullWidth
+    />
+  );
+
+  const priceFilter = <div>$$ more to come $$</div>;
+
+  const indicatorFilters = (
+    <div className={classes.indicators}>
+      { indicators.map((i) => (
+        <FormControlLabel control={<Checkbox name={i.name} />} label={i.name} />
+      )) }
+    </div>
+  );
+
   if (type === 'desktop') {
     return (
       <div className={classes.root}>
         { header }
+        { nameFilter }
+        { priceFilter }
+        { indicatorFilters }
       </div>
     );
   }
@@ -75,6 +103,9 @@ const FilterPanel = ({
         </Toolbar>
         <div className={classes.dialogBody}>
           { header }
+          { nameFilter }
+          { priceFilter }
+          { indicatorFilters }
         </div>
       </Dialog>
     </div>
@@ -85,21 +116,12 @@ FilterPanel.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['desktop', 'mobile']),
-  filters: PropTypes.shape({
-    stars: PropTypes.number,
-    distance: PropTypes.number,
-    price: PropTypes.number,
-  }),
-  setFilters: PropTypes.func.isRequired,
+  indicators: PropTypes.arrayOf(PropTypes.string),
 };
 
 FilterPanel.defaultProps = {
   type: 'mobile',
-  filters: {
-    stars: 0,
-    distance: 0,
-    price: 0,
-  },
+  indicators: [],
 };
 
 export default withStyles(styles)(FilterPanel);

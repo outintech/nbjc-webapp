@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
@@ -158,8 +159,7 @@ const Search = ({
               open={openFilter}
               onClose={() => setOpenFilter(false)}
               type={matches ? 'desktop' : 'mobile'}
-              filters={filters}
-              setFilter={setFilters}
+              indicators={indicators}
             />
           </div>
         )}
