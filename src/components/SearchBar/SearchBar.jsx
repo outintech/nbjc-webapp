@@ -110,6 +110,14 @@ const SearchBar = ({
     });
   };
 
+  const parseLocationObjectToString = (obj) => {
+    let locationObjString = `${obj.name}`;
+    if (obj.abbreviation) {
+      locationObjString += `, ${obj.abbreviation}`;
+    }
+    return locationObjString;
+  };
+
   return (
     <Paper component="form" onSubmit={handleSubmit}>
       <Box className={classes.root}>
@@ -117,31 +125,16 @@ const SearchBar = ({
           className={classes.input}
           options={autofillResults}
           getOptionSelected={(option, value) => option.name === value.name}
-          getOptionLabel={(option) => {
-            let label = option.name;
-            if (option.abbreviation) {
-              label += `, ${option.abbreviation}`;
-            }
-            return label;
-          }}
+          getOptionLabel={(option) => parseLocationObjectToString(option)}
           onChange={(event, newLocation) => {
-            if (newLocation.name === 'Current Location' && !geopositionLoading && isGeolocationEnabled) {
-              setLocation(userLocation.address.city);
-            } else if (newLocation.abbreviation) {
-              setLocation(`${newLocation.name}, ${newLocation.abbreviation}`);
-            } else {
-              setLocation(`${newLocation.name}`);
-            }
+            setLocation(parseLocationObjectToString(newLocation));
           }}
           forcePopupIcon={false}
           disableClearable
           filterSelectedOptions
           filterOptions={filterOptions}
           renderOption={(props) => {
-            let dropdownText = `${props.name}`;
-            if (props.abbreviation) {
-              dropdownText += `, ${props.abbreviation}`;
-            }
+            const dropdownText = parseLocationObjectToString(props);
             return (
               <Box
                 component="div"
