@@ -15,10 +15,15 @@ import {
 
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
 import States from '../../api/states';
 import useSearch from '../../routes/Search/hooks/useSearch';
+
+const filterOptions = createFilterOptions({
+  limit: 5,
+  trim: true,
+});
 
 const styles = (theme) => ({
   root: {
@@ -68,20 +73,17 @@ const SearchBar = ({
   const { userLocation } = useSearch({ userCoords: coords, isGeolocationEnabled });
   const geopositionLoading = promiseInProgress || (isGeolocationEnabled && coords === null);
 
-  const minResultsToDisplay = 1;
-  const maxResultsToDisplay = 5;
-
   const [location, setLocation] = useState('');
   const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
   const [autofillResults, setAutofillResults] = useState(autofillWithBlankInput);
 
   useEffect(() => {
-    if (location === '' && isGeolocationEnabled && !geopositionLoading) {
+    const userInput = location.toLowerCase().trim();
+    if (userInput === '' && isGeolocationEnabled && !geopositionLoading) {
       setAutofillResults(autofillWithBlankInput);
     } else if (location) {
-      const userInput = location.trim().toLowerCase();
       const autofillArray = States.filter((obj) => obj.name.toLowerCase().includes(userInput));
-      setAutofillResults(autofillArray.slice(minResultsToDisplay - 1, maxResultsToDisplay));
+      setAutofillResults(autofillArray);
     }
   }, [location]);
 
@@ -134,6 +136,7 @@ const SearchBar = ({
           forcePopupIcon={false}
           disableClearable
           filterSelectedOptions
+          filterOptions={filterOptions}
           renderOption={(props) => {
             let dropdownText = `${props.name}`;
             if (props.abbreviation) {
