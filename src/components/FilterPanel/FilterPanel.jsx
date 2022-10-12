@@ -7,6 +7,7 @@ import {
   Dialog,
   IconButton,
   Toolbar,
+  Button,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -19,6 +20,13 @@ const styles = {
     padding: '0 24px',
     marginBottom: 15,
   },
+  filterHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  clearButton: {
+    marginLeft: 'auto',
+  },
 };
 
 const FilterPanel = ({
@@ -29,12 +37,25 @@ const FilterPanel = ({
   filters,
   setFilters,
 }) => {
-  const placeholder = `We got some filters: ${Object.keys(filters).join()}!`;
+  const checkedFilters = 2;
+  const header = (
+    <div className={classes.filterHeader}>
+      <h2>
+        Filter
+        { ` (${checkedFilters})` }
+      </h2>
+      <Button
+        className={classes.clearButton}
+      >
+        Clear All
+      </Button>
+    </div>
+  );
 
   if (type === 'desktop') {
     return (
       <div className={classes.root}>
-        { placeholder }
+        { header }
       </div>
     );
   }
@@ -53,7 +74,7 @@ const FilterPanel = ({
           </IconButton>
         </Toolbar>
         <div className={classes.dialogBody}>
-          { placeholder }
+          { header }
         </div>
       </Dialog>
     </div>

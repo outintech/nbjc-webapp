@@ -40,7 +40,9 @@ const styles = (theme) => ({
     },
   },
   filters: {
-    padding: '25px',
+    [theme.breakpoints.up('mobile')]: {
+      padding: '61px 24px 0 24px',
+    },
   },
   list: {
     display: 'grid',
@@ -124,33 +126,8 @@ const Search = ({
     updateFilters('rating', changedFilters.stars);
   };
 
-  const getResultsString = () => {
-    let text = `${pagination.total_count} results found for`;
-    let comma = '';
-    if (search.searchTerm) {
-      text = `${text} ${search.searchTerm}`;
-      comma = ',';
-    }
-    if (search.category) {
-      text = `${text}${comma} ${search.category}`;
-      comma = ',';
-    }
-    if (search.location) {
-      text = `${text}${comma} ${search.location}`;
-      comma = ',';
-    }
-    const indicatorNames = indicators
-      .filter((indicator) => search.indicators.includes(indicator.value))
-      .map((indicator) => indicator.name);
-
-    if (indicatorNames.length < 3) {
-      text = `${text}${comma} ${indicatorNames.join(' and ')}`;
-    } else {
-      text = `${text}${comma} ${indicatorNames[0]} and ${indicatorNames.length - 1} more`;
-    }
-    return text;
-  };
   const isGeoLoading = isGeolocationEnabled && coords === null;
+
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
@@ -169,7 +146,6 @@ const Search = ({
       >
         {searchResults !== null && searchResults.length > 0 && (
           <div className={classes.filters}>
-            <p>{ getResultsString() }</p>
             <Button
               variant="outlined"
               onClick={() => setOpenFilter(!openFilter)}
