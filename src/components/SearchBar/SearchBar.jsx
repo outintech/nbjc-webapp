@@ -23,6 +23,7 @@ import useSearch from '../../routes/Search/hooks/useSearch';
 const filterOptions = createFilterOptions({
   limit: 5,
   trim: true,
+  stringify: (option) => option.name,
 });
 
 const styles = (theme) => ({
@@ -75,27 +76,12 @@ const SearchBar = ({
 
   const [location, setLocation] = useState('');
   const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
-  const [autofillResults, setAutofillResults] = useState(autofillWithBlankInput);
-
-  useEffect(() => {
-    const userInput = location.toLowerCase().trim();
-    if (userInput === '' && isGeolocationEnabled && !geopositionLoading) {
-      setAutofillResults(autofillWithBlankInput);
-    } else if (location) {
-      const autofillArray = States.filter((obj) => obj.name.toLowerCase().includes(userInput));
-      setAutofillResults(autofillArray);
-    }
-  }, [location]);
 
   useEffect(() => {
     if (isGeolocationEnabled && !geopositionLoading && userLocation !== null) {
       setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
     }
   }, [geopositionLoading]);
-
-  useEffect(() => {
-    setAutofillResults(autofillWithBlankInput);
-  }, [autofillWithBlankInput]);
 
   const handleTextInputChange = (event) => {
     setLocation(event.target.value);
@@ -123,7 +109,7 @@ const SearchBar = ({
       <Box className={classes.root}>
         <Autocomplete
           className={classes.input}
-          options={autofillResults}
+          options={location.trim() === '' ? autofillWithBlankInput : States}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => parseLocationObjectToString(option)}
           onChange={(event, newLocation) => {
