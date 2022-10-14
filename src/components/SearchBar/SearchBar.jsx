@@ -136,7 +136,6 @@ const SearchBar = ({
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
-              id="outlined-basic"
               variant="outlined"
               disableunderline="true"
               InputProps={{ ...params.InputProps, style: { padding: 5 } }}
