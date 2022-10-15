@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,9 +11,11 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
+  InputAdornment,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
   toolbar: {
@@ -23,14 +25,14 @@ const styles = {
     padding: '0 24px',
     marginBottom: 15,
   },
-  filterHeader: {
+  header: {
     display: 'flex',
     flexDirection: 'row',
   },
   clearButton: {
     marginLeft: 'auto',
   },
-  indicators: {
+  controls: {
     display: 'flex',
     flexDirection: 'column',
   },
@@ -42,10 +44,12 @@ const FilterPanel = ({
   type,
   classes,
   indicators,
+  /* search */
+  /* updateSearch */
 }) => {
   const checkedFilters = 2;
   const header = (
-    <div className={classes.filterHeader}>
+    <div className={classes.header}>
       <h2>
         Filter
         { ` (${checkedFilters})` }
@@ -64,16 +68,52 @@ const FilterPanel = ({
       variant="outlined"
       label="Search by name within results"
       fullWidth
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="search"
+              onClick={() => console.log('call updateSearch with input value')}
+            >
+              <SearchIcon />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
     />
   );
 
-  const priceFilter = <div>$$ more to come $$</div>;
+  const priceFilter = (
+    <div className="group">
+      <div className="groupLabel">
+        Price
+      </div>
+      <div className={classes.controls}>
+        { [1, 2, 3, 4].map((i) => (
+          <FormControlLabel
+            key={`price_${i}`}
+            control={<Checkbox name={`price_${i}`} onClick={() => console.log('price checkbox!')} />}
+            label={`${'$'.repeat(i)}`}
+          />
+        )) }
+      </div>
+    </div>
+  );
 
   const indicatorFilters = (
-    <div className={classes.indicators}>
-      { indicators.map((i) => (
-        <FormControlLabel control={<Checkbox name={i.name} />} label={i.name} />
-      )) }
+    <div className="group">
+      <div className="groupLabel">
+        Indicators
+      </div>
+      <div className={classes.controls}>
+        { indicators.map((i) => (
+          <FormControlLabel
+            key={`indicator_${i.value}`}
+            control={<Checkbox name={`indicator_${i.name}`} onClick={() => console.log('indicator!')} />}
+            label={i.name}
+          />
+        )) }
+      </div>
     </div>
   );
 
@@ -116,7 +156,7 @@ FilterPanel.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['desktop', 'mobile']),
-  indicators: PropTypes.arrayOf(PropTypes.string),
+  indicators: PropTypes.arrayOf(PropTypes.object),
 };
 
 FilterPanel.defaultProps = {
