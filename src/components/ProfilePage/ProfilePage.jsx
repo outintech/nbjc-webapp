@@ -160,11 +160,11 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: 'Invalid characters',
       }));
-    } else if (fieldValue.trim().length > 20) {
+    } else if (fieldValue.trim().length > 255) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
-        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 255 charcaters',
       }));
     } else {
       setInputError((prevState) => ({

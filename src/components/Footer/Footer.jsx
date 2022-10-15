@@ -89,16 +89,16 @@ const Footer = ({ classes }) => (
     </div>
     <div className={classes.links}>
       <Typography className={classes.link}>
-        <a size="small" href="/community-guidelines" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="/community-guidelines">
           Community Guidelines
         </a>
-        <a size="small" href="/terms-of-service" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="/terms-of-service">
           Terms of Service
         </a>
-        <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank">
           Privacy Policy
         </a>
-        <a size="small" href="/infringement-policies" disableRipple disableFocusRipple disableTouchRipple>
+        <a size="small" href="/infringement-policies">
           Infringement Policies
         </a>
         <Box component="span" className={classes.copyright}>
