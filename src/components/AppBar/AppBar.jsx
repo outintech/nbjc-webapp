@@ -33,12 +33,11 @@ import { UserContext } from '../../context/UserContext';
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    height: 56,
     [theme.breakpoints.up('xs')]: {
-      marginBottom: 20,
+      height: 56,
     },
-    [theme.breakpoints.up('mobile')]: {
-      marginBottom: 20,
+    [theme.breakpoints.up('md')]: {
+      height: 64,
     },
   },
   appBar: {
@@ -183,7 +182,9 @@ const AppBar = ({
             <Typography variant="h6" data-testid="appbar-title">
               {isLoading ? '' : pageTitle || nameContext.spaceTitle}
             </Typography>
-            {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? <Logo /> : null}
+            {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? (
+              <Logo />
+            ) : null}
             <Avatar className={classes.avatar}>
               <Link href="/profile" underline="none">
                 {avatar}
@@ -212,7 +213,10 @@ const AppBar = ({
               }}
             >
               <ListItemIcon>
-                <HelpOutlineOutlinedIcon color="tertiary" className={classes.icons} />
+                <HelpOutlineOutlinedIcon
+                  color="tertiary"
+                  className={classes.icons}
+                />
               </ListItemIcon>
               <ListItemText>
                 <Typography className={classes.icons} variant="subtitle2">
@@ -229,11 +233,13 @@ const AppBar = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Leave The Lavender Book?</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          Leave The Lavender Book?
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to leave The Lavender Book?
-            You will be taken to Google Forms to contact Support.
+            Are you sure you want to leave The Lavender Book? You will be taken
+            to Google Forms to contact Support.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

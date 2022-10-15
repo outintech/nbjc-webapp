@@ -3,7 +3,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useAuth0 } from '@auth0/auth0-react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
+import Header from '../Header/Header';
 import AppBar from '../AppBar';
 import Footer from '../Footer';
 
@@ -17,10 +19,10 @@ const styles = (theme) => ({
     height: '100%',
     flex: 1,
     [theme.breakpoints.up('xs')]: {
-      marginBottom: 20,
+      margin: '10px 0px 20px 0px',
     },
     [theme.breakpoints.up('mobile')]: {
-      marginBottom: 125,
+      margin: '20px 0px 125px 0px',
     },
   },
 });
@@ -31,6 +33,8 @@ const AppLayout = ({
   selected,
   classes,
 }) => {
+  const history = useHistory();
+  const ifHome = history.location.pathname === '/';
   const appBarRoutes = routes
     .filter((r) => !r.skipAppBar)
     .map((r) => ({
@@ -47,6 +51,7 @@ const AppLayout = ({
         selected={selected}
         isLoading={isLoading}
       />
+      { ifHome && <Header /> }
       <div className={classes.content}>
         {isLoading && (
           <CircularProgress color="secondary" />
