@@ -15,6 +15,8 @@ import {
 
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import HomeIcon from '@material-ui/icons/Home';
+
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
 import States from '../../api/states';
@@ -121,13 +123,15 @@ const SearchBar = ({
           filterOptions={filterOptions}
           renderOption={(props) => {
             const dropdownText = parseLocationObjectToString(props);
+            const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.icon} />
+              : <LocationOnIcon className={classes.icon} />;
             return (
               <Box
                 component="div"
                 sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                 className={classes.dropdown}
               >
-                <LocationOnIcon className={classes.icon} />
+                {dropdownIcon}
                 {dropdownText}
               </Box>
             );
