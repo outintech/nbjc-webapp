@@ -8,12 +8,10 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     marginBottom: 10,
     color: 'white',
     backgroundImage:
       'linear-gradient(#633AA3CC, #633AA3CC), url("/landing.png")',
-    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     [theme.breakpoints.up('xs')]: {
@@ -40,7 +38,7 @@ const styles = (theme) => ({
 const Header = ({ classes }) => {
   const [isMobileOrTablet] = useMobileDevice();
   return (
-    <section className="hero-section">
+    <section>
       <Box className={classes.root}>
         <Box className={classes.container}>
           <Typography
