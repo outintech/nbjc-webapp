@@ -38,10 +38,6 @@ const styles = {
   clearButton: {
     marginLeft: 'auto',
   },
-  controls: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
 };
 
 const priceFilterDefault = {
@@ -145,44 +141,49 @@ const FilterPanel = ({
     </FormControl>
   );
 
+  const indicatorCheckboxes = indicators.map((i) => (
+    <FormControlLabel
+      key={`indicator_${i.value}`}
+      control={(
+        <Checkbox
+          name={i.name}
+          value={i.value}
+          checked={Object.hasOwn(indicatorVals, i.name)}
+          onClick={(e) => {
+            if (e.target.checked) {
+              setIndicatorVals({ ...indicatorVals, [e.target.name]: e.target.value });
+            } else {
+              setIndicatorVals(
+                {
+                  ...Object.fromEntries(
+                    Object.entries(indicatorVals).filter(
+                      ([key, val]) => key !== e.target.name,
+                    ),
+                  ),
+                },
+              );
+            }
+          }}
+        />
+      )}
+      label={i.name}
+    />
+  ));
+
   const indicatorFilters = (
     <FormControl component="fieldset" className="">
       <FormLabel component="legend" className="">Indicators</FormLabel>
-      <Collapse in={!collapsed} collapsedSize="269px">
-        <FormGroup>
-          { indicators.map((i) => (
-            <FormControlLabel
-              key={`indicator_${i.value}`}
-              control={(
-                <Checkbox
-                  name={i.name}
-                  value={i.value}
-                  checked={Object.hasOwn(indicatorVals, i.name)}
-                  onClick={(e) => {
-                    if (e.target.checked) {
-                      setIndicatorVals({ ...indicatorVals, [e.target.name]: e.target.value });
-                    } else {
-                      setIndicatorVals(
-                        {
-                          ...Object.fromEntries(
-                            Object.entries(indicatorVals).filter(
-                              ([key, val]) => key !== e.target.name,
-                            ),
-                          ),
-                        },
-                      );
-                    }
-                  }}
-                />
-              )}
-              label={i.name}
-            />
-          )) }
-        </FormGroup>
-      </Collapse>
-      <Button onClick={() => setCollapsed(!collapsed)}>
-        { `Show ${collapsed ? 'More' : 'Less'}` }
-      </Button>
+      <FormGroup>
+        { indicatorCheckboxes.slice(0, 5) }
+        <Collapse in={!collapsed}>
+          <FormGroup>
+            { indicatorCheckboxes.slice(5) }
+          </FormGroup>
+        </Collapse>
+        <Button onClick={() => setCollapsed(!collapsed)}>
+          { `Show ${collapsed ? 'More' : 'Less'}` }
+        </Button>
+      </FormGroup>
     </FormControl>
   );
 
