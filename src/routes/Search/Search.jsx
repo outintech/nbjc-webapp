@@ -159,7 +159,10 @@ const Search = ({
               open={openFilter}
               onClose={() => setOpenFilter(false)}
               type={matches ? 'desktop' : 'mobile'}
-              indicators={indicators}
+              allIndicators={indicators}
+              search={search}
+              updateSearch={updateSearch}
+              resultCount={searchResults.length}
             />
           </div>
         )}

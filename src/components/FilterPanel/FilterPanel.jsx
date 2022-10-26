@@ -38,6 +38,11 @@ const styles = {
   clearButton: {
     marginLeft: 'auto',
   },
+  apply: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 };
 
 const priceFilterDefault = {
@@ -52,15 +57,32 @@ const FilterPanel = ({
   onClose,
   type,
   classes,
-  indicators,
-  /* search */
-  /* updateSearch */
+  allIndicators,
+  search,
+  updateSearch,
+  resultCount,
 }) => {
   const [nameFilterVal, setNameFilterVal] = useState('');
   const [priceFilterVal, setPriceFilterVal] = useState(priceFilterDefault);
   const [indicatorVals, setIndicatorVals] = useState({});
   const [filterCount, setFilterCount] = useState(0);
   const [collapsed, setCollapsed] = useState(true);
+
+  useEffect(() => {
+    const { searchTerm = '', price = 0, indicators = [] } = search;
+    setNameFilterVal(searchTerm);
+    if (price) {
+      setPriceFilterVal(...priceFilterDefault, { [`price_${price}`]: true });
+    }
+    const checkedIndicators = {};
+    allIndicators.forEach((i) => {
+      if (indicators.includes(i.value)) {
+        checkedIndicators[i.name] = i.value;
+      }
+    });
+    setIndicatorVals(checkedIndicators);
+    console.log(search);
+  }, [search, allIndicators]);
 
   useEffect(() => {
     let active = 0;
@@ -76,6 +98,23 @@ const FilterPanel = ({
     setNameFilterVal('');
     setPriceFilterVal(priceFilterDefault);
     setIndicatorVals({});
+  };
+
+  const applyFilters = () => {
+    const indicators = [];
+    Object.entries(indicatorVals).forEach(([name, value]) => (
+      indicators.push({
+        name,
+        value,
+        isSelected: true,
+      })
+    ));
+    updateSearch({
+      ...search,
+      name: { name: nameFilterVal },
+      category: { alias: search.category },
+      indicators,
+    });
   };
 
   const header = (
@@ -105,7 +144,7 @@ const FilterPanel = ({
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-              onClick={() => console.log('do the search!')}
+              onClick={applyFilters}
             >
               <SearchIcon />
             </IconButton>
@@ -141,7 +180,7 @@ const FilterPanel = ({
     </FormControl>
   );
 
-  const indicatorCheckboxes = indicators.map((i) => (
+  const indicatorCheckboxes = allIndicators.map((i) => (
     <FormControlLabel
       key={`indicator_${i.value}`}
       control={(
@@ -187,6 +226,14 @@ const FilterPanel = ({
     </FormControl>
   );
 
+  const apply = (
+    <Button
+      onClick={() => console.log('apply button')}
+    >
+      Apply
+    </Button>
+  );
+
   if (type === 'desktop') {
     return (
       <div className={classes.root}>
@@ -194,6 +241,9 @@ const FilterPanel = ({
         { nameFilter }
         { priceFilter }
         { indicatorFilters }
+        <div className={classes.apply}>
+          { apply }
+        </div>
       </div>
     );
   }
@@ -216,6 +266,17 @@ const FilterPanel = ({
           { nameFilter }
           { priceFilter }
           { indicatorFilters }
+          <div className={classes.apply}>
+            <span>
+              {`${resultCount} Search Result${resultCount === 1 ? '' : 's'}`}
+            </span>
+            <Button
+              onClick={onClose}
+            >
+              Close
+            </Button>
+            { apply }
+          </div>
         </div>
       </Dialog>
     </div>
@@ -226,12 +287,20 @@ FilterPanel.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['desktop', 'mobile']),
-  indicators: PropTypes.arrayOf(PropTypes.object),
+  allIndicators: PropTypes.arrayOf(PropTypes.object),
+  search: PropTypes.shape({
+    searchTerm: PropTypes.string,
+    indicators: PropTypes.arrayOf(PropTypes.string),
+    price: PropTypes.number,
+  }).isRequired,
+  updateSearch: PropTypes.func.isRequired,
+  resultCount: PropTypes.number,
 };
 
 FilterPanel.defaultProps = {
   type: 'mobile',
-  indicators: [],
+  allIndicators: [],
+  resultCount: 0,
 };
 
 export default withStyles(styles)(FilterPanel);
