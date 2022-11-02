@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-console */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,6 +14,8 @@ import {
   FormControl,
   FormLabel,
   FormGroup,
+  Radio,
+  RadioGroup,
   Collapse,
 } from '@material-ui/core';
 
@@ -34,6 +35,29 @@ const styles = {
   header: {
     display: 'flex',
     flexDirection: 'row',
+    '& h2': {
+      fontSize: '20px',
+      textTransform: 'uppercase',
+    },
+    '& button': {
+      color: '#1e1131',
+      textTransform: 'capitalize',
+    },
+  },
+  nameFilter: {
+    backgroundColor: '#fff',
+    border: '1px solid #999',
+  },
+  filterGroup: {
+    backgroundColor: '#fff',
+    borderRadius: '4px',
+    padding: '24px',
+    margin: '16px 0',
+    width: '100%',
+    '& legend': {
+      fontWeight: '600',
+      textTransform: 'uppercase',
+    },
   },
   clearButton: {
     marginLeft: 'auto',
@@ -43,13 +67,6 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
-};
-
-const priceFilterDefault = {
-  price_1: false,
-  price_2: false,
-  price_3: false,
-  price_4: false,
 };
 
 const FilterPanel = ({
@@ -63,7 +80,7 @@ const FilterPanel = ({
   resultCount,
 }) => {
   const [nameFilterVal, setNameFilterVal] = useState('');
-  const [priceFilterVal, setPriceFilterVal] = useState(priceFilterDefault);
+  const [priceFilterVal, setPriceFilterVal] = useState(0);
   const [indicatorVals, setIndicatorVals] = useState({});
   const [filterCount, setFilterCount] = useState(0);
   const [collapsed, setCollapsed] = useState(true);
@@ -72,7 +89,7 @@ const FilterPanel = ({
     const { searchTerm = '', price = 0, indicators = [] } = search;
     setNameFilterVal(searchTerm);
     if (price) {
-      setPriceFilterVal(...priceFilterDefault, { [`price_${price}`]: true });
+      setPriceFilterVal(price);
     }
     const checkedIndicators = {};
     allIndicators.forEach((i) => {
@@ -81,7 +98,6 @@ const FilterPanel = ({
       }
     });
     setIndicatorVals(checkedIndicators);
-    console.log(search);
   }, [search, allIndicators]);
 
   useEffect(() => {
@@ -89,14 +105,16 @@ const FilterPanel = ({
     if (nameFilterVal) {
       active++;
     }
-    active += Object.values(priceFilterVal).filter((v) => v === true).length;
+    if (priceFilterVal) {
+      active++;
+    }
     active += Object.values(indicatorVals).length;
     setFilterCount(active);
   }, [nameFilterVal, priceFilterVal, indicatorVals]);
 
   const clearFilters = () => {
     setNameFilterVal('');
-    setPriceFilterVal(priceFilterDefault);
+    setPriceFilterVal(0);
     setIndicatorVals({});
   };
 
@@ -114,6 +132,7 @@ const FilterPanel = ({
       name: { name: nameFilterVal },
       category: { alias: search.category },
       indicators,
+      price: priceFilterVal,
     });
   };
 
@@ -135,6 +154,7 @@ const FilterPanel = ({
   const nameFilter = (
     <TextField
       id="nameFilter"
+      className={classes.nameFilter}
       type="text"
       variant="outlined"
       label="Search by name within results"
@@ -157,26 +177,23 @@ const FilterPanel = ({
   );
 
   const priceFilter = (
-    <FormControl component="fieldset" className="">
+    <FormControl component="fieldset" className={classes.filterGroup}>
       <FormLabel component="legend" className="">Price</FormLabel>
-      <FormGroup>
+      <RadioGroup
+        aria-label="Price"
+        name="price"
+        value={priceFilterVal}
+        onChange={(e) => setPriceFilterVal(parseInt(e.target.value, 10))}
+      >
         { [1, 2, 3, 4].map((i) => (
           <FormControlLabel
             key={`price_${i}`}
-            control={(
-              <Checkbox
-                name={`price_${i}`}
-                checked={priceFilterVal[`price_${i}`]}
-                onClick={(e) => setPriceFilterVal(
-                  { ...priceFilterVal, [e.target.name]: e.target.checked },
-                )}
-                inputProps={{ 'aria-label': `Price, level ${i}` }}
-              />
-            )}
+            control={<Radio />}
             label={`${'$'.repeat(i)}`}
+            value={i}
           />
         )) }
-      </FormGroup>
+      </RadioGroup>
     </FormControl>
   );
 
@@ -196,7 +213,7 @@ const FilterPanel = ({
                 {
                   ...Object.fromEntries(
                     Object.entries(indicatorVals).filter(
-                      ([key, val]) => key !== e.target.name,
+                      ([key]) => key !== e.target.name,
                     ),
                   ),
                 },
@@ -210,7 +227,7 @@ const FilterPanel = ({
   ));
 
   const indicatorFilters = (
-    <FormControl component="fieldset" className="">
+    <FormControl component="fieldset" className={classes.filterGroup}>
       <FormLabel component="legend" className="">Indicators</FormLabel>
       <FormGroup>
         { indicatorCheckboxes.slice(0, 5) }
@@ -228,7 +245,7 @@ const FilterPanel = ({
 
   const apply = (
     <Button
-      onClick={() => console.log('apply button')}
+      onClick={applyFilters}
     >
       Apply
     </Button>

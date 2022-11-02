@@ -44,6 +44,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       padding: '61px 24px 0 24px',
     },
+    backgroundColor: '#f2f2f2',
   },
   list: {
     display: 'grid',
