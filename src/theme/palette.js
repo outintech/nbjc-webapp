@@ -20,7 +20,7 @@ const palette = {
       hover: '#DBC1FA',
     },
     navBlack: {
-      light: '#000000',
+      light: '#FFFFFF',
       main: '#000000',
       dark: '#000000',
       contrastText: '#FFFFFF',

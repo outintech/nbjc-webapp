@@ -42,7 +42,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navBlack.main,
+    backgroundColor: theme.palette.navBlack.light,
     color: theme.palette.navBlack.contrastText,
   },
   selected: {
