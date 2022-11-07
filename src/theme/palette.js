@@ -23,6 +23,7 @@ const palette = {
       light: '#FFFFFF',
       main: '#000000',
       dark: '#000000',
+      textDark: '#1E1131',
       contrastText: '#FFFFFF',
     },
     // Used by `getContrastText()` to maximize the contrast between
