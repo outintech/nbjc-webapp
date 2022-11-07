@@ -59,7 +59,9 @@ const AppBar = ({
     }
     return (
       <div className={classes.logo}>
-        <img src={logoSrc} alt="logo" />
+        <a href="/">
+          <img src={logoSrc} alt="logo" />
+        </a>
       </div>
     );
   };
