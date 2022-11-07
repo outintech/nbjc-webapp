@@ -80,7 +80,7 @@ const AppBar = ({
           Add a Space
         </Link>
       </div>
-    ) : <AddCircleOutlineIcon className={classes.icons} fontSize="small" style={{ marginRight: 2 }} />;
+    ) : <AddCircleOutlineIcon className={classes.icons} fontSize="small" style={{ marginRight: 25 }} />;
   };
 
   return (
