@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import { useHistory } from 'react-router-dom';
@@ -63,6 +64,9 @@ const styles = (theme) => ({
       marginRight: 0,
     },
   },
+  buttonLink: {
+    color: 'white',
+  },
   copyright: {
     '&::before': {
       content: '""',
@@ -94,20 +98,46 @@ const Footer = ({ classes }) => {
       </div>
       <div className={classes.links}>
         <Typography className={classes.link}>
-          <a size="small" href="/community-guidelines">
+          <Button
+            className={classes.buttonLink}
+            onClick={() => {
+              history.push({
+                pathname: '/community-guidelines',
+              });
+            }}
+          >
             Community Guidelines
-          </a>
-          <a size="small" href="/terms-of-service">
+          </Button>
+          <Button
+            className={classes.buttonLink}
+            onClick={() => {
+              history.push({
+                pathname: '/terms-of-service',
+              });
+            }}
+          >
             Terms of Service
-          </a>
-          <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank">
+          </Button>
+          <Button
+            className={classes.buttonLink}
+            href="https://nbjc.org/privacy-policy/"
+            rel="noreferrer"
+            target="_blank"
+          >
             Privacy Policy
-          </a>
-          <a size="small" href="/infringement-policies">
+          </Button>
+          <Button
+            className={classes.buttonLink}
+            onClick={() => {
+              history.push({
+                pathname: '/infringement-policies',
+              });
+            }}
+          >
             Infringement Policies
-          </a>
+          </Button>
           <Box component="span" className={classes.copyright}>
-            Copyright 2021 NBJC
+            {`Copyright ${new Date().getFullYear()} NBJC`}
           </Box>
         </Typography>
       </div>
