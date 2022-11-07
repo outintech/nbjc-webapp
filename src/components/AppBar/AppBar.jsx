@@ -45,6 +45,9 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.navBlack.light,
     color: theme.palette.navBlack.contrastText,
   },
+  links: {
+    color: theme.palette.navBlack.dark,
+  },
   selected: {
     background: theme.palette.action.selected,
   },
@@ -185,6 +188,12 @@ const AppBar = ({
             {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? (
               <Logo />
             ) : null}
+            <Typography variant="h6" data-testid="appbar-add-space" className={classes.links}>
+              Add a Space
+            </Typography>
+            <Typography variant="h6" data-testid="appbar-login" className={classes.links}>
+              Log In
+            </Typography>
             <Avatar className={classes.avatar}>
               <Link href="/profile" underline="none">
                 {avatar}
