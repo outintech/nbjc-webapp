@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import { useHistory } from 'react-router-dom';
 
-import { useMediaQuery, withStyles } from '@material-ui/core';
+import { Typography, useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,16 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import MenuIcon from '@material-ui/icons/Menu';
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 // import { UserContext } from '../../context/UserContext';
 
@@ -78,80 +66,11 @@ const styles = (theme) => ({
 });
 
 const AppBar = ({
-  selected,
   classes,
-  routes,
   isLoading,
 }) => {
-  const [showDrawer, setShowDrawer] = useState(false);
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   // const userContext = useContext(UserContext);
-  const history = useHistory();
-
-  const goBack = () => {
-    history.goBack();
-  };
-  const showDrawerItems = () => routes.map((item) => {
-    const otherProps = {
-      selected: item.key === selected,
-      color: item.key === selected ? 'primary' : 'inherit',
-    };
-    return (
-      <ListItem
-        button
-        key={item.key}
-        selected={otherProps.selected}
-        className={cx({ [classes.selected]: otherProps.selected })}
-        onClick={() => {
-          setShowDrawer(false);
-          history.push(item.path);
-        }}
-      >
-        <ListItemIcon>
-          <item.icon className={classes.icons} />
-        </ListItemIcon>
-        <ListItemText>
-          <Typography className={classes.icons} variant="subtitle2">
-            {item.label}
-          </Typography>
-        </ListItemText>
-      </ListItem>
-    );
-  });
-
-  const NavIcons = () => {
-    let appIcons;
-    if (
-      selected === 'spaceDetails'
-      || selected === 'addReview'
-      || selected === 'reviews'
-    ) {
-      appIcons = (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="go-back"
-          onClick={goBack}
-          data-testid="appbar-go-back"
-        >
-          <ArrowBackIos />
-        </IconButton>
-      );
-    } else {
-      appIcons = (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={() => setShowDrawer(!showDrawer)}
-          data-testid="appbar-menu"
-        >
-          <MenuIcon />
-        </IconButton>
-      );
-    }
-    return appIcons;
-  };
 
   const Logo = () => {
     const matches = useMediaQuery('(min-width:376px)');
@@ -190,7 +109,6 @@ const AppBar = ({
       <div className={classes.root} data-testid="app-bar">
         <MaterialAppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <NavIcons />
             {!isLoading ? (
               <Logo />
             ) : null}
@@ -206,44 +124,17 @@ const AppBar = ({
               <Link href="/profile" underline="none" className={classes.links}>
                 Log In
               </Link>
+              <Typography
+                className={classes.links}
+                onClick={() => {
+                  setShowSupportDialog(true);
+                }}
+              >
+                Support
+              </Typography>
             </div>
-
           </Toolbar>
         </MaterialAppBar>
-        <Drawer
-          open={showDrawer}
-          onClose={() => setShowDrawer(false)}
-          data-testid="appbar-drawer"
-          className={classes.drawer}
-          classes={{
-            paper: classes.drawerPaper,
-            backdrop: classes.backdrop,
-          }}
-        >
-          <Toolbar />
-          <List>
-            {showDrawerItems()}
-            <ListItem
-              button
-              key="support"
-              onClick={() => {
-                setShowSupportDialog(true);
-              }}
-            >
-              <ListItemIcon>
-                <HelpOutlineOutlinedIcon
-                  color="tertiary"
-                  className={classes.icons}
-                />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography className={classes.icons} variant="subtitle2">
-                  Support
-                </Typography>
-              </ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
       </div>
       <Dialog
         open={showSupportDialog}
@@ -268,7 +159,6 @@ const AppBar = ({
             onClick={() => {
               window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
               setShowSupportDialog(false);
-              setShowDrawer(false);
             }}
             color="primary"
             autoFocus
@@ -282,20 +172,11 @@ const AppBar = ({
 };
 
 AppBar.propTypes = {
-  selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   isLoading: PropTypes.bool,
-  routes: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
 };
 
 AppBar.defaultProps = {
-  selected: 'home',
   isLoading: false,
 };
 
