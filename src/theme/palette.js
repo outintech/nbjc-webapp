@@ -22,7 +22,7 @@ const palette = {
     navBlack: {
       light: '#000000',
       main: '#000000',
-      dark: '#000000',
+      dark: '#351F57',
       contrastText: '#FFFFFF',
     },
     // Used by `getContrastText()` to maximize the contrast between

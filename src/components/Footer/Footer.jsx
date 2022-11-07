@@ -3,9 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
+import { useHistory } from 'react-router-dom';
+
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.navBlack.main,
+    backgroundColor: theme.palette.navBlack.dark,
     display: 'flex',
     color: theme.palette.navBlack.contrastText,
     minHeight: 75,
@@ -72,42 +74,46 @@ const styles = (theme) => ({
   },
 });
 
-const Footer = ({ classes }) => (
-  <div className={classes.root}>
-    <div className={classes.info}>
-      <Typography variant="subtitle2">
-        The Lavender Book is a crowd-sourced application created
-        by the team at &nbsp;
-        <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-          National Black Justice Coalition
-        </a>
-        &nbsp; and &nbsp;
-        <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-          Out in Tech
-        </a>
-      </Typography>
+const Footer = ({ classes }) => {
+  const history = useHistory();
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.info}>
+        <Typography variant="subtitle2">
+          The Lavender Book is a crowd-sourced application created
+          by the team at &nbsp;
+          <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            National Black Justice Coalition
+          </a>
+          &nbsp; and &nbsp;
+          <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            Out in Tech
+          </a>
+        </Typography>
+      </div>
+      <div className={classes.links}>
+        <Typography className={classes.link}>
+          <a size="small" href="/community-guidelines">
+            Community Guidelines
+          </a>
+          <a size="small" href="/terms-of-service">
+            Terms of Service
+          </a>
+          <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank">
+            Privacy Policy
+          </a>
+          <a size="small" href="/infringement-policies">
+            Infringement Policies
+          </a>
+          <Box component="span" className={classes.copyright}>
+            Copyright 2021 NBJC
+          </Box>
+        </Typography>
+      </div>
     </div>
-    <div className={classes.links}>
-      <Typography className={classes.link}>
-        <a size="small" href="/community-guidelines">
-          Community Guidelines
-        </a>
-        <a size="small" href="/terms-of-service">
-          Terms of Service
-        </a>
-        <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank">
-          Privacy Policy
-        </a>
-        <a size="small" href="/infringement-policies">
-          Infringement Policies
-        </a>
-        <Box component="span" className={classes.copyright}>
-          Copyright 2021 NBJC
-        </Box>
-      </Typography>
-    </div>
-  </div>
-);
+  );
+};
 
 Footer.propTypes = {};
 
