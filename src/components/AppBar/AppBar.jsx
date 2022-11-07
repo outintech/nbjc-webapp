@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-// import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
@@ -49,7 +49,7 @@ const AppBar = ({
   isLoading,
 }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
-  // const userContext = useContext(UserContext);
+  const userContext = useContext(UserContext);
 
   const Logo = () => {
     const matches = useMediaQuery('(min-width:376px)');
@@ -64,6 +64,13 @@ const AppBar = ({
         </a>
       </div>
     );
+  };
+
+  const TruncateUserName = (userName) => {
+    if (userName.length > 10) {
+      return `${userName.slice(0, 10)}....`;
+    }
+    return userName;
   };
 
   const AddASpace = () => {
@@ -103,7 +110,7 @@ const AppBar = ({
             >
               <AddASpace />
               <Link href="/profile" underline="none" className={classes.links}>
-                Log In
+                {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
               </Link>
               <Button
                 className={classes.links}
