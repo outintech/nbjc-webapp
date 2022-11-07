@@ -32,9 +32,6 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       width: 'unset',
     },
-    '& a': {
-      fontWeight: 'bold',
-    },
   },
   links: {
     display: 'flex',
@@ -66,15 +63,7 @@ const styles = (theme) => ({
   },
   buttonLink: {
     color: 'inherit',
-  },
-  copyright: {
-    '&::before': {
-      content: '""',
-      marginRight: 10,
-      marginLeft: 10,
-      borderLeft: '1px solid white',
-      whiteSpace: 'pre-wrap',
-    },
+    fontWeight: 400,
   },
 });
 
@@ -97,7 +86,7 @@ const Footer = ({ classes }) => {
         </Typography>
       </div>
       <div className={classes.info}>
-        <Typography className={classes.link}>
+        <Typography className={classes.link} style={{ display: 'flex', alignItems: 'center' }}>
           <Button
             className={classes.buttonLink}
             onClick={() => {
