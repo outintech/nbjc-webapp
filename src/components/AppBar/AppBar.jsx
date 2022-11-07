@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
 
@@ -11,7 +12,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Toolbar from '@material-ui/core/Toolbar';
-import Link from '@material-ui/core/Link';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { UserContext } from '../../context/UserContext';
@@ -50,6 +50,7 @@ const AppBar = ({
 }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   const userContext = useContext(UserContext);
+  const history = useHistory();
 
   const Logo = () => {
     const matches = useMediaQuery('(min-width:376px)');
@@ -59,9 +60,7 @@ const AppBar = ({
     }
     return (
       <div className={classes.logo}>
-        <a href="/">
-          <img src={logoSrc} alt="logo" />
-        </a>
+        <img src={logoSrc} alt="logo" />
       </div>
     );
   };
@@ -85,12 +84,43 @@ const AppBar = ({
       }}
       >
         <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
-        <Link href="/spaces/new" underline="none" className={classes.links}>
+        <Button
+          className={classes.links}
+          style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+          onClick={() => {
+            history.push({
+              pathname: '/spaces/new',
+            });
+          }}
+        >
           Add a Space
-        </Link>
+        </Button>
       </div>
     ) : <AddCircleOutlineIcon className={classes.icons} fontSize="small" style={{ marginRight: 25 }} />;
   };
+
+  const LogIn = () => (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'right',
+      alignItems: 'center',
+      alignSelf: 'right',
+    }}
+    >
+      <Button
+        className={classes.links}
+        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+        onClick={() => {
+          history.push({
+            pathname: '/profile',
+          });
+        }}
+      >
+        {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
+      </Button>
+    </div>
+  );
 
   return (
     <>
@@ -109,9 +139,18 @@ const AppBar = ({
             }}
             >
               <AddASpace />
-              <Link href="/profile" underline="none" className={classes.links}>
-                {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
-              </Link>
+              <LogIn />
+              <Button
+                className={classes.links}
+                style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+                onClick={() => {
+                  history.push({
+                    pathname: '/',
+                  });
+                }}
+              >
+                Home
+              </Button>
               <Button
                 className={classes.links}
                 style={{ backgroundColor: 'transparent', textTransform: 'none' }}
