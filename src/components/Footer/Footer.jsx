@@ -82,7 +82,7 @@ const Footer = ({ classes }) => {
   const history = useHistory();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div className={classes.info}>
         <Typography variant="subtitle2">
           The Lavender Book is a crowd-sourced application created
