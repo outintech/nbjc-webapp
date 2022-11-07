@@ -47,7 +47,7 @@ const styles = (theme) => ({
     color: theme.palette.navBlack.contrastText,
   },
   links: {
-    marginRight: '20px',
+    marginRight: '1rem',
     color: theme.palette.navBlack.textDark,
   },
   selected: {
@@ -178,6 +178,25 @@ const AppBar = ({
     );
   };
 
+  const AddASpace = () => {
+    const matches = useMediaQuery('(min-width:376px)');
+    return matches ? (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'right',
+        alignItems: 'center',
+        alignSelf: 'right',
+      }}
+      >
+        <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+        <Link href="/spaces/new" underline="none" className={classes.links}>
+          Add a Space
+        </Link>
+      </div>
+    ) : <AddCircleOutlineIcon className={classes.icons} fontSize="small" style={{ marginRight: 2 }} />;
+  };
+
   return (
     <>
       <div className={classes.root} data-testid="app-bar">
@@ -195,12 +214,10 @@ const AppBar = ({
               flexDirection: 'row',
               justifyContent: 'right',
               alignItems: 'center',
+              alignSelf: 'right',
             }}
             >
-              <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
-              <Link href="/spaces/new" underline="none" className={classes.links}>
-                Add a Space
-              </Link>
+              <AddASpace />
               <Link href="/profile" underline="none" className={classes.links}>
                 Log In
               </Link>
