@@ -41,27 +41,9 @@ const styles = (theme) => ({
   icons: {
     color: '#000',
   },
-  drawer: {
-    width: 375,
-    flexShrink: 0,
-    position: 'static !important',
-    '& .MuiBackdrop-root': {
-      zIndex: 1,
-    },
-  },
-  drawerPaper: {
-    width: 375,
-  },
-  avatar: {
-    backgroundColor: '#ffffff',
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-    marginLeft: 'auto',
-    textTransform: 'uppercase',
-  },
   logo: {
     flexGrow: 1,
-    textAlign: 'center',
+    textAlign: 'left',
   },
 });
 
