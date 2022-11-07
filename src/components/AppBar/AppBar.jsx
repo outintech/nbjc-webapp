@@ -22,6 +22,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
@@ -46,7 +47,8 @@ const styles = (theme) => ({
     color: theme.palette.navBlack.contrastText,
   },
   links: {
-    color: theme.palette.navBlack.dark,
+    marginRight: '20px',
+    color: theme.palette.navBlack.textDark,
   },
   selected: {
     background: theme.palette.action.selected,
@@ -188,12 +190,22 @@ const AppBar = ({
             {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? (
               <Logo />
             ) : null}
-            <Typography variant="h6" data-testid="appbar-add-space" className={classes.links}>
-              Add a Space
-            </Typography>
-            <Typography variant="h6" data-testid="appbar-login" className={classes.links}>
-              Log In
-            </Typography>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'right',
+              alignItems: 'center',
+            }}
+            >
+              <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+              <Link href="/spaces/new" underline="none" className={classes.links}>
+                Add a Space
+              </Link>
+              <Link href="/profile" underline="none" className={classes.links}>
+                Log In
+              </Link>
+            </div>
+
             <Avatar className={classes.avatar}>
               <Link href="/profile" underline="none">
                 {avatar}
