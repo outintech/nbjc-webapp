@@ -96,7 +96,19 @@ const AppBar = ({
           Add a Space
         </Button>
       </div>
-    ) : <AddCircleOutlineIcon className={classes.icons} fontSize="small" style={{ marginRight: 25 }} />;
+    ) : (
+      <Button
+        className={classes.links}
+        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+        onClick={() => {
+          history.push({
+            pathname: '/spaces/new',
+          });
+        }}
+      >
+        <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+      </Button>
+    );
   };
 
   const LogIn = () => (
