@@ -65,7 +65,7 @@ const styles = (theme) => ({
     },
   },
   buttonLink: {
-    color: 'white',
+    color: 'inherit',
   },
   copyright: {
     '&::before': {
@@ -82,7 +82,7 @@ const Footer = ({ classes }) => {
   const history = useHistory();
 
   return (
-    <div className={classes.root} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className={classes.root} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className={classes.info}>
         <Typography variant="subtitle2">
           The Lavender Book is a crowd-sourced application created
@@ -96,7 +96,7 @@ const Footer = ({ classes }) => {
           </a>
         </Typography>
       </div>
-      <div className={classes.links}>
+      <div className={classes.info}>
         <Typography className={classes.link}>
           <Button
             className={classes.buttonLink}
