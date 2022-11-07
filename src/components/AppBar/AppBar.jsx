@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Typography, useMediaQuery, withStyles } from '@material-ui/core';
+import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -34,9 +34,6 @@ const styles = (theme) => ({
   links: {
     marginRight: '1rem',
     color: theme.palette.navBlack.textDark,
-  },
-  selected: {
-    background: theme.palette.action.selected,
   },
   icons: {
     color: '#000',
@@ -106,14 +103,15 @@ const AppBar = ({
               <Link href="/profile" underline="none" className={classes.links}>
                 Log In
               </Link>
-              <Typography
+              <Button
                 className={classes.links}
+                style={{ backgroundColor: 'transparent', textTransform: 'none' }}
                 onClick={() => {
                   setShowSupportDialog(true);
                 }}
               >
                 Support
-              </Typography>
+              </Button>
             </div>
           </Toolbar>
         </MaterialAppBar>
