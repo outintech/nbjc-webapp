@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog';
@@ -25,11 +24,9 @@ import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
-import { NameContext } from '../../context/NameContext';
-import { UserContext } from '../../context/UserContext';
+// import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
@@ -88,21 +85,12 @@ const AppBar = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showSupportDialog, setShowSupportDialog] = useState(false);
-  const nameContext = useContext(NameContext);
-  const userContext = useContext(UserContext);
+  // const userContext = useContext(UserContext);
   const history = useHistory();
-
-  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
 
   const goBack = () => {
     history.goBack();
   };
-  // if there is no username, the user might not be signed in
-  // so fallback to icon
-  let avatar = <PersonIcon color="primary" />;
-  if (userContext.userProfile.username) {
-    avatar = userContext.userProfile.username[0];
-  }
   const showDrawerItems = () => routes.map((item) => {
     const otherProps = {
       selected: item.key === selected,
@@ -203,10 +191,7 @@ const AppBar = ({
         <MaterialAppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <NavIcons />
-            <Typography variant="h6" data-testid="appbar-title">
-              {isLoading ? '' : pageTitle || nameContext.spaceTitle}
-            </Typography>
-            {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? (
+            {!isLoading ? (
               <Logo />
             ) : null}
             <div style={{
@@ -223,11 +208,6 @@ const AppBar = ({
               </Link>
             </div>
 
-            <Avatar className={classes.avatar}>
-              <Link href="/profile" underline="none">
-                {avatar}
-              </Link>
-            </Avatar>
           </Toolbar>
         </MaterialAppBar>
         <Drawer
