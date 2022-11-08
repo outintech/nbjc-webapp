@@ -32,7 +32,7 @@ const styles = (theme) => ({
     color: theme.palette.navBlack.contrastText,
   },
   links: {
-    marginRight: '0.5rem',
+    marginRight: '0.15rem',
     color: theme.palette.navBlack.textDark,
   },
   icons: {
@@ -41,7 +41,7 @@ const styles = (theme) => ({
   logo: {
     flexGrow: 1,
     textAlign: 'left',
-    marginRight: '1rem',
+    marginRight: '0.3rem',
   },
 });
 
@@ -54,7 +54,7 @@ const AppBar = ({
   const history = useHistory();
 
   const Logo = () => {
-    const matches = useMediaQuery('(min-width:450px)');
+    const matches = useMediaQuery('(min-width:422px)');
     let logoSrc = '/mobile-appBar-logo.svg';
     if (matches) {
       logoSrc = '/web-appBar-logo.svg';
