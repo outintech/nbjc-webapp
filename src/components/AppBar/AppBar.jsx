@@ -82,10 +82,6 @@ const AppBar = ({
   };
 
   const TruncateUserName = (userName) => {
-    const matches = useMediaQuery('(min-width:422px)');
-    if (matches) {
-      return `${userName.slice(0, 3)}....`;
-    }
     if (userName.length > 10) {
       return `${userName.slice(0, 10)}....`;
     }
@@ -234,7 +230,7 @@ const AppBar = ({
             }}
             >
               <AddASpace />
-              {userContext.userProfile.username ? <LogIn /> : <PositionedMenu />}
+              {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
               <Button
                 className={classes.links}
                 style={{ backgroundColor: 'transparent', textTransform: 'none' }}
