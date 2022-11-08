@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+// import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { useHistory } from 'react-router-dom';
@@ -51,7 +52,7 @@ const Footer = ({ classes }) => {
   const history = useHistory();
 
   return (
-    <div
+    <Box
       className={classes.root}
       style={
         {
@@ -59,7 +60,7 @@ const Footer = ({ classes }) => {
         }
       }
     >
-      <div className={classes.info}>
+      <Box className={classes.info}>
         <Typography variant="subtitle2">
           The Lavender Book is a crowd-sourced application created
           by the team at &nbsp;
@@ -71,8 +72,8 @@ const Footer = ({ classes }) => {
             Out in Tech
           </a>
         </Typography>
-      </div>
-      <div className={classes.info} style={{ display: 'flex', alignItems: 'center' }}>
+      </Box>
+      <Box className={classes.info} style={{ display: 'flex', alignItems: 'center' }}>
         <Button
           className={classes.buttonLink}
         >
@@ -114,8 +115,8 @@ const Footer = ({ classes }) => {
         <Box component="span" className={classes.copyright}>
           {`Copyright ${new Date().getFullYear()} NBJC`}
         </Box>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
