@@ -32,7 +32,7 @@ const styles = (theme) => ({
     color: theme.palette.navBlack.contrastText,
   },
   links: {
-    marginRight: '1rem',
+    marginRight: '0.5rem',
     color: theme.palette.navBlack.textDark,
   },
   icons: {
@@ -41,6 +41,7 @@ const styles = (theme) => ({
   logo: {
     flexGrow: 1,
     textAlign: 'left',
+    marginRight: '1rem',
   },
 });
 
@@ -53,7 +54,7 @@ const AppBar = ({
   const history = useHistory();
 
   const Logo = () => {
-    const matches = useMediaQuery('(min-width:376px)');
+    const matches = useMediaQuery('(min-width:450px)');
     let logoSrc = '/mobile-appBar-logo.svg';
     if (matches) {
       logoSrc = '/web-appBar-logo.svg';
@@ -73,7 +74,7 @@ const AppBar = ({
   };
 
   const AddASpace = () => {
-    const matches = useMediaQuery('(min-width:376px)');
+    const matches = useMediaQuery('(min-width:519px)');
     return matches ? (
       <div style={{
         display: 'flex',
