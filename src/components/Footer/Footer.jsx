@@ -55,28 +55,28 @@ const Footer = ({ classes }) => {
         }
       }
     >
-      <Box className={classes.info}>
-        <Typography variant="subtitle2">
-          The Lavender Book is a crowd-sourced application created
-          by the team at &nbsp;
-          <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-            National Black Justice Coalition
-          </a>
-          &nbsp; and &nbsp;
-          <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-            Out in Tech
-          </a>
-        </Typography>
-      </Box>
       <Grid container className={classes.info} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={12} md={5}>
+          <Typography variant="subtitle2">
+            The Lavender Book is a crowd-sourced application created
+            by the team at &nbsp;
+            <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+              National Black Justice Coalition
+            </a>
+            &nbsp; and &nbsp;
+            <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+              Out in Tech
+            </a>
+          </Typography>
+        </Grid>
+        <Grid item xs={4} md={1}>
           <Button
             className={classes.buttonLink}
           >
             Community Guidelines
           </Button>
         </Grid>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={4} md={1}>
           <Button
             className={classes.buttonLink}
             onClick={() => {
@@ -88,7 +88,7 @@ const Footer = ({ classes }) => {
             Terms of Service
           </Button>
         </Grid>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={4} md={1}>
           <Button
             className={classes.buttonLink}
             href="https://nbjc.org/privacy-policy/"
@@ -98,7 +98,7 @@ const Footer = ({ classes }) => {
             Privacy Policy
           </Button>
         </Grid>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={4} md={1}>
           <Button
             className={classes.buttonLink}
             onClick={() => {
@@ -110,14 +110,14 @@ const Footer = ({ classes }) => {
             Infringement Policies
           </Button>
         </Grid>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={4} md={1}>
           <Button
             className={classes.buttonLink}
           >
             Donate
           </Button>
         </Grid>
-        <Grid item xs={4} md={2}>
+        <Grid item xs={4} md={1}>
           <Box component="span">
             {`Copyright ${new Date().getFullYear()} NBJC`}
           </Box>
