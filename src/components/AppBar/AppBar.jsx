@@ -11,8 +11,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
+
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 
 import { UserContext } from '../../context/UserContext';
 
@@ -75,6 +80,55 @@ const AppBar = ({
       return `${userName.slice(0, 10)}....`;
     }
     return userName;
+  };
+
+  const PositionedMenu = () => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    return (
+      <div>
+        <Button
+          id="demo-positioned-button"
+          aria-controls={open ? 'demo-positioned-menu' : undefined}
+          aria-haspopup="true"
+          style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
+        </Button>
+        <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            <AccountCircleIcon />
+            My Profile
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <LogoutIcon />
+            Sign Out
+          </MenuItem>
+        </Menu>
+      </div>
+    );
   };
 
   const AddASpace = () => {
@@ -156,7 +210,7 @@ const AppBar = ({
             }}
             >
               <AddASpace />
-              <LogIn />
+              {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
               <Button
                 className={classes.links}
                 style={{ backgroundColor: 'transparent', textTransform: 'none' }}
