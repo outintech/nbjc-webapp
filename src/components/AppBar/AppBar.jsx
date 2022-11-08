@@ -67,6 +67,10 @@ const AppBar = ({
   };
 
   const TruncateUserName = (userName) => {
+    const matches = useMediaQuery('(min-width:422px)');
+    if (matches) {
+      return `${userName.slice(0, 3)}....`;
+    }
     if (userName.length > 10) {
       return `${userName.slice(0, 10)}....`;
     }
@@ -74,7 +78,7 @@ const AppBar = ({
   };
 
   const AddASpace = () => {
-    const matches = useMediaQuery('(min-width:519px)');
+    const matches = useMediaQuery('(min-width:485px)');
     return matches ? (
       <div style={{
         display: 'flex',
