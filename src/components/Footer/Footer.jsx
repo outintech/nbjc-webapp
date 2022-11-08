@@ -33,24 +33,13 @@ const styles = (theme) => ({
       width: 'unset',
     },
   },
-  links: {
-    display: 'flex',
-    marginRight: 20,
-    [theme.breakpoints.up('xs')]: {
-      marginTop: 10,
-      marginLeft: 20,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      marginTop: 20,
-      marginLeft: 'auto',
-    },
-  },
   externalLink: {
     color: 'inherit',
   },
   buttonLink: {
     color: 'inherit',
     fontWeight: 400,
+    fontSize: 14,
   },
   copyright: {
     marginLeft: 10,
@@ -83,55 +72,48 @@ const Footer = ({ classes }) => {
           </a>
         </Typography>
       </div>
-      <div className={classes.info}>
-        <Typography noWrap style={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            className={classes.buttonLink}
-            onClick={() => {
-              history.push({
-                pathname: '/community-guidelines',
-              });
-            }}
-          >
-            Community Guidelines
-          </Button>
-          <Button
-            className={classes.buttonLink}
-            onClick={() => {
-              history.push({
-                pathname: '/terms-of-service',
-              });
-            }}
-          >
-            Terms of Service
-          </Button>
-          <Button
-            className={classes.buttonLink}
-            href="https://nbjc.org/privacy-policy/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Privacy Policy
-          </Button>
-          <Button
-            className={classes.buttonLink}
-            onClick={() => {
-              history.push({
-                pathname: '/infringement-policies',
-              });
-            }}
-          >
-            Infringement Policies
-          </Button>
-          <Button
-            className={classes.buttonLink}
-          >
-            Donate
-          </Button>
-          <Box component="span" className={classes.copyright}>
-            {`Copyright ${new Date().getFullYear()} NBJC`}
-          </Box>
-        </Typography>
+      <div className={classes.info} style={{ display: 'flex', alignItems: 'center' }}>
+        <Button
+          className={classes.buttonLink}
+        >
+          Community Guidelines
+        </Button>
+        <Button
+          className={classes.buttonLink}
+          onClick={() => {
+            history.push({
+              pathname: '/terms-of-service',
+            });
+          }}
+        >
+          Terms of Service
+        </Button>
+        <Button
+          className={classes.buttonLink}
+          href="https://nbjc.org/privacy-policy/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Privacy Policy
+        </Button>
+        <Button
+          className={classes.buttonLink}
+          onClick={() => {
+            history.push({
+              pathname: '/infringement-policies',
+            });
+          }}
+        >
+          Infringement Policies
+        </Button>
+        <Button
+          className={classes.buttonLink}
+        >
+          Donate
+        </Button>
+        <Box component="span" className={classes.copyright}>
+          {`Copyright ${new Date().getFullYear()} NBJC`}
+        </Box>
       </div>
     </div>
   );
