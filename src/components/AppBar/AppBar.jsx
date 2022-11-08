@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
@@ -58,6 +60,8 @@ const AppBar = ({
   const userContext = useContext(UserContext);
   const history = useHistory();
 
+  const { logout } = useAuth0();
+
   const Logo = () => {
     const matches = useMediaQuery('(min-width:422px)');
     let logoSrc = '/mobile-appBar-logo.svg';
@@ -91,6 +95,19 @@ const AppBar = ({
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const navigateToProfile = () => {
+      history.push({
+        pathname: '/profile',
+      });
+    };
+    const signOut = () => {
+      logout({
+        returnTo: window.location.origin,
+        client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+        federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
+      });
+    };
+
     return (
       <div>
         <Button
@@ -118,11 +135,11 @@ const AppBar = ({
             horizontal: 'left',
           }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={navigateToProfile}>
             <AccountCircleIcon />
             My Profile
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={signOut}>
             <LogoutIcon />
             Sign Out
           </MenuItem>
