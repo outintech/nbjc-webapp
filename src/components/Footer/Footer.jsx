@@ -46,24 +46,15 @@ const styles = (theme) => ({
     },
   },
   externalLink: {
-    // whiteSpace: 'nowrap',
     color: 'inherit',
-  },
-  link: {
-    float: 'right',
-    fontSize: 14,
-    '& a': {
-      color: 'inherit',
-      marginRight: 20,
-      whiteSpace: 'pre-wrap',
-    },
-    '& a:last-of-type': {
-      marginRight: 0,
-    },
   },
   buttonLink: {
     color: 'inherit',
     fontWeight: 400,
+  },
+  copyright: {
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 
@@ -71,7 +62,14 @@ const Footer = ({ classes }) => {
   const history = useHistory();
 
   return (
-    <div className={classes.root} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div
+      className={classes.root}
+      style={
+        {
+          display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
+        }
+      }
+    >
       <div className={classes.info}>
         <Typography variant="subtitle2">
           The Lavender Book is a crowd-sourced application created
@@ -86,7 +84,7 @@ const Footer = ({ classes }) => {
         </Typography>
       </div>
       <div className={classes.info}>
-        <Typography className={classes.link} style={{ display: 'flex', alignItems: 'center' }}>
+        <Typography noWrap style={{ display: 'flex', alignItems: 'center' }}>
           <Button
             className={classes.buttonLink}
             onClick={() => {
@@ -124,6 +122,11 @@ const Footer = ({ classes }) => {
             }}
           >
             Infringement Policies
+          </Button>
+          <Button
+            className={classes.buttonLink}
+          >
+            Donate
           </Button>
           <Box component="span" className={classes.copyright}>
             {`Copyright ${new Date().getFullYear()} NBJC`}
