@@ -41,6 +41,7 @@ const styles = (theme) => ({
   links: {
     marginRight: '0.15rem',
     color: theme.palette.navBlack.textDark,
+    fontWeight: 600,
   },
   icons: {
     color: '#000',
@@ -49,6 +50,11 @@ const styles = (theme) => ({
     flexGrow: 1,
     textAlign: 'left',
     marginRight: '0.3rem',
+  },
+  menuItems: {
+    '& .MuiPaper-root': {
+      backgroundColor: 'theme.palette.navBlack.menu',
+    },
   },
 });
 
@@ -114,6 +120,7 @@ const AppBar = ({
           id="demo-positioned-button"
           aria-controls={open ? 'demo-positioned-menu' : undefined}
           aria-haspopup="true"
+          className={classes.links}
           style={{ backgroundColor: 'transparent', textTransform: 'none' }}
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
@@ -135,7 +142,7 @@ const AppBar = ({
             horizontal: 'left',
           }}
         >
-          <MenuItem onClick={navigateToProfile}>
+          <MenuItem onClick={navigateToProfile} className={classes.menuItems}>
             <AccountCircleIcon />
             My Profile
           </MenuItem>
@@ -227,7 +234,7 @@ const AppBar = ({
             }}
             >
               <AddASpace />
-              {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
+              {userContext.userProfile.username ? <LogIn /> : <PositionedMenu />}
               <Button
                 className={classes.links}
                 style={{ backgroundColor: 'transparent', textTransform: 'none' }}
