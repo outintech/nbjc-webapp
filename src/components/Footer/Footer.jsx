@@ -33,6 +33,7 @@ const styles = (theme) => ({
   },
   externalLink: {
     color: 'inherit',
+    fontWeight: 600,
   },
   buttonLink: {
     color: 'inherit',
@@ -57,11 +58,11 @@ const Footer = ({ classes }) => {
           <Typography variant="subtitle2">
             The Lavender Book is a crowd-sourced application created
             by the team at &nbsp;
-            <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink} style={{ textDecoration: 'none' }}>
               National Black Justice Coalition
             </a>
             &nbsp; and &nbsp;
-            <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink} style={{ textDecoration: 'none' }}>
               Out in Tech
             </a>
           </Typography>
