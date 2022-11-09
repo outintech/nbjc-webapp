@@ -19,7 +19,7 @@ const palette = {
       selected: '#DBC1FA',
       hover: '#DBC1FA',
     },
-    navBlack: {
+    navWhite: {
       light: '#000000',
       main: '#000000',
       dark: '#351F57',

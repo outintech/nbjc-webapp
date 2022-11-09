@@ -1,19 +1,19 @@
 import React from 'react';
+
+import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { useHistory } from 'react-router-dom';
-
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.navBlack.dark,
+    backgroundColor: theme.palette.navWhite.dark,
     display: 'flex',
-    color: theme.palette.navBlack.contrastText,
+    color: theme.palette.navWhite.contrastText,
     minHeight: 75,
-    width: '100%',
     backgroundClip: 'padding-box',
     [theme.breakpoints.up('xs')]: {
       flexWrap: 'wrap',
@@ -34,6 +34,7 @@ const styles = (theme) => ({
   externalLink: {
     color: 'inherit',
     fontWeight: 600,
+    textDecoration: 'none',
   },
   buttonLink: {
     color: 'inherit',
@@ -47,22 +48,17 @@ const Footer = ({ classes }) => {
   return (
     <div
       className={classes.root}
-      style={
-        {
-          display: 'flex', justifyContent: 'center', alignItems: 'center',
-        }
-      }
     >
       <Grid container className={classes.info} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Grid item xs={12} md={5}>
           <Typography variant="subtitle2">
             The Lavender Book is a crowd-sourced application created
             by the team at &nbsp;
-            <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink} style={{ textDecoration: 'none' }}>
+            <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
               National Black Justice Coalition
             </a>
             &nbsp; and &nbsp;
-            <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink} style={{ textDecoration: 'none' }}>
+            <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
               Out in Tech
             </a>
           </Typography>

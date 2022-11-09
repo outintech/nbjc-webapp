@@ -42,8 +42,8 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navBlack.main,
-    color: theme.palette.navBlack.contrastText,
+    backgroundColor: theme.palette.navWhite.main,
+    color: theme.palette.navWhite.contrastText,
   },
   selected: {
     background: theme.palette.action.selected,
