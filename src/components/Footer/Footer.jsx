@@ -30,9 +30,6 @@ const styles = (theme) => ({
       marginRight: 0,
       width: '100%',
     },
-    [theme.breakpoints.up('mobile')]: {
-      width: 'unset',
-    },
   },
   externalLink: {
     color: 'inherit',
@@ -69,14 +66,14 @@ const Footer = ({ classes }) => {
             </a>
           </Typography>
         </Grid>
-        <Grid item xs={4} md={1}>
+        <Grid item>
           <Button
             className={classes.buttonLink}
           >
             Community Guidelines
           </Button>
         </Grid>
-        <Grid item xs={4} md={1}>
+        <Grid item>
           <Button
             className={classes.buttonLink}
             onClick={() => {
@@ -88,7 +85,7 @@ const Footer = ({ classes }) => {
             Terms of Service
           </Button>
         </Grid>
-        <Grid item xs={4} md={1}>
+        <Grid item>
           <Button
             className={classes.buttonLink}
             href="https://nbjc.org/privacy-policy/"
@@ -98,7 +95,7 @@ const Footer = ({ classes }) => {
             Privacy Policy
           </Button>
         </Grid>
-        <Grid item xs={4} md={1}>
+        <Grid item>
           <Button
             className={classes.buttonLink}
             onClick={() => {
@@ -110,15 +107,15 @@ const Footer = ({ classes }) => {
             Infringement Policies
           </Button>
         </Grid>
-        <Grid item xs={4} md={1}>
+        <Grid item>
           <Button
             className={classes.buttonLink}
           >
             Donate
           </Button>
         </Grid>
-        <Grid item xs={4} md={1}>
-          <Box component="span">
+        <Grid item xs={1.5} md={1.5}>
+          <Box>
             {`Copyright ${new Date().getFullYear()} NBJC`}
           </Box>
         </Grid>
