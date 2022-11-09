@@ -51,11 +51,6 @@ const styles = (theme) => ({
     textAlign: 'left',
     marginRight: '0.3rem',
   },
-  menuItems: {
-    '& .MuiPaper-root': {
-      backgroundColor: 'theme.palette.navBlack.menu',
-    },
-  },
 });
 
 const AppBar = ({
@@ -129,16 +124,11 @@ const AppBar = ({
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
-          <MenuItem onClick={navigateToProfile} className={classes.menuItems}>
+          <MenuItem onClick={navigateToProfile}>
             <AccountCircleIcon />
             My Profile
           </MenuItem>
