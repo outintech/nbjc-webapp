@@ -88,16 +88,6 @@ const Footer = ({ classes }) => {
         <Grid item>
           <Button
             className={classes.buttonLink}
-            href="https://nbjc.org/privacy-policy/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Privacy Policy
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            className={classes.buttonLink}
             onClick={() => {
               history.push({
                 pathname: '/infringement-policies',
@@ -105,6 +95,16 @@ const Footer = ({ classes }) => {
             }}
           >
             Infringement Policies
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            className={classes.buttonLink}
+            href="https://nbjc.org/privacy-policy/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Privacy Policy
           </Button>
         </Grid>
         <Grid item>
