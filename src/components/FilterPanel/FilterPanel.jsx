@@ -23,14 +23,23 @@ import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
+  dialog: {
+    paddingRight: '20%',
+    '& .MuiBackdrop-root': {
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+  },
   toolbar: {
+    backgroundColor: '#f2f2f2',
     justifyContent: 'flex-end',
   },
   dialogBody: {
+    backgroundColor: '#f2f2f2',
     display: 'flex',
     flexDirection: 'column',
     marginBottom: 15,
     padding: '0 24px',
+    position: 'relative',
   },
   header: {
     display: 'flex',
@@ -47,25 +56,61 @@ const styles = {
   nameFilter: {
     backgroundColor: '#fff',
     border: '1px solid #999',
+    borderRadius: '4px',
   },
   filterGroup: {
     backgroundColor: '#fff',
     borderRadius: '4px',
     padding: '24px',
-    margin: '16px 0',
+    margin: '0 0 16px 0',
     width: '100%',
-    '& legend': {
-      fontWeight: '600',
-      textTransform: 'uppercase',
+    '&:first-of-type': {
+      marginTop: '16px',
+    },
+  },
+  filterHeader: {
+    fontSize: '14px',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+  },
+  visuallyHidden: {
+    position: 'absolute',
+    overflow: 'hidden',
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    width: '1px',
+    height: '1px',
+    whiteSpace: 'nowrap',
+  },
+  filterToggle: {
+    fontSize: '14px',
+    fontWeight: '600',
+    paddingLeft: '0',
+    textTransform: 'capitalize',
+    '& > *': {
+      justifyContent: 'flex-start',
     },
   },
   clearButton: {
     marginLeft: 'auto',
   },
   apply: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
+    bottom: '0px',
+    left: '0px',
+    padding: '16px 0',
+    position: 'sticky',
+    textAlign: 'center',
+    width: '100%',
+    '& button': {
+      margin: '0 8px',
+      padding: '12px 42px',
+    },
+  },
+  resultCount: {
+    display: 'inline-block',
+    marginBottom: '20px',
+    width: '100%',
   },
 };
 
@@ -134,6 +179,9 @@ const FilterPanel = ({
       indicators,
       price: priceFilterVal,
     });
+    if (open) {
+      onClose();
+    }
   };
 
   const header = (
@@ -157,7 +205,7 @@ const FilterPanel = ({
       className={classes.nameFilter}
       type="text"
       variant="outlined"
-      label="Search by name within results"
+      label={`Search by name${type === 'desktop' ? ' within results' : ''}`}
       fullWidth
       InputProps={{
         endAdornment: (
@@ -178,7 +226,13 @@ const FilterPanel = ({
 
   const priceFilter = (
     <FormControl component="fieldset" className={classes.filterGroup}>
-      <FormLabel component="legend" className="">Price</FormLabel>
+      <FormLabel component="legend" className={classes.visuallyHidden}>Price</FormLabel>
+      <div
+        aria-hidden="true"
+        className={classes.filterHeader}
+      >
+        Price
+      </div>
       <RadioGroup
         aria-label="Price"
         name="price"
@@ -190,6 +244,7 @@ const FilterPanel = ({
             key={`price_${i}`}
             control={<Radio />}
             label={`${'$'.repeat(i)}`}
+            aria-label={`price level ${i}`}
             value={i}
           />
         )) }
@@ -228,7 +283,13 @@ const FilterPanel = ({
 
   const indicatorFilters = (
     <FormControl component="fieldset" className={classes.filterGroup}>
-      <FormLabel component="legend" className="">Indicators</FormLabel>
+      <FormLabel component="legend" className={classes.visuallyHidden}>Indicators</FormLabel>
+      <div
+        aria-hidden="true"
+        className={classes.filterHeader}
+      >
+        Indicators
+      </div>
       <FormGroup>
         { indicatorCheckboxes.slice(0, 5) }
         <Collapse in={!collapsed}>
@@ -236,8 +297,11 @@ const FilterPanel = ({
             { indicatorCheckboxes.slice(5) }
           </FormGroup>
         </Collapse>
-        <Button onClick={() => setCollapsed(!collapsed)}>
-          { `Show ${collapsed ? 'More' : 'Less'}` }
+        <Button
+          onClick={() => setCollapsed(!collapsed)}
+          className={classes.filterToggle}
+        >
+          { `See ${collapsed ? 'More' : 'Less'}` }
         </Button>
       </FormGroup>
     </FormControl>
@@ -246,6 +310,8 @@ const FilterPanel = ({
   const apply = (
     <Button
       onClick={applyFilters}
+      variant="contained"
+      color="primary"
     >
       Apply
     </Button>
@@ -266,7 +332,12 @@ const FilterPanel = ({
   }
   return (
     <div className={classes.root}>
-      <Dialog fullScreen open={open} onClose={onClose}>
+      <Dialog
+        fullScreen
+        className={classes.dialog}
+        open={open}
+        onClose={onClose}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -283,17 +354,19 @@ const FilterPanel = ({
           { nameFilter }
           { priceFilter }
           { indicatorFilters }
-          <div className={classes.apply}>
-            <span>
-              {`${resultCount} Search Result${resultCount === 1 ? '' : 's'}`}
-            </span>
-            <Button
-              onClick={onClose}
-            >
-              Close
-            </Button>
-            { apply }
-          </div>
+        </div>
+        <div className={classes.apply}>
+          <span className={classes.resultCount}>
+            {`${resultCount} Search Result${resultCount === 1 ? '' : 's'}`}
+          </span>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+            color="default"
+          >
+            Close
+          </Button>
+          { apply }
         </div>
       </Dialog>
     </div>
