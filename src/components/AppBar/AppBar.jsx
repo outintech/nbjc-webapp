@@ -127,6 +127,11 @@ const AppBar = ({
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+          PaperProps={{
+            style: {
+              background: '#EBE5F6',
+            },
+          }}
         >
           <MenuItem onClick={navigateToProfile}>
             <AccountCircleIcon />
