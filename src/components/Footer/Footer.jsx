@@ -94,7 +94,7 @@ const Footer = ({ classes }) => {
               });
             }}
           >
-            Infringement Policies
+            Infringement Policy
           </Button>
         </Grid>
         <Grid item>
