@@ -42,6 +42,8 @@ const styles = (theme) => ({
     marginRight: '0.15rem',
     color: theme.palette.navBlack.textDark,
     fontWeight: 600,
+    backgroundColor: 'transparent',
+    textTransform: 'none',
   },
   icons: {
     color: '#000',
@@ -50,6 +52,13 @@ const styles = (theme) => ({
     flexGrow: 1,
     textAlign: 'left',
     marginRight: '0.3rem',
+  },
+  navLinkBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'right',
+    alignItems: 'center',
+    alignSelf: 'right',
   },
 });
 
@@ -111,12 +120,11 @@ const AppBar = ({
           id="demo-positioned-button"
           aria-controls={open ? 'demo-positioned-menu' : undefined}
           aria-haspopup="true"
-          className={classes.links}
-          style={{ backgroundColor: 'transparent', textTransform: 'none' }}
           aria-expanded={open ? 'true' : undefined}
+          className={classes.links}
           onClick={handleClick}
         >
-          {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
+          {TruncateUserName(userContext.userProfile.username)}
         </Button>
         <Menu
           id="demo-positioned-menu"
@@ -149,18 +157,10 @@ const AppBar = ({
   const AddASpace = () => {
     const matches = useMediaQuery('(min-width:485px)');
     return matches ? (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'right',
-        alignItems: 'center',
-        alignSelf: 'right',
-      }}
-      >
+      <div className={classes.navLinkBar}>
         <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
         <Button
           className={classes.links}
-          style={{ backgroundColor: 'transparent', textTransform: 'none' }}
           onClick={() => {
             history.push({
               pathname: '/spaces/new',
@@ -173,7 +173,6 @@ const AppBar = ({
     ) : (
       <Button
         className={classes.links}
-        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
         onClick={() => {
           history.push({
             pathname: '/spaces/new',
@@ -186,24 +185,16 @@ const AppBar = ({
   };
 
   const LogIn = () => (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'right',
-      alignItems: 'center',
-      alignSelf: 'right',
-    }}
-    >
+    <div className={classes.navLinkBar}>
       <Button
         className={classes.links}
-        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
         onClick={() => {
           history.push({
             pathname: '/profile',
           });
         }}
       >
-        {userContext.userProfile.username ? TruncateUserName(userContext.userProfile.username) : 'Log In'}
+        Log In
       </Button>
     </div>
   );
@@ -213,22 +204,12 @@ const AppBar = ({
       <div className={classes.root} data-testid="app-bar">
         <MaterialAppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            {!isLoading ? (
-              <Logo />
-            ) : null}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'right',
-              alignItems: 'center',
-              alignSelf: 'right',
-            }}
-            >
+            {!isLoading ? (<Logo />) : null}
+            <div className={classes.navLinkBar}>
               <AddASpace />
               {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
               <Button
                 className={classes.links}
-                style={{ backgroundColor: 'transparent', textTransform: 'none' }}
                 onClick={() => {
                   history.push({
                     pathname: '/',
@@ -239,7 +220,6 @@ const AppBar = ({
               </Button>
               <Button
                 className={classes.links}
-                style={{ backgroundColor: 'transparent', textTransform: 'none' }}
                 onClick={() => {
                   setShowSupportDialog(true);
                 }}
