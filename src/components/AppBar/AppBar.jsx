@@ -117,8 +117,8 @@ const AppBar = ({
     return (
       <div>
         <Button
-          id="demo-positioned-button"
-          aria-controls={open ? 'demo-positioned-menu' : undefined}
+          id="log-in-positioned-button"
+          aria-controls={open ? 'log-in-positioned-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           className={classes.links}
@@ -127,8 +127,8 @@ const AppBar = ({
           {TruncateUserName(userContext.userProfile.username)}
         </Button>
         <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
+          id="log-in-positioned-menu"
+          aria-labelledby="log-in-positioned-button"
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
