@@ -10,6 +10,8 @@ import {
 // import Button from '@material-ui/core/Button';
 
 import FirstGridImage from '../../assets/Rectangle 52.png';
+import SecondGridImage from '../../assets/Rectangle 53.png';
+import ThirdGridImage from '../../assets/Rectangle 54.png';
 
 const styles = (theme) => ({
   root: {
@@ -101,26 +103,26 @@ const Home = ({ classes }) => {
         </Grid>
         <Grid item xs={12} md={8} className={classes.fontGridContainer}>
           <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-            The Mission
+            Discover New Spaces
           </Typography>
           <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-            Our mission is to spread the word about spaces where people can be themselves.
-            All spaces and reviews are published by Lavender Book members.
+            Lavender Book is here whether you are traveling or looking for a new local
+            hangout spot.
           </Typography>
         </Grid>
         <Grid item xs={12} md={4}>
-          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+          <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+          <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
         </Grid>
         <Grid item xs={12} md={8} className={classes.fontGridContainer}>
           <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-            The Mission
+            What types of spaces can I search?
           </Typography>
           <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-            Our mission is to spread the word about spaces where people can be themselves.
-            All spaces and reviews are published by Lavender Book members.
+            Not sure where to start? Use the categories below to narrow your search to specific
+            types of spaces.
           </Typography>
         </Grid>
       </Grid>
