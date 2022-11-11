@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -39,11 +39,12 @@ const styles = (theme) => ({
     color: theme.palette.navBlack.contrastText,
   },
   links: {
-    marginRight: '0.15rem',
+    marginRight: '1rem',
     color: theme.palette.navBlack.textDark,
     fontWeight: 600,
     backgroundColor: 'transparent',
     textTransform: 'none',
+    textDecoration: 'none',
   },
   icons: {
     color: '#000',
@@ -155,47 +156,28 @@ const AppBar = ({
   };
 
   const AddASpace = () => {
-    const matches = useMediaQuery('(min-width:485px)');
+    const matches = useMediaQuery('(min-width:495px)');
     return matches ? (
       <div className={classes.navLinkBar}>
-        <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
-        <Button
-          className={classes.links}
-          onClick={() => {
-            history.push({
-              pathname: '/spaces/new',
-            });
-          }}
-        >
+        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
+          <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
           Add a Space
-        </Button>
+        </NavLink>
       </div>
     ) : (
-      <Button
-        className={classes.links}
-        onClick={() => {
-          history.push({
-            pathname: '/spaces/new',
-          });
-        }}
-      >
-        <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
-      </Button>
+      <div className={classes.navLinkBar}>
+        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
+          <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+        </NavLink>
+      </div>
     );
   };
 
   const LogIn = () => (
     <div className={classes.navLinkBar}>
-      <Button
-        className={classes.links}
-        onClick={() => {
-          history.push({
-            pathname: '/profile',
-          });
-        }}
-      >
+      <NavLink to="/profile" className={classes.links}>
         Log In
-      </Button>
+      </NavLink>
     </div>
   );
 
@@ -208,16 +190,9 @@ const AppBar = ({
             <div className={classes.navLinkBar}>
               <AddASpace />
               {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
-              <Button
-                className={classes.links}
-                onClick={() => {
-                  history.push({
-                    pathname: '/',
-                  });
-                }}
-              >
+              <NavLink to="/" className={classes.links}>
                 Home
-              </Button>
+              </NavLink>
               <Button
                 className={classes.links}
                 onClick={() => {
