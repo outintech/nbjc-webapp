@@ -1,9 +1,15 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import {
+  Box,
+  Grid,
+  Typography,
+  useMediaQuery,
+  withStyles,
+} from '@material-ui/core/';
+
+// import Button from '@material-ui/core/Button';
+
+import FirstGridImage from '../../assets/Rectangle 52.png';
 
 const styles = (theme) => ({
   root: {
@@ -24,6 +30,7 @@ const styles = (theme) => ({
     height: 'auto',
     display: 'inherit',
     margin: '0 auto',
+    width: '100%',
   },
   buttonWrapper: {
     [theme.breakpoints.up('xs')]: {
@@ -54,62 +61,71 @@ const styles = (theme) => ({
       width: '25px',
     },
   },
+  fontGridContainer: {
+    display: 'flex',
+    alignItems: 'left',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: '30px',
+    fontWeight: 600,
+  },
+  font: {
+    color: '#1E1131',
+  },
+  body: {
+    fontSize: '18px',
+  },
 });
 
 const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
-  const matches = useMediaQuery('(min-width:500px)');
-  let src = '/mobile-home-icon.svg';
-  let variant = 'h5';
-  if (matches) {
-    src = '/web-home-icon.svg';
-    variant = 'h4';
-  }
-
+  const matches = useMediaQuery('(min-width:500px)'); // Use this to center the typography when mobile view.
+  console.log(matches);
   return (
-    <div className={classes.root}>
-      <img src={src} alt="Home page" className={classes.image} />
-      <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant} align="center">
-          Welcome! The Lavender Book is a community-driven platform built for
-          the Black Queer, Black Trans, and Black Gender Non-Binary
-          communities.
-        </Typography>
-      </Box>
-      <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant} align="center">
-          Its mission is to spread the word about spaces where people can be
-          themselves. All spaces and reviews are published by Lavender Book
-          members.
-        </Typography>
-      </Box>
-      <div className={classes.buttonWrapper}>
-        <Button
-          variant="outlined"
-          color="primary"
-          align="center"
-          fullWidth={!matches}
-          href="/spaces/new"
-          className={classes.button}
-          disableElevation
-        >
-          Add a Space
-        </Button>
-        <div className={classes.break} />
-        <Button
-          variant="contained"
-          color="primary"
-          align="center"
-          fullWidth={!matches}
-          href="/search"
-          className={classes.button}
-          disableElevation
-        >
-          Search for a Space
-        </Button>
-      </div>
-    </div>
+    <Box className={classes.root}>
+      <Grid container>
+        <Grid item xs={12} md={4}>
+          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+        </Grid>
+        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            The Mission
+          </Typography>
+          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            Our mission is to spread the word about spaces where people can be themselves.
+            All spaces and reviews are published by Lavender Book members.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            The Mission
+          </Typography>
+          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            Our mission is to spread the word about spaces where people can be themselves.
+            All spaces and reviews are published by Lavender Book members.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+        </Grid>
+        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            The Mission
+          </Typography>
+          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            Our mission is to spread the word about spaces where people can be themselves.
+            All spaces and reviews are published by Lavender Book members.
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
+
   );
 };
 
