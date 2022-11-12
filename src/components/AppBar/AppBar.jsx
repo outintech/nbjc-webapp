@@ -35,12 +35,12 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navBlack.light,
-    color: theme.palette.navBlack.contrastText,
+    backgroundColor: theme.palette.navWhite.light,
+    color: theme.palette.navWhite.contrastText,
   },
   links: {
     marginRight: '1rem',
-    color: theme.palette.navBlack.textDark,
+    color: theme.palette.navWhite.textDark,
     fontWeight: 600,
     backgroundColor: 'transparent',
     textTransform: 'none',
