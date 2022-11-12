@@ -26,7 +26,8 @@ const styles = (theme) => ({
       width: '100%',
     },
     [theme.breakpoints.up('mobile')]: {
-      maxWidth: '500px',
+      maxWidth: '350px',
+      marginBottom: '20px',
     },
     height: 'auto',
     display: 'inherit',
@@ -77,9 +78,12 @@ const styles = (theme) => ({
   },
   body: {
     fontSize: '20px',
+    [theme.breakpoints.up('mobile')]: {
+      marginBottom: '20px',
+    },
   },
   row: {
-    marginLeft: 40,
+    marginLeft: 60,
     marginRight: 40,
     marginTop: 40,
   },
@@ -109,7 +113,7 @@ const Home = ({ classes }) => {
             </Button>
           </Grid>
 
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
@@ -124,7 +128,7 @@ const Home = ({ classes }) => {
           <Grid item xs={12} md={4}>
             <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               What types of spaces can I search?
             </Typography>
@@ -143,10 +147,10 @@ const Home = ({ classes }) => {
             <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               The Mission
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
@@ -155,10 +159,10 @@ const Home = ({ classes }) => {
             <Grid item xs={12} md={4}>
               <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
             </Grid>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               Discover New Spaces
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
               Lavender Book is here whether you are traveling or looking for a new local
               hangout spot.
             </Typography>
@@ -167,10 +171,10 @@ const Home = ({ classes }) => {
             <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               What types of spaces can I search?
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
               Not sure where to start? Use the categories below to narrow your search to specific
               types of spaces.
             </Typography>
