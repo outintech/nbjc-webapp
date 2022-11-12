@@ -1,13 +1,12 @@
 import React from 'react';
 import {
   Box,
+  Button,
   Grid,
   Typography,
   useMediaQuery,
   withStyles,
 } from '@material-ui/core/';
-
-// import Button from '@material-ui/core/Button';
 
 import FirstGridImage from '../../assets/Rectangle 52.png';
 import SecondGridImage from '../../assets/Rectangle 53.png';
@@ -87,47 +86,94 @@ const Home = ({ classes }) => {
   const matches = useMediaQuery('(min-width:500px)'); // Use this to center the typography when mobile view.
   console.log(matches);
   return (
-    <Box className={classes.root}>
-      <Grid container>
-        <Grid item xs={12} md={4}>
-          <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+    matches ? (
+      <Box className={classes.root}>
+        <Grid container>
+          <imageOne />
+          <Grid item xs={12} md={4}>
+            <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              The Mission
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Our mission is to spread the word about spaces where people can be themselves.
+              All spaces and reviews are published by Lavender Book members.
+            </Typography>
+            <Button>
+              Add a Space
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              Discover New Spaces
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Lavender Book is here whether you are traveling or looking for a new local
+              hangout spot.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              What types of spaces can I search?
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Not sure where to start? Use the categories below to narrow your search to specific
+              types of spaces.
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-            The Mission
-          </Typography>
-          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-            Our mission is to spread the word about spaces where people can be themselves.
-            All spaces and reviews are published by Lavender Book members.
-          </Typography>
+      </Box>
+    ) : (
+      <Box className={classes.root}>
+        <Grid container>
+          <imageOne />
+          <Grid item xs={12} md={4}>
+            <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              The Mission
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Our mission is to spread the word about spaces where people can be themselves.
+              All spaces and reviews are published by Lavender Book members.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Grid item xs={12} md={4}>
+              <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
+            </Grid>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              Discover New Spaces
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Lavender Book is here whether you are traveling or looking for a new local
+              hangout spot.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
+          </Grid>
+          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+            <Typography variant="h2" className={[classes.title, classes.font]} align="left">
+              What types of spaces can I search?
+            </Typography>
+            <Typography variant="body1" className={[classes.font, classes.body]} align="left">
+              Not sure where to start? Use the categories below to narrow your search to specific
+              types of spaces.
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-            Discover New Spaces
-          </Typography>
-          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-            Lavender Book is here whether you are traveling or looking for a new local
-            hangout spot.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
-        </Grid>
-        <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-          <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-            What types of spaces can I search?
-          </Typography>
-          <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-            Not sure where to start? Use the categories below to narrow your search to specific
-            types of spaces.
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>
-
+      </Box>
+    )
   );
 };
 
