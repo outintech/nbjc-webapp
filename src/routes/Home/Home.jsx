@@ -69,31 +69,34 @@ const styles = (theme) => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: '30px',
+    fontSize: '28px',
     fontWeight: 600,
   },
   font: {
     color: '#1E1131',
   },
   body: {
-    fontSize: '18px',
+    fontSize: '20px',
+  },
+  row: {
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 40,
   },
 });
 
 const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
-  const matches = useMediaQuery('(min-width:500px)'); // Use this to center the typography when mobile view.
-  console.log(matches);
+  const matches = useMediaQuery('(min-width:960px)');
   return (
     matches ? (
       <Box className={classes.root}>
-        <Grid container>
-          <imageOne />
+        <Grid container className={classes.row}>
           <Grid item xs={12} md={4}>
             <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               The Mission
             </Typography>
@@ -105,6 +108,7 @@ const Home = ({ classes }) => {
               Add a Space
             </Button>
           </Grid>
+
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
