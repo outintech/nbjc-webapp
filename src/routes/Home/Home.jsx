@@ -8,6 +8,19 @@ import {
   withStyles,
 } from '@material-ui/core/';
 
+import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
+import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
+import { ReactComponent as DCIcon } from '../../assets/noto_classical-building.svg';
+import { ReactComponent as HoustonIcon } from '../../assets/noto_cactus.svg';
+import { ReactComponent as LAIcon } from '../../assets/noto_palm-tree.svg';
+
+import { ReactComponent as CafeIcon } from '../../assets/noto_hot-beverage.svg';
+import { ReactComponent as BarberIcon } from '../../assets/noto_barber-pole.svg';
+import { ReactComponent as RestaurantIcon } from '../../assets/noto_fork-and-knife-with-plate.svg';
+import { ReactComponent as WellnessIcon } from '../../assets/noto_woman-in-lotus-position-dark-skin-tone.svg';
+import { ReactComponent as ShoppingIcon } from '../../assets/noto_shopping-bags.svg';
+import { ReactComponent as NightlifeIcon } from '../../assets/noto_cocktail-glass.svg';
+
 import FirstGridImage from '../../assets/Rectangle 52.png';
 import SecondGridImage from '../../assets/Rectangle 53.png';
 import ThirdGridImage from '../../assets/Rectangle 54.png';
@@ -53,7 +66,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       marginBottom: '0px',
     },
-    width: '250px',
+    backgroundColor: '#EBE5F6',
+    marginRight: '20px',
   },
   break: {
     [theme.breakpoints.up('xs')]: {
@@ -87,6 +101,13 @@ const styles = (theme) => ({
     marginRight: 40,
     marginTop: 40,
   },
+  buttonRow: {
+    marginBottom: 20,
+  },
+  problemButton: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 const Home = ({ classes }) => {
@@ -108,9 +129,11 @@ const Home = ({ classes }) => {
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
-            <Button>
-              Add a Space
-            </Button>
+            <Box>
+              <Button variant="outlined" className={classes.button}>
+                Add a Space
+              </Button>
+            </Box>
           </Grid>
 
           <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
@@ -121,7 +144,30 @@ const Home = ({ classes }) => {
               Lavender Book is here whether you are traveling or looking for a new local
               hangout spot.
             </Typography>
+            <Box>
+              <Button variant="outlined" className={classes.button}>
+                <SolIcon />
+                NYC
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <AtlantaIcon />
+                Atlanta
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <DCIcon />
+                DC
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <HoustonIcon />
+                Houston
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <LAIcon />
+                LA
+              </Button>
+            </Box>
           </Grid>
+
           <Grid item xs={12} md={4}>
             <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
@@ -136,8 +182,42 @@ const Home = ({ classes }) => {
               Not sure where to start? Use the categories below to narrow your search to specific
               types of spaces.
             </Typography>
+            <Box className={classes.buttonRow}>
+              <Button variant="outlined" className={classes.button}>
+                <CafeIcon />
+                Coffeeshops
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <BarberIcon />
+                Barbershops
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <RestaurantIcon />
+                Restaurants
+              </Button>
+            </Box>
+            <Box>
+              <Button variant="outlined" className={classes.button}>
+                <WellnessIcon />
+                Wellness
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <ShoppingIcon />
+                Shopping
+              </Button>
+              <Button variant="outlined" className={classes.button}>
+                <NightlifeIcon />
+                Nightlife
+              </Button>
+            </Box>
           </Grid>
         </Grid>
+        <Box className={classes.problemButton}>
+          <Button variant="outlined" className={classes.button}>
+            Report a Problem
+          </Button>
+        </Box>
+
       </Box>
     ) : (
       <Box className={classes.root}>
