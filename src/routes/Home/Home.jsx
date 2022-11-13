@@ -71,7 +71,7 @@ const styles = (theme) => ({
     backgroundColor: '#FCFBFE',
     marginRight: '20px',
     textTransform: 'none',
-
+    border: '1px solid #EBE5F6',
   },
   break: {
     [theme.breakpoints.up('xs')]: {
@@ -111,6 +111,7 @@ const styles = (theme) => ({
     gap: 10,
   },
   problemButton: {
+    marginTop: 10,
     display: 'flex',
     justifyContent: 'center',
   },
