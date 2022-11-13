@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -9,6 +9,12 @@ import {
   useMediaQuery,
   withStyles,
 } from '@material-ui/core/';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
 import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
@@ -121,6 +127,7 @@ const styles = (theme) => ({
 const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
+  const [showSupportDialog, setShowSupportDialog] = useState(false);
   const matches = useMediaQuery('(min-width:960px)');
   const history = useHistory();
 
@@ -216,11 +223,47 @@ const Home = ({ classes }) => {
           </Grid>
         </Grid>
         <Box className={classes.problemButton}>
-          <Button variant="outlined" className={classes.button}>
+          <Button
+            variant="outlined"
+            className={classes.button}
+            onClick={() => {
+              setShowSupportDialog(true);
+            }}
+          >
             Report a Problem
           </Button>
         </Box>
-
+        <Dialog
+          open={showSupportDialog}
+          onClose={() => setShowSupportDialog(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Leave The Lavender Book?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to leave The Lavender Book? You will be taken
+              to Google Forms to contact Support.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowSupportDialog(false)} color="primary">
+              Disagree
+            </Button>
+            <Button
+              onClick={() => {
+                window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
+                setShowSupportDialog(false);
+              }}
+              color="primary"
+              autoFocus
+            >
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     ) : (
       <Box className={classes.root}>
