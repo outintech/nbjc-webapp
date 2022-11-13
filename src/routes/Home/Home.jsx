@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   Box,
@@ -122,14 +122,21 @@ const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
   const matches = useMediaQuery('(min-width:960px)');
-  // const history = useHistory();
+  const history = useHistory();
+
+  const handleClick = (event, param) => {
+    history.push({
+      pathname: '/search/results',
+      search: `?searchTerm=&category=&location=${param}`,
+    });
+  };
 
   const rowTwoButtons = [
-    { name: 'NYC', icon: <SolIcon /> },
-    { name: 'Atlanta', icon: <AtlantaIcon /> },
-    { name: 'DC', icon: <DCIcon /> },
-    { name: 'Houston', icon: <HoustonIcon /> },
-    { name: 'LA', icon: <LAIcon /> },
+    { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
+    { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
+    { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
+    { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
+    { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
   ];
 
   const rowThreeButtons = [
@@ -163,7 +170,7 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]} style={{ marginLeft: '7rem' }}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
@@ -173,16 +180,21 @@ const Home = ({ classes }) => {
             </Typography>
             <Box className={classes.buttonRow}>
               {rowTwoButtons.map((buttonData) => (
-                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+                <Button
+                  variant="outlined"
+                  className={classes.button}
+                  startIcon={buttonData.icon}
+                  onClick={(event) => handleClick(event, buttonData.search)}
+                >
                   {buttonData.name}
                 </Button>
               ))}
             </Box>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
+
           <Grid item xs={12} md={4}>
             <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
           </Grid>
