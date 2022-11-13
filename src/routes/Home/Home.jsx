@@ -38,7 +38,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
-    [theme.breakpoints.up('mobile')]: {
+    [theme.breakpoints.up('md')]: {
       margin: '0 100px',
     },
   },
@@ -75,6 +75,7 @@ const styles = (theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
   },
+
   title: {
     fontSize: '28px',
     fontWeight: 600,
@@ -103,7 +104,9 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
     gap: 20,
     marginBottom: 20,
-    maxWidth: 550,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 550,
+    },
   },
   problemButton: {
     marginTop: 10,
