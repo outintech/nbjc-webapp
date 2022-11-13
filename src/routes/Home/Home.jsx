@@ -77,6 +77,7 @@ const styles = (theme) => ({
     backgroundColor: '#FCFBFE',
     textTransform: 'none',
     border: '1px solid #EBE5F6',
+    fontWeight: 600,
   },
   break: {
     [theme.breakpoints.up('xs')]: {
@@ -177,7 +178,7 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]} style={{ marginLeft: '7rem' }}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
