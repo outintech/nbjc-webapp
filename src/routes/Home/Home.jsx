@@ -108,12 +108,16 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  icon: {
+    marginRight: '5px',
+  },
 });
 
 const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
   const matches = useMediaQuery('(min-width:960px)');
+
   return (
     matches ? (
       <Box className={classes.root}>
@@ -146,23 +150,23 @@ const Home = ({ classes }) => {
             </Typography>
             <Box>
               <Button variant="outlined" className={classes.button}>
-                <SolIcon />
+                <SolIcon className={classes.icon} />
                 NYC
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <AtlantaIcon />
+                <AtlantaIcon className={classes.icon} />
                 Atlanta
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <DCIcon />
+                <DCIcon className={classes.icon} />
                 DC
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <HoustonIcon />
+                <HoustonIcon className={classes.icon} />
                 Houston
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <LAIcon />
+                <LAIcon className={classes.icon} />
                 LA
               </Button>
             </Box>
@@ -184,29 +188,29 @@ const Home = ({ classes }) => {
             </Typography>
             <Box className={classes.buttonRow}>
               <Button variant="outlined" className={classes.button}>
-                <CafeIcon />
+                <CafeIcon className={classes.icon} />
                 Coffeeshops
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <BarberIcon />
+                <BarberIcon className={classes.icon} />
                 Barbershops
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <RestaurantIcon />
+                <RestaurantIcon className={classes.icon} />
                 Restaurants
               </Button>
             </Box>
             <Box>
               <Button variant="outlined" className={classes.button}>
-                <WellnessIcon />
+                <WellnessIcon className={classes.icon} />
                 Wellness
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <ShoppingIcon />
+                <ShoppingIcon className={classes.icon} />
                 Shopping
               </Button>
               <Button variant="outlined" className={classes.button}>
-                <NightlifeIcon />
+                <NightlifeIcon className={classes.icon} />
                 Nightlife
               </Button>
             </Box>
