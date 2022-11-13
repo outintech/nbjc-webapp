@@ -55,18 +55,6 @@ const styles = (theme) => ({
     margin: '0 auto',
     width: '100%',
   },
-  buttonWrapper: {
-    [theme.breakpoints.up('xs')]: {
-      flexWrap: 'wrap-reverse',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      flexWrap: 'no-wrap',
-    },
-    height: '120px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'space-evenly',
-  },
   button: {
     [theme.breakpoints.up('xs')]: {
       marginBottom: '25px',
@@ -104,6 +92,7 @@ const styles = (theme) => ({
     fontSize: '20px',
     [theme.breakpoints.up('mobile')]: {
       marginBottom: '20px',
+      fontSize: '18px',
     },
   },
   row: {
@@ -117,6 +106,9 @@ const styles = (theme) => ({
     gap: 20,
     marginBottom: 20,
     maxWidth: 550,
+    [theme.breakpoints.up('mobile')]: {
+      justifyContent: 'center',
+    },
   },
   problemButton: {
     marginTop: 10,
@@ -281,6 +273,9 @@ const Home = ({ classes }) => {
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
+            <Button href="/spaces/new" variant="outlined" className={[classes.button, classes.body]}>
+              Add a Space
+            </Button>
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Grid item xs={12} md={4}>
@@ -293,6 +288,18 @@ const Home = ({ classes }) => {
               Lavender Book is here whether you are traveling or looking for a new local
               hangout spot.
             </Typography>
+            <Box className={classes.buttonRow}>
+              {rowTwoButtons.map((buttonData) => (
+                <Button
+                  variant="outlined"
+                  className={classes.button}
+                  startIcon={buttonData.icon}
+                  onClick={(event) => handleClick(event, buttonData.search)}
+                >
+                  {buttonData.name}
+                </Button>
+              ))}
+            </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
@@ -305,8 +312,57 @@ const Home = ({ classes }) => {
               Not sure where to start? Use the categories below to narrow your search to specific
               types of spaces.
             </Typography>
+            <Box className={classes.buttonRow}>
+              {rowThreeButtons.map((buttonData) => (
+                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+                  {buttonData.name}
+                </Button>
+              ))}
+            </Box>
           </Grid>
         </Grid>
+        <Box className={classes.problemButton}>
+          <Button
+            variant="outlined"
+            className={classes.button}
+            onClick={() => {
+              setShowSupportDialog(true);
+            }}
+          >
+            Report a Problem
+          </Button>
+        </Box>
+        <Dialog
+          open={showSupportDialog}
+          onClose={() => setShowSupportDialog(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Leave The Lavender Book?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to leave The Lavender Book? You will be taken
+              to Google Forms to contact Support.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowSupportDialog(false)} color="primary">
+              Disagree
+            </Button>
+            <Button
+              onClick={() => {
+                window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
+                setShowSupportDialog(false);
+              }}
+              color="primary"
+              autoFocus
+            >
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     )
   );
