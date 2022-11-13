@@ -108,9 +108,6 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  icon: {
-    marginRight: '5px',
-  },
 });
 
 const Home = ({ classes }) => {
@@ -149,24 +146,19 @@ const Home = ({ classes }) => {
               hangout spot.
             </Typography>
             <Box>
-              <Button variant="outlined" className={classes.button}>
-                <SolIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<SolIcon />}>
                 NYC
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <AtlantaIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<AtlantaIcon />}>
                 Atlanta
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <DCIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<DCIcon />}>
                 DC
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <HoustonIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<HoustonIcon />}>
                 Houston
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <LAIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<LAIcon />}>
                 LA
               </Button>
             </Box>
@@ -187,30 +179,24 @@ const Home = ({ classes }) => {
               types of spaces.
             </Typography>
             <Box className={classes.buttonRow}>
-              <Button variant="outlined" className={classes.button}>
-                <CafeIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<CafeIcon />}>
                 Coffeeshops
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <BarberIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<BarberIcon />}>
                 Barbershops
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <RestaurantIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<RestaurantIcon />}>
                 Restaurants
               </Button>
             </Box>
             <Box>
-              <Button variant="outlined" className={classes.button}>
-                <WellnessIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<WellnessIcon />}>
                 Wellness
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <ShoppingIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<ShoppingIcon />}>
                 Shopping
               </Button>
-              <Button variant="outlined" className={classes.button}>
-                <NightlifeIcon className={classes.icon} />
+              <Button variant="outlined" className={classes.button} startIcon={<NightlifeIcon />}>
                 Nightlife
               </Button>
             </Box>
