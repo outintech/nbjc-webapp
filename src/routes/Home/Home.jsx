@@ -69,7 +69,6 @@ const styles = (theme) => ({
       marginBottom: '0px',
     },
     backgroundColor: '#FCFBFE',
-    marginRight: '20px',
     textTransform: 'none',
     border: '1px solid #EBE5F6',
   },
@@ -108,7 +107,9 @@ const styles = (theme) => ({
   buttonRow: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: 20,
+    marginBottom: 20,
+    maxWidth: 550,
   },
   problemButton: {
     marginTop: 10,
