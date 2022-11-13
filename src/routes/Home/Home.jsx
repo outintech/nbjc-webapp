@@ -1,4 +1,6 @@
 import React from 'react';
+// import { useHistory } from 'react-router-dom';
+
 import {
   Box,
   Button,
@@ -114,6 +116,24 @@ const Home = ({ classes }) => {
   // since this is a copy heavy page
   // switch to smaller dimensions sooner
   const matches = useMediaQuery('(min-width:960px)');
+  // const history = useHistory();
+
+  const rowTwoButtons = [
+    { name: 'NYC', icon: <SolIcon /> },
+    { name: 'Atlanta', icon: <AtlantaIcon /> },
+    { name: 'DC', icon: <DCIcon /> },
+    { name: 'Houston', icon: <HoustonIcon /> },
+    { name: 'LA', icon: <LAIcon /> },
+  ];
+
+  const rowThreeButtons = [
+    { name: 'Coffeeshops', icon: <CafeIcon /> },
+    { name: 'Barbershops', icon: <BarberIcon /> },
+    { name: 'Restaurants', icon: <RestaurantIcon /> },
+    { name: 'Wellness', icon: <WellnessIcon /> },
+    { name: 'Shopping', icon: <ShoppingIcon /> },
+    { name: 'Nightlife', icon: <NightlifeIcon /> },
+  ];
 
   return (
     matches ? (
@@ -131,7 +151,7 @@ const Home = ({ classes }) => {
               All spaces and reviews are published by Lavender Book members.
             </Typography>
             <Box>
-              <Button variant="outlined" className={classes.button}>
+              <Button href="/spaces/new" variant="outlined" className={classes.button}>
                 Add a Space
               </Button>
             </Box>
@@ -146,21 +166,11 @@ const Home = ({ classes }) => {
               hangout spot.
             </Typography>
             <Box>
-              <Button variant="outlined" className={classes.button} startIcon={<SolIcon />}>
-                NYC
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<AtlantaIcon />}>
-                Atlanta
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<DCIcon />}>
-                DC
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<HoustonIcon />}>
-                Houston
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<LAIcon />}>
-                LA
-              </Button>
+              {rowTwoButtons.map((buttonData) => (
+                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+                  {buttonData.name}
+                </Button>
+              ))}
             </Box>
           </Grid>
 
@@ -179,26 +189,18 @@ const Home = ({ classes }) => {
               types of spaces.
             </Typography>
             <Box className={classes.buttonRow}>
-              <Button variant="outlined" className={classes.button} startIcon={<CafeIcon />}>
-                Coffeeshops
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<BarberIcon />}>
-                Barbershops
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<RestaurantIcon />}>
-                Restaurants
-              </Button>
+              {rowThreeButtons.slice(0, 3).map((buttonData) => (
+                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+                  {buttonData.name}
+                </Button>
+              ))}
             </Box>
             <Box>
-              <Button variant="outlined" className={classes.button} startIcon={<WellnessIcon />}>
-                Wellness
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<ShoppingIcon />}>
-                Shopping
-              </Button>
-              <Button variant="outlined" className={classes.button} startIcon={<NightlifeIcon />}>
-                Nightlife
-              </Button>
+              {rowThreeButtons.slice(3, 6).map((buttonData) => (
+                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+                  {buttonData.name}
+                </Button>
+              ))}
             </Box>
           </Grid>
         </Grid>
