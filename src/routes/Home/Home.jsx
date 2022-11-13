@@ -56,12 +56,6 @@ const styles = (theme) => ({
     width: '100%',
   },
   button: {
-    [theme.breakpoints.up('xs')]: {
-      marginBottom: '25px',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      marginBottom: '0px',
-    },
     backgroundColor: '#FCFBFE',
     textTransform: 'none',
     border: '1px solid #EBE5F6',
@@ -101,6 +95,10 @@ const styles = (theme) => ({
     marginTop: 40,
   },
   buttonRow: {
+    [theme.breakpoints.up('xs')]: {
+      justifyContent: 'center',
+      marginTop: 10,
+    },
     display: 'flex',
     flexWrap: 'wrap',
     gap: 20,
@@ -273,7 +271,7 @@ const Home = ({ classes }) => {
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
-            <Button href="/spaces/new" variant="outlined" className={[classes.button, classes.body]}>
+            <Button href="/spaces/new" variant="outlined" className={[classes.button, classes.body, classes.buttonRow]}>
               Add a Space
             </Button>
           </Grid>
