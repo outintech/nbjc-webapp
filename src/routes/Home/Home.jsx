@@ -68,8 +68,10 @@ const styles = (theme) => ({
     [theme.breakpoints.up('mobile')]: {
       marginBottom: '0px',
     },
-    backgroundColor: '#EBE5F6',
+    backgroundColor: '#FCFBFE',
     marginRight: '20px',
+    textTransform: 'none',
+
   },
   break: {
     [theme.breakpoints.up('xs')]: {
@@ -104,7 +106,9 @@ const styles = (theme) => ({
     marginTop: 40,
   },
   buttonRow: {
-    marginBottom: 20,
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 10,
   },
   problemButton: {
     display: 'flex',
@@ -165,7 +169,7 @@ const Home = ({ classes }) => {
               Lavender Book is here whether you are traveling or looking for a new local
               hangout spot.
             </Typography>
-            <Box>
+            <Box className={classes.buttonRow}>
               {rowTwoButtons.map((buttonData) => (
                 <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
                   {buttonData.name}
@@ -189,14 +193,7 @@ const Home = ({ classes }) => {
               types of spaces.
             </Typography>
             <Box className={classes.buttonRow}>
-              {rowThreeButtons.slice(0, 3).map((buttonData) => (
-                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
-                  {buttonData.name}
-                </Button>
-              ))}
-            </Box>
-            <Box>
-              {rowThreeButtons.slice(3, 6).map((buttonData) => (
+              {rowThreeButtons.map((buttonData) => (
                 <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
                   {buttonData.name}
                 </Button>
