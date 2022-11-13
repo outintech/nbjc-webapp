@@ -95,7 +95,7 @@ const styles = (theme) => ({
     marginTop: 40,
   },
   buttonRow: {
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       justifyContent: 'center',
       marginTop: 10,
     },
@@ -104,9 +104,6 @@ const styles = (theme) => ({
     gap: 20,
     marginBottom: 20,
     maxWidth: 550,
-    [theme.breakpoints.up('mobile')]: {
-      justifyContent: 'center',
-    },
   },
   problemButton: {
     marginTop: 10,
