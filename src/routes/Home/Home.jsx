@@ -48,12 +48,16 @@ const styles = (theme) => ({
     },
     [theme.breakpoints.up('mobile')]: {
       maxWidth: '350px',
-      marginBottom: '20px',
+      marginBottom: '1rem',
     },
     height: 'auto',
     display: 'inherit',
     margin: '0 auto',
     width: '100%',
+  },
+  middleImage: {
+    marginRight: '10%',
+    marginLeft: 'auto',
   },
   button: {
     backgroundColor: '#FCFBFE',
@@ -61,21 +65,12 @@ const styles = (theme) => ({
     border: '1px solid #EBE5F6',
     fontWeight: 600,
   },
-  break: {
-    [theme.breakpoints.up('xs')]: {
-      width: '0px',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      width: '25px',
-    },
-  },
   fontGridContainer: {
     display: 'flex',
     alignItems: 'left',
     justifyContent: 'center',
     flexDirection: 'column',
   },
-
   title: {
     fontSize: '28px',
     fontWeight: 600,
@@ -86,14 +81,14 @@ const styles = (theme) => ({
   body: {
     fontSize: '20px',
     [theme.breakpoints.up('mobile')]: {
-      marginBottom: '20px',
+      marginBottom: '1rem',
       fontSize: '18px',
     },
   },
   row: {
-    marginLeft: 60,
-    marginRight: 40,
-    marginTop: 40,
+    marginLeft: '5rem',
+    marginRight: '3rem',
+    marginTop: '3rem',
   },
   buttonRow: {
     [theme.breakpoints.down('md')]: {
@@ -102,14 +97,14 @@ const styles = (theme) => ({
     },
     display: 'flex',
     flexWrap: 'wrap',
-    gap: 20,
-    marginBottom: 20,
+    gap: '1.5rem',
+    marginBottom: '1rem',
     [theme.breakpoints.up('md')]: {
       maxWidth: 550,
     },
   },
   problemButton: {
-    marginTop: 10,
+    marginTop: '1rem',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -168,7 +163,7 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]} style={{ marginLeft: '4%' }}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
