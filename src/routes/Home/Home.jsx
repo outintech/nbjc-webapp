@@ -55,10 +55,6 @@ const styles = (theme) => ({
     margin: '0 auto',
     width: '100%',
   },
-  middleImage: {
-    marginRight: '10%',
-    marginLeft: 'auto',
-  },
   button: {
     backgroundColor: '#FCFBFE',
     textTransform: 'none',
@@ -146,7 +142,7 @@ const Home = ({ classes }) => {
       <Box className={classes.root}>
         <Grid container className={classes.row}>
           <Grid item xs={12} md={4}>
-            <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+            <img src={FirstGridImage} alt="happy black person at pride parade" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
@@ -162,8 +158,7 @@ const Home = ({ classes }) => {
               </Button>
             </Box>
           </Grid>
-
-          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]} style={{ marginLeft: '4%' }}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
@@ -185,11 +180,10 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
+            <img src={SecondGridImage} alt="three black people having fun on a street" className={classes.middleImage} />
           </Grid>
-
           <Grid item xs={12} md={4}>
-            <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
+            <img src={ThirdGridImage} alt="black person in front of rainbow mural" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
@@ -256,7 +250,7 @@ const Home = ({ classes }) => {
         <Grid container>
           <imageOne />
           <Grid item xs={12} md={4}>
-            <img src={FirstGridImage} alt="meaningful text" className={classes.image} />
+            <img src={FirstGridImage} alt="happy black person at pride parade" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
@@ -272,7 +266,7 @@ const Home = ({ classes }) => {
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Grid item xs={12} md={4}>
-              <img src={SecondGridImage} alt="meaningful text" className={classes.image} />
+              <img src={SecondGridImage} alt="three black people having fun on a street" className={classes.image} />
             </Grid>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               Discover New Spaces
@@ -295,7 +289,7 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <img src={ThirdGridImage} alt="meaningful text" className={classes.image} />
+            <img src={ThirdGridImage} alt="black person in front of rainbow mural" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
