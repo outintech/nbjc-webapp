@@ -4,17 +4,16 @@ import { useHistory } from 'react-router-dom';
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   Typography,
   useMediaQuery,
   withStyles,
 } from '@material-ui/core/';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
 import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
@@ -29,9 +28,9 @@ import { ReactComponent as WellnessIcon } from '../../assets/noto_woman-in-lotus
 import { ReactComponent as ShoppingIcon } from '../../assets/noto_shopping-bags.svg';
 import { ReactComponent as NightlifeIcon } from '../../assets/noto_cocktail-glass.svg';
 
-import FirstGridImage from '../../assets/Rectangle 52.png';
-import SecondGridImage from '../../assets/Rectangle 53.png';
-import ThirdGridImage from '../../assets/Rectangle 54.png';
+import PrideParadeImage from '../../assets/Rectangle 52.png';
+import GroupPrideImage from '../../assets/Rectangle 53.png';
+import RainbowMuralImage from '../../assets/Rectangle 54.png';
 
 const styles = (theme) => ({
   root: {
@@ -142,7 +141,7 @@ const Home = ({ classes }) => {
       <Box className={classes.root}>
         <Grid container className={classes.row}>
           <Grid item xs={12} md={4}>
-            <img src={FirstGridImage} alt="happy black person at pride parade" className={classes.image} />
+            <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
@@ -180,10 +179,10 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <img src={SecondGridImage} alt="three black people having fun on a street" className={classes.middleImage} />
+            <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <img src={ThirdGridImage} alt="black person in front of rainbow mural" className={classes.image} />
+            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
@@ -250,7 +249,7 @@ const Home = ({ classes }) => {
         <Grid container>
           <imageOne />
           <Grid item xs={12} md={4}>
-            <img src={FirstGridImage} alt="happy black person at pride parade" className={classes.image} />
+            <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
@@ -266,7 +265,7 @@ const Home = ({ classes }) => {
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Grid item xs={12} md={4}>
-              <img src={SecondGridImage} alt="three black people having fun on a street" className={classes.image} />
+              <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.image} />
             </Grid>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               Discover New Spaces
@@ -289,7 +288,7 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <img src={ThirdGridImage} alt="black person in front of rainbow mural" className={classes.image} />
+            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.image} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
