@@ -302,6 +302,7 @@ const FilterPanel = ({
           className={classes.filterToggle}
         >
           { `See ${collapsed ? 'More' : 'Less'}` }
+          <span className={classes.visuallyHidden}>Indicators</span>
         </Button>
       </FormGroup>
     </FormControl>
