@@ -37,14 +37,14 @@ const styles = (theme) => ({
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
+    [theme.breakpoints.up('mobile')]: {
+      margin: '0 40px',
+    },
     [theme.breakpoints.up('md')]: {
       margin: '0 100px',
     },
   },
   image: {
-    [theme.breakpoints.up('xs')]: {
-      width: '100%',
-    },
     [theme.breakpoints.up('mobile')]: {
       maxWidth: '350px',
       marginBottom: '1rem',
@@ -81,9 +81,13 @@ const styles = (theme) => ({
     },
   },
   row: {
-    marginLeft: '5rem',
-    marginRight: '3rem',
+    margin: '0 auto',
     marginTop: '3rem',
+  },
+  middleRow: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    margin: '0 auto',
   },
   buttonRow: {
     [theme.breakpoints.down('md')]: {
@@ -157,7 +161,7 @@ const Home = ({ classes }) => {
               </Button>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.row]}>
+          <Grid item xs={12} md={6} className={[classes.fontGridContainer, classes.middleRow]}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="left">
               Discover New Spaces
             </Typography>
