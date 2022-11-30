@@ -32,6 +32,10 @@ import PrideParadeImage from '../../assets/Rectangle 52.png';
 import GroupPrideImage from '../../assets/Rectangle 53.png';
 import RainbowMuralImage from '../../assets/Rectangle 54.png';
 
+import PrideParadeImageLarge from '../../assets/Rectangle 52@2x.png';
+import GroupPrideImageLarge from '../../assets/Rectangle 53@2x.png';
+import RainbowMuralImageLarge from '../../assets/Rectangle 54@2x.png';
+
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
@@ -49,9 +53,11 @@ const styles = (theme) => ({
       maxWidth: '350px',
       marginBottom: '1rem',
     },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '450px',
+    },
     height: 'auto',
     display: 'inherit',
-    margin: '0 auto',
     width: '100%',
   },
   button: {
@@ -65,10 +71,13 @@ const styles = (theme) => ({
     alignItems: 'left',
     justifyContent: 'center',
     flexDirection: 'column',
-    maxWidth: 800,
+    [theme.breakpoints.up('md')]: {
+      minWidth: 800,
+      maxWidth: 800,
+    },
   },
   title: {
-    fontSize: '28px',
+    fontSize: '32px',
     fontWeight: 600,
   },
   font: {
@@ -78,17 +87,15 @@ const styles = (theme) => ({
     fontSize: '20px',
     [theme.breakpoints.up('mobile')]: {
       marginBottom: '1rem',
-      fontSize: '18px',
+      fontSize: '22px',
     },
   },
   row: {
-    margin: '0 auto',
     marginTop: '3rem',
   },
   middleRow: {
     display: 'flex',
     alignItems: 'flex-start',
-    margin: '0 auto',
   },
   buttonRow: {
     [theme.breakpoints.down('md')]: {
@@ -111,11 +118,20 @@ const styles = (theme) => ({
   outerRow: {
     display: 'flex',
     gap: 20,
-
+    [theme.breakpoints.up('md')]: {
+      gap: 40,
+    },
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   innerRow: {
     display: 'flex',
     gap: 20,
+    [theme.breakpoints.up('md')]: {
+      gap: 40,
+    },
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -155,7 +171,7 @@ const Home = ({ classes }) => {
       <Box className={classes.root}>
         <Box className={classes.row}>
           <Box className={classes.outerRow}>
-            <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.image} />
+            <img src={PrideParadeImageLarge} alt="happy black person at pride parade" className={classes.image} />
             <Box className={[classes.fontGridContainer, classes.row]}>
               <Typography variant="h2" className={[classes.title, classes.font]} align="left">
                 The Mission
@@ -193,10 +209,10 @@ const Home = ({ classes }) => {
                 ))}
               </Box>
             </Box>
-            <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.image} />
+            <img src={GroupPrideImageLarge} alt="three black people having fun on a street" className={classes.image} />
           </Box>
           <Box className={classes.outerRow}>
-            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.image} />
+            <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
             <Box className={[classes.fontGridContainer, classes.row]}>
               <Typography variant="h2" className={[classes.title, classes.font]} align="left">
                 What types of spaces can I search?
