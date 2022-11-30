@@ -144,6 +144,13 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  margins: {
+    margin: '0 auto',
+  },
+  mobileCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 const Home = ({ classes }) => {
@@ -289,8 +296,8 @@ const Home = ({ classes }) => {
       <Box className={classes.root}>
         <Grid container>
           <imageOne />
-          <Grid item xs={12} md={4}>
-            <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.image} />
+          <Grid item xs={12} md={4} className={classes.mobileCenter}>
+            <img src={PrideParadeImage} alt="happy black person at pride parade" className={[classes.image, classes.margin]} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
@@ -305,8 +312,8 @@ const Home = ({ classes }) => {
             </Button>
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Grid item xs={12} md={4}>
-              <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.image} />
+            <Grid item xs={12} md={4} className={classes.mobileCenter}>
+              <img src={GroupPrideImage} alt="three black people having fun on a street" className={[classes.image, classes.margin]} />
             </Grid>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               Discover New Spaces
@@ -328,8 +335,8 @@ const Home = ({ classes }) => {
               ))}
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.image} />
+          <Grid item xs={12} md={4} className={classes.mobileCenter}>
+            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={[classes.image, classes.margin]} />
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
