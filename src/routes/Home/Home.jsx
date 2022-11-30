@@ -65,6 +65,10 @@ const styles = (theme) => ({
     textTransform: 'none',
     border: '1px solid #EBE5F6',
     fontWeight: 600,
+    [theme.breakpoints.up('lg')]: {
+      minWidth: 122.4,
+      minHeight: 40.8,
+    },
   },
   fontGridContainer: {
     display: 'flex',
@@ -74,6 +78,10 @@ const styles = (theme) => ({
     [theme.breakpoints.up('md')]: {
       minWidth: 800,
       maxWidth: 800,
+    },
+    [theme.breakpoints.up('lg')]: {
+      minWidth: 1000,
+      maxWidth: 1000,
     },
   },
   title: {
@@ -108,6 +116,9 @@ const styles = (theme) => ({
     marginBottom: '1rem',
     [theme.breakpoints.up('md')]: {
       maxWidth: 550,
+    },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: 800,
     },
   },
   problemButton: {
