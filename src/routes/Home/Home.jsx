@@ -39,7 +39,7 @@ import RainbowMuralImageLarge from '../../assets/Rectangle 54@2x.png';
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
-      margin: '0 20px',
+      margin: '0 10px',
     },
     [theme.breakpoints.up('mobile')]: {
       margin: '0 40px',
@@ -49,16 +49,28 @@ const styles = (theme) => ({
     },
   },
   image: {
+    width: '100%',
+    height: 'auto',
+    display: 'inherit',
     [theme.breakpoints.up('lg')]: {
       maxWidth: '450px',
     },
-    [theme.breakpoints.up('mobile')]: {
+    [theme.breakpoints.up('md')]: {
       maxWidth: '350px',
       marginBottom: '1rem',
     },
+  },
+  mobileImage: {
     height: 'auto',
+    width: 'auto',
     display: 'inherit',
-    width: '100%',
+  },
+  smallMobileImage: {
+    height: 'auto',
+    width: 'auto',
+    display: 'inherit',
+    maxWidth: '300px',
+    minWidth: '300px',
   },
   button: {
     backgroundColor: '#FCFBFE',
@@ -66,6 +78,7 @@ const styles = (theme) => ({
     border: '1px solid #EBE5F6',
     fontWeight: 600,
     [theme.breakpoints.up('lg')]: {
+      // Width/Height is 1.7x larger than the base MUI button size.
       minWidth: 122.4,
       minHeight: 40.8,
     },
@@ -76,8 +89,8 @@ const styles = (theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     [theme.breakpoints.up('lg')]: {
-      minWidth: 900,
-      maxWidth: 900,
+      minWidth: 875,
+      maxWidth: 875,
     },
     overflow: 'auto',
   },
@@ -141,12 +154,10 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  margins: {
-    margin: '0 auto',
-  },
   mobileCenter: {
     display: 'flex',
     justifyContent: 'center',
+    objectFit: 'contain',
   },
 });
 
@@ -155,6 +166,7 @@ const Home = ({ classes }) => {
   // switch to smaller dimensions sooner
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   const matches = useMediaQuery('(min-width:960px)');
+  const mobileMatches = useMediaQuery('(min-width: 425px');
   const history = useHistory();
 
   const handleClick = (event, param) => {
@@ -292,9 +304,9 @@ const Home = ({ classes }) => {
     ) : (
       <Box className={classes.root}>
         <Grid container>
-          <imageOne />
           <Grid item xs={12} md={4} className={classes.mobileCenter}>
-            <img src={PrideParadeImage} alt="happy black person at pride parade" className={[classes.image, classes.margin]} />
+            {mobileMatches ? <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.mobileImage} />
+              : <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.smallMobileImage} />}
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
@@ -308,10 +320,11 @@ const Home = ({ classes }) => {
               Add a Space
             </Button>
           </Grid>
+          <Grid item xs={12} md={4} className={classes.mobileCenter}>
+            {mobileMatches ? <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.mobileImage} />
+              : <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.smallMobileImage} />}
+          </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Grid item xs={12} md={4} className={classes.mobileCenter}>
-              <img src={GroupPrideImage} alt="three black people having fun on a street" className={[classes.image, classes.margin]} />
-            </Grid>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
               Discover New Spaces
             </Typography>
@@ -333,7 +346,8 @@ const Home = ({ classes }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4} className={classes.mobileCenter}>
-            <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={[classes.image, classes.margin]} />
+            {mobileMatches ? <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.mobileImage} />
+              : <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.smallMobileImage} />}
           </Grid>
           <Grid item xs={12} md={8} className={classes.fontGridContainer}>
             <Typography variant="h2" className={[classes.title, classes.font]} align="center">
