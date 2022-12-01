@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink } from 'react-router-dom';
 
@@ -7,12 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useMediaQuery, withStyles } from '@material-ui/core';
 
 import MaterialAppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -67,22 +63,23 @@ const AppBar = ({
   classes,
   isLoading,
 }) => {
-  const [showSupportDialog, setShowSupportDialog] = useState(false);
   const userContext = useContext(UserContext);
   const history = useHistory();
 
   const { logout } = useAuth0();
 
   const Logo = () => {
-    const matches = useMediaQuery('(min-width:422px)');
+    const matches = useMediaQuery('(min-width:426px)');
     let logoSrc = '/mobile-appBar-logo.svg';
     if (matches) {
       logoSrc = '/web-appBar-logo.svg';
     }
     return (
-      <div className={classes.logo}>
-        <img src={logoSrc} alt="logo" />
-      </div>
+      <Box className={classes.logo}>
+        <NavLink to="/">
+          <img src={logoSrc} alt="logo" />
+        </NavLink>
+      </Box>
     );
   };
 
@@ -116,7 +113,7 @@ const AppBar = ({
     };
 
     return (
-      <div>
+      <Box>
         <Button
           id="log-in-positioned-button"
           aria-controls={open ? 'log-in-positioned-menu' : undefined}
@@ -151,85 +148,43 @@ const AppBar = ({
             Sign Out
           </MenuItem>
         </Menu>
-      </div>
+      </Box>
     );
   };
 
   const AddASpace = () => {
-    const matches = useMediaQuery('(min-width:495px)');
+    const matches = useMediaQuery('(min-width:426px)');
     return (
-      <div className={classes.navLinkBar}>
+      <Box className={classes.navLinkBar}>
         <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
           <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
           {matches ? 'Add a Space' : ''}
         </NavLink>
-      </div>
+      </Box>
     );
   };
 
   const LogIn = () => (
-    <div className={classes.navLinkBar}>
+    <Box className={classes.navLinkBar}>
       <NavLink to="/profile" className={classes.links}>
         Log In
       </NavLink>
-    </div>
+    </Box>
   );
 
   return (
     <>
-      <div className={classes.root} data-testid="app-bar">
+      <Box className={classes.root} data-testid="app-bar">
         <MaterialAppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             {!isLoading ? (<Logo />) : null}
-            <div className={classes.navLinkBar}>
+            <Box className={classes.navLinkBar}>
               <AddASpace />
               {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
-              <NavLink to="/" className={classes.links}>
-                Home
-              </NavLink>
-              <Button
-                className={classes.links}
-                onClick={() => {
-                  setShowSupportDialog(true);
-                }}
-              >
-                Support
-              </Button>
-            </div>
+            </Box>
           </Toolbar>
         </MaterialAppBar>
-      </div>
-      <Dialog
-        open={showSupportDialog}
-        onClose={() => setShowSupportDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Leave The Lavender Book?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to leave The Lavender Book? You will be taken
-            to Google Forms to contact Support.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowSupportDialog(false)} color="primary">
-            Disagree
-          </Button>
-          <Button
-            onClick={() => {
-              window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
-              setShowSupportDialog(false);
-            }}
-            color="primary"
-            autoFocus
-          >
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
+      </Box>
     </>
   );
 };
