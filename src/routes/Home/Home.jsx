@@ -154,7 +154,7 @@ const Home = ({ classes }) => {
   };
 
   const SupportButton = () => {
-    console.log('eslint');
+    const supportLink = 'https://forms.gle/mLDNTMGxMojuiKKLA';
     return (
       <Box>
         <Box className={classes.centerContent} style={{ marginTop: '1rem' }}>
@@ -189,7 +189,7 @@ const Home = ({ classes }) => {
             </Button>
             <Button
               onClick={() => {
-                window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
+                window.open(supportLink, '_blank');
                 setShowSupportDialog(false);
               }}
               color="primary"
