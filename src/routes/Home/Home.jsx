@@ -45,7 +45,7 @@ const styles = (theme) => ({
       margin: '0 40px',
     },
     [theme.breakpoints.up('md')]: {
-      margin: '0 100px',
+      margin: '3rem 0 100px',
     },
   },
   image: {
@@ -61,61 +61,61 @@ const styles = (theme) => ({
     },
   },
   mobileImage: {
+    // 1st Breakpoint CSS.
     height: 'auto',
     width: 'auto',
     display: 'inherit',
   },
   smallMobileImage: {
+    // 2nd Breakpoint CSS.
     height: 'auto',
     width: 'auto',
     display: 'inherit',
     maxWidth: '300px',
     minWidth: '300px',
   },
-  button: {
-    backgroundColor: '#FCFBFE',
-    textTransform: 'none',
-    border: '1px solid #EBE5F6',
-    fontWeight: 600,
+  searchButton: {
     [theme.breakpoints.up('lg')]: {
       // Width/Height is 1.7x larger than the base MUI button size.
       minWidth: 122.4,
       minHeight: 40.8,
     },
+    backgroundColor: '#FCFBFE',
+    textTransform: 'none',
+    border: '1px solid #EBE5F6',
+    fontWeight: 600,
   },
-  fontGridContainer: {
-    display: 'flex',
-    alignItems: 'left',
-    justifyContent: 'center',
-    flexDirection: 'column',
+  textContainer: {
     [theme.breakpoints.up('lg')]: {
       minWidth: 875,
       maxWidth: 875,
     },
+    display: 'flex',
+    alignItems: 'left',
+    justifyContent: 'center',
+    flexDirection: 'column',
     overflow: 'auto',
   },
-  title: {
+  textHeader: {
+    color: '#1E1131',
     fontSize: '32px',
     fontWeight: 600,
   },
-  font: {
-    color: '#1E1131',
-  },
-  body: {
-    fontSize: '20px',
+  textParagraphBody: {
     [theme.breakpoints.up('mobile')]: {
       marginBottom: '1rem',
       fontSize: '22px',
     },
+    color: '#1E1131',
+    fontSize: '20px',
   },
-  row: {
-    marginTop: '3rem',
-  },
-  middleRow: {
-    display: 'flex',
-    alignItems: 'flex-start',
-  },
-  buttonRow: {
+  searchButtonContainer: {
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 550,
+    },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: 800,
+    },
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center',
       marginTop: 10,
@@ -124,49 +124,26 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
     gap: '1.5rem',
     marginBottom: '1rem',
-    [theme.breakpoints.up('md')]: {
-      maxWidth: 550,
-    },
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: 800,
-    },
   },
-  problemButton: {
-    marginTop: '1rem',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  outerRow: {
-    display: 'flex',
-    gap: 20,
+  desktopImageTextContainer: {
     [theme.breakpoints.up('md')]: {
       gap: 40,
     },
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  innerRow: {
-    display: 'flex',
     gap: 20,
-    [theme.breakpoints.up('md')]: {
-      gap: 40,
-    },
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  mobileCenter: {
+  centerContent: {
     display: 'flex',
     justifyContent: 'center',
-    objectFit: 'contain',
   },
 });
 
 const Home = ({ classes }) => {
-  // since this is a copy heavy page
-  // switch to smaller dimensions sooner
   const [showSupportDialog, setShowSupportDialog] = useState(false);
-  const matches = useMediaQuery('(min-width:960px)');
-  const mobileMatches = useMediaQuery('(min-width: 425px');
+  const desktopBreakpoint = useMediaQuery('(min-width:960px)');
+  const mobileBreakpoint = useMediaQuery('(min-width: 425px');
   const history = useHistory();
 
   const handleClick = (event, param) => {
@@ -176,7 +153,7 @@ const Home = ({ classes }) => {
     });
   };
 
-  const rowTwoButtons = [
+  const locationButtons = [
     { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
     { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
     { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
@@ -184,7 +161,7 @@ const Home = ({ classes }) => {
     { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
   ];
 
-  const rowThreeButtons = [
+  const categoryButtons = [
     { name: 'Coffeeshops', icon: <CafeIcon /> },
     { name: 'Barbershops', icon: <BarberIcon /> },
     { name: 'Restaurants', icon: <RestaurantIcon /> },
@@ -194,74 +171,72 @@ const Home = ({ classes }) => {
   ];
 
   return (
-    matches ? (
+    desktopBreakpoint ? (
       <Box className={classes.root}>
-        <Box className={classes.row}>
-          <Box className={classes.outerRow}>
-            <img src={PrideParadeImageLarge} alt="happy black person at pride parade" className={classes.image} />
-            <Box className={[classes.fontGridContainer, classes.row]}>
-              <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-                The Mission
-              </Typography>
-              <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-                Our mission is to spread the word about spaces where people can be themselves.
-                All spaces and reviews are published by Lavender Book members.
-              </Typography>
-              <Box>
-                <Button href="/spaces/new" variant="outlined" className={classes.button}>
-                  Add a Space
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-          <Box className={classes.innerRow}>
-            <Box className={[classes.fontGridContainer, classes.middleRow]}>
-              <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-                Discover New Spaces
-              </Typography>
-              <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-                Lavender Book is here whether you are traveling or looking for a new local
-                hangout spot.
-              </Typography>
-              <Box className={classes.buttonRow}>
-                {rowTwoButtons.map((buttonData) => (
-                  <Button
-                    variant="outlined"
-                    className={classes.button}
-                    startIcon={buttonData.icon}
-                    onClick={(event) => handleClick(event, buttonData.search)}
-                  >
-                    {buttonData.name}
-                  </Button>
-                ))}
-              </Box>
-            </Box>
-            <img src={GroupPrideImageLarge} alt="three black people having fun on a street" className={classes.image} />
-          </Box>
-          <Box className={classes.outerRow}>
-            <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
-            <Box className={[classes.fontGridContainer, classes.row]}>
-              <Typography variant="h2" className={[classes.title, classes.font]} align="left">
-                What types of spaces can I search?
-              </Typography>
-              <Typography variant="body1" className={[classes.font, classes.body]} align="left">
-                Not sure where to start? Use the categories below to narrow your search to specific
-                types of spaces.
-              </Typography>
-              <Box className={classes.buttonRow}>
-                {rowThreeButtons.map((buttonData) => (
-                  <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
-                    {buttonData.name}
-                  </Button>
-                ))}
-              </Box>
+        <Box className={classes.desktopImageTextContainer}>
+          <img src={PrideParadeImageLarge} alt="happy black person at pride parade" className={classes.image} />
+          <Box className={classes.textContainer}>
+            <Typography variant="h2" align="left" className={classes.textHeader}>
+              The Mission
+            </Typography>
+            <Typography variant="body1" align="left" className={classes.textParagraphBody}>
+              Our mission is to spread the word about spaces where people can be themselves.
+              All spaces and reviews are published by Lavender Book members.
+            </Typography>
+            <Box>
+              <Button href="/spaces/new" variant="outlined" className={classes.searchButton}>
+                Add a Space
+              </Button>
             </Box>
           </Box>
         </Box>
-        <Box className={classes.problemButton}>
+        <Box className={classes.desktopImageTextContainer}>
+          <Box className={classes.textContainer}>
+            <Typography variant="h2" align="left" className={classes.textHeader}>
+              Discover New Spaces
+            </Typography>
+            <Typography variant="body1" align="left" className={classes.textParagraphBody}>
+              Lavender Book is here whether you are traveling or looking for a new local
+              hangout spot.
+            </Typography>
+            <Box className={classes.searchButtonContainer}>
+              {locationButtons.map((buttonData) => (
+                <Button
+                  variant="outlined"
+                  startIcon={buttonData.icon}
+                  onClick={(event) => handleClick(event, buttonData.search)}
+                  className={classes.searchButton}
+                >
+                  {buttonData.name}
+                </Button>
+              ))}
+            </Box>
+          </Box>
+          <img src={GroupPrideImageLarge} alt="three black people having fun on a street" className={classes.image} />
+        </Box>
+        <Box className={classes.desktopImageTextContainer}>
+          <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
+          <Box className={classes.textContainer}>
+            <Typography variant="h2" className={classes.textHeader} align="left">
+              What types of spaces can I search?
+            </Typography>
+            <Typography variant="body1" className={classes.textParagraphBody} align="left">
+              Not sure where to start? Use the categories below to narrow your search to specific
+              types of spaces.
+            </Typography>
+            <Box className={classes.searchButtonContainer}>
+              {categoryButtons.map((buttonData) => (
+                <Button variant="outlined" className={classes.searchButton} startIcon={buttonData.icon}>
+                  {buttonData.name}
+                </Button>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+        <Box className={classes.centerContent} style={{ marginTop: '1rem' }}>
           <Button
             variant="outlined"
-            className={classes.button}
+            className={classes.searchButton}
             onClick={() => {
               setShowSupportDialog(true);
             }}
@@ -304,72 +279,72 @@ const Home = ({ classes }) => {
     ) : (
       <Box className={classes.root}>
         <Grid container>
-          <Grid item xs={12} md={4} className={classes.mobileCenter}>
-            {mobileMatches ? <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.mobileImage} />
+          <Grid item xs={12} md={4} className={classes.centerContent}>
+            {mobileBreakpoint ? <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.mobileImage} />
               : <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.smallMobileImage} />}
           </Grid>
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
+          <Grid item xs={12} md={8} className={classes.textContainer}>
+            <Typography variant="h2" align="center" className={classes.textHeader}>
               The Mission
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
+            <Typography variant="body1" align="center" className={classes.textParagraphBody}>
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
-            <Button href="/spaces/new" variant="outlined" className={[classes.button, classes.body, classes.buttonRow]}>
+            <Button href="/spaces/new" variant="outlined" className={[classes.searchButton, classes.textParagraphBody, classes.searchButtonContainer]}>
               Add a Space
             </Button>
           </Grid>
-          <Grid item xs={12} md={4} className={classes.mobileCenter}>
-            {mobileMatches ? <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.mobileImage} />
+          <Grid item xs={12} md={4} className={classes.centerContent}>
+            {mobileBreakpoint ? <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.mobileImage} />
               : <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.smallMobileImage} />}
           </Grid>
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
+          <Grid item xs={12} md={8} className={classes.textContainer}>
+            <Typography variant="h2" className={classes.textHeader} align="center">
               Discover New Spaces
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
+            <Typography variant="body1" className={classes.textParagraphBody} align="center">
               Lavender Book is here whether you are traveling or looking for a new local
               hangout spot.
             </Typography>
-            <Box className={classes.buttonRow}>
-              {rowTwoButtons.map((buttonData) => (
+            <Box className={classes.searchButtonContainer}>
+              {locationButtons.map((buttonData) => (
                 <Button
                   variant="outlined"
-                  className={classes.button}
                   startIcon={buttonData.icon}
                   onClick={(event) => handleClick(event, buttonData.search)}
+                  className={classes.searchButton}
                 >
                   {buttonData.name}
                 </Button>
               ))}
             </Box>
           </Grid>
-          <Grid item xs={12} md={4} className={classes.mobileCenter}>
-            {mobileMatches ? <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.mobileImage} />
+          <Grid item xs={12} md={4} className={classes.centerContent}>
+            {mobileBreakpoint ? <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.mobileImage} />
               : <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.smallMobileImage} />}
           </Grid>
-          <Grid item xs={12} md={8} className={classes.fontGridContainer}>
-            <Typography variant="h2" className={[classes.title, classes.font]} align="center">
+          <Grid item xs={12} md={8} className={classes.textContainer}>
+            <Typography variant="h2" className={classes.textHeader} align="center">
               What types of spaces can I search?
             </Typography>
-            <Typography variant="body1" className={[classes.font, classes.body]} align="center">
+            <Typography variant="body1" className={classes.textParagraphBody} align="center">
               Not sure where to start? Use the categories below to narrow your search to specific
               types of spaces.
             </Typography>
-            <Box className={classes.buttonRow}>
-              {rowThreeButtons.map((buttonData) => (
-                <Button variant="outlined" className={classes.button} startIcon={buttonData.icon}>
+            <Box className={classes.searchButtonContainer}>
+              {categoryButtons.map((buttonData) => (
+                <Button variant="outlined" className={classes.searchButton} startIcon={buttonData.icon}>
                   {buttonData.name}
                 </Button>
               ))}
             </Box>
           </Grid>
         </Grid>
-        <Box className={classes.problemButton}>
+        <Box className={classes.centerContent} style={{ marginTop: '1rem' }}>
           <Button
             variant="outlined"
-            className={classes.button}
+            className={classes.searchButton}
             onClick={() => {
               setShowSupportDialog(true);
             }}
