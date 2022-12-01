@@ -49,12 +49,12 @@ const styles = (theme) => ({
     },
   },
   image: {
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '450px',
+    },
     [theme.breakpoints.up('mobile')]: {
       maxWidth: '350px',
       marginBottom: '1rem',
-    },
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: '450px',
     },
     height: 'auto',
     display: 'inherit',
@@ -75,14 +75,11 @@ const styles = (theme) => ({
     alignItems: 'left',
     justifyContent: 'center',
     flexDirection: 'column',
-    [theme.breakpoints.up('md')]: {
-      minWidth: 800,
-      maxWidth: 800,
-    },
     [theme.breakpoints.up('lg')]: {
-      minWidth: 1000,
-      maxWidth: 1000,
+      minWidth: 900,
+      maxWidth: 900,
     },
+    overflow: 'auto',
   },
   title: {
     fontSize: '32px',
@@ -198,7 +195,7 @@ const Home = ({ classes }) => {
                 Our mission is to spread the word about spaces where people can be themselves.
                 All spaces and reviews are published by Lavender Book members.
               </Typography>
-              <Box className={classes.buttonRow}>
+              <Box>
                 <Button href="/spaces/new" variant="outlined" className={classes.button}>
                   Add a Space
                 </Button>
