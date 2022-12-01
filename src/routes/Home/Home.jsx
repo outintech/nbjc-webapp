@@ -39,13 +39,13 @@ import RainbowMuralImageLarge from '../../assets/Rectangle 54@2x.png';
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
-      margin: '0 10px',
+      margin: '0 20px',
     },
     [theme.breakpoints.up('mobile')]: {
       margin: '0 40px',
     },
     [theme.breakpoints.up('md')]: {
-      margin: '3rem 0 100px',
+      margin: '3rem 100px',
     },
   },
   image: {
