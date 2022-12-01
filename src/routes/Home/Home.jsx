@@ -153,23 +153,6 @@ const Home = ({ classes }) => {
     });
   };
 
-  const locationButtons = [
-    { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
-    { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
-    { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
-    { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
-    { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
-  ];
-
-  const categoryButtons = [
-    { name: 'Coffeeshops', icon: <CafeIcon /> },
-    { name: 'Barbershops', icon: <BarberIcon /> },
-    { name: 'Restaurants', icon: <RestaurantIcon /> },
-    { name: 'Wellness', icon: <WellnessIcon /> },
-    { name: 'Shopping', icon: <ShoppingIcon /> },
-    { name: 'Nightlife', icon: <NightlifeIcon /> },
-  ];
-
   const SupportButton = () => {
     console.log('eslint');
     return (
@@ -221,7 +204,13 @@ const Home = ({ classes }) => {
   };
 
   const QuickLocationButtons = () => {
-    console.log('eslint');
+    const locationButtons = [
+      { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
+      { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
+      { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
+      { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
+      { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
+    ];
     return (
       <Box className={classes.searchButtonContainer}>
         {locationButtons.map((buttonData) => (
@@ -239,7 +228,14 @@ const Home = ({ classes }) => {
   };
 
   const QuickCategoryButtons = () => {
-    console.log('eslint');
+    const categoryButtons = [
+      { name: 'Coffeeshops', icon: <CafeIcon /> },
+      { name: 'Barbershops', icon: <BarberIcon /> },
+      { name: 'Restaurants', icon: <RestaurantIcon /> },
+      { name: 'Wellness', icon: <WellnessIcon /> },
+      { name: 'Shopping', icon: <ShoppingIcon /> },
+      { name: 'Nightlife', icon: <NightlifeIcon /> },
+    ];
     return (
       <Box className={classes.searchButtonContainer}>
         {categoryButtons.map((buttonData) => (
