@@ -37,6 +37,7 @@ const styles = (theme) => ({
   links: {
     marginRight: '1rem',
     color: theme.palette.navWhite.textDark,
+    fontSize: '1.1rem',
     fontWeight: 600,
     backgroundColor: 'transparent',
     textTransform: 'none',
@@ -44,6 +45,7 @@ const styles = (theme) => ({
   },
   icons: {
     color: '#000',
+    fontSize: '1.5rem',
   },
   logo: {
     flexGrow: 1,
