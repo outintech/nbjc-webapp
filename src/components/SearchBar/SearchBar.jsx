@@ -108,7 +108,7 @@ const SearchBar = ({
   };
 
   return (
-    <Paper component="form" onSubmit={handleSubmit}>
+    <Paper component="form" onSubmit={handleSubmit} elevation={0}>
       <Box className={classes.root}>
         <Autocomplete
           className={classes.input}
