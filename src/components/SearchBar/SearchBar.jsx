@@ -80,7 +80,8 @@ const SearchBar = ({
   const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
 
   useEffect(() => {
-    if (isGeolocationEnabled && !geopositionLoading && userLocation.address !== undefined) {
+    if (isGeolocationEnabled && !geopositionLoading
+      && userLocation.address !== null && userLocation.address.city !== null) {
       setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
     }
   }, [geopositionLoading]);
