@@ -64,17 +64,24 @@ const styles = (theme) => ({
   searchBarWrapper: {
     flex: '1 auto',
   },
+  toolBar: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
 const AppBar = ({
   classes,
   isLoading,
 }) => {
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
   const userContext = useContext(UserContext);
   const location = useLocation();
   const path = location.pathname;
   const history = useHistory();
-  const [showSearchBar, setShowSearchBar] = useState(false);
+  const isDesktopWidth = useMediaQuery('(min-width: 426px)');
+
   const { logout } = useAuth0();
 
   useEffect(() => {
@@ -86,11 +93,7 @@ const AppBar = ({
   }, [path]);
 
   const Logo = () => {
-    const matches = useMediaQuery('(min-width:426px)');
-    let logoSrc = '/mobile-appBar-logo.svg';
-    if (matches) {
-      logoSrc = '/web-appBar-logo.svg';
-    }
+    const logoSrc = '/web-appBar-logo.svg';
     return (
       <Box className={classes.logo}>
         <NavLink to="/">
@@ -190,22 +193,29 @@ const AppBar = ({
   );
 
   return (
-    <>
-      <Box className={classes.root} data-testid="app-bar">
-        <MaterialAppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            {!isLoading ? (<Logo />) : null}
+    <Box className={classes.root} data-testid="app-bar">
+      <MaterialAppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          {!isLoading ? (<Logo />) : null}
+          {(isDesktopWidth && showSearchBar) ? (
             <Box className={classes.searchBarWrapper}>
-              {showSearchBar ? (<SearchBar />) : null}
+              <SearchBar />
             </Box>
-            <Box className={classes.navLinkBar}>
-              <AddASpace />
-              {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
+          ) : null}
+          <Box className={classes.navLinkBar}>
+            <AddASpace />
+            {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
+          </Box>
+        </Toolbar>
+        {(!isDesktopWidth && showSearchBar) ? (
+          <Toolbar className={classes.toolBar}>
+            <Box className={classes.searchBarWrapper}>
+              <SearchBar />
             </Box>
           </Toolbar>
-        </MaterialAppBar>
-      </Box>
-    </>
+        ) : null}
+      </MaterialAppBar>
+    </Box>
   );
 };
 
