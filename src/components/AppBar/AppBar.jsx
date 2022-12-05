@@ -31,6 +31,10 @@ const styles = (theme) => ({
       height: 64,
     },
   },
+  expandAppBar: {
+    // Height of root + Height of searchBar
+    height: 112,
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.navWhite.light,
@@ -85,10 +89,10 @@ const AppBar = ({
   const { logout } = useAuth0();
 
   useEffect(() => {
-    if (path.includes('search') || path.includes('spaces')) {
-      setShowSearchBar(true);
-    } else {
+    if (path === '/') {
       setShowSearchBar(false);
+    } else {
+      setShowSearchBar(true);
     }
   }, [path]);
 
@@ -193,7 +197,7 @@ const AppBar = ({
   );
 
   return (
-    <Box className={classes.root} data-testid="app-bar">
+    <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           {!isLoading ? (<Logo />) : null}
