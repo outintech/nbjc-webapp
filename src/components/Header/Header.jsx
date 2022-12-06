@@ -13,14 +13,15 @@ const styles = (theme) => ({
       'linear-gradient(#633AA3CC, #633AA3CC), url("/landing.png")',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
-    [theme.breakpoints.down('xs')]: {
-      height: 145,
-    },
+
     [theme.breakpoints.up('xs')]: {
       height: 190,
     },
     [theme.breakpoints.up('md')]: {
       height: 262,
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 145,
     },
   },
   container: {
@@ -30,9 +31,6 @@ const styles = (theme) => ({
     flexDirection: 'column',
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
-    },
-    [theme.breakpoints.up('sm')]: {
-      margin: '0 100px',
     },
   },
   title: {
