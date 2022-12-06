@@ -32,7 +32,7 @@ const styles = (theme) => ({
     },
   },
   expandAppBar: {
-    // Height of root + Height of searchBar
+    // Height of root xs up + Height of searchBar
     height: 112,
   },
   appBar: {
@@ -66,9 +66,10 @@ const styles = (theme) => ({
     alignSelf: 'right',
   },
   searchBarWrapper: {
+    margin: '0 .5rem',
     flex: '1 auto',
   },
-  toolBar: {
+  bottomRow: {
     display: 'flex',
     flexDirection: 'column',
   },
@@ -202,20 +203,15 @@ const AppBar = ({
         <Toolbar>
           {!isLoading ? (<Logo />) : null}
           {(isDesktopWidth && showSearchBar) ? (
-            <Box className={classes.searchBarWrapper}>
-              <SearchBar />
-            </Box>
-          ) : null}
+            <Box className={classes.searchBarWrapper}><SearchBar /></Box>) : null}
           <Box className={classes.navLinkBar}>
             <AddASpace />
             {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
           </Box>
         </Toolbar>
         {(!isDesktopWidth && showSearchBar) ? (
-          <Toolbar className={classes.toolBar}>
-            <Box className={classes.searchBarWrapper}>
-              <SearchBar />
-            </Box>
+          <Toolbar className={classes.bottomRow}>
+            <Box className={classes.searchBarWrapper}><SearchBar /></Box>
           </Toolbar>
         ) : null}
       </MaterialAppBar>
