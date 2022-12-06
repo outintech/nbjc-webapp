@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useHistory } from 'react-router-dom';
-
 import { geolocated } from 'react-geolocated';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -31,7 +30,12 @@ const filterOptions = createFilterOptions({
 const styles = (theme) => ({
   root: {
     display: 'flex',
+    zIndex: 3,
+    height: '44px',
+    boxShadow: 'none',
     alignItems: 'center',
+    margin: '0 auto',
+    width: 'auto',
     [theme.breakpoints.up('xs')]: {
       width: theme.spacing(34),
     },
@@ -98,13 +102,9 @@ const SearchBar = ({
     });
   };
 
-  const parseLocationObjectToString = (obj) => {
-    let locationObjString = `${obj.name}`;
-    if (obj.abbreviation) {
-      locationObjString += `, ${obj.abbreviation}`;
-    }
-    return locationObjString;
-  };
+  const parseLocationObjectToString = (obj) => (
+    obj.abbreviation ? `${obj.name}, ${obj.abbreviation}` : obj.name
+  );
 
   return (
     <Paper component="form" onSubmit={handleSubmit}>
