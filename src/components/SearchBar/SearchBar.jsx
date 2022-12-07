@@ -37,7 +37,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     maxWidth: '584px',
     position: 'relative',
-    width: '50%',
+    width: '90%',
     borderRadius: '4px',
   },
   input: {
