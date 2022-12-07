@@ -29,14 +29,14 @@ const filterOptions = createFilterOptions({
 
 const styles = (theme) => ({
   root: {
-    display: 'flex',
     zIndex: 3,
+    display: 'flex',
     height: '44px',
     boxShadow: 'none',
     alignItems: 'center',
-    width: 'auto',
     maxWidth: '584px',
     position: 'relative',
+    width: '50%',
   },
   title: {
     padding: '0 0.8rem',
@@ -62,6 +62,8 @@ const styles = (theme) => ({
   },
   autoCompleteContainer: {
     width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -158,6 +160,7 @@ const SearchBar = ({
             <SearchIcon />
           </IconButton>
         </Box>
+
       </Paper>
     </Box>
 
