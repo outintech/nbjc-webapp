@@ -60,6 +60,14 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  submitButtonContainer: {
+    color: 'white',
+    backgroundColor: '#1E1131',
+    borderRadius: '4px',
+    display: 'flex',
+    justifyContent: 'center',
+    minWidth: '48px',
+  },
 });
 
 const SearchBar = ({
@@ -144,7 +152,7 @@ const SearchBar = ({
         <Box
           display="block"
           data-testid="searchbar-submit"
-          style={{ color: 'white', backgroundColor: '#1E1131' }}
+          className={classes.submitButtonContainer}
         >
           <IconButton
             type="submit"
@@ -154,10 +162,8 @@ const SearchBar = ({
             <SearchIcon />
           </IconButton>
         </Box>
-
       </Paper>
     </Box>
-
   );
 };
 
