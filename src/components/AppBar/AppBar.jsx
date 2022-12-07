@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink, useLocation } from 'react-router-dom';
@@ -70,8 +71,7 @@ const styles = (theme) => ({
     alignSelf: 'right',
   },
   searchBarWrapper: {
-    margin: '0 .5rem',
-    flex: '1 auto',
+    flex: '1',
   },
   bottomRow: {
     display: 'flex',
@@ -89,7 +89,7 @@ const AppBar = ({
   const location = useLocation();
   const path = location.pathname;
   const history = useHistory();
-  const isDesktopWidth = useMediaQuery('(min-width: 426px)');
+  const isDesktopWidth = useMediaQuery('(min-width: 655px)');
 
   const { logout } = useAuth0();
 
@@ -210,15 +210,15 @@ const AppBar = ({
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           {!isLoading ? (<Logo />) : null}
-          {(isDesktopWidth && showSearchBar) ? (
-            <Box className={classes.searchBarWrapper}><SearchBar /></Box>) : null}
+          {(isDesktopWidth && showSearchBar)
+            ? <Box className={classes.searchBarWrapper}><SearchBar /></Box> : null}
           <Box className={classes.navLinkBar}>
             <AddASpace />
             {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
           </Box>
         </Toolbar>
         {(!isDesktopWidth && showSearchBar) ? (
-          <Toolbar className={classes.bottomRow}>
+          <Toolbar>
             <Box className={classes.searchBarWrapper}><SearchBar /></Box>
           </Toolbar>
         ) : null}
