@@ -58,6 +58,10 @@ const styles = (theme) => ({
     textAlign: 'left',
     marginRight: '0.3rem',
   },
+  logoWithSearchBar: {
+    textAlign: 'left',
+    marginRight: '0.3rem',
+  },
   navLinkBar: {
     display: 'flex',
     flexDirection: 'row',
@@ -99,8 +103,12 @@ const AppBar = ({
 
   const Logo = () => {
     const logoSrc = '/web-appBar-logo.svg';
+    let conditionalClass = classes.logoWithSearchBar;
+    if (path === '/') {
+      conditionalClass = classes.logo;
+    }
     return (
-      <Box className={classes.logo}>
+      <Box className={conditionalClass}>
         <NavLink to="/">
           <img src={logoSrc} alt="logo" />
         </NavLink>
