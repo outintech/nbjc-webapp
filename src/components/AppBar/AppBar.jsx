@@ -77,6 +77,9 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  mobileLogo: {
+    flexGrow: 1,
+  },
 });
 
 const AppBar = ({
@@ -104,7 +107,7 @@ const AppBar = ({
   const Logo = () => {
     const logoSrc = '/web-appBar-logo.svg';
     let conditionalClass = classes.logoWithSearchBar;
-    if (path === '/') {
+    if (path === '/' || (!isDesktopWidth && showSearchBar)) {
       conditionalClass = classes.logo;
     }
     return (
@@ -209,7 +212,9 @@ const AppBar = ({
     <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          {!isLoading ? (<Logo />) : null}
+          {!isLoading ? (
+            <Logo />
+          ) : null}
           {(isDesktopWidth && showSearchBar)
             ? <Box className={classes.searchBarWrapper}><SearchBar /></Box> : null}
           <Box className={classes.navLinkBar}>
