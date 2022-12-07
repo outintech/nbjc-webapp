@@ -31,26 +31,21 @@ const styles = (theme) => ({
   root: {
     zIndex: 3,
     display: 'flex',
-    height: '44px',
+    maxHeight: '48px',
+    height: '100%',
     boxShadow: 'none',
     alignItems: 'center',
     maxWidth: '584px',
     position: 'relative',
     width: '50%',
-  },
-  title: {
-    padding: '0 0.8rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: '4px',
   },
   input: {
     display: 'flex',
     flex: 1,
     flexWrap: 'wrap',
-    alignItems: 'left',
   },
-  icon: {
+  dropdownIcon: {
     color: theme.palette.primary.main,
     display: 'flex',
   },
@@ -121,8 +116,8 @@ const SearchBar = ({
           filterOptions={filterOptions}
           renderOption={(props) => {
             const dropdownText = parseLocationObjectToString(props);
-            const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.icon} />
-              : <LocationOnIcon className={classes.icon} />;
+            const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.dropdownIcon} />
+              : <LocationOnIcon className={classes.dropdownIcon} />;
             return (
               <Box
                 component="div"
@@ -153,7 +148,6 @@ const SearchBar = ({
         >
           <IconButton
             type="submit"
-            sx={{ p: '10px' }}
             aria-label="search"
             color="inherit"
           >
