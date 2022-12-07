@@ -34,17 +34,9 @@ const styles = (theme) => ({
     height: '44px',
     boxShadow: 'none',
     alignItems: 'center',
-    margin: '0 auto',
     width: 'auto',
-    [theme.breakpoints.up('xs')]: {
-      width: theme.spacing(34),
-    },
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(45),
-    },
-    [theme.breakpoints.up('md')]: {
-      width: theme.spacing(80),
-    },
+    maxWidth: '584px',
+    position: 'relative',
   },
   title: {
     padding: '0 0.8rem',
@@ -54,7 +46,8 @@ const styles = (theme) => ({
   },
   input: {
     display: 'flex',
-    flexGrow: 1,
+    flex: 1,
+    flexWrap: 'wrap',
     alignItems: 'left',
   },
   icon: {
@@ -66,6 +59,9 @@ const styles = (theme) => ({
     alignItems: 'center',
     flexWrap: 'wrap',
     fontWeight: 'bold',
+  },
+  autoCompleteContainer: {
+    width: '100%',
   },
 });
 
@@ -107,8 +103,8 @@ const SearchBar = ({
   );
 
   return (
-    <Paper component="form" onSubmit={handleSubmit}>
-      <Box className={classes.root}>
+    <Box className={classes.autoCompleteContainer}>
+      <Paper component="form" onSubmit={handleSubmit} className={classes.root}>
         <Autocomplete
           className={classes.input}
           options={location.trim() === '' ? autofillWithBlankInput : States}
@@ -149,7 +145,7 @@ const SearchBar = ({
           )}
         />
         <Box
-          display="flex"
+          display="block"
           data-testid="searchbar-submit"
           style={{ color: 'white', backgroundColor: '#1E1131' }}
         >
@@ -162,8 +158,9 @@ const SearchBar = ({
             <SearchIcon />
           </IconButton>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    </Box>
+
   );
 };
 
