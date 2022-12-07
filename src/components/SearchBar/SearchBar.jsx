@@ -36,6 +36,7 @@ const styles = (theme) => ({
     boxShadow: 'none',
     alignItems: 'center',
     maxWidth: '584px',
+    minWidth: '252px',
     position: 'relative',
     width: '90%',
     borderRadius: '4px',
