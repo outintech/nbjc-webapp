@@ -32,6 +32,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
+    width: '100%',
   },
   title: {
     [theme.breakpoints.up('xs')]: {
@@ -46,6 +47,7 @@ const styles = (theme) => ({
     fontWeight: 700,
     lineHeight: '1.235',
     marginBottom: '.6em',
+    width: 'auto',
   },
 });
 
