@@ -21,16 +21,18 @@ import { UserContext } from '../../context/UserContext';
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    height: 56,
+    height: 64,
   },
   expandAppBar: {
-    // Height of root xs up + Height of searchBar
-    height: 112,
+    height: 128,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.navWhite.light,
     color: theme.palette.navWhite.contrastText,
+  },
+  muiBreakpointWorkaround: {
+    minHeight: 64,
   },
   links: {
     marginRight: '1rem',
@@ -201,8 +203,8 @@ const AppBar = ({
 
   return (
     <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
-      <MaterialAppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+      <MaterialAppBar position="fixed" className={[classes.appBar, classes.muiBreakpointWorkaround]}>
+        <Toolbar className={classes.muiBreakpointWorkaround}>
           {!isLoading ? (
             <Logo />
           ) : null}
@@ -214,7 +216,7 @@ const AppBar = ({
           </Box>
         </Toolbar>
         {(!isDesktopWidth && showSearchBar) ? (
-          <Toolbar>
+          <Toolbar className={classes.muiBreakpointWorkaround}>
             <Box className={classes.searchBarWrapper}><SearchBar /></Box>
           </Toolbar>
         ) : null}
