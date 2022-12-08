@@ -36,7 +36,6 @@ const styles = (theme) => ({
     maxWidth: '584px',
     minWidth: '252px',
     width: '90%',
-    borderRadius: '4px',
   },
   searchInput: {
     flex: 1,
@@ -56,7 +55,6 @@ const styles = (theme) => ({
   submitButtonContainer: {
     color: 'white',
     backgroundColor: '#1E1131',
-    borderRadius: '4px',
     minWidth: '48px',
   },
 });
