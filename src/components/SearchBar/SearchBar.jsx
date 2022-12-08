@@ -87,7 +87,8 @@ const SearchBar = ({
 
   useEffect(() => {
     if (isGeolocationEnabled && !geopositionLoading
-      && userLocation.address !== null && userLocation.address.city !== null) {
+      && userLocation.address !== null && userLocation.address.city !== null
+      && userLocation.address.city !== undefined) {
       setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
     }
   }, [geopositionLoading]);
