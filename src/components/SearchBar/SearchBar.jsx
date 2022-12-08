@@ -77,10 +77,10 @@ const SearchBar = ({
   const [userLocationAutocomplete, setUserLocationAutocomplete] = useState([]);
 
   useEffect(() => {
-    if (isGeolocationEnabled && !geopositionLoading
-      && userLocation.address !== null && userLocation.address.city !== null
-      && userLocation.address.city !== undefined) {
+    try {
       setUserLocationAutocomplete([{ name: userLocation.address.city }]);
+    } catch (e) {
+      setUserLocationAutocomplete([{ name: '' }]);
     }
   }, [geopositionLoading]);
 
