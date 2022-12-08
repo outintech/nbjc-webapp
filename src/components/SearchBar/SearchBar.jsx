@@ -21,7 +21,7 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import States from '../../api/states';
 import useSearch from '../../routes/Search/hooks/useSearch';
 
-const filterOptions = createFilterOptions({
+const autoCompleteSettings = createFilterOptions({
   limit: 5,
   trim: true,
   stringify: (option) => option.name,
@@ -38,13 +38,13 @@ const styles = (theme) => ({
     width: '90%',
     borderRadius: '4px',
   },
-  input: {
+  searchInput: {
     flex: 1,
   },
   dropdownIcon: {
     color: theme.palette.primary.main,
   },
-  dropdown: {
+  dropdownMenu: {
     display: 'flex',
     fontWeight: 'bold',
   },
@@ -73,13 +73,13 @@ const SearchBar = ({
   const geopositionLoading = promiseInProgress || (isGeolocationEnabled && coords === null);
 
   const [location, setLocation] = useState('');
-  const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
+  const [userLocationAutocomplete, setUserLocationAutocomplete] = useState([]);
 
   useEffect(() => {
     if (isGeolocationEnabled && !geopositionLoading
       && userLocation.address !== null && userLocation.address.city !== null
       && userLocation.address.city !== undefined) {
-      setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
+      setUserLocationAutocomplete([{ name: userLocation.address.city }]);
     }
   }, [geopositionLoading]);
 
@@ -103,22 +103,22 @@ const SearchBar = ({
     <Box className={classes.autoCompleteContainer}>
       <Paper component="form" onSubmit={handleSubmit} className={classes.root}>
         <Autocomplete
-          className={classes.input}
-          options={location.trim() === '' ? autofillWithBlankInput : States}
+          className={classes.searchInput}
+          options={location.trim() === '' ? userLocationAutocomplete : States}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => parseLocationObjectToString(option)}
-          onChange={(event, newLocation) => {
-            setLocation(parseLocationObjectToString(newLocation));
+          onChange={(event, selectedOption) => {
+            setLocation(parseLocationObjectToString(selectedOption));
           }}
           forcePopupIcon={false}
           disableClearable
-          filterOptions={filterOptions}
+          filterOptions={autoCompleteSettings}
           renderOption={(props) => {
             const dropdownText = parseLocationObjectToString(props);
             const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.dropdownIcon} />
               : <LocationOnIcon className={classes.dropdownIcon} />;
             return (
-              <Box className={classes.dropdown}>
+              <Box className={classes.dropdownMenu}>
                 {dropdownIcon}
                 {dropdownText}
               </Box>
