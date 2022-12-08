@@ -57,6 +57,9 @@ const styles = (theme) => ({
     backgroundColor: '#1E1131',
     minWidth: '48px',
   },
+  removeTextFieldRadius: {
+    borderRadius: 0,
+  },
 });
 
 const SearchBar = ({
@@ -127,7 +130,11 @@ const SearchBar = ({
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
               // Padding is for lining up the gray outline of the textfield
-              InputProps={{ ...params.InputProps, style: { padding: 5 } }}
+              InputProps={{
+                ...params.InputProps,
+                style: { padding: 5 },
+                classes: { root: classes.removeTextFieldRadius },
+              }}
               variant="outlined"
               onChange={handleTextInputChange}
               placeholder={placeholder}
