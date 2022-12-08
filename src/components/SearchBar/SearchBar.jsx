@@ -29,31 +29,23 @@ const filterOptions = createFilterOptions({
 
 const styles = (theme) => ({
   root: {
-    zIndex: 3,
     display: 'flex',
     maxHeight: '48px',
     height: '100%',
-    boxShadow: 'none',
     alignItems: 'center',
     maxWidth: '584px',
     minWidth: '252px',
-    position: 'relative',
     width: '90%',
     borderRadius: '4px',
   },
   input: {
-    display: 'flex',
     flex: 1,
-    flexWrap: 'wrap',
   },
   dropdownIcon: {
     color: theme.palette.primary.main,
-    display: 'flex',
   },
   dropdown: {
     display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
     fontWeight: 'bold',
   },
   autoCompleteContainer: {
@@ -65,8 +57,6 @@ const styles = (theme) => ({
     color: 'white',
     backgroundColor: '#1E1131',
     borderRadius: '4px',
-    display: 'flex',
-    justifyContent: 'center',
     minWidth: '48px',
   },
 });
@@ -97,7 +87,6 @@ const SearchBar = ({
     setLocation(event.target.value);
   };
 
-  // eslint-disable-next-line consistent-return
   const handleSubmit = (event) => {
     event.preventDefault();
     history.push({
@@ -123,18 +112,13 @@ const SearchBar = ({
           }}
           forcePopupIcon={false}
           disableClearable
-          filterSelectedOptions
           filterOptions={filterOptions}
           renderOption={(props) => {
             const dropdownText = parseLocationObjectToString(props);
             const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.dropdownIcon} />
               : <LocationOnIcon className={classes.dropdownIcon} />;
             return (
-              <Box
-                component="div"
-                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                className={classes.dropdown}
-              >
+              <Box className={classes.dropdown}>
                 {dropdownIcon}
                 {dropdownText}
               </Box>
@@ -144,9 +128,9 @@ const SearchBar = ({
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
-              variant="outlined"
-              disableunderline="true"
+              // Padding is for lining up the gray outline of the textfield
               InputProps={{ ...params.InputProps, style: { padding: 5 } }}
+              variant="outlined"
               onChange={handleTextInputChange}
               placeholder={placeholder}
             />
