@@ -29,6 +29,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    width: '100%',
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
@@ -46,6 +47,7 @@ const styles = (theme) => ({
     fontWeight: 700,
     lineHeight: '1.235',
     marginBottom: '.6em',
+    width: 'auto',
   },
 });
 
