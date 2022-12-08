@@ -80,7 +80,7 @@ const SearchBar = ({
     try {
       setUserLocationAutocomplete([{ name: userLocation.address.city }]);
     } catch (e) {
-      setUserLocationAutocomplete([{ name: '' }]);
+      setUserLocationAutocomplete([]);
     }
   }, [geopositionLoading]);
 
