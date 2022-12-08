@@ -1,12 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink, useLocation } from 'react-router-dom';
-
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
-
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -19,18 +16,12 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 
 import SearchBar from '../SearchBar';
-
 import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    [theme.breakpoints.up('xs')]: {
-      height: 56,
-    },
-    [theme.breakpoints.up('md')]: {
-      height: 64,
-    },
+    height: 56,
   },
   expandAppBar: {
     // Height of root xs up + Height of searchBar
