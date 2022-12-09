@@ -48,11 +48,6 @@ const styles = (theme) => ({
     fontSize: '1.5rem',
   },
   logo: {
-    flexGrow: 1,
-    textAlign: 'left',
-    marginRight: '0.3rem',
-  },
-  logoWithSearchBar: {
     textAlign: 'left',
     marginRight: '0.3rem',
   },
@@ -63,15 +58,8 @@ const styles = (theme) => ({
     alignItems: 'center',
     alignSelf: 'right',
   },
-  searchBarWrapper: {
-    flex: '1',
-  },
-  bottomRow: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  mobileLogo: {
-    flexGrow: 1,
+  expandedContent: {
+    flex: 1,
   },
 });
 
@@ -99,12 +87,10 @@ const AppBar = ({
 
   const Logo = () => {
     const logoSrc = '/web-appBar-logo.svg';
-    let conditionalClass = classes.logoWithSearchBar;
-    if (path === '/' || (!isDesktopWidth && showSearchBar)) {
-      conditionalClass = classes.logo;
-    }
     return (
-      <Box className={conditionalClass}>
+      <Box className={(path === '/' || (!isDesktopWidth && showSearchBar))
+        ? [classes.logo, classes.expandedContent] : classes.logo}
+      >
         <NavLink to="/">
           <img src={logoSrc} alt="logo" />
         </NavLink>
@@ -113,13 +99,17 @@ const AppBar = ({
   };
 
   const TruncateUserName = (userName) => {
-    if (userName.length > 10) {
-      return `${userName.slice(0, 10)}....`;
+    try {
+      if (userName.length > 10) {
+        return `${userName.slice(0, 10)}....`;
+      }
+    } catch (e) {
+      return 'Account';
     }
     return userName;
   };
 
-  const PositionedMenu = () => {
+  const LoggedInDropdown = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -209,15 +199,15 @@ const AppBar = ({
             <Logo />
           ) : null}
           {(isDesktopWidth && showSearchBar)
-            ? <Box className={classes.searchBarWrapper}><SearchBar /></Box> : null}
+            ? <Box className={classes.expandedContent}><SearchBar /></Box> : null}
           <Box className={classes.navLinkBar}>
             <AddASpace />
-            {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
+            {userContext.userProfile.username ? <LoggedInDropdown /> : <LogIn />}
           </Box>
         </Toolbar>
         {(!isDesktopWidth && showSearchBar) ? (
           <Toolbar className={classes.muiBreakpointWorkaround}>
-            <Box className={classes.searchBarWrapper}><SearchBar /></Box>
+            <Box className={classes.expandedContent}><SearchBar /></Box>
           </Toolbar>
         ) : null}
       </MaterialAppBar>
