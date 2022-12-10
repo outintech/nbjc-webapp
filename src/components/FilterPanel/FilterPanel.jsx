@@ -127,10 +127,15 @@ const styles = {
   verticalContainer: {
     width: '100%',
     display: 'inline-block',
+    paddingLeft: '28px',
+    paddingRight: '28px',
   },
   filterParentContainer: {
     display: 'inline-flex',
     width: '!00%',
+  },
+  filterBarContent: {
+    top: 'auto',
   },
 };
 
@@ -343,13 +348,15 @@ const FilterPanel = ({
       <Box className={classes.filterContainer}>
         <div className={classes.root}>
           <Box className={classes.verticalContainer}>
-            {header}
-            {nameFilter}
-            {priceFilter}
-            {indicatorFilters}
-            <div className={classes.apply}>
-              {apply}
-            </div>
+            <Box className={classes.filterBarContent}>
+              {header}
+              {nameFilter}
+              {priceFilter}
+              {indicatorFilters}
+              <div className={classes.apply}>
+                {apply}
+              </div>
+            </Box>
           </Box>
         </div>
       </Box>
