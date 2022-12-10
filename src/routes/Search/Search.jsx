@@ -22,15 +22,11 @@ import SearchForm from './SearchForm';
 
 const styles = (theme) => ({
   result: {
-    margin: '10px 0px 40px 0px',
+    // This is for setting the margins of the results returned from search.
   },
   content: {
-    margin: '0 15px',
     display: 'flex',
     flexDirection: 'column',
-    [theme.breakpoints.up('mobile')]: {
-      margin: '0 15px',
-    },
   },
   resultsWrapper: {
     display: 'flex',
@@ -40,10 +36,15 @@ const styles = (theme) => ({
       gridTemplateColumns: '1fr 3fr',
     },
   },
-  filters: {
-    [theme.breakpoints.up('mobile')]: {
-      padding: '61px 24px 0 24px',
-    },
+  filtersContainer: {
+    display: 'flex',
+    alignSelf: 'flex-start',
+    flexDirection: 'column',
+    flexShrink: 0,
+    width: '316px',
+    zIndex: 999,
+    paddingTop: '32px',
+    marginRight: '40px',
     backgroundColor: '#f2f2f2',
   },
   list: {
@@ -147,7 +148,7 @@ const Search = ({
         })}
       >
         {searchResults !== null && searchResults.length > 0 && (
-          <div className={classes.filters}>
+          <div className={classes.filtersContainer}>
             <Button
               variant="outlined"
               onClick={() => setOpenFilter(!openFilter)}

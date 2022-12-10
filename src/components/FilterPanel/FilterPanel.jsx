@@ -120,6 +120,17 @@ const styles = {
     fontWeight: 700,
     lineHeight: '24px',
     letterSpacing: '0px',
+    textAlign: 'left',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  verticalContainer: {
+    width: '100%',
+    display: 'inline-block',
+  },
+  filterParentContainer: {
+    display: 'inline-flex',
+    width: '!00%',
   },
 };
 
@@ -195,8 +206,8 @@ const FilterPanel = ({
 
   const header = (
     <div className={classes.header}>
-      <h2>
-        <p className={classes.filterFont}>Filter</p>
+      <h2 className={classes.filterFont}>
+        <p style={{ marginRight: 5 }}>Filter</p>
         {filterCount > 0 && ` (${filterCount})`}
       </h2>
       <Button
@@ -331,13 +342,15 @@ const FilterPanel = ({
     return (
       <Box className={classes.filterContainer}>
         <div className={classes.root}>
-          {header}
-          {nameFilter}
-          {priceFilter}
-          {indicatorFilters}
-          <div className={classes.apply}>
-            {apply}
-          </div>
+          <Box className={classes.verticalContainer}>
+            {header}
+            {nameFilter}
+            {priceFilter}
+            {indicatorFilters}
+            <div className={classes.apply}>
+              {apply}
+            </div>
+          </Box>
         </div>
       </Box>
     );
