@@ -299,7 +299,13 @@ const FilterPanel = ({
           <FormControlLabel
             key={`price_${i}`}
             control={<Radio />}
-            label={`${'$'.repeat(i)}`}
+            label={
+              (
+                <Typography className={classes.checkBoxLabels}>
+                  {'$'.repeat(i)}
+                </Typography>
+              )
+            }
             aria-label={`price level ${i}`}
             value={i}
           />
