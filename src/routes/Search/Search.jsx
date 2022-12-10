@@ -169,26 +169,29 @@ const Search = ({
             />
           </div>
         )}
-        <div className={classes.list}>
-          {searchResults !== null && searchResults.length > 0
-            && searchResults.map((result) => (
-              <div className={classes.searchResult} key={result.id}>
-                <BusinessCard
-                  business={result}
-                  key={result.id}
-                  overrideClasses={{ root: classes.result }}
-                />
-              </div>
-            ))}
+        <div>
+          <div className={classes.list}>
+            {searchResults !== null && searchResults.length > 0
+              && searchResults.map((result) => (
+                <div className={classes.searchResult} key={result.id}>
+                  <BusinessCard
+                    business={result}
+                    key={result.id}
+                    overrideClasses={{ root: classes.result }}
+                  />
+                </div>
+              ))}
+          </div>
+          {pagination && pagination !== null && (
+            <Pagination
+              totalCount={pagination.total_count || 0}
+              page={pagination.page || 1}
+              perPage={pagination.perPage || 10}
+            />
+          )}
         </div>
       </div>
-      {pagination && pagination !== null && (
-        <Pagination
-          totalCount={pagination.total_count || 0}
-          page={pagination.page || 1}
-          perPage={pagination.perPage || 10}
-        />
-      )}
+
       {searchResults !== null
         && search.searchTerm !== null
         && searchResults.length === 0
