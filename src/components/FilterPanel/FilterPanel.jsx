@@ -118,6 +118,7 @@ const styles = {
       margin: '0 8px',
       padding: '12px 42px',
     },
+    marginBottom: '48px',
   },
   resultCount: {
     display: 'inline-block',
@@ -171,6 +172,9 @@ const styles = {
   checkBoxLabels: {
     fontSize: '14px',
     fontWeight: '600',
+  },
+  applyContainer: {
+
   },
 };
 
