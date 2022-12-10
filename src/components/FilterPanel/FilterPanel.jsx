@@ -249,7 +249,7 @@ const FilterPanel = ({
         className={classes.nameFilter}
         type="text"
         fullWidth
-        variant="standard"
+        variant="outlined"
         size="small"
         value={nameFilterVal}
         InputProps={{
