@@ -6,6 +6,7 @@ import {
   Dialog,
   IconButton,
   Toolbar,
+  Box,
   Button,
   TextField,
   FormControlLabel,
@@ -112,6 +113,14 @@ const styles = {
     marginBottom: '20px',
     width: '100%',
   },
+  filterContainer: {
+    display: 'flex',
+  },
+  filterFont: {
+    fontWeight: 700,
+    lineHeight: '24px',
+    letterSpacing: '0px',
+  },
 };
 
 const FilterPanel = ({
@@ -187,7 +196,7 @@ const FilterPanel = ({
   const header = (
     <div className={classes.header}>
       <h2>
-        Filter
+        <p className={classes.filterFont}>Filter</p>
         {filterCount > 0 && ` (${filterCount})`}
       </h2>
       <Button
@@ -239,7 +248,7 @@ const FilterPanel = ({
         value={priceFilterVal}
         onChange={(e) => setPriceFilterVal(parseInt(e.target.value, 10))}
       >
-        { [1, 2, 3, 4].map((i) => (
+        {[1, 2, 3, 4].map((i) => (
           <FormControlLabel
             key={`price_${i}`}
             control={<Radio />}
@@ -247,7 +256,7 @@ const FilterPanel = ({
             aria-label={`price level ${i}`}
             value={i}
           />
-        )) }
+        ))}
       </RadioGroup>
     </FormControl>
   );
@@ -291,17 +300,17 @@ const FilterPanel = ({
         Indicators
       </div>
       <FormGroup>
-        { indicatorCheckboxes.slice(0, 5) }
+        {indicatorCheckboxes.slice(0, 5)}
         <Collapse in={!collapsed}>
           <FormGroup>
-            { indicatorCheckboxes.slice(5) }
+            {indicatorCheckboxes.slice(5)}
           </FormGroup>
         </Collapse>
         <Button
           onClick={() => setCollapsed(!collapsed)}
           className={classes.filterToggle}
         >
-          { `See ${collapsed ? 'More' : 'Less'}` }
+          {`See ${collapsed ? 'More' : 'Less'}`}
           <span className={classes.visuallyHidden}>Indicators</span>
         </Button>
       </FormGroup>
@@ -320,15 +329,17 @@ const FilterPanel = ({
 
   if (type === 'desktop') {
     return (
-      <div className={classes.root}>
-        { header }
-        { nameFilter }
-        { priceFilter }
-        { indicatorFilters }
-        <div className={classes.apply}>
-          { apply }
+      <Box className={classes.filterContainer}>
+        <div className={classes.root}>
+          {header}
+          {nameFilter}
+          {priceFilter}
+          {indicatorFilters}
+          <div className={classes.apply}>
+            {apply}
+          </div>
         </div>
-      </div>
+      </Box>
     );
   }
   return (
@@ -351,10 +362,10 @@ const FilterPanel = ({
           </IconButton>
         </Toolbar>
         <div className={classes.dialogBody}>
-          { header }
-          { nameFilter }
-          { priceFilter }
-          { indicatorFilters }
+          {header}
+          {nameFilter}
+          {priceFilter}
+          {indicatorFilters}
         </div>
         <div className={classes.apply}>
           <span className={classes.resultCount}>
@@ -367,7 +378,7 @@ const FilterPanel = ({
           >
             Close
           </Button>
-          { apply }
+          {apply}
         </div>
       </Dialog>
     </div>

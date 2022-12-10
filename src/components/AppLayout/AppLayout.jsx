@@ -9,7 +9,7 @@ import Header from '../Header/Header';
 import AppBar from '../AppBar';
 import Footer from '../Footer';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     minHeight: '100vh',
     display: 'flex',
@@ -18,12 +18,6 @@ const styles = (theme) => ({
   content: {
     height: '100%',
     flex: 1,
-    [theme.breakpoints.up('xs')]: {
-      margin: '10px 0px 20px 0px',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      margin: '20px 0px 125px 0px',
-    },
   },
 });
 
@@ -51,7 +45,7 @@ const AppLayout = ({
         selected={selected}
         isLoading={isLoading}
       />
-      { ifHome && <Header /> }
+      {ifHome && <Header />}
       <div className={classes.content}>
         {isLoading && (
           <CircularProgress color="secondary" />
