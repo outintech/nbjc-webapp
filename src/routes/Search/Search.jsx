@@ -42,6 +42,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     flexShrink: 0,
     width: '316px',
+    height: '100%',
     zIndex: 999,
     paddingTop: '32px',
     marginRight: '40px',
