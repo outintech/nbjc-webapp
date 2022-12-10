@@ -17,6 +17,7 @@ import {
   Radio,
   RadioGroup,
   Collapse,
+  Typography,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -73,9 +74,14 @@ const styles = {
     },
   },
   filterHeader: {
+    color: '#1E1131',
     fontSize: '14px',
-    fontWeight: '600',
+    lineHeight: '20px',
+    textAlign: 'left',
+    letterSpacing: '0px',
+    fontWeight: 'bold',
     textTransform: 'uppercase',
+    marginBottom: '3px',
   },
   visuallyHidden: {
     position: 'absolute',
@@ -153,6 +159,18 @@ const styles = {
   filterSearchContainer: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  checkBox: {
+    verticalAlign: 'top',
+    display: 'table-cell',
+    color: '#1E1131',
+  },
+  formFontColor: {
+    color: '#1E1131',
+  },
+  checkBoxLabels: {
+    fontSize: '14px',
+    fontWeight: '600',
   },
 };
 
@@ -297,6 +315,7 @@ const FilterPanel = ({
         <Checkbox
           name={i.name}
           value={i.value}
+          className={classes.checkBox}
           checked={Object.hasOwn(indicatorVals, i.name)}
           onClick={(e) => {
             if (e.target.checked) {
@@ -315,7 +334,7 @@ const FilterPanel = ({
           }}
         />
       )}
-      label={i.name}
+      label={<Typography className={classes.checkBoxLabels}>{i.name}</Typography>}
     />
   ));
 
@@ -328,7 +347,7 @@ const FilterPanel = ({
       >
         Indicators
       </div>
-      <FormGroup>
+      <FormGroup className={classes.formFontColor}>
         {indicatorCheckboxes.slice(0, 5)}
         <Collapse in={!collapsed}>
           <FormGroup>
