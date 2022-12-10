@@ -11,7 +11,6 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  InputAdornment,
   FormControl,
   FormLabel,
   FormGroup,
@@ -21,7 +20,7 @@ import {
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
   dialog: {
@@ -53,12 +52,15 @@ const styles = {
       color: '#1e1131',
       textTransform: 'capitalize',
     },
-    maxHeight: '100%',
+    alignItems: 'baseline',
+    maxHeight: '80px',
+    marginBottom: '5px',
   },
   nameFilter: {
     backgroundColor: '#fff',
     border: '1px solid #999',
     borderRadius: '4px',
+
   },
   filterGroup: {
     backgroundColor: '#fff',
@@ -96,6 +98,7 @@ const styles = {
   clearButton: {
     flexGrow: 1,
     justifyContent: 'right',
+    maxHeight: '23.991',
   },
   apply: {
     backgroundColor: '#fff',
@@ -146,6 +149,10 @@ const styles = {
     lineHeight: '24px',
     fontSize: '14px',
     height: 'inherit',
+  },
+  filterSearchContainer: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 };
 
@@ -236,28 +243,23 @@ const FilterPanel = ({
   );
 
   const nameFilter = (
-    <TextField
-      id="nameFilter"
-      className={classes.nameFilter}
-      type="text"
-      variant="outlined"
-      label={`Search by name${type === 'desktop' ? ' within results' : ''}`}
-      fullWidth
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="search"
-              onClick={applyFilters}
-            >
-              <SearchIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-      value={nameFilterVal}
-      onChange={(e) => setNameFilterVal(e.target.value)}
-    />
+    <Box className={classes.filterSearchContainer}>
+      <TextField
+        id="nameFilter"
+        className={classes.nameFilter}
+        type="text"
+        fullWidth
+        variant="standard"
+        size="small"
+        value={nameFilterVal}
+        InputProps={{
+          disableUnderline: true,
+          padding: 5,
+          classes: { borderRadius: 0 },
+        }}
+        onChange={(e) => setNameFilterVal(e.target.value)}
+      />
+    </Box>
   );
 
   const priceFilter = (
