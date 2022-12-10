@@ -53,6 +53,7 @@ const styles = {
       color: '#1e1131',
       textTransform: 'capitalize',
     },
+    maxHeight: '100%',
   },
   nameFilter: {
     backgroundColor: '#fff',
@@ -93,7 +94,8 @@ const styles = {
     },
   },
   clearButton: {
-    marginLeft: 'auto',
+    flexGrow: 1,
+    justifyContent: 'right',
   },
   apply: {
     backgroundColor: '#fff',
@@ -123,6 +125,7 @@ const styles = {
     textAlign: 'left',
     display: 'flex',
     alignItems: 'center',
+    color: '#1E1131',
   },
   verticalContainer: {
     width: '100%',
@@ -136,6 +139,13 @@ const styles = {
   },
   filterBarContent: {
     top: 'auto',
+  },
+  clearButtonFont: {
+    color: '#1E1131',
+    fontWeight: 600,
+    lineHeight: '24px',
+    fontSize: '14px',
+    height: 'inherit',
   },
 };
 
@@ -218,8 +228,9 @@ const FilterPanel = ({
       <Button
         className={classes.clearButton}
         onClick={() => clearFilters()}
+        style={{ backgroundColor: 'transparent' }}
       >
-        Clear All
+        <span className={classes.clearButtonFont}>Clear All</span>
       </Button>
     </div>
   );
