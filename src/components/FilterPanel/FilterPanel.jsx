@@ -118,7 +118,7 @@ const styles = {
       margin: '0 8px',
       padding: '12px 42px',
     },
-    marginBottom: '48px',
+    marginBottom: '188px',
   },
   resultCount: {
     display: 'inline-block',
@@ -273,6 +273,7 @@ const FilterPanel = ({
         fullWidth
         variant="outlined"
         size="small"
+        placeholder="Search by name within results"
         value={nameFilterVal}
         InputProps={{
           disableUnderline: true,
