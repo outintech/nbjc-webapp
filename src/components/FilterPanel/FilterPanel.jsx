@@ -18,10 +18,11 @@ import {
   RadioGroup,
   Collapse,
   Typography,
+  InputAdornment,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
-// import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
   dialog: {
@@ -61,7 +62,6 @@ const styles = {
     backgroundColor: '#fff',
     border: '1px solid #999',
     borderRadius: '4px',
-
   },
   filterGroup: {
     backgroundColor: '#fff',
@@ -173,9 +173,6 @@ const styles = {
     fontSize: '14px',
     fontWeight: '600',
   },
-  applyContainer: {
-
-  },
 };
 
 const FilterPanel = ({
@@ -271,14 +268,25 @@ const FilterPanel = ({
         className={classes.nameFilter}
         type="text"
         fullWidth
+        margin="normal"
         variant="outlined"
         size="small"
-        placeholder="Search by name within results"
+        placeholder="Search by name"
         value={nameFilterVal}
         InputProps={{
           disableUnderline: true,
           padding: 5,
           classes: { borderRadius: 0 },
+          endAdornment: (
+            <InputAdornment
+              style={{ right: 5 }}
+              onClick={applyFilters}
+            >
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
         }}
         onChange={(e) => setNameFilterVal(e.target.value)}
       />
