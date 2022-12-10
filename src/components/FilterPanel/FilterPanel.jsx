@@ -345,7 +345,7 @@ const FilterPanel = ({
         aria-hidden="true"
         className={classes.filterHeader}
       >
-        Indicators
+        Inclusion
       </div>
       <FormGroup className={classes.formFontColor}>
         {indicatorCheckboxes.slice(0, 5)}
