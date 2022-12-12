@@ -27,6 +27,7 @@ const styles = (theme) => ({
     },
     flexGrow: 1,
     marginTop: '8px',
+    marginRight: '142px',
   },
   starIcon: {
     paddingBottom: '0 !important',
@@ -95,7 +96,7 @@ const BusinessCard = ({
   overrideClasses,
 }) => (
   <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
-    <CardActionArea href={`/spaces/${id}`} disableRipple style={{ display: 'flex' }}>
+    <CardActionArea href={`/spaces/${id}`} disableRipple style={{ display: 'flex', height: '216px' }}>
       <CardHeader
         avatar={(
           <div color="secondary">
