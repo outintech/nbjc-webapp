@@ -173,7 +173,10 @@ const BusinessCard = ({
   classes,
   overrideClasses,
 }) => {
-  console.log(classes);
+  const convertAddressToGoogleMapsLink = (businessAddress) => {
+    const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
+    return googleAPIQuery + encodeURIComponent(businessAddress.address);
+  };
 
   return (
     <Box className={classes.businessCardContainer}>
@@ -193,7 +196,9 @@ const BusinessCard = ({
             </Box>
             <Box className={classes.addressContainer}>
               <LocationOnIcon className={classes.icon} />
-              <Typography variant="body1" style={{ textDecoration: 'underline' }}>{address}</Typography>
+              <a href={convertAddressToGoogleMapsLink({ address })}>
+                <Typography variant="body1" style={{ textDecoration: 'underline', color: '#666666' }}>{address}</Typography>
+              </a>
             </Box>
           </Box>
           <Box className={classes.bottomContent}>
