@@ -134,6 +134,7 @@ const styles = (theme) => ({
     borderTop: '1px solid #E5E5E5',
     textAlign: 'center',
     justifyContent: 'space-between',
+    paddingTop: '5px',
   },
   tagContainer: {
     display: 'flex',
@@ -191,21 +192,21 @@ const BusinessCard = ({
               <ChipList chips={filters} />
             </Box>
             <Box className={classes.CTAcontainer}>
-              CTAs
               <Box className={classes.ratingContainer}>
-                Rating
+                <StarIcon color="secondary" fontSize="small" />
+                <span>Add Review</span>
+              </Box>
+              <Box className={classes.ratingContainer}>
+                <span>Rating</span>
                 <StarIcon color="secondary" fontSize="small" />
                 {averageRating}
               </Box>
               <Box className={classes.ratingContainer}>
-                Rating
-                <StarIcon color="secondary" fontSize="small" />
-                {averageRating}
+                {phoneNumber}
               </Box>
               <Box className={classes.ratingContainer}>
-                Rating
                 <StarIcon color="secondary" fontSize="small" />
-                {averageRating}
+                <span>Visit Website</span>
               </Box>
             </Box>
           </Box>
