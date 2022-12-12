@@ -88,7 +88,15 @@ const styles = (theme) => ({
       display: 'none',
     },
     width: '100px !important',
+    marginBottom: '16px',
     height: 36,
+    border: '#EBE5F6 1px solid',
+  },
+  filterButtonText: {
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: '#1E1131',
   },
 });
 
@@ -156,7 +164,7 @@ const Search = ({
               color="primary"
               className={classes.filterButton}
             >
-              FILTER
+              <span className={classes.filterButtonText}>FILTER</span>
             </Button>
             <FilterPanel
               open={openFilter}
