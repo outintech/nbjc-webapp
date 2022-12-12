@@ -26,7 +26,8 @@ const styles = (theme) => ({
   },
   content: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    width: '100%',
   },
   resultsWrapper: {
     display: 'flex',
@@ -50,16 +51,11 @@ const styles = (theme) => ({
   },
   list: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, 350px)',
+    gridTemplateColumns: 'repeat(1fr)',
     gridGap: 50,
   },
   searchResult: {
-    [theme.breakpoints.up('xs')]: {
-      maxWidth: '350px',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      width: '100%',
-    },
+    width: '100%',
   },
   emptyStateWrapper: {
     marginTop: 60,
