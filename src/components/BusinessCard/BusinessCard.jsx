@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
+import StarIcon from '@material-ui/icons/Star';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -130,6 +131,9 @@ const styles = (theme) => ({
   CTAcontainer: {
     display: 'flex',
     alignItems: 'flex-end',
+    borderTop: '1px solid #E5E5E5',
+    textAlign: 'center',
+    justifyContent: 'space-between',
   },
   tagContainer: {
     display: 'flex',
@@ -140,6 +144,9 @@ const styles = (theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+  },
+  ratingContainer: {
+    display: 'flex',
   },
 });
 
@@ -185,6 +192,21 @@ const BusinessCard = ({
             </Box>
             <Box className={classes.CTAcontainer}>
               CTAs
+              <Box className={classes.ratingContainer}>
+                Rating
+                <StarIcon color="secondary" fontSize="small" />
+                {averageRating}
+              </Box>
+              <Box className={classes.ratingContainer}>
+                Rating
+                <StarIcon color="secondary" fontSize="small" />
+                {averageRating}
+              </Box>
+              <Box className={classes.ratingContainer}>
+                Rating
+                <StarIcon color="secondary" fontSize="small" />
+                {averageRating}
+              </Box>
             </Box>
           </Box>
         </Box>
