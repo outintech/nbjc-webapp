@@ -26,6 +26,7 @@ const styles = (theme) => ({
       padding: '6px 6px;',
     },
     flexGrow: 1,
+    marginTop: '8px',
   },
   starIcon: {
     paddingBottom: '0 !important',
