@@ -108,8 +108,6 @@ const styles = (theme) => ({
   },
   businessTitle: {
     marginBottom: 0,
-    fontsize: '20px',
-    fontWeight: 700,
     letterSpacing: '-0.4px',
     lineHeight: '28px',
     height: '100%',
@@ -129,6 +127,8 @@ const styles = (theme) => ({
   },
   titleContainer: {
     height: '100%',
+    fontSize: '18px',
+    fontWeight: 700,
   },
   CTAcontainer: {
     display: 'flex',
@@ -189,14 +189,17 @@ const BusinessCard = ({
         <Box className={classes.contentContainer}>
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
-              <p className={classes.businessTitle} style={{ marginTop: 0 }}>
+              <p className={classes.businessTitle} style={{ margin: 0, height: '100%' }}>
                 <span style={{ marginRight: 2 }}>1.</span>
                 {name}
               </p>
             </Box>
             <Box className={classes.addressContainer}>
-              <LocationOnIcon className={classes.icon} />
-              <a href={convertAddressToGoogleMapsLink({ address })}>
+              <a
+                href={convertAddressToGoogleMapsLink({ address })}
+                className={classes.addressContainer}
+              >
+                <LocationOnIcon className={classes.icon} />
                 <Typography variant="body1" style={{ textDecoration: 'underline', color: '#666666' }}>{address}</Typography>
               </a>
             </Box>
