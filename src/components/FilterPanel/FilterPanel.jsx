@@ -124,6 +124,9 @@ const styles = {
     display: 'inline-block',
     marginBottom: '20px',
     width: '100%',
+    color: '#1E1131',
+    fontSize: '14px',
+    fontWeight: 500,
   },
   filterContainer: {
     display: 'flex',
@@ -172,6 +175,23 @@ const styles = {
   checkBoxLabels: {
     fontSize: '14px',
     fontWeight: '600',
+  },
+  mobileFilterButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '12px 16px',
+    gap: '10px',
+  },
+  closeButton: {
+    border: '#EBE5F6 1px solid',
+    backgroundColor: '#FCFBFE',
+  },
+  applyButton: {
+    border: '#EBE5F6 1px solid',
+    backgroundColor: '#351F57',
+    color: '#FFFFFF',
   },
 };
 
@@ -388,7 +408,7 @@ const FilterPanel = ({
     <Button
       onClick={applyFilters}
       variant="contained"
-      color="primary"
+      className={classes.applyButton}
     >
       Apply
     </Button>
@@ -442,14 +462,16 @@ const FilterPanel = ({
           <span className={classes.resultCount}>
             {`${resultCount} Search Result${resultCount === 1 ? '' : 's'}`}
           </span>
-          <Button
-            onClick={onClose}
-            variant="outlined"
-            color="default"
-          >
-            Close
-          </Button>
-          {apply}
+          <div className={classes.mobileFilterButtons} style={{ display: 'flex' }}>
+            <Button
+              onClick={onClose}
+              variant="outlined"
+              className={classes.closeButton}
+            >
+              Close
+            </Button>
+            {apply}
+          </div>
         </div>
       </Dialog>
     </div>
