@@ -2,7 +2,13 @@
 import React from 'react';
 import PropTypes, { nominalTypeHack } from 'prop-types';
 
-import { Box } from '@material-ui/core';
+import {
+  Box,
+  Icon,
+  Typography,
+} from '@material-ui/core';
+
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -68,28 +74,50 @@ const styles = (theme) => ({
   businessCardContainer: {
     borderRadius: '4px',
     border: '1px solid black',
-    maxHeight: '216px',
-    maxWidth: '760px',
     marginRight: 142,
-
+    width: 'auto',
+    height: '100%',
   },
   searchContentContainer: {
+    maxHeight: '216px',
+    maxWidth: '760px',
     display: 'flex',
+    flexDirection: 'row',
     padding: 24,
   },
   imageContainer: {
     marginRight: 24,
     position: 'relative',
-    width: 171,
-    height: 171,
+    maxWidth: 254,
+    maxHeight: 184,
+    flexGrow: 1,
+    overflow: 'contain',
   },
   image: {
     width: '100%',
     height: '100%',
+    objectFit: 'cover',
+    borderRadius: '4px',
   },
   contentContainer: {
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 3,
     border: '1px solid black',
+    justifyContent: 'space-around',
+  },
+  businessTitle: {
+    marginBottom: 0,
+    fontsize: '20px',
+    fontWeight: 500,
+    letterSpacing: '-0.4px',
+    lineHeight: '28px',
+  },
+  icon: {
+
+  },
+  addressContainer: {
+    display: 'flex',
   },
 });
 
@@ -116,12 +144,23 @@ const BusinessCard = ({
       <Box className={classes.searchContentContainer}>
         <Box className={classes.imageContainer}>
           <a href="/">
-            <img src="https://via.placeholder.com/171" alt="alt-text" className={classes.image} />
+            <img src={imageUrl} alt="alt-text" className={classes.image} />
           </a>
         </Box>
         <Box className={classes.contentContainer}>
-          Content
-
+          <Box>
+            <h3 className={classes.businessTitle}>Title</h3>
+          </Box>
+          <Box className={classes.addressContainer}>
+            <LocationOnIcon className={classes.icon} />
+            <Typography variant="body1">{address}</Typography>
+          </Box>
+          <Box>
+            Tags
+          </Box>
+          <Box>
+            CTAs
+          </Box>
         </Box>
       </Box>
     </Box>
