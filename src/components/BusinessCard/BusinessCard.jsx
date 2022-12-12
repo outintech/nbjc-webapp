@@ -83,8 +83,6 @@ const styles = (theme) => ({
     backgroundColor: '#FFFFFF',
   },
   searchContentContainer: {
-    maxHeight: '216px',
-    maxWidth: '760px',
     display: 'flex',
     flexDirection: 'row',
     padding: 24,
@@ -147,6 +145,7 @@ const styles = (theme) => ({
   },
   bottomContent: {
     height: '100%',
+    width: 'auto',
     display: 'flex',
     flexDirection: 'column',
   },
