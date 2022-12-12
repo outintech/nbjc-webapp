@@ -13,6 +13,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { withStyles } from '@material-ui/core/styles';
 
 import { spaceProps } from '../../types';
+import ChipList from '../ChipList';
 
 const styles = (theme) => ({
   root: {
@@ -102,8 +103,7 @@ const styles = (theme) => ({
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 3,
-    border: '1px solid black',
+    flexGrow: 1,
   },
   businessTitle: {
     marginBottom: 0,
@@ -133,7 +133,7 @@ const styles = (theme) => ({
   tagContainer: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
+    flexGrow: 3,
   },
   bottomContent: {
     height: '100%',
@@ -169,9 +169,9 @@ const BusinessCard = ({
           </a>
         </Box>
         <Box className={classes.contentContainer}>
-          <Box className={classes.titleAddressContainer}>
+          <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
-              <h3 className={classes.businessTitle}>Title</h3>
+              <p className={classes.businessTitle} style={{ marginTop: 0 }}>{name}</p>
             </Box>
             <Box className={classes.addressContainer}>
               <LocationOnIcon className={classes.icon} />
@@ -180,7 +180,7 @@ const BusinessCard = ({
           </Box>
           <Box className={classes.bottomContent}>
             <Box className={classes.tagContainer}>
-              Tags
+              <ChipList chips={filters} />
             </Box>
             <Box className={classes.CTAcontainer}>
               CTAs
