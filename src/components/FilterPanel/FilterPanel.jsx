@@ -126,7 +126,7 @@ const styles = {
     width: '100%',
     color: '#1E1131',
     fontSize: '14px',
-    fontWeight: 500,
+    fontWeight: 600,
   },
   filterContainer: {
     display: 'flex',
