@@ -104,7 +104,6 @@ const styles = (theme) => ({
     flexDirection: 'column',
     flexGrow: 3,
     border: '1px solid black',
-    justifyContent: 'space-around',
   },
   businessTitle: {
     marginBottom: 0,
@@ -112,12 +111,34 @@ const styles = (theme) => ({
     fontWeight: 500,
     letterSpacing: '-0.4px',
     lineHeight: '28px',
+    height: '100%',
   },
   icon: {
 
   },
   addressContainer: {
     display: 'flex',
+  },
+  titleAddressContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  titleContainer: {
+    height: '100%',
+  },
+  CTAcontainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  tagContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+  bottomContent: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -148,18 +169,22 @@ const BusinessCard = ({
           </a>
         </Box>
         <Box className={classes.contentContainer}>
-          <Box>
-            <h3 className={classes.businessTitle}>Title</h3>
+          <Box className={classes.titleAddressContainer}>
+            <Box className={classes.titleContainer}>
+              <h3 className={classes.businessTitle}>Title</h3>
+            </Box>
+            <Box className={classes.addressContainer}>
+              <LocationOnIcon className={classes.icon} />
+              <Typography variant="body1">{address}</Typography>
+            </Box>
           </Box>
-          <Box className={classes.addressContainer}>
-            <LocationOnIcon className={classes.icon} />
-            <Typography variant="body1">{address}</Typography>
-          </Box>
-          <Box>
-            Tags
-          </Box>
-          <Box>
-            CTAs
+          <Box className={classes.bottomContent}>
+            <Box className={classes.tagContainer}>
+              Tags
+            </Box>
+            <Box className={classes.CTAcontainer}>
+              CTAs
+            </Box>
           </Box>
         </Box>
       </Box>
