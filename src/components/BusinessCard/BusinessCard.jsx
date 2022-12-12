@@ -74,10 +74,11 @@ const styles = (theme) => ({
   },
   businessCardContainer: {
     borderRadius: '4px',
-    border: '1px solid black',
+    border: '1px solid #E5E5E5',
     marginRight: 142,
     width: 'auto',
     height: '100%',
+    backgroundColor: '#FFFFFF',
   },
   searchContentContainer: {
     maxHeight: '216px',
