@@ -34,7 +34,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     [theme.breakpoints.up('mobile')]: {
       display: 'grid',
-      gridTemplateColumns: '1fr 3fr',
+      gridTemplateColumns: '1fr 8fr',
     },
   },
   filtersContainer: {
