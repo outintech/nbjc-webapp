@@ -4,13 +4,13 @@ import PropTypes, { nominalTypeHack } from 'prop-types';
 
 import {
   Box,
-  Icon,
   Typography,
 } from '@material-ui/core';
 
 import StarIcon from '@material-ui/icons/Star';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -120,6 +120,7 @@ const styles = (theme) => ({
   addressContainer: {
     display: 'flex',
     color: '#666666',
+    marginBottom: '2px',
   },
   titleAddressContainer: {
     display: 'flex',
@@ -129,6 +130,7 @@ const styles = (theme) => ({
     height: '100%',
     fontSize: '18px',
     fontWeight: 700,
+    display: 'flex',
   },
   CTAcontainer: {
     display: 'flex',
@@ -189,10 +191,11 @@ const BusinessCard = ({
         <Box className={classes.contentContainer}>
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
-              <p className={classes.businessTitle} style={{ margin: 0, height: '100%' }}>
+              <p className={classes.businessTitle} style={{ margin: 0, height: '100%', flex: 1 }}>
                 <span style={{ marginRight: 2 }}>1.</span>
                 {name}
               </p>
+              <MoreVertIcon />
             </Box>
             <Box className={classes.addressContainer}>
               <a
