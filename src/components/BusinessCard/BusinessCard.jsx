@@ -95,7 +95,7 @@ const BusinessCard = ({
   overrideClasses,
 }) => (
   <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
-    <CardActionArea href={`/spaces/${id}`} disableRipple>
+    <CardActionArea href={`/spaces/${id}`} disableRipple style={{ display: 'flex' }}>
       <CardHeader
         avatar={(
           <div color="secondary">
