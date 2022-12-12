@@ -111,16 +111,19 @@ const styles = (theme) => ({
   businessTitle: {
     marginBottom: 0,
     fontsize: '20px',
-    fontWeight: 500,
+    fontWeight: 700,
     letterSpacing: '-0.4px',
     lineHeight: '28px',
     height: '100%',
+    color: '#1E1131',
   },
   icon: {
-
+    height: '100%',
+    width: '23px',
   },
   addressContainer: {
     display: 'flex',
+    color: '#666666',
   },
   titleAddressContainer: {
     display: 'flex',
@@ -184,11 +187,14 @@ const BusinessCard = ({
         <Box className={classes.contentContainer}>
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
-              <p className={classes.businessTitle} style={{ marginTop: 0 }}>{name}</p>
+              <p className={classes.businessTitle} style={{ marginTop: 0 }}>
+                <span style={{ marginRight: 2 }}>1.</span>
+                {name}
+              </p>
             </Box>
             <Box className={classes.addressContainer}>
               <LocationOnIcon className={classes.icon} />
-              <Typography variant="body1">{address}</Typography>
+              <Typography variant="body1" style={{ textDecoration: 'underline' }}>{address}</Typography>
             </Box>
           </Box>
           <Box className={classes.bottomContent}>
