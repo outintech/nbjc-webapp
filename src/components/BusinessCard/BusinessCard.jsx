@@ -25,12 +25,7 @@ const styles = (theme) => ({
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
     },
-    [theme.breakpoints.up('xs')]: {
-      maxWidth: 344,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      maxWidth: 436,
-    },
+    flexGrow: 1,
   },
   starIcon: {
     paddingBottom: '0 !important',
