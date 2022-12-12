@@ -1,24 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import cx from 'classnames';
+import PropTypes, { nominalTypeHack } from 'prop-types';
 
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Divider,
-  Typography,
-} from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import ShareIcon from '@material-ui/icons/Share';
+import { Box } from '@material-ui/core';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import { spaceProps } from '../../types';
-import ChipList from '../ChipList';
 
 const styles = (theme) => ({
   root: {
@@ -77,6 +65,32 @@ const styles = (theme) => ({
   shareButton: {
     float: 'right',
   },
+  businessCardContainer: {
+    borderRadius: '4px',
+    border: '1px solid black',
+    maxHeight: '216px',
+    maxWidth: '760px',
+    marginRight: 142,
+
+  },
+  searchContentContainer: {
+    display: 'flex',
+    padding: 24,
+  },
+  imageContainer: {
+    marginRight: 24,
+    position: 'relative',
+    width: 171,
+    height: 171,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  contentContainer: {
+    flexGrow: 1,
+    border: '1px solid black',
+  },
 });
 
 const BusinessCard = ({
@@ -94,62 +108,25 @@ const BusinessCard = ({
   },
   classes,
   overrideClasses,
-}) => (
-  <Card className={cx(classes.root, overrideClasses.root)} variant="outlined" key={id}>
-    <CardActionArea href={`/spaces/${id}`} disableRipple style={{ display: 'flex', height: '216px' }}>
-      <CardHeader
-        avatar={(
-          <div color="secondary">
-            <StarIcon color="secondary" fontSize="large" classes={{ root: classes.starIcon }} />
-            <Typography
-              variant="caption"
-              color="secondary"
-              className={classes.rating}
-              align="center"
-            >
-              {averageRating}
-            </Typography>
-          </div>
-        )}
-        // TODO: POSTMVP feature
-        action={false && <BookmarkBorderIcon color="secondary" />}
-        title={<Typography variant="h6">{name}</Typography>}
-        subheader={<Typography variant="body2">{category}</Typography>}
-        classes={{ action: classes.headerAction }}
-      />
-      <CardMedia
-        image={imageUrl}
-        className={classes.cardMedia}
-      />
-      <CardContent>
-        <div className={classes.location}>
-          <div className={classes.address}>
-            <Typography variant="body1">{address}</Typography>
-          </div>
-          <div className={classes.distance}>
-            <Typography variant="body1">{distance}</Typography>
-          </div>
-        </div>
-        <Divider />
-        <div className={classes.chipWrapper}>
-          <ChipList chips={filters} />
-        </div>
-        <div className={classes.footer}>
-          <Button color="primary" href={`tel:${phoneNumber}`}>Call Space</Button>
-          <Button color="primary" href={`/spaces/${id}/reviews/new`}>Write a review</Button>
-          <Button color="primary" aria-label="visit space" component="span" className={classes.shareButton} disableRipple>
-            <a href={url} target="_blank" rel="noreferrer">
-              <ShareIcon
-                color="primary"
-                style={{ padding: 0 }}
-              />
-            </a>
-          </Button>
-        </div>
-      </CardContent>
-    </CardActionArea>
-  </Card>
-);
+}) => {
+  console.log(classes);
+
+  return (
+    <Box className={classes.businessCardContainer}>
+      <Box className={classes.searchContentContainer}>
+        <Box className={classes.imageContainer}>
+          <a href="/">
+            <img src="https://via.placeholder.com/171" alt="alt-text" className={classes.image} />
+          </a>
+        </Box>
+        <Box className={classes.contentContainer}>
+          Content
+
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 BusinessCard.propTypes = {
   business: PropTypes.shape(spaceProps).isRequired,
