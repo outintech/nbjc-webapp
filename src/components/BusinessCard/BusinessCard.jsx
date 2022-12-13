@@ -12,6 +12,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PhoneIcon from '@material-ui/icons/Phone';
+import LanguageIcon from '@material-ui/icons/Language';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -239,11 +240,11 @@ const BusinessCard = ({
                 <span className={classes.purpleColor}>{averageRating}</span>
               </Box>
               <Box className={classes.ratingContainer}>
-                <PhoneIcon className={classes.purpleColor} />
+                <PhoneIcon className={classes.purpleColor} fontSize="small" />
                 <a href={`tel:${phoneNumber}`} className={classes.blackColorNoUnderline}>{formatTenDigitPhoneNumber(phoneNumber)}</a>
               </Box>
               <Box className={classes.ratingContainer}>
-                <StarIcon color="secondary" fontSize="small" />
+                <LanguageIcon color="secondary" fontSize="small" />
                 <span>Visit Website</span>
               </Box>
             </Box>
