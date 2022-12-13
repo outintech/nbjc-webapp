@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import useQuery from '../../hooks/useQuery';
 
@@ -16,7 +14,7 @@ const styles = (theme) => ({
     marginRight: 142,
   },
   prompt: {
-    display: 'block',
+    display: 'flex',
     flexGrow: 2,
     width: '100%',
     marginTop: '30px',
@@ -34,6 +32,20 @@ const styles = (theme) => ({
       marginBottom: 50,
     },
   },
+  showingText: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  navigationContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  paginationContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    whiteSpace: 'no wrap',
+  },
 });
 
 const Pagination = ({
@@ -42,7 +54,6 @@ const Pagination = ({
   perPage,
   classes,
 }) => {
-  const matches = useMediaQuery('(min-width:376px)');
   const query = useQuery();
   const history = useHistory();
   const totalPages = Math.ceil(totalCount / perPage);
@@ -56,17 +67,9 @@ const Pagination = ({
     query.set('page', page - 1);
     query.set('perPage', perPage);
     backButton = (
-      <Button
-        variant="outlined"
-        color="primary"
-        align="center"
-        fullWidth={!matches}
-        href={`${backLink}?${query.toString()}`}
-        className={classes.button}
-        disableElevation
-      >
-        Previous
-      </Button>
+      <a href={`${backLink}?${query.toString()}`}>
+        {'<'}
+      </a>
     );
   }
   if (totalPages > 1 && page < totalPages) {
@@ -75,17 +78,9 @@ const Pagination = ({
     query.set('page', page + 1);
     query.set('perPage', perPage);
     nextButton = (
-      <Button
-        variant="contained"
-        color="primary"
-        align="center"
-        fullWidth={!matches}
-        href={`${nextLink}?${query.toString()}`}
-        className={classes.button}
-        disableElevation
-      >
-        Next
-      </Button>
+      <a href={`${nextLink}?${query.toString()}`}>
+        {'>'}
+      </a>
     );
   }
 
@@ -93,9 +88,27 @@ const Pagination = ({
     <div className={classes.root}>
       {(backExists || nextExists)
         && (
-          <Typography variant="h5" align="center" className={classes.prompt}>
-            {`Showing ${perPage} of ${totalCount} results`}
-          </Typography>
+          <div className={classes.prompt}>
+            <Typography variant="h5" align="center" className={classes.showingText}>
+              {`Showing ${perPage} of ${totalCount} results`}
+            </Typography>
+            <div className={classes.navigationContainer}>
+              <div className={classes.paginationContainer}>
+                <div className={classes.navigationButtonContainers}>
+                  {backButton}
+                </div>
+                <div className={classes.paginationLinkContainers}>
+                  12345
+                </div>
+                <div className={classes.navigationContainer}>
+                  {nextButton}
+                </div>
+              </div>
+              <div>
+                Go to X page here
+              </div>
+            </div>
+          </div>
         )}
       {backButton}
       {nextButton}
