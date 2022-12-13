@@ -222,9 +222,9 @@ const Search = ({
                 <div className={classes.filterBarContainer}>
                   <div className={classes.leftSideFilter}>
                     <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Sort by:</span>
+                      <span className={classes.boldedText}>Showing:</span>
                       <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>Highly Rated</span>
+                        <span className={classes.purpleText}>10 per page</span>
                         <ArrowDropDownIcon className={classes.arrowDropdown} />
                       </span>
                     </div>

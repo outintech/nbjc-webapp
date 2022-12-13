@@ -11,6 +11,7 @@ import StarIcon from '@material-ui/icons/Star';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -154,8 +155,12 @@ const styles = (theme) => ({
   ratingContainer: {
     display: 'flex',
   },
-  ratingScore: {
+  purpleColor: {
     color: '#633AA3',
+  },
+  phoneNumberString: {
+    textDecoration: 'none',
+    color: '#666666',
   },
 });
 
@@ -180,12 +185,22 @@ const BusinessCard = ({
     return googleAPIQuery + encodeURIComponent(businessAddress.address);
   };
 
+  const formatTenDigitPhoneNumber = (phoneNumberString) => {
+    const cleaned = (`'' + ${phoneNumberString}`).replace(/\D/g, '');
+    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      const intlCode = (match[1] ? '+1 ' : '');
+      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+    }
+    return null;
+  };
+
   return (
     <Box className={classes.businessCardContainer}>
       <Box className={classes.searchContentContainer}>
         <Box className={classes.imageContainer}>
           <a href="/">
-            <img src={imageUrl} alt="alt-text" className={classes.image} />
+            <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
           </a>
         </Box>
         <Box className={classes.contentContainer}>
@@ -219,10 +234,11 @@ const BusinessCard = ({
               <Box className={classes.ratingContainer}>
                 <span style={{ marginRight: 1 }}>Rating</span>
                 <StarIcon color="secondary" fontSize="small" />
-                <span className={classes.ratingScore}>{averageRating}</span>
+                <span className={classes.purpleColor}>{averageRating}</span>
               </Box>
               <Box className={classes.ratingContainer}>
-                {phoneNumber}
+                <PhoneIcon className={classes.purpleColor} />
+                <a href={`tel:${phoneNumber}`} className={classes.phoneNumberString}>{formatTenDigitPhoneNumber(phoneNumber)}</a>
               </Box>
               <Box className={classes.ratingContainer}>
                 <StarIcon color="secondary" fontSize="small" />
