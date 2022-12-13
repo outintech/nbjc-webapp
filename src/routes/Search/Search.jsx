@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import BusinessCard from '../../components/BusinessCard';
 import FilterPanel from '../../components/FilterPanel';
@@ -56,7 +57,7 @@ const styles = (theme) => ({
     gridGap: 50,
   },
   searchResult: {
-    width: '100%',
+    width: 'auto',
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -96,7 +97,6 @@ const styles = (theme) => ({
     color: '#1E1131',
   },
   headerFilterBar: {
-    marginBottom: 16,
     marginTop: 24,
   },
   searchCountHeader: {
@@ -104,7 +104,7 @@ const styles = (theme) => ({
     fontSize: '32px',
     color: '#1E1131',
     lineHeight: '32px',
-    marginBottom: 9,
+    marginBottom: 16,
   },
   filterBarContainer: {
     display: 'flex',
@@ -117,7 +117,21 @@ const styles = (theme) => ({
     marginRight: 142,
   },
   filterDropdown: {
+    display: 'flex',
+  },
+  boldedText: {
+    fontWeight: 600,
+    lineHeight: '17.5px',
+    color: '#1E1131',
     marginRight: 6,
+  },
+  purpleText: {
+    display: 'flex',
+    color: '#633AA3',
+  },
+  arrowDropdown: {
+    marginRight: 6,
+    verticalAlign: 'center',
   },
 });
 
@@ -206,14 +220,28 @@ const Search = ({
                 </div>
                 <div className={classes.filterBarContainer}>
                   <div className={classes.leftSideFilter}>
-                    Showing: 10 per page
+                    <div className={classes.filterDropdown}>
+                      <span className={classes.boldedText}>Sort by:</span>
+                      <span className={classes.purpleText}>
+                        <span className={classes.purpleText}>Highly Rated</span>
+                        <ArrowDropDownIcon className={classes.arrowDropdown} />
+                      </span>
+                    </div>
                   </div>
                   <div className={classes.rightSideFilter}>
                     <div className={classes.filterDropdown}>
-                      Distance: 5 miles
+                      <span className={classes.boldedText}>Distance:</span>
+                      <span className={classes.purpleText}>
+                        <span className={classes.purpleText}>5 miles</span>
+                        <ArrowDropDownIcon className={classes.arrowDropdown} />
+                      </span>
                     </div>
-                    <div>
-                      Sort by: Highest Rated
+                    <div className={classes.filterDropdown}>
+                      <span className={classes.boldedText}>Sort by:</span>
+                      <span className={classes.purpleText}>
+                        <span className={classes.purpleText}>Highly Rated</span>
+                        <ArrowDropDownIcon className={classes.arrowDropdown} />
+                      </span>
                     </div>
                   </div>
                 </div>
