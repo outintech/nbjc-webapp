@@ -180,6 +180,7 @@ const BusinessCard = ({
   },
   classes,
   overrideClasses,
+  count,
 }) => {
   const convertAddressToGoogleMapsLink = (businessAddress) => {
     const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
@@ -208,7 +209,10 @@ const BusinessCard = ({
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
               <p className={classes.businessTitle} style={{ margin: 0, height: '100%', flex: 1 }}>
-                <span style={{ marginRight: 2 }}>1.</span>
+                <span style={{ marginRight: 5 }}>
+                  {count}
+                  .
+                </span>
                 {name}
               </p>
               <MoreVertIcon />

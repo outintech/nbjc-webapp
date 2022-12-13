@@ -251,11 +251,12 @@ const Search = ({
             : null}
           <div className={classes.list}>
             {searchResults !== null && searchResults.length > 0
-              && searchResults.map((result) => (
+              && searchResults.map((result, index) => (
                 <div className={classes.searchResult} key={result.id}>
                   <BusinessCard
                     business={result}
                     key={result.id}
+                    count={(pagination.page - 1) * 10 + index + 1}
                     overrideClasses={{ root: classes.result }}
                   />
                 </div>
