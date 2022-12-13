@@ -18,7 +18,7 @@ const styles = (theme) => ({
     display: 'flex',
     flexGrow: 2,
     width: '100%',
-    marginTop: '30px',
+    marginTop: '40px',
     color: '#666666',
     fontSize: '16px',
   },
@@ -133,12 +133,16 @@ const Pagination = ({
 
   return (
     <div className={classes.root}>
-      {(backExists || nextExists)
-        && (
-          <div className={classes.prompt}>
+      <div className={classes.prompt}>
+
+        {(totalCount > 0)
+          && (
             <Typography variant="h5" align="center" className={classes.showingText}>
               {`Showing ${calculatePageRange()[0]} - ${calculatePageRange()[1]} of ${totalCount} results`}
             </Typography>
+          )}
+        {(backExists || nextExists)
+          && (
             <div className={classes.navigationContainer}>
               <div className={classes.paginationContainer}>
                 <div className={classes.navigationButtonContainers}>
@@ -156,8 +160,8 @@ const Pagination = ({
                 Go to X page here
               </div>
             </div>
-          </div>
-        )}
+          )}
+      </div>
     </div>
   );
 };
