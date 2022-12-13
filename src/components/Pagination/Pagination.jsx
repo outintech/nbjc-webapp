@@ -13,12 +13,15 @@ const styles = (theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    marginRight: 142,
   },
   prompt: {
     display: 'block',
     flexGrow: 2,
     width: '100%',
     marginTop: '30px',
+    color: '#666666',
+    fontSize: '16px',
   },
   button: {
     [theme.breakpoints.up('xs')]: {
