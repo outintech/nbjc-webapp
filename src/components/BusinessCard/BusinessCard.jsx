@@ -155,12 +155,12 @@ const styles = (theme) => ({
   },
   ratingContainer: {
     display: 'flex',
+    textDecoration: 'none',
   },
   purpleColor: {
     color: '#633AA3',
   },
-  blackColorNoUnderline: {
-    textDecoration: 'none',
+  blackColor: {
     color: '#666666',
   },
 });
@@ -232,21 +232,21 @@ const BusinessCard = ({
               <ChipList chips={filters} />
             </Box>
             <Box className={classes.CTAcontainer}>
-              <Box className={classes.ratingContainer}>
+              <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
                 <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-                <a href={`/spaces/${id}/reviews/new`} className={classes.blackColorNoUnderline}>
-                  <span>Add Review</span>
-                </a>
-              </Box>
+                <span className={classes.blackColor}>Add Review</span>
+              </a>
               <Box className={classes.ratingContainer}>
                 <span style={{ marginRight: 1 }}>Rating</span>
                 <StarIcon color="secondary" fontSize="small" />
                 <span className={classes.purpleColor}>{averageRating}</span>
               </Box>
-              <Box className={classes.ratingContainer}>
+              <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
                 <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                <a href={`tel:${phoneNumber}`} className={classes.blackColorNoUnderline}>{formatTenDigitPhoneNumber(phoneNumber)}</a>
-              </Box>
+                <span className={classes.blackColor}>
+                  {formatTenDigitPhoneNumber(phoneNumber)}
+                </span>
+              </a>
               <Box className={classes.ratingContainer}>
                 <LanguageIcon color="secondary" fontSize="small" />
                 <span>Visit Website</span>
