@@ -36,6 +36,7 @@ const styles = (theme) => ({
   showingText: {
     flexGrow: 1,
     justifyContent: 'center',
+    fontSize: '16px',
   },
   navigationContainer: {
     display: 'flex',
@@ -124,13 +125,19 @@ const Pagination = ({
     </a>
   );
 
+  const calculatePageRange = () => {
+    const startingRange = (page - 1) * perPage + 1;
+    const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
+    return [startingRange, endingRange];
+  };
+
   return (
     <div className={classes.root}>
       {(backExists || nextExists)
         && (
           <div className={classes.prompt}>
             <Typography variant="h5" align="center" className={classes.showingText}>
-              {`Showing ${perPage} of ${totalCount} results`}
+              {`Showing ${calculatePageRange()[0]} - ${calculatePageRange()[1]} of ${totalCount} results`}
             </Typography>
             <div className={classes.navigationContainer}>
               <div className={classes.paginationContainer}>

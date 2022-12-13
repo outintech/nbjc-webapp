@@ -175,6 +175,12 @@ const Search = ({
   };
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
+
+  if (pagination) {
+    console.log(pagination);
+    console.log(pagination.totalCount);
+  }
+
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
@@ -213,11 +219,12 @@ const Search = ({
           </div>
         )}
         <div>
-          {!loading
+          {searchResults !== null && searchResults.length > 0
             ? (
               <div className={classes.headerFilterBar}>
                 <div className={classes.searchCountHeader}>
-                  {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
+                  {pagination.totalCount !== undefined ? `${pagination.total_count} 
+                  Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}` : null}
                 </div>
                 <div className={classes.filterBarContainer}>
                   <div className={classes.leftSideFilter}>
