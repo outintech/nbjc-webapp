@@ -131,7 +131,8 @@ const styles = (theme) => ({
   },
   arrowDropdown: {
     marginRight: 6,
-    verticalAlign: 'center',
+    paddingBottom: 4,
+    verticalAlign: 'middle',
   },
 });
 
