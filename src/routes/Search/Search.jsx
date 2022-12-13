@@ -223,8 +223,7 @@ const Search = ({
             ? (
               <div className={classes.headerFilterBar}>
                 <div className={classes.searchCountHeader}>
-                  {pagination.totalCount !== undefined ? `${pagination.total_count} 
-                  Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}` : null}
+                  {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
                 </div>
                 <div className={classes.filterBarContainer}>
                   <div className={classes.leftSideFilter}>
