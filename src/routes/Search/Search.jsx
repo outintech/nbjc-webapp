@@ -28,6 +28,7 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    backgroundColor: '#FFFFFF',
   },
   resultsWrapper: {
     display: 'flex',
@@ -94,6 +95,30 @@ const styles = (theme) => ({
     lineHeight: '20px',
     color: '#1E1131',
   },
+  headerFilterBar: {
+    marginBottom: 16,
+    marginTop: 24,
+  },
+  searchCountHeader: {
+    fontWeight: 600,
+    fontSize: '32px',
+    color: '#1E1131',
+    lineHeight: '32px',
+    marginBottom: 9,
+  },
+  filterBarContainer: {
+    display: 'flex',
+  },
+  leftSideFilter: {
+    flex: 1,
+  },
+  rightSideFilter: {
+    display: 'flex',
+    marginRight: 142,
+  },
+  filterDropdown: {
+    marginRight: 6,
+  },
 });
 
 const Search = ({
@@ -135,7 +160,6 @@ const Search = ({
   };
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
-
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
@@ -174,6 +198,28 @@ const Search = ({
           </div>
         )}
         <div>
+          {!loading
+            ? (
+              <div className={classes.headerFilterBar}>
+                <div className={classes.searchCountHeader}>
+                  {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
+                </div>
+                <div className={classes.filterBarContainer}>
+                  <div className={classes.leftSideFilter}>
+                    Showing: 10 per page
+                  </div>
+                  <div className={classes.rightSideFilter}>
+                    <div className={classes.filterDropdown}>
+                      Distance: 5 miles
+                    </div>
+                    <div>
+                      Sort by: Highest Rated
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+            : null}
           <div className={classes.list}>
             {searchResults !== null && searchResults.length > 0
               && searchResults.map((result) => (
