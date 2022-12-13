@@ -158,7 +158,7 @@ const styles = (theme) => ({
   purpleColor: {
     color: '#633AA3',
   },
-  phoneNumberString: {
+  blackColorNoUnderline: {
     textDecoration: 'none',
     color: '#666666',
   },
@@ -229,7 +229,9 @@ const BusinessCard = ({
             <Box className={classes.CTAcontainer}>
               <Box className={classes.ratingContainer}>
                 <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-                <span>Add Review</span>
+                <a href={`/spaces/${id}/reviews/new`} className={classes.blackColorNoUnderline}>
+                  <span>Add Review</span>
+                </a>
               </Box>
               <Box className={classes.ratingContainer}>
                 <span style={{ marginRight: 1 }}>Rating</span>
@@ -238,7 +240,7 @@ const BusinessCard = ({
               </Box>
               <Box className={classes.ratingContainer}>
                 <PhoneIcon className={classes.purpleColor} />
-                <a href={`tel:${phoneNumber}`} className={classes.phoneNumberString}>{formatTenDigitPhoneNumber(phoneNumber)}</a>
+                <a href={`tel:${phoneNumber}`} className={classes.blackColorNoUnderline}>{formatTenDigitPhoneNumber(phoneNumber)}</a>
               </Box>
               <Box className={classes.ratingContainer}>
                 <StarIcon color="secondary" fontSize="small" />
