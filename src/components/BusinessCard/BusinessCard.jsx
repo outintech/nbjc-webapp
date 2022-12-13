@@ -199,7 +199,7 @@ const BusinessCard = ({
     <Box className={classes.businessCardContainer}>
       <Box className={classes.searchContentContainer}>
         <Box className={classes.imageContainer}>
-          <a href="/">
+          <a href={`/spaces/${id}`}>
             <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
           </a>
         </Box>
