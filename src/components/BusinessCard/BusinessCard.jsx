@@ -28,54 +28,6 @@ const styles = (theme) => ({
     marginTop: '8px',
     marginRight: '142px',
   },
-  starIcon: {
-    paddingBottom: '0 !important',
-  },
-  rating: {
-    display: 'block',
-  },
-  headerAction: {
-    margin: '0 !important',
-  },
-  cardMedia: {
-    margin: 'auto',
-    [theme.breakpoints.up('xs')]: {
-      width: 344,
-      height: 194,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      width: 436,
-      height: 222,
-    },
-  },
-  location: {
-    display: 'flex',
-    'flex-direction': 'row',
-    marginBottom: 15,
-    color: 'rgba(0, 0, 0, 0.6)',
-    textDecorationLine: 'underline',
-  },
-
-  distance: {
-    textAlign: 'right',
-    flexGrow: 2,
-  },
-  address: {
-    marginRight: 30,
-    flexGrow: 1,
-  },
-  chipWrapper: {
-    'margin-top': '15px',
-  },
-  filter: {
-    margin: '15px 20px 15px 0',
-  },
-  footer: {
-    marginTop: 30,
-  },
-  shareButton: {
-    float: 'right',
-  },
   businessCardContainer: {
     borderRadius: '4px',
     border: '1px solid #E5E5E5',
