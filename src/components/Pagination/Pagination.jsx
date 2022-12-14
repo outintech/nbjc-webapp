@@ -13,7 +13,6 @@ const styles = () => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginRight: 142,
     marginBottom: 100,
   },
   prompt: {

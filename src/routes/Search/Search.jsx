@@ -57,7 +57,7 @@ const styles = (theme) => ({
     gridGap: 50,
   },
   searchResult: {
-    width: 'auto',
+    marginRight: 142,
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -103,15 +103,11 @@ const styles = (theme) => ({
     lineHeight: '32px',
     marginBottom: 16,
   },
-  filterBarContainer: {
-    display: 'flex',
-  },
   leftSideFilter: {
     flex: 1,
   },
   rightSideFilter: {
     display: 'flex',
-    marginRight: 142,
   },
   filterDropdown: {
     display: 'flex',
@@ -217,7 +213,7 @@ const Search = ({
                 <div className={classes.searchCountHeader}>
                   {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
                 </div>
-                <div className={classes.filterBarContainer}>
+                <div className={classes.searchResult} style={{ display: 'flex' }}>
                   <div className={classes.leftSideFilter}>
                     <div className={classes.filterDropdown}>
                       <span className={classes.boldedText}>Showing:</span>
@@ -261,11 +257,13 @@ const Search = ({
               ))}
           </div>
           {pagination && pagination !== null && (
-            <Pagination
-              totalCount={pagination.total_count || 0}
-              page={pagination.page || 1}
-              perPage={pagination.perPage || 10}
-            />
+            <div className={classes.searchResult}>
+              <Pagination
+                totalCount={pagination.total_count || 0}
+                page={pagination.page || 1}
+                perPage={pagination.perPage || 10}
+              />
+            </div>
           )}
         </div>
       </div>
