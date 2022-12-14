@@ -30,10 +30,10 @@ const styles = (theme) => ({
     width: '100%',
   },
   resultsWrapper: {
+    display: 'flex',
   },
   filtersContainer: {
     width: '316px',
-    height: '100%',
     zIndex: 999,
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
