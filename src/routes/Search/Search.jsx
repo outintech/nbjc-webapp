@@ -176,11 +176,6 @@ const Search = ({
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
 
-  if (pagination) {
-    console.log(pagination);
-    console.log(pagination.totalCount);
-  }
-
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (

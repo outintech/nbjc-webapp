@@ -99,7 +99,14 @@ const Pagination = ({
         {'<'}
       </a>
     );
+  } else {
+    backButton = (
+      <div className={classes.inactiveButton}>
+        {'<'}
+      </div>
+    );
   }
+
   if (totalPages > 1 && page < totalPages) {
     const nextLink = history.location.pathname;
     nextExists = true;
@@ -109,6 +116,12 @@ const Pagination = ({
       <a href={`${nextLink}?${query.toString()}`}>
         {'>'}
       </a>
+    );
+  } else {
+    nextButton = (
+      <div className={classes.inactiveButton}>
+        {'>'}
+      </div>
     );
   }
 
@@ -131,6 +144,29 @@ const Pagination = ({
     return [startingRange, endingRange];
   };
 
+  const calculatePaginationMenu = () => {
+    const menu = [page];
+    const nextPage = page + 1;
+    const prevPage = page - 1;
+
+    if ((totalPages > 1 && page > 1)) {
+      menu.unshift(prevPage);
+    }
+
+    if ((totalPages > 1 && page < totalPages) === false) {
+      return menu;
+    }
+
+    if (page + 2 <= totalPages) {
+      // This should have the ... between those two
+      return menu.concat([nextPage, totalPages]);
+    }
+    if (page + 2 > totalPages) {
+      return menu.concat([nextPage]);
+    }
+    return menu.concat([nextPage, nextPage + 1]);
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.prompt}>
@@ -149,8 +185,9 @@ const Pagination = ({
                   {backButton}
                 </div>
                 <div className={classes.paginationLinkContainers}>
-                  {paginationButton('/', 1, true)}
-                  {paginationButton('/', 2, false)}
+                  {calculatePaginationMenu().map((pages) => (
+                    paginationButton('/', pages, true)
+                  ))}
                 </div>
                 <div className={classes.navigationContainer}>
                   {nextButton}
