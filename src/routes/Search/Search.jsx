@@ -173,24 +173,23 @@ const Search = ({
           location={userLocation.address}
         />
       )}
-      <div
-        className={cx(classes.resultsWrapper, {
-          [classes.desktop]: isWiderThanBreakpoint,
-        })}
-      >
-        {searchResults !== null && searchResults.length > 0 && (
-          <div className={classes.filtersContainer}>
-            <FilterPanel
-              open={openFilter}
-              onClose={() => setOpenFilter(false)}
-              type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
-              allIndicators={indicators}
-              search={search}
-              updateSearch={updateSearch}
-              resultCount={searchResults.length}
-            />
-          </div>
-        )}
+      <div className={cx(classes.resultsWrapper, { [classes.desktop]: isWiderThanBreakpoint })}>
+        {searchResults !== null
+          && searchResults.length > 0
+          && (isWiderThanBreakpoint || openFilter)
+          && (
+            <div className={classes.filtersContainer}>
+              <FilterPanel
+                open={openFilter}
+                onClose={() => setOpenFilter(false)}
+                type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
+                allIndicators={indicators}
+                search={search}
+                updateSearch={updateSearch}
+                resultCount={searchResults.length}
+              />
+            </div>
+          )}
         <div>
           {searchResults !== null && searchResults.length > 0
             ? (
@@ -198,6 +197,18 @@ const Search = ({
                 <div className={classes.searchCountHeader}>
                   {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
                 </div>
+                {!isWiderThanBreakpoint && (
+                  <div>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setOpenFilter(!openFilter)}
+                      color="primary"
+                      className={classes.filterButton}
+                    >
+                      FILTER
+                    </Button>
+                  </div>
+                )}
                 <div style={{ display: 'flex' }}>
                   <div className={classes.leftSideFilter}>
                     <div className={classes.filterDropdown}>
