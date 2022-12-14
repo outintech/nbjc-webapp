@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
@@ -33,11 +33,7 @@ const styles = (theme) => ({
   },
   resultsWrapper: {
     display: 'flex',
-    flexDirection: 'column',
-    [theme.breakpoints.up('mobile')]: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 8fr',
-    },
+    flexDirection: 'row',
   },
   filtersContainer: {
     display: 'flex',
@@ -52,10 +48,10 @@ const styles = (theme) => ({
   },
   list: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(1fr)',
     gridGap: 50,
   },
   searchResult: {
+    width: '80%',
     marginRight: 142,
     marginLeft: 40,
   },
@@ -79,9 +75,6 @@ const styles = (theme) => ({
     flexGrow: 2,
   },
   filterButton: {
-    [theme.breakpoints.up('mobile')]: {
-      display: 'none',
-    },
     width: '100px !important',
     marginBottom: '16px',
     height: 36,
@@ -92,9 +85,6 @@ const styles = (theme) => ({
     fontSize: '14px',
     lineHeight: '20px',
     color: '#1E1131',
-  },
-  headerFilterBar: {
-    marginTop: 24,
   },
   searchCountHeader: {
     fontWeight: 600,
@@ -127,6 +117,9 @@ const styles = (theme) => ({
     paddingBottom: 4,
     verticalAlign: 'middle',
   },
+  hiddenElement: {
+    display: 'none',
+  },
 });
 
 const Search = ({
@@ -134,7 +127,7 @@ const Search = ({
   coords,
   isGeolocationEnabled,
 }) => {
-  const matches = useMediaQuery('(min-width:376px)');
+  const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
 
   const [openFilter, setOpenFilter] = useState(false);
   const {
@@ -182,23 +175,15 @@ const Search = ({
       )}
       <div
         className={cx(classes.resultsWrapper, {
-          [classes.desktop]: matches,
+          [classes.desktop]: isWiderThanBreakpoint,
         })}
       >
         {searchResults !== null && searchResults.length > 0 && (
           <div className={classes.filtersContainer}>
-            <Button
-              variant="outlined"
-              onClick={() => setOpenFilter(!openFilter)}
-              color="primary"
-              className={classes.filterButton}
-            >
-              <span className={classes.filterButtonText}>FILTER</span>
-            </Button>
             <FilterPanel
               open={openFilter}
               onClose={() => setOpenFilter(false)}
-              type={matches ? 'desktop' : 'mobile'}
+              type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
               allIndicators={indicators}
               search={search}
               updateSearch={updateSearch}
@@ -274,13 +259,13 @@ const Search = ({
         && !loading
         && (
           <div className={classes.emptyStateWrapper}>
-            <Typography variant={matches ? 'h2' : 'h4'} align="center">
+            <Typography variant={isWiderThanBreakpoint ? 'h2' : 'h4'} align="center">
               No Results
             </Typography>
             <div className={classes.emptyStateIcon}>
               <SearchIcon color="primary" fontSize="large" className={classes.emptyStateIcon} />
             </div>
-            <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
+            <Typography variant={isWiderThanBreakpoint ? 'h4' : 'subtitle1'} align="center">
               We couldn’t find what you’re looking for.
               Please try again or add a space to Lavender Book.
             </Typography>

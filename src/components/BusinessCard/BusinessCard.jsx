@@ -80,27 +80,30 @@ const styles = (theme) => ({
     display: 'flex',
   },
   CTAcontainer: {
+    borderTop: '1px solid #E5E5E5',
+    paddingTop: '12px',
+  },
+  buttonContainer: {
     display: 'flex',
     alignItems: 'flex-end',
-    borderTop: '1px solid #E5E5E5',
     textAlign: 'center',
-    justifyContent: 'space-between',
-    paddingTop: '12px',
+    maxWidth: '800px',
   },
   tagContainer: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 3,
+    maxWidth: '800px',
   },
   bottomContent: {
     height: '100%',
-    width: 'auto',
     display: 'flex',
     flexDirection: 'column',
   },
   ratingContainer: {
     display: 'flex',
     textDecoration: 'none',
+    marginRight: 'auto',
   },
   purpleColor: {
     color: '#633AA3',
@@ -182,24 +185,26 @@ const BusinessCard = ({
               <ChipList chips={filters} />
             </Box>
             <Box className={classes.CTAcontainer}>
-              <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-                <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-                <span className={classes.grayColor}>Add Review</span>
-              </a>
-              <Box className={classes.ratingContainer}>
-                <span style={{ marginRight: 1 }}>Rating</span>
-                <StarIcon color="secondary" fontSize="small" />
-                <span className={classes.purpleColor}>{averageRating}</span>
-              </Box>
-              <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
-                <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                <span className={classes.grayColor}>
-                  {formatTenDigitPhoneNumber(phoneNumber)}
-                </span>
-              </a>
-              <Box className={classes.ratingContainer}>
-                <LanguageIcon color="secondary" fontSize="small" />
-                <span>Visit Website</span>
+              <Box className={classes.buttonContainer}>
+                <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
+                  <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
+                  <span className={classes.grayColor}>Add Review</span>
+                </a>
+                <Box className={classes.ratingContainer}>
+                  <span style={{ marginRight: 1 }}>Rating</span>
+                  <StarIcon color="secondary" fontSize="small" />
+                  <span className={classes.purpleColor}>{averageRating}</span>
+                </Box>
+                <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
+                  <PhoneIcon className={classes.purpleColor} fontSize="small" />
+                  <span className={classes.grayColor}>
+                    {formatTenDigitPhoneNumber(phoneNumber)}
+                  </span>
+                </a>
+                <Box className={classes.ratingContainer}>
+                  <LanguageIcon color="secondary" fontSize="small" />
+                  <span>Visit Website</span>
+                </Box>
               </Box>
             </Box>
           </Box>

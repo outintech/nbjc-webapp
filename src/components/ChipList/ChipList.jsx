@@ -12,7 +12,6 @@ const styles = {
   chip: {
     marginBottom: 8,
     marginRight: 4,
-    padding: '2px 4px 2px 4px',
     backgroundColor: '#F2F2F2',
     color: '#666666',
     borderRadius: '4px',
@@ -41,6 +40,7 @@ const ChipList = ({ chips, classes }) => {
           key={chip.name.replace(/\w/, '')}
           className={classes.chip}
           ref={ref}
+          size="small"
         />
       );
     })
