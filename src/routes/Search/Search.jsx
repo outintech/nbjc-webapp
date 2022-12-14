@@ -48,7 +48,6 @@ const styles = (theme) => ({
     height: '100%',
     zIndex: 999,
     paddingTop: '32px',
-    marginRight: '40px',
     backgroundColor: '#f2f2f2',
   },
   list: {
@@ -57,7 +56,8 @@ const styles = (theme) => ({
     gridGap: 50,
   },
   searchResult: {
-    margin: '0 16px',
+    marginRight: 142,
+    marginLeft: 40,
   },
   emptyStateWrapper: {
     marginTop: 60,
