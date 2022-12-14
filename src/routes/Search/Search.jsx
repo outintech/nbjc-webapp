@@ -27,9 +27,9 @@ const styles = (theme) => ({
   },
   content: {
     display: 'flex',
-    flexDirection: 'row',
     width: '100%',
     backgroundColor: '#FFFFFF',
+    flexDirection: 'column',
   },
   resultsWrapper: {
     display: 'flex',
@@ -74,9 +74,6 @@ const styles = (theme) => ({
     '& a:first-child': {
       marginRight: 20,
     },
-  },
-  filterButtonWrapper: {
-    display: 'flex',
   },
   searchresultsText: {
     flexGrow: 2,

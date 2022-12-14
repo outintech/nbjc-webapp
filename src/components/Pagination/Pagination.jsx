@@ -168,7 +168,6 @@ const Pagination = ({
     }
 
     if (page + 3 <= totalPages) {
-      // This should have the ... between those two
       return menu.concat([nextPage, '...', totalPages]);
     }
     if (page + 2 > totalPages) {
@@ -180,7 +179,6 @@ const Pagination = ({
   return (
     <div className={classes.root}>
       <div className={classes.prompt}>
-
         {(totalCount > 0)
           && (
             <Typography variant="h5" align="center" className={classes.showingText}>
