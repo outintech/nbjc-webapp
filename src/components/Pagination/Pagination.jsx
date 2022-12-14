@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
+import Input from '@material-ui/core/Input';
+
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import useQuery from '../../hooks/useQuery';
@@ -73,6 +75,13 @@ const styles = (theme) => ({
   },
   inactiveButton: {
     color: '#666666',
+  },
+  pageInputNavigation: {
+    border: '1px solid #666666',
+    width: '40px',
+    borderRadius: '4px',
+    height: '28px',
+    marginLeft: '8px',
   },
 });
 
@@ -194,7 +203,12 @@ const Pagination = ({
                 </div>
               </div>
               <div>
-                Go to X page here
+                <span>Go to page</span>
+                <Input
+                  inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
+                  defaultValue={totalPages}
+                  className={classes.pageInputNavigation}
+                />
               </div>
             </div>
           )}
