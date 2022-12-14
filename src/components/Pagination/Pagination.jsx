@@ -82,6 +82,18 @@ const styles = (theme) => ({
     borderRadius: '4px',
     height: '28px',
     marginLeft: '8px',
+    backgroundColor: '#FFFFFF',
+  },
+  pageInputContainer: {
+    backgroundColor: '#F2F2F2',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    borderRadius: '4px',
+    width: '153px',
+    height: '60px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#000000',
   },
 });
 
@@ -202,7 +214,7 @@ const Pagination = ({
                   {nextButton}
                 </div>
               </div>
-              <div>
+              <div className={classes.pageInputContainer}>
                 <span>Go to page</span>
                 <Input
                   inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
