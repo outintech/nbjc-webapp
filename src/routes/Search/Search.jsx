@@ -57,7 +57,7 @@ const styles = (theme) => ({
     gridGap: 50,
   },
   searchResult: {
-    marginRight: 142,
+    margin: '0 16px',
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -209,11 +209,11 @@ const Search = ({
         <div>
           {searchResults !== null && searchResults.length > 0
             ? (
-              <div className={classes.headerFilterBar}>
+              <div className={classes.searchResult} style={{ marginTop: '24px' }}>
                 <div className={classes.searchCountHeader}>
                   {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
                 </div>
-                <div className={classes.searchResult} style={{ display: 'flex' }}>
+                <div style={{ display: 'flex' }}>
                   <div className={classes.leftSideFilter}>
                     <div className={classes.filterDropdown}>
                       <span className={classes.boldedText}>Showing:</span>
