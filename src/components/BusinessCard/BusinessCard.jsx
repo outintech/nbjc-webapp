@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import PropTypes, { nominalTypeHack } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {
   Box,
@@ -21,14 +21,6 @@ import ChipList from '../ChipList';
 
 const styles = (theme) => ({
   root: {
-    '& .MuiSvgIcon-root': {
-      padding: '6px 6px;',
-    },
-    flexGrow: 1,
-    marginTop: '8px',
-    marginRight: '142px',
-  },
-  businessCardContainer: {
     borderRadius: '4px',
     border: '1px solid #E5E5E5',
     marginRight: 142,
@@ -38,7 +30,6 @@ const styles = (theme) => ({
   },
   searchContentContainer: {
     display: 'flex',
-    flexDirection: 'row',
     padding: 24,
   },
   imageContainer: {
@@ -46,6 +37,7 @@ const styles = (theme) => ({
     position: 'relative',
     maxWidth: 254,
     maxHeight: 184,
+    minHeight: 184,
     flexGrow: 1,
     overflow: 'contain',
   },
@@ -150,7 +142,7 @@ const BusinessCard = ({
   };
 
   return (
-    <Box className={classes.businessCardContainer}>
+    <Box className={classes.root}>
       <Box className={classes.searchContentContainer}>
         <Box className={classes.imageContainer}>
           <a href={`/spaces/${id}`}>
