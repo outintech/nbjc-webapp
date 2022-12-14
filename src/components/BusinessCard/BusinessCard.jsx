@@ -58,6 +58,8 @@ const styles = (theme) => ({
     lineHeight: '28px',
     height: '100%',
     color: '#1E1131',
+    margin: 0,
+    flex: 1,
   },
   icon: {
     height: '100%',
@@ -104,8 +106,11 @@ const styles = (theme) => ({
   purpleColor: {
     color: '#633AA3',
   },
-  blackColor: {
+  grayColor: {
     color: '#666666',
+  },
+  addressString: {
+    textDecoration: 'underline',
   },
 });
 
@@ -152,7 +157,7 @@ const BusinessCard = ({
         <Box className={classes.contentContainer}>
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
             <Box className={classes.titleContainer}>
-              <p className={classes.businessTitle} style={{ margin: 0, height: '100%', flex: 1 }}>
+              <p className={classes.businessTitle}>
                 <span style={{ marginRight: 5 }}>
                   {count}
                   .
@@ -167,7 +172,9 @@ const BusinessCard = ({
                 className={classes.addressContainer}
               >
                 <LocationOnIcon className={classes.icon} />
-                <Typography variant="body1" style={{ textDecoration: 'underline', color: '#666666' }}>{address}</Typography>
+                <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
+                  {address}
+                </Typography>
               </a>
             </Box>
           </Box>
@@ -178,7 +185,7 @@ const BusinessCard = ({
             <Box className={classes.CTAcontainer}>
               <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
                 <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-                <span className={classes.blackColor}>Add Review</span>
+                <span className={classes.grayColor}>Add Review</span>
               </a>
               <Box className={classes.ratingContainer}>
                 <span style={{ marginRight: 1 }}>Rating</span>
@@ -187,7 +194,7 @@ const BusinessCard = ({
               </Box>
               <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
                 <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                <span className={classes.blackColor}>
+                <span className={classes.grayColor}>
                   {formatTenDigitPhoneNumber(phoneNumber)}
                 </span>
               </a>
