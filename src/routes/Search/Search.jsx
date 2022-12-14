@@ -26,18 +26,12 @@ const styles = (theme) => ({
     // This is for setting the margins of the results returned from search.
   },
   content: {
-    display: 'flex',
     backgroundColor: '#FFFFFF',
+    width: '100%',
   },
   resultsWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
   },
   filtersContainer: {
-    display: 'flex',
-    alignSelf: 'flex-start',
-    flexDirection: 'column',
-    flexShrink: 0,
     width: '316px',
     height: '100%',
     zIndex: 999,
@@ -45,9 +39,9 @@ const styles = (theme) => ({
     backgroundColor: '#f2f2f2',
   },
   searchResult: {
-    width: '100%',
     marginLeft: 40,
     marginBottom: 20,
+    marginRight: 40,
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -114,6 +108,9 @@ const styles = (theme) => ({
   },
   hiddenElement: {
     display: 'none',
+  },
+  searchBodyContainer: {
+    width: '100%',
   },
 });
 
@@ -185,7 +182,7 @@ const Search = ({
               />
             </div>
           )}
-        <div>
+        <div className={classes.searchBodyContainer}>
           {searchResults !== null && searchResults.length > 0
             ? (
               <div className={classes.searchResult} style={{ marginTop: '24px' }}>
@@ -234,7 +231,7 @@ const Search = ({
               </div>
             )
             : null}
-          <div className={classes.list}>
+          <div>
             {searchResults !== null && searchResults.length > 0
               && searchResults.map((result, index) => (
                 <div className={classes.searchResult} key={result.id}>
