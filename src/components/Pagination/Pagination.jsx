@@ -8,13 +8,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import useQuery from '../../hooks/useQuery';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
     marginRight: 142,
-    marginBottom: 40,
+    marginBottom: 100,
   },
   prompt: {
     display: 'flex',
@@ -23,17 +23,6 @@ const styles = (theme) => ({
     marginTop: '40px',
     color: '#666666',
     fontSize: '16px',
-  },
-  button: {
-    [theme.breakpoints.up('xs')]: {
-      width: '100%',
-      marginTop: 40,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      width: 250,
-      marginRight: 20,
-      marginBottom: 50,
-    },
   },
   showingText: {
     flexGrow: 1,
@@ -178,9 +167,9 @@ const Pagination = ({
       return menu;
     }
 
-    if (page + 2 <= totalPages) {
+    if (page + 3 <= totalPages) {
       // This should have the ... between those two
-      return menu.concat([nextPage, totalPages]);
+      return menu.concat([nextPage, '...', totalPages]);
     }
     if (page + 2 > totalPages) {
       return menu.concat([nextPage]);
