@@ -27,9 +27,7 @@ const styles = (theme) => ({
   },
   content: {
     display: 'flex',
-    width: '100%',
     backgroundColor: '#FFFFFF',
-    flexDirection: 'column',
   },
   resultsWrapper: {
     display: 'flex',
@@ -46,17 +44,14 @@ const styles = (theme) => ({
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
   },
-  list: {
-    display: 'grid',
-    gridGap: 50,
-  },
   searchResult: {
-    width: '80%',
-    marginRight: 142,
+    width: '100%',
     marginLeft: 40,
+    marginBottom: 20,
   },
   emptyStateWrapper: {
     marginTop: 60,
+    width: '100%',
   },
   emptyStateIcon: {
     width: 55,
