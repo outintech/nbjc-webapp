@@ -41,7 +41,12 @@ const styles = (theme) => ({
   searchResult: {
     marginLeft: 40,
     marginBottom: 20,
-    marginRight: 40,
+    marginRight: 142,
+  },
+  searchResultBreakpoint: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 20,
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -185,7 +190,12 @@ const Search = ({
         <div className={classes.searchBodyContainer}>
           {searchResults !== null && searchResults.length > 0
             ? (
-              <div className={classes.searchResult} style={{ marginTop: '24px' }}>
+              <div
+                className={isWiderThanBreakpoint
+                  ? classes.searchResult
+                  : classes.searchResultBreakpoint}
+                style={{ marginTop: '24px' }}
+              >
                 <div className={classes.searchCountHeader}>
                   {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
                 </div>
@@ -234,7 +244,12 @@ const Search = ({
           <div>
             {searchResults !== null && searchResults.length > 0
               && searchResults.map((result, index) => (
-                <div className={classes.searchResult} key={result.id}>
+                <div
+                  className={isWiderThanBreakpoint
+                    ? classes.searchResult
+                    : classes.searchResultBreakpoint}
+                  key={result.id}
+                >
                   <BusinessCard
                     business={result}
                     key={result.id}
@@ -245,7 +260,10 @@ const Search = ({
               ))}
           </div>
           {pagination && pagination !== null && (
-            <div className={classes.searchResult}>
+            <div className={isWiderThanBreakpoint
+              ? classes.searchResult
+              : classes.searchResultBreakpoint}
+            >
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
