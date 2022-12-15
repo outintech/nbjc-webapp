@@ -74,6 +74,8 @@ const styles = (theme) => ({
   titleAddressContainer: {
     display: 'flex',
     flexDirection: 'column',
+    marginBottom: 8,
+    width: '100%',
   },
   titleContainer: {
     height: '100%',
@@ -130,12 +132,6 @@ const styles = (theme) => ({
     fontWeight: 700,
     display: 'flex',
   },
-  mobileTagContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 3,
-    maxWidth: '800px',
-  },
   mobileBusinessTitle: {
     marginBottom: 0,
     letterSpacing: '-0.4px',
@@ -143,6 +139,19 @@ const styles = (theme) => ({
     color: '#1E1131',
     margin: 0,
     flex: 1,
+  },
+  hideElement: {
+    display: 'none',
+  },
+  mobileBottomContent: {
+    marginBottom: 5,
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  mobileContainer: {
+    display: 'flex',
+    marginLeft: '5px',
+    marginTop: '5px',
   },
 });
 
@@ -164,6 +173,7 @@ const BusinessCard = ({
   count,
 }) => {
   const [useMobile, setUseMobile] = useState(false);
+  const [hideCTAs, setHideCTAs] = useState(false);
   const mobileCTABreakpoint = useMediaQuery('(min-width:500px)');
   const desktopCTABreakpoint = useMediaQuery('(min-width:838px)');
 
@@ -174,6 +184,15 @@ const BusinessCard = ({
       setUseMobile(true);
     }
   }, [desktopCTABreakpoint]);
+
+  useEffect(() => {
+    if ((useMobile && !mobileCTABreakpoint)
+      || (!useMobile && !desktopCTABreakpoint)) {
+      setHideCTAs(true);
+    } else {
+      setHideCTAs(false);
+    }
+  }, [mobileCTABreakpoint, desktopCTABreakpoint]);
 
   const convertAddressToGoogleMapsLink = (businessAddress) => {
     const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
@@ -191,26 +210,9 @@ const BusinessCard = ({
   };
 
   const ChipTags = () => (
-    <Box className={useMobile ? classes.mobileTagContainer : classes.tagContainer}>
+    <Box className={classes.tagContainer}>
       <ChipList chips={filters} />
     </Box>
-  );
-
-  const hideCTAs = ((useMobile && !mobileCTABreakpoint)
-    || (!useMobile && !desktopCTABreakpoint));
-
-  const PhoneNumber = () => (
-    hideCTAs ? null : (
-      <span className={classes.grayColor}>
-        {formatTenDigitPhoneNumber(phoneNumber)}
-      </span>
-    )
-  );
-
-  const VisitWebsite = () => (
-    hideCTAs ? null : (
-      <span>Visit Website</span>
-    )
   );
 
   const CTAButtons = () => (
@@ -227,11 +229,15 @@ const BusinessCard = ({
         </Box>
         <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
           <PhoneIcon className={classes.purpleColor} fontSize="small" />
-          <PhoneNumber />
+          {hideCTAs ? null : (
+            <span className={classes.grayColor}>
+              {formatTenDigitPhoneNumber(phoneNumber)}
+            </span>
+          )}
         </a>
         <Box className={classes.ratingContainer}>
           <LanguageIcon color="secondary" fontSize="small" />
-          <VisitWebsite />
+          {hideCTAs ? null : <span>Visit Website</span>}
         </Box>
       </Box>
     </Box>
@@ -272,46 +278,24 @@ const BusinessCard = ({
     </Box>
   );
 
-  const DesktopCard = () => (
+  return (
     <Box className={classes.root}>
-      <Box className={classes.searchContentContainer}>
-        <Image />
+      <Box className={useMobile ? [] : classes.searchContentContainer}>
+        {useMobile ? null : <Image />}
         <Box className={classes.contentContainer}>
-          <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
-            <TitleAndDropdownMenu />
-            <Address />
+          <Box className={useMobile ? classes.mobileContainer : []}>
+            {useMobile ? <Image /> : null}
+            <Box className={classes.titleAddressContainer}>
+              <TitleAndDropdownMenu />
+              <Address />
+            </Box>
           </Box>
-          <Box className={classes.bottomContent}>
+          <Box className={useMobile ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]} style={{ marginTop: '5px', marginLeft: '5px', marginBottom: '5px' }}>
             <ChipTags />
             <CTAButtons />
           </Box>
         </Box>
       </Box>
-    </Box>
-  );
-
-  const MobileCard = () => (
-    <Box className={classes.root}>
-      <Box className={classes.contentContainer}>
-        <Box style={{ display: 'flex', marginLeft: '5px', marginTop: '5px' }}>
-          <Image />
-          <Box className={classes.titleAddressContainer} style={{ marginBottom: 8, width: '100%' }}>
-            <TitleAndDropdownMenu />
-            <Address />
-          </Box>
-        </Box>
-        <Box className={classes.bottomContent} style={{ marginTop: '5px', marginLeft: '5px', marginBottom: '5px' }}>
-          <ChipTags />
-          <CTAButtons />
-        </Box>
-      </Box>
-    </Box>
-
-  );
-
-  return (
-    <Box>
-      {useMobile ? MobileCard : DesktopCard}
     </Box>
   );
 };
