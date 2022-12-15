@@ -33,7 +33,6 @@ const styles = (theme) => ({
     display: 'flex',
   },
   filtersContainer: {
-    width: '316px',
     zIndex: 999,
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
