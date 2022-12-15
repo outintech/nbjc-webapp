@@ -6,7 +6,7 @@ import { Chip, Typography } from '@material-ui/core';
 
 const styles = {
   chipWrapper: {
-    maxHeight: 80,
+    maxHeight: '100%',
     overflow: 'hidden',
   },
   chip: {

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -14,10 +14,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LanguageIcon from '@material-ui/icons/Language';
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
 import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
+import useQuery from '../../hooks/useQuery';
 
 const styles = (theme) => ({
   root: {
@@ -114,6 +116,34 @@ const styles = (theme) => ({
   addressString: {
     textDecoration: 'underline',
   },
+  mobileImageContainer: {
+    marginRight: 24,
+    position: 'relative',
+    maxWidth: 127,
+    maxHeight: 92,
+    minHeight: 92,
+    flexGrow: 1,
+    overflow: 'hidden',
+  },
+  mobileTitleContainer: {
+    fontSize: '16px',
+    fontWeight: 700,
+    display: 'flex',
+  },
+  mobileTagContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 3,
+    maxWidth: '800px',
+  },
+  mobileBusinessTitle: {
+    marginBottom: 0,
+    letterSpacing: '-0.4px',
+    height: '100%',
+    color: '#1E1131',
+    margin: 0,
+    flex: 1,
+  },
 });
 
 const BusinessCard = ({
@@ -133,6 +163,18 @@ const BusinessCard = ({
   overrideClasses,
   count,
 }) => {
+  const [useMobile, setUseMobile] = useState(false);
+  const mobileCTABreakpoint = useMediaQuery('(min-width:500px)');
+  const desktopCTABreakpoint = useMediaQuery('(min-width:838px)');
+
+  useEffect(() => {
+    if (desktopCTABreakpoint) {
+      setUseMobile(false);
+    } else {
+      setUseMobile(true);
+    }
+  }, [desktopCTABreakpoint]);
+
   const convertAddressToGoogleMapsLink = (businessAddress) => {
     const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
     return googleAPIQuery + encodeURIComponent(businessAddress.address);
@@ -149,9 +191,26 @@ const BusinessCard = ({
   };
 
   const ChipTags = () => (
-    <Box className={classes.tagContainer}>
+    <Box className={useMobile ? classes.mobileTagContainer : classes.tagContainer}>
       <ChipList chips={filters} />
     </Box>
+  );
+
+  const hideCTAs = ((useMobile && !mobileCTABreakpoint)
+    || (!useMobile && !desktopCTABreakpoint));
+
+  const PhoneNumber = () => (
+    hideCTAs ? null : (
+      <span className={classes.grayColor}>
+        {formatTenDigitPhoneNumber(phoneNumber)}
+      </span>
+    )
+  );
+
+  const VisitWebsite = () => (
+    hideCTAs ? null : (
+      <span>Visit Website</span>
+    )
   );
 
   const CTAButtons = () => (
@@ -168,21 +227,19 @@ const BusinessCard = ({
         </Box>
         <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
           <PhoneIcon className={classes.purpleColor} fontSize="small" />
-          <span className={classes.grayColor}>
-            {formatTenDigitPhoneNumber(phoneNumber)}
-          </span>
+          <PhoneNumber />
         </a>
         <Box className={classes.ratingContainer}>
           <LanguageIcon color="secondary" fontSize="small" />
-          <span>Visit Website</span>
+          <VisitWebsite />
         </Box>
       </Box>
     </Box>
   );
 
   const TitleAndDropdownMenu = () => (
-    <Box className={classes.titleContainer}>
-      <p className={classes.businessTitle}>
+    <Box className={useMobile ? classes.mobileTitleContainer : classes.titleContainer}>
+      <p className={useMobile ? classes.mobileBusinessTitle : classes.businessTitle}>
         <span style={{ marginRight: 5 }}>
           {count}
           .
@@ -208,14 +265,14 @@ const BusinessCard = ({
   );
 
   const Image = () => (
-    <Box className={classes.imageContainer}>
+    <Box className={useMobile ? classes.mobileImageContainer : classes.imageContainer}>
       <a href={`/spaces/${id}`}>
         <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
       </a>
     </Box>
   );
 
-  return (
+  const DesktopCard = () => (
     <Box className={classes.root}>
       <Box className={classes.searchContentContainer}>
         <Image />
@@ -230,6 +287,31 @@ const BusinessCard = ({
           </Box>
         </Box>
       </Box>
+    </Box>
+  );
+
+  const MobileCard = () => (
+    <Box className={classes.root}>
+      <Box className={classes.contentContainer}>
+        <Box style={{ display: 'flex', marginLeft: '5px', marginTop: '5px' }}>
+          <Image />
+          <Box className={classes.titleAddressContainer} style={{ marginBottom: 8, width: '100%' }}>
+            <TitleAndDropdownMenu />
+            <Address />
+          </Box>
+        </Box>
+        <Box className={classes.bottomContent} style={{ marginTop: '5px', marginLeft: '5px', marginBottom: '5px' }}>
+          <ChipTags />
+          <CTAButtons />
+        </Box>
+      </Box>
+    </Box>
+
+  );
+
+  return (
+    <Box>
+      {useMobile ? MobileCard : DesktopCard}
     </Box>
   );
 };
