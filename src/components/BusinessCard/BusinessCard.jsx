@@ -173,8 +173,6 @@ const BusinessCard = ({
   count,
 }) => {
   const [useMobile, setUseMobile] = useState(false);
-  const [hideCTAs, setHideCTAs] = useState(false);
-  const mobileCTABreakpoint = useMediaQuery('(min-width:500px)');
   const desktopCTABreakpoint = useMediaQuery('(min-width:838px)');
 
   useEffect(() => {
@@ -184,15 +182,6 @@ const BusinessCard = ({
       setUseMobile(true);
     }
   }, [desktopCTABreakpoint]);
-
-  useEffect(() => {
-    if ((useMobile && !mobileCTABreakpoint)
-      || (!useMobile && !desktopCTABreakpoint)) {
-      setHideCTAs(true);
-    } else {
-      setHideCTAs(false);
-    }
-  }, [mobileCTABreakpoint, desktopCTABreakpoint]);
 
   const convertAddressToGoogleMapsLink = (businessAddress) => {
     const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
@@ -206,69 +195,8 @@ const BusinessCard = ({
       const intlCode = (match[1] ? '+1 ' : '');
       return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
     }
-    return null;
+    return 'No number found';
   };
-
-  const ChipTags = () => (
-    <Box className={classes.tagContainer}>
-      <ChipList chips={filters} />
-    </Box>
-  );
-
-  const CTAButtons = () => (
-    <Box className={classes.CTAcontainer}>
-      <Box className={classes.buttonContainer}>
-        <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-          <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-          <span className={classes.grayColor}>Add Review</span>
-        </a>
-        <Box className={classes.ratingContainer}>
-          <span style={{ marginRight: 1 }}>Rating</span>
-          <StarIcon color="secondary" fontSize="small" />
-          <span className={classes.purpleColor}>{averageRating}</span>
-        </Box>
-        <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
-          <PhoneIcon className={classes.purpleColor} fontSize="small" />
-          {hideCTAs ? null : (
-            <span className={classes.grayColor}>
-              {formatTenDigitPhoneNumber(phoneNumber)}
-            </span>
-          )}
-        </a>
-        <Box className={classes.ratingContainer}>
-          <LanguageIcon color="secondary" fontSize="small" />
-          {hideCTAs ? null : <span>Visit Website</span>}
-        </Box>
-      </Box>
-    </Box>
-  );
-
-  const TitleAndDropdownMenu = () => (
-    <Box className={useMobile ? classes.mobileTitleContainer : classes.titleContainer}>
-      <p className={useMobile ? classes.mobileBusinessTitle : classes.businessTitle}>
-        <span style={{ marginRight: 5 }}>
-          {count}
-          .
-        </span>
-        {name}
-      </p>
-      <MoreVertIcon />
-    </Box>
-  );
-
-  const Address = () => (
-    <Box className={classes.addressContainer}>
-      <a
-        href={convertAddressToGoogleMapsLink({ address })}
-        className={classes.addressContainer}
-      >
-        <LocationOnIcon className={classes.icon} />
-        <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
-          {address}
-        </Typography>
-      </a>
-    </Box>
-  );
 
   const Image = () => (
     <Box className={useMobile ? classes.mobileImageContainer : classes.imageContainer}>
@@ -286,13 +214,58 @@ const BusinessCard = ({
           <Box className={useMobile ? classes.mobileContainer : []}>
             {useMobile ? <Image /> : null}
             <Box className={classes.titleAddressContainer}>
-              <TitleAndDropdownMenu />
-              <Address />
+              <Box className={useMobile ? classes.mobileTitleContainer : classes.titleContainer}>
+                <p className={useMobile ? classes.mobileBusinessTitle : classes.businessTitle}>
+                  <span style={{ marginRight: 5 }}>
+                    {count}
+                    .
+                  </span>
+                  {name}
+                </p>
+                <MoreVertIcon />
+              </Box>
+              <Box className={classes.addressContainer}>
+                <a
+                  href={convertAddressToGoogleMapsLink({ address })}
+                  className={classes.addressContainer}
+                >
+                  <LocationOnIcon className={classes.icon} />
+                  <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
+                    {address}
+                  </Typography>
+                </a>
+              </Box>
             </Box>
           </Box>
           <Box className={useMobile ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]} style={{ marginTop: '5px', marginLeft: '5px', marginBottom: '5px' }}>
-            <ChipTags />
-            <CTAButtons />
+            <Box className={classes.tagContainer}>
+              <ChipList chips={filters} />
+            </Box>
+            <Box className={classes.CTAcontainer}>
+              <Box className={classes.buttonContainer}>
+                <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
+                  <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
+                  <span className={classes.grayColor}>Add Review</span>
+                </a>
+                <Box className={classes.ratingContainer}>
+                  <span style={{ marginRight: 1 }}>Rating</span>
+                  <StarIcon color="secondary" fontSize="small" />
+                  <span className={classes.purpleColor}>{averageRating}</span>
+                </Box>
+                <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
+                  <PhoneIcon className={classes.purpleColor} fontSize="small" />
+                  {useMobile ? null : (
+                    <span className={classes.grayColor}>
+                      {formatTenDigitPhoneNumber(phoneNumber)}
+                    </span>
+                  )}
+                </a>
+                <Box className={classes.ratingContainer}>
+                  <LanguageIcon color="secondary" fontSize="small" />
+                  {useMobile ? null : <span>Visit Website</span>}
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>
