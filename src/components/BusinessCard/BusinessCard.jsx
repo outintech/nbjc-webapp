@@ -38,7 +38,7 @@ const styles = (theme) => ({
     maxHeight: 184,
     minHeight: 184,
     flexGrow: 1,
-    overflow: 'contain',
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
@@ -148,65 +148,85 @@ const BusinessCard = ({
     return null;
   };
 
+  const ChipTags = () => (
+    <Box className={classes.tagContainer}>
+      <ChipList chips={filters} />
+    </Box>
+  );
+
+  const CTAButtons = () => (
+    <Box className={classes.CTAcontainer}>
+      <Box className={classes.buttonContainer}>
+        <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
+          <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
+          <span className={classes.grayColor}>Add Review</span>
+        </a>
+        <Box className={classes.ratingContainer}>
+          <span style={{ marginRight: 1 }}>Rating</span>
+          <StarIcon color="secondary" fontSize="small" />
+          <span className={classes.purpleColor}>{averageRating}</span>
+        </Box>
+        <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
+          <PhoneIcon className={classes.purpleColor} fontSize="small" />
+          <span className={classes.grayColor}>
+            {formatTenDigitPhoneNumber(phoneNumber)}
+          </span>
+        </a>
+        <Box className={classes.ratingContainer}>
+          <LanguageIcon color="secondary" fontSize="small" />
+          <span>Visit Website</span>
+        </Box>
+      </Box>
+    </Box>
+  );
+
+  const TitleAndDropdownMenu = () => (
+    <Box className={classes.titleContainer}>
+      <p className={classes.businessTitle}>
+        <span style={{ marginRight: 5 }}>
+          {count}
+          .
+        </span>
+        {name}
+      </p>
+      <MoreVertIcon />
+    </Box>
+  );
+
+  const Address = () => (
+    <Box className={classes.addressContainer}>
+      <a
+        href={convertAddressToGoogleMapsLink({ address })}
+        className={classes.addressContainer}
+      >
+        <LocationOnIcon className={classes.icon} />
+        <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
+          {address}
+        </Typography>
+      </a>
+    </Box>
+  );
+
+  const Image = () => (
+    <Box className={classes.imageContainer}>
+      <a href={`/spaces/${id}`}>
+        <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
+      </a>
+    </Box>
+  );
+
   return (
     <Box className={classes.root}>
       <Box className={classes.searchContentContainer}>
-        <Box className={classes.imageContainer}>
-          <a href={`/spaces/${id}`}>
-            <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
-          </a>
-        </Box>
+        <Image />
         <Box className={classes.contentContainer}>
           <Box className={classes.titleAddressContainer} style={{ marginBottom: 8 }}>
-            <Box className={classes.titleContainer}>
-              <p className={classes.businessTitle}>
-                <span style={{ marginRight: 5 }}>
-                  {count}
-                  .
-                </span>
-                {name}
-              </p>
-              <MoreVertIcon />
-            </Box>
-            <Box className={classes.addressContainer}>
-              <a
-                href={convertAddressToGoogleMapsLink({ address })}
-                className={classes.addressContainer}
-              >
-                <LocationOnIcon className={classes.icon} />
-                <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
-                  {address}
-                </Typography>
-              </a>
-            </Box>
+            <TitleAndDropdownMenu />
+            <Address />
           </Box>
           <Box className={classes.bottomContent}>
-            <Box className={classes.tagContainer}>
-              <ChipList chips={filters} />
-            </Box>
-            <Box className={classes.CTAcontainer}>
-              <Box className={classes.buttonContainer}>
-                <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-                  <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
-                  <span className={classes.grayColor}>Add Review</span>
-                </a>
-                <Box className={classes.ratingContainer}>
-                  <span style={{ marginRight: 1 }}>Rating</span>
-                  <StarIcon color="secondary" fontSize="small" />
-                  <span className={classes.purpleColor}>{averageRating}</span>
-                </Box>
-                <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
-                  <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                  <span className={classes.grayColor}>
-                    {formatTenDigitPhoneNumber(phoneNumber)}
-                  </span>
-                </a>
-                <Box className={classes.ratingContainer}>
-                  <LanguageIcon color="secondary" fontSize="small" />
-                  <span>Visit Website</span>
-                </Box>
-              </Box>
-            </Box>
+            <ChipTags />
+            <CTAButtons />
           </Box>
         </Box>
       </Box>
