@@ -144,9 +144,9 @@ const styles = (theme) => ({
     display: 'none',
   },
   mobileBottomContent: {
-    marginBottom: 5,
-    marginTop: 5,
-    marginLeft: 5,
+    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 10,
   },
   mobileContainer: {
     display: 'flex',
@@ -172,16 +172,7 @@ const BusinessCard = ({
   overrideClasses,
   count,
 }) => {
-  const [useMobile, setUseMobile] = useState(false);
-  const desktopCTABreakpoint = useMediaQuery('(min-width:838px)');
-
-  useEffect(() => {
-    if (desktopCTABreakpoint) {
-      setUseMobile(false);
-    } else {
-      setUseMobile(true);
-    }
-  }, [desktopCTABreakpoint]);
+  const useDesktop = useMediaQuery('(min-width:838px)');
 
   const convertAddressToGoogleMapsLink = (businessAddress) => {
     const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
@@ -199,7 +190,7 @@ const BusinessCard = ({
   };
 
   const Image = () => (
-    <Box className={useMobile ? classes.mobileImageContainer : classes.imageContainer}>
+    <Box className={useDesktop ? classes.imageContainer : classes.mobileImageContainer}>
       <a href={`/spaces/${id}`}>
         <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
       </a>
@@ -208,14 +199,14 @@ const BusinessCard = ({
 
   return (
     <Box className={classes.root}>
-      <Box className={useMobile ? [] : classes.searchContentContainer}>
-        {useMobile ? null : <Image />}
+      <Box className={useDesktop ? classes.searchContentContainer : []}>
+        {useDesktop ? <Image /> : null}
         <Box className={classes.contentContainer}>
-          <Box className={useMobile ? classes.mobileContainer : []}>
-            {useMobile ? <Image /> : null}
+          <Box className={useDesktop ? [] : classes.mobileContainer}>
+            {useDesktop ? null : <Image />}
             <Box className={classes.titleAddressContainer}>
-              <Box className={useMobile ? classes.mobileTitleContainer : classes.titleContainer}>
-                <p className={useMobile ? classes.mobileBusinessTitle : classes.businessTitle}>
+              <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
+                <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
                   <span style={{ marginRight: 5 }}>
                     {count}
                     .
@@ -237,7 +228,9 @@ const BusinessCard = ({
               </Box>
             </Box>
           </Box>
-          <Box className={useMobile ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]} style={{ marginTop: '5px', marginLeft: '5px', marginBottom: '5px' }}>
+          <Box className={useDesktop
+            ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]}
+          >
             <Box className={classes.tagContainer}>
               <ChipList chips={filters} />
             </Box>
@@ -254,15 +247,15 @@ const BusinessCard = ({
                 </Box>
                 <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
                   <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                  {useMobile ? null : (
+                  {useDesktop ? (
                     <span className={classes.grayColor}>
                       {formatTenDigitPhoneNumber(phoneNumber)}
                     </span>
-                  )}
+                  ) : null}
                 </a>
                 <Box className={classes.ratingContainer}>
                   <LanguageIcon color="secondary" fontSize="small" />
-                  {useMobile ? null : <span>Visit Website</span>}
+                  {useDesktop ? <span>Visit Website</span> : null}
                 </Box>
               </Box>
             </Box>
