@@ -96,7 +96,7 @@ const styles = (theme) => ({
     display: 'flex',
   },
   mobileTitleContainer: {
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 700,
     display: 'flex',
   },
@@ -140,11 +140,9 @@ const styles = (theme) => ({
   addressString: {
     textDecoration: 'underline',
   },
-
   hideElement: {
     display: 'none',
   },
-
   mobileContainer: {
     display: 'flex',
     marginLeft: '5px',
@@ -193,7 +191,8 @@ const BusinessCard = ({
   const useDesktop = useMediaQuery('(min-width:838px)');
 
   const Image = () => {
-    const CardImage = imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
+    const FallBackImage = 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
+    const CardImage = imageUrl || FallBackImage;
     const ImageDimension = useDesktop ? classes.largeImageDimensions : classes.smallImageDimensions;
     return (
       <Box className={[classes.imageContainer, ImageDimension]}>
@@ -204,6 +203,90 @@ const BusinessCard = ({
     );
   };
 
+  const AddressIcon = () => (
+    <a
+      href={convertAddressToGoogleMapsLink({ address })}
+      className={classes.addressContainer}
+    >
+      <LocationOnIcon className={classes.icon} />
+    </a>
+  );
+
+  const AddressString = () => (
+    <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
+      {address}
+    </Typography>
+  );
+
+  const AddressRow = () => (
+    <Box className={classes.addressContainer}>
+      <AddressIcon />
+      <AddressString />
+    </Box>
+  );
+
+  const BusinessName = () => (
+    <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
+      <span className={classes.indexNumberMargins}>
+        {count}
+        .
+      </span>
+      {name}
+    </p>
+  );
+
+  const ShareButton = () => (
+    <>
+      <MoreVertIcon />
+    </>
+  );
+
+  const BusinessNameShareButtonRow = () => (
+    <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
+      <BusinessName />
+      <ShareButton />
+    </Box>
+  );
+
+  const ChipsRow = () => (
+    <Box className={classes.tagContainer}>
+      <ChipList chips={filters} />
+    </Box>
+  );
+
+  const RatingCTA = () => (
+    <Box className={classes.ratingContainer}>
+      <span className={classes.ctaSpacing}>Rating</span>
+      <StarIcon color="secondary" fontSize="small" />
+      <span className={classes.purpleColor}>{averageRating}</span>
+    </Box>
+  );
+
+  const VisitWebsiteCTA = () => (
+    <Box className={classes.ratingContainer}>
+      <LanguageIcon color="secondary" fontSize="small" />
+      {useDesktop ? <span>Visit Website</span> : null}
+    </Box>
+  );
+
+  const PhoneNumberCTA = () => (
+    <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
+      <PhoneIcon className={classes.purpleColor} fontSize="small" />
+      {useDesktop ? (
+        <span className={classes.grayColor}>
+          {formatTenDigitPhoneNumber(phoneNumber)}
+        </span>
+      ) : null}
+    </a>
+  );
+
+  const AddReviewCTA = () => (
+    <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
+      <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
+      <span className={classes.grayColor}>Add Review</span>
+    </a>
+  );
+
   return (
     <Box className={classes.root}>
       <Box className={useDesktop ? classes.cardParentContainer : []}>
@@ -212,58 +295,20 @@ const BusinessCard = ({
           <Box className={useDesktop ? [] : classes.mobileContainer}>
             {useDesktop ? null : <Image />}
             <Box className={classes.titleAddressContainer}>
-              <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
-                <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
-                  <span className={classes.indexNumberMargins}>
-                    {count}
-                    .
-                  </span>
-                  {name}
-                </p>
-                <MoreVertIcon />
-              </Box>
-              <Box className={classes.addressContainer}>
-                <a
-                  href={convertAddressToGoogleMapsLink({ address })}
-                  className={classes.addressContainer}
-                >
-                  <LocationOnIcon className={classes.icon} />
-                  <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
-                    {address}
-                  </Typography>
-                </a>
-              </Box>
+              <BusinessNameShareButtonRow />
+              <AddressRow />
             </Box>
           </Box>
           <Box className={useDesktop
             ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]}
           >
-            <Box className={classes.tagContainer}>
-              <ChipList chips={filters} />
-            </Box>
+            <ChipsRow />
             <Box className={classes.CTAcontainer}>
               <Box className={classes.buttonContainer}>
-                <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-                  <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
-                  <span className={classes.grayColor}>Add Review</span>
-                </a>
-                <Box className={classes.ratingContainer}>
-                  <span className={classes.ctaSpacing}>Rating</span>
-                  <StarIcon color="secondary" fontSize="small" />
-                  <span className={classes.purpleColor}>{averageRating}</span>
-                </Box>
-                <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
-                  <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                  {useDesktop ? (
-                    <span className={classes.grayColor}>
-                      {formatTenDigitPhoneNumber(phoneNumber)}
-                    </span>
-                  ) : null}
-                </a>
-                <Box className={classes.ratingContainer}>
-                  <LanguageIcon color="secondary" fontSize="small" />
-                  {useDesktop ? <span>Visit Website</span> : null}
-                </Box>
+                <AddReviewCTA />
+                <RatingCTA />
+                <PhoneNumberCTA />
+                <VisitWebsiteCTA />
               </Box>
             </Box>
           </Box>
