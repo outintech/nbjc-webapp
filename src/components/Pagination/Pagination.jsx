@@ -150,7 +150,7 @@ const Pagination = ({
   const calculatePageRange = () => {
     const startingRange = (page - 1) * perPage + 1;
     const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
-    return [startingRange, endingRange];
+    return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
   };
 
   const calculatePaginationMenu = () => {
@@ -181,7 +181,7 @@ const Pagination = ({
         {(totalCount > 0)
           && (
             <Typography variant="h5" align="center" className={classes.showingText}>
-              {`Showing ${calculatePageRange()[0]} - ${calculatePageRange()[1]} of ${totalCount} results`}
+              {calculatePageRange()}
             </Typography>
           )}
         {(backExists || nextExists)
