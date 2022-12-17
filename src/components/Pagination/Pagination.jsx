@@ -109,6 +109,9 @@ const styles = () => ({
     backgroundColor: '#633AA3',
     borderRadius: '2px',
   },
+  hideDisplay: {
+    display: 'none',
+  },
 });
 
 const NextButton = ({ pageLink, classes }) => {
@@ -135,8 +138,10 @@ const BackButton = ({ pageLink, classes }) => {
 
 const GoToPage = ({ classes, totalPages }) => {
   const label = 'Go to page';
+  const ShowContent = false ? undefined : classes.hideDisplay;
+  const GoToPageClasses = `${classes.goToPageContainer} ${ShowContent}`;
   return (
-    <div className={classes.goToPageContainer}>
+    <div className={GoToPageClasses}>
       <span>{label}</span>
       <Input
         inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
@@ -156,7 +161,7 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   )
 );
 
-const GoToPageButton = ({ goToPageLabel }) => {
+const OpenGoToPageButton = ({ goToPageLabel }) => {
   const onClick = null;
   return (
     <div>{goToPageLabel}</div>
@@ -170,7 +175,7 @@ const PaginationButton = ({
   currPage,
 }) => {
   if (pageNumber === goToPageLabel) {
-    return <GoToPageButton goToPageLabel={goToPageLabel} />;
+    return <OpenGoToPageButton goToPageLabel={goToPageLabel} />;
   }
   const calculateLink = '/';
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
