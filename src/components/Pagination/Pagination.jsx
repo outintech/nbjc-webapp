@@ -94,18 +94,24 @@ const styles = () => ({
   },
   paginationLabel: {
     textDecoration: 'none',
+    margin: '0 2px',
   },
   alignLabelAbsoluteCenter: {
     flex: 1,
+  },
+  expandNavigationButtons: {
+    width: '32px',
+    textAlign: 'center',
   },
 });
 
 const NextButton = ({ pageLink, classes }) => {
   const color = pageLink === undefined ? classes.inactiveColor : classes.activeColor;
   const removeUnderline = classes.paginationLabel;
+  const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <a href={pageLink} aria-label="Go next page" className={`${removeUnderline} ${color}`}>
-      <span>{'>'}</span>
+    <a href={pageLink} aria-label="Go next page" className={nextClasses}>
+      {'>'}
     </a>
   );
 };
@@ -113,8 +119,9 @@ const NextButton = ({ pageLink, classes }) => {
 const BackButton = ({ pageLink, classes }) => {
   const color = pageLink === undefined ? classes.inactiveColor : classes.activeColor;
   const removeUnderline = classes.paginationLabel;
+  const backClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <a href={pageLink} aria-label="Go previous page" className={`${removeUnderline} ${color}`}>
+    <a href={pageLink} aria-label="Go previous page" className={backClasses}>
       {'<'}
     </a>
   );
