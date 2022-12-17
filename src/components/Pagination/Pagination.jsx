@@ -171,8 +171,9 @@ const Pagination = ({
   const calculatePaginationMenu = () => {
     const pagesToRender = {
       prevPage: ((totalPages > 1 && page > 1) ? page - 1 : null),
-      nextPage: ((page + 1 >= totalPages) ? page + 1 : null),
-      nextNextPage: ((page + 2 === totalPages) ? page + 2 : null),
+      currPage: page,
+      nextPage: ((page + 1 < totalPages) ? page + 1 : null),
+      nextNextPage: ((page + 2 < totalPages) ? page + 2 : null),
       ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
       lastPage: ((totalPages !== page) ? totalPages : null),
     };
