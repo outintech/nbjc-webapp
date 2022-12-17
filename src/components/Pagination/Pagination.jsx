@@ -38,18 +38,7 @@ const styles = () => ({
     justifyContent: 'flex-start',
     whiteSpace: 'no wrap',
   },
-  paginationLinkContainers: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '30px',
-    justifyContent: 'center',
-    minWidth: '20px',
-  },
-  paginationLink: {
-    padding: '0.6px',
-  },
   paginationButton: {
-    backgroundColor: '#633AA3',
     height: '28px',
     width: '28px',
     display: 'flex',
@@ -57,12 +46,11 @@ const styles = () => ({
     alignItems: 'center',
     margin: '0 2px',
   },
-  activeButton: {
-    backgroundColor: '#633AA3',
-    color: '#FFFFFF',
-  },
-  inactiveButton: {
+  activeColor: {
     color: '#666666',
+  },
+  inactiveColor: {
+    color: '#E5E5E5',
   },
   pageInputNavigation: {
     border: '1px solid #666666',
@@ -137,16 +125,11 @@ const Pagination = ({
     return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
   };
 
-  const paginationButton = (link, pageNumber, isActive) => (
-    <a href={link} className={classes.paginationLinkContainers}>
-      <div>
-        <span className={[
-          classes.paginationButton,
-          isActive ? classes.inactiveButton : classes.activeButton]}
-        >
-          {pageNumber}
-        </span>
-      </div>
+  const paginationButton = (link, pageNumber) => (
+    <a href={link} aria-label={`Go to page ${pageNumber}`}>
+      <span className={classes.paginationButton}>
+        {pageNumber}
+      </span>
     </a>
   );
 
@@ -185,15 +168,11 @@ const Pagination = ({
           && (
             <div className={classes.navigationContainer}>
               <div className={classes.paginationContainer}>
-                <div className={classes.navigationButtonContainers}>
+                <div style={{ display: 'flex' }}>
                   <BackButton pageLink={backButton} classes={classes} />
-                </div>
-                <div className={classes.paginationLinkContainers}>
                   {calculatePaginationMenu().map((pages) => (
                     paginationButton('/', pages, true)
                   ))}
-                </div>
-                <div className={classes.navigationContainer}>
                   <NextButton pageLink={nextButton} classes={classes} />
                 </div>
               </div>
