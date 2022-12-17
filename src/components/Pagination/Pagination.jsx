@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -41,18 +43,20 @@ const styles = () => ({
   navigationContainer: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'flex-end',
+    flex: 1,
   },
   mobileNavigationContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    flex: 1,
   },
   paginationButton: {
     height: '28px',
     width: '28px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     margin: '0 2px',
   },
   activeColor: {
@@ -86,6 +90,13 @@ const styles = () => ({
   mobilePaginationListContainer: {
     display: 'flex',
     marginTop: 44,
+    justifyContent: 'center',
+  },
+  paginationLabel: {
+    textDecoration: 'none',
+  },
+  alignLabelAbsoluteCenter: {
+    flex: 1,
   },
 });
 
@@ -137,7 +148,7 @@ const PaginationButton = ({ pageNumber, classes, goToPageLabel }) => {
   const calculateLink = '/';
   return (
     <>
-      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`}>
+      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={classes.paginationLabel}>
         <div className={classes.paginationButton}>
           <span>{pageNumber}</span>
         </div>
@@ -192,7 +203,8 @@ const Pagination = ({
   const CalculatePageRange = () => {
     const startingRange = (page - 1) * perPage + 1;
     const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
-    return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
+    const resultString = endingRange <= 1 ? 'Result' : 'Results';
+    return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
   };
 
   const calculatePaginationMenu = () => {
@@ -210,25 +222,30 @@ const Pagination = ({
   return (
     <div className={classes.root}>
       <div className={promptClasses}>
-        <RangeOfResults
-          totalCount={totalPages}
-          classes={classes}
-          calculateRange={CalculatePageRange()}
-        />
-        {(backExists || nextExists) && (
-          <div className={navigationContainerClasses}>
-            <div className={paginationListClasses}>
-              <BackButton pageLink={backButton} classes={classes} />
-              <RenderPaginationButtons
-                pagesToRender={calculatePaginationMenu()}
-                classes={classes}
-                goToPageLabel={labelForGoToPage}
-              />
-              <NextButton pageLink={nextButton} classes={classes} />
-            </div>
-            <GoToPage totalPages={totalPages} classes={classes} />
-          </div>
-        )}
+        <div className={classes.alignLabelAbsoluteCenter} />
+        <div>
+          <RangeOfResults
+            totalCount={totalPages}
+            classes={classes}
+            calculateRange={CalculatePageRange()}
+          />
+        </div>
+        <div className={navigationContainerClasses}>
+          {(backExists || nextExists) && (
+            <>
+              <div className={paginationListClasses}>
+                <BackButton pageLink={backButton} classes={classes} />
+                <RenderPaginationButtons
+                  pagesToRender={calculatePaginationMenu()}
+                  classes={classes}
+                  goToPageLabel={labelForGoToPage}
+                />
+                <NextButton pageLink={nextButton} classes={classes} />
+              </div>
+              <GoToPage totalPages={totalPages} classes={classes} />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
