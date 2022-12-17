@@ -103,6 +103,11 @@ const styles = () => ({
     width: '32px',
     textAlign: 'center',
   },
+  currentPageButton: {
+    color: '#FFFFFF',
+    backgroundColor: '#633AA3',
+    borderRadius: '2px',
+  },
 });
 
 const NextButton = ({ pageLink, classes }) => {
@@ -150,14 +155,28 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   )
 );
 
-const PaginationButton = ({ pageNumber, classes, goToPageLabel }) => {
+const GoToPageButton = ({ goToPageLabel }) => {
+  const onClick = null;
+  return (
+    <div>{goToPageLabel}</div>
+  );
+};
+
+const PaginationButton = ({
+  pageNumber,
+  classes,
+  goToPageLabel,
+  currPage,
+}) => {
   if (pageNumber === goToPageLabel) {
-    return <div>...</div>;
+    return <GoToPageButton goToPageLabel={goToPageLabel} />;
   }
   const calculateLink = '/';
+  const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
+  const PaginationButtonClasses = `${classes.paginationLabel} ${isCurrentPage}`;
   return (
     <>
-      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={classes.paginationLabel}>
+      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses}>
         <div className={classes.paginationButton}>
           <span>{pageNumber}</span>
         </div>
@@ -166,9 +185,21 @@ const PaginationButton = ({ pageNumber, classes, goToPageLabel }) => {
   );
 };
 
-const RenderPaginationButtons = ({ pagesToRender, classes, goToPageLabel }) => (
+const RenderPaginationButtons = (
+  {
+    pagesToRender,
+    classes,
+    goToPageLabel,
+    currPage,
+  },
+) => (
   pagesToRender.filter((page) => page !== null).map((page) => (
-    <PaginationButton pageNumber={page} classes={classes} goToPageLabel={goToPageLabel} />
+    <PaginationButton
+      pageNumber={page}
+      classes={classes}
+      goToPageLabel={goToPageLabel}
+      currPage={currPage}
+    />
   ))
 );
 
@@ -248,6 +279,7 @@ const Pagination = ({
                   pagesToRender={calculatePaginationMenu()}
                   classes={classes}
                   goToPageLabel={labelForGoToPage}
+                  currPage={page}
                 />
                 <NextButton pageLink={nextButton} classes={classes} />
               </div>
