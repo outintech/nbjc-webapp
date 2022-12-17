@@ -32,12 +32,6 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  paginationContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    whiteSpace: 'no wrap',
-  },
   paginationButton: {
     height: '28px',
     width: '28px',
@@ -60,7 +54,7 @@ const styles = () => ({
     marginLeft: '8px',
     backgroundColor: '#FFFFFF',
   },
-  pageInputContainer: {
+  goToPageContainer: {
     backgroundColor: '#F2F2F2',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     borderRadius: '4px',
@@ -83,13 +77,36 @@ const NextButton = ({ pageLink, classes }) => {
 };
 
 const BackButton = ({ pageLink, classes }) => {
-  const color = pageLink === '' ? classes.inactiveColor : classes.activeColor;
+  const color = pageLink === '' ? [classes.inactiveColor] : [classes.activeColor];
   return (
     <a href={pageLink} className={color}>
       {'<'}
     </a>
   );
 };
+
+const GoToPage = ({ classes, totalPages }) => {
+  const label = 'Go to page';
+  return (
+    <div className={classes.goToPageContainer}>
+      <span>{label}</span>
+      <Input
+        inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
+        defaultValue={totalPages}
+        className={classes.pageInputNavigation}
+      />
+    </div>
+  );
+};
+
+const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
+  (totalCount > 0)
+  && (
+    <Typography variant="h5" align="center" className={classes.showingText}>
+      {calculateRange}
+    </Typography>
+  )
+);
 
 const Pagination = ({
   totalCount,
@@ -119,7 +136,7 @@ const Pagination = ({
     nextButton = `${nextLink}?${query.toString()}`;
   }
 
-  const calculatePageRange = () => {
+  const CalculatePageRange = () => {
     const startingRange = (page - 1) * perPage + 1;
     const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
     return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
@@ -158,32 +175,22 @@ const Pagination = ({
   return (
     <div className={classes.root}>
       <div className={classes.prompt}>
-        {(totalCount > 0)
-          && (
-            <Typography variant="h5" align="center" className={classes.showingText}>
-              {calculatePageRange()}
-            </Typography>
-          )}
+        <RangeOfResults
+          totalCount={totalPages}
+          classes={classes}
+          calculateRange={CalculatePageRange()}
+        />
         {(backExists || nextExists)
           && (
             <div className={classes.navigationContainer}>
-              <div className={classes.paginationContainer}>
-                <div style={{ display: 'flex' }}>
-                  <BackButton pageLink={backButton} classes={classes} />
-                  {calculatePaginationMenu().map((pages) => (
-                    paginationButton('/', pages, true)
-                  ))}
-                  <NextButton pageLink={nextButton} classes={classes} />
-                </div>
+              <div style={{ display: 'flex' }}>
+                <BackButton pageLink={backButton} classes={classes} />
+                {calculatePaginationMenu().map((pages) => (
+                  paginationButton('/', pages, true)
+                ))}
+                <NextButton pageLink={nextButton} classes={classes} />
               </div>
-              <div className={classes.pageInputContainer}>
-                <span>Go to page</span>
-                <Input
-                  inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
-                  defaultValue={totalPages}
-                  className={classes.pageInputNavigation}
-                />
-              </div>
+              <GoToPage totalPages={totalPages} classes={classes} />
             </div>
           )}
       </div>
