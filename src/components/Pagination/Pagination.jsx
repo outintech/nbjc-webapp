@@ -101,18 +101,20 @@ const styles = () => ({
 });
 
 const NextButton = ({ pageLink, classes }) => {
-  const color = pageLink === '' ? classes.inactiveColor : classes.activeColor;
+  const color = pageLink === undefined ? classes.inactiveColor : classes.activeColor;
+  const removeUnderline = classes.paginationLabel;
   return (
-    <a href={pageLink} className={color}>
-      {'>'}
+    <a href={pageLink} aria-label="Go next page" className={`${removeUnderline} ${color}`}>
+      <span>{'>'}</span>
     </a>
   );
 };
 
 const BackButton = ({ pageLink, classes }) => {
-  const color = pageLink === '' ? [classes.inactiveColor] : [classes.activeColor];
+  const color = pageLink === undefined ? classes.inactiveColor : classes.activeColor;
+  const removeUnderline = classes.paginationLabel;
   return (
-    <a href={pageLink} className={color}>
+    <a href={pageLink} aria-label="Go previous page" className={`${removeUnderline} ${color}`}>
       {'<'}
     </a>
   );
