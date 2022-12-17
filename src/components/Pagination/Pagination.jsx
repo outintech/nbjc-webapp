@@ -83,6 +83,7 @@ const styles = () => ({
     justifyContent: 'center',
     alignItems: 'center',
     color: '#000000',
+    marginTop: 8,
   },
   paginationListContainer: {
     display: 'flex',
@@ -100,7 +101,7 @@ const styles = () => ({
     flex: 1,
   },
   expandNavigationButtons: {
-    width: '32px',
+    width: '28px',
     textAlign: 'center',
   },
   currentPageButton: {
