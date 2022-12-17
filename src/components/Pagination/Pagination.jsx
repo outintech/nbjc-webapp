@@ -168,26 +168,21 @@ const OpenGoToPageButton = ({ goToPageLabel }) => {
   );
 };
 
-const getLinkFromPageNumber = ({ pageNumber }) => {
-  const link = null;
-  return link;
-};
-
 const PaginationButton = ({
   pageNumber,
   classes,
   goToPageLabel,
   currPage,
+  link,
 }) => {
   if (pageNumber === goToPageLabel) {
     return <OpenGoToPageButton goToPageLabel={goToPageLabel} />;
   }
-  const calculateLink = '/';
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
   const PaginationButtonClasses = `${classes.paginationLabel} ${isCurrentPage}`;
   return (
     <>
-      <Link href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
+      <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
         <div className={classes.paginationButton}>
           <span>{pageNumber}</span>
         </div>
@@ -204,15 +199,35 @@ const RenderPaginationButtons = (
     currPage,
   },
 ) => (
-  pagesToRender.filter((page) => page !== null).map((page) => (
+  pagesToRender.map((page) => (
     <PaginationButton
-      pageNumber={page}
+      pageNumber={page.pageNumber}
       classes={classes}
       goToPageLabel={goToPageLabel}
       currPage={currPage}
+      link={page.link}
     />
   ))
 );
+
+const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, query, perPage) => {
+  let pagesToRender = {
+    prevPage: ((totalPages > 1 && page > 1) ? page - 1 : null),
+    currPage: page,
+    nextPage: ((page + 1 < totalPages) ? page + 1 : null),
+    nextNextPage: ((page + 2 < totalPages) ? page + 2 : null),
+    ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
+    lastPage: ((totalPages !== page) ? totalPages : null),
+  };
+  pagesToRender = Object.values(pagesToRender).filter((pgNum) => pgNum !== null);
+  const pagesWithLinks = pagesToRender.map((pg) => {
+    const base = history.location.pathname;
+    query.set('page', pg);
+    query.set('perPage', perPage);
+    return { pageNumber: pg, link: `${base}?${query.toString()}` };
+  });
+  return pagesWithLinks;
+};
 
 const Pagination = ({
   totalCount,
@@ -258,18 +273,6 @@ const Pagination = ({
     return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
   };
 
-  const calculatePaginationMenu = () => {
-    const pagesToRender = {
-      prevPage: ((totalPages > 1 && page > 1) ? page - 1 : null),
-      currPage: page,
-      nextPage: ((page + 1 < totalPages) ? page + 1 : null),
-      nextNextPage: ((page + 2 < totalPages) ? page + 2 : null),
-      ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
-      lastPage: ((totalPages !== page) ? totalPages : null),
-    };
-    return Object.values(pagesToRender);
-  };
-
   return (
     <div className={classes.root}>
       <div className={promptClasses}>
@@ -287,7 +290,10 @@ const Pagination = ({
               <div className={paginationListClasses}>
                 <BackButton pageLink={backButton} classes={classes} />
                 <RenderPaginationButtons
-                  pagesToRender={calculatePaginationMenu()}
+                  pagesToRender={
+                    calculatePaginationMenu(totalPages, page,
+                      labelForGoToPage, history, query, perPage)
+                  }
                   classes={classes}
                   goToPageLabel={labelForGoToPage}
                   currPage={page}
