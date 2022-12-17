@@ -65,6 +65,9 @@ const styles = () => ({
     alignItems: 'center',
     color: '#000000',
   },
+  paginationListContainer: {
+    display: 'flex',
+  },
 });
 
 const NextButton = ({ pageLink, classes }) => {
@@ -108,6 +111,25 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   )
 );
 
+const PaginationButton = ({ pageNumber, classes }) => {
+  const calculateLink = '/';
+  return (
+    <>
+      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`}>
+        <div className={classes.paginationButton}>
+          <span>{pageNumber}</span>
+        </div>
+      </a>
+    </>
+  );
+};
+
+const RenderPaginationButtons = ({ pagesToRender, classes }) => (
+  pagesToRender.map((page) => (
+    <PaginationButton pageNumber={page} classes={classes} />
+  ))
+);
+
 const Pagination = ({
   totalCount,
   page,
@@ -142,14 +164,6 @@ const Pagination = ({
     return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
   };
 
-  const paginationButton = (link, pageNumber) => (
-    <a href={link} aria-label={`Go to page ${pageNumber}`}>
-      <span className={classes.paginationButton}>
-        {pageNumber}
-      </span>
-    </a>
-  );
-
   const calculatePaginationMenu = () => {
     const menu = [page];
     const nextPage = page + 1;
@@ -180,19 +194,19 @@ const Pagination = ({
           classes={classes}
           calculateRange={CalculatePageRange()}
         />
-        {(backExists || nextExists)
-          && (
-            <div className={classes.navigationContainer}>
-              <div style={{ display: 'flex' }}>
-                <BackButton pageLink={backButton} classes={classes} />
-                {calculatePaginationMenu().map((pages) => (
-                  paginationButton('/', pages, true)
-                ))}
-                <NextButton pageLink={nextButton} classes={classes} />
-              </div>
-              <GoToPage totalPages={totalPages} classes={classes} />
+        {(backExists || nextExists) && (
+          <div className={classes.navigationContainer}>
+            <div className={classes.paginationListContainer}>
+              <BackButton pageLink={backButton} classes={classes} />
+              <RenderPaginationButtons
+                pagesToRender={calculatePaginationMenu()}
+                classes={classes}
+              />
+              <NextButton pageLink={nextButton} classes={classes} />
             </div>
-          )}
+            <GoToPage totalPages={totalPages} classes={classes} />
+          </div>
+        )}
       </div>
     </div>
   );
