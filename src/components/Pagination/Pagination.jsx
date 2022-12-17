@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
 
 import useQuery from '../../hooks/useQuery';
 
@@ -119,9 +119,9 @@ const NextButton = ({ pageLink, classes }) => {
   const removeUnderline = classes.paginationLabel;
   const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <a href={pageLink} aria-label="Go next page" className={nextClasses}>
+    <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none">
       {'>'}
-    </a>
+    </Link>
   );
 };
 
@@ -130,15 +130,15 @@ const BackButton = ({ pageLink, classes }) => {
   const removeUnderline = classes.paginationLabel;
   const backClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <a href={pageLink} aria-label="Go previous page" className={backClasses}>
+    <Link href={pageLink} aria-label="Go previous page" className={backClasses} underline="none">
       {'<'}
-    </a>
+    </Link>
   );
 };
 
-const GoToPage = ({ classes, totalPages }) => {
+const GoToPage = ({ classes, totalPages, showGoToPage }) => {
   const label = 'Go to page';
-  const ShowContent = false ? undefined : classes.hideDisplay;
+  const ShowContent = showGoToPage ? undefined : classes.hideDisplay;
   const GoToPageClasses = `${classes.goToPageContainer} ${ShowContent}`;
   return (
     <div className={GoToPageClasses}>
@@ -168,6 +168,11 @@ const OpenGoToPageButton = ({ goToPageLabel }) => {
   );
 };
 
+const getLinkFromPageNumber = ({ pageNumber }) => {
+  const link = null;
+  return link;
+};
+
 const PaginationButton = ({
   pageNumber,
   classes,
@@ -182,11 +187,11 @@ const PaginationButton = ({
   const PaginationButtonClasses = `${classes.paginationLabel} ${isCurrentPage}`;
   return (
     <>
-      <a href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses}>
+      <Link href={calculateLink} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
         <div className={classes.paginationButton}>
           <span>{pageNumber}</span>
         </div>
-      </a>
+      </Link>
     </>
   );
 };
