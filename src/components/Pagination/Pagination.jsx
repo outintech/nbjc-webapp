@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import Input from '@material-ui/core/Input';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+
 import useQuery from '../../hooks/useQuery';
 
 const styles = () => ({
@@ -23,6 +24,15 @@ const styles = () => ({
     color: '#666666',
     fontSize: '16px',
   },
+  mobilePrompt: {
+    display: 'flex',
+    flexGrow: 2,
+    width: '100%',
+    marginTop: '40px',
+    color: '#666666',
+    fontSize: '16px',
+    flexDirection: 'column',
+  },
   showingText: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -31,6 +41,11 @@ const styles = () => ({
   navigationContainer: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  mobileNavigationContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   paginationButton: {
     height: '28px',
@@ -67,6 +82,10 @@ const styles = () => ({
   },
   paginationListContainer: {
     display: 'flex',
+  },
+  mobilePaginationListContainer: {
+    display: 'flex',
+    marginTop: 44,
   },
 });
 
@@ -139,6 +158,7 @@ const Pagination = ({
   perPage,
   classes,
 }) => {
+  const useDesktop = useMediaQuery('(min-width:838px)');
   const query = useQuery();
   const history = useHistory();
   const totalPages = Math.ceil(totalCount / perPage);
@@ -146,6 +166,13 @@ const Pagination = ({
   let backExists;
   let nextExists;
   let nextButton;
+
+  const paginationListClasses = useDesktop
+    ? classes.paginationListContainer : classes.mobilePaginationListContainer;
+  const navigationContainerClasses = useDesktop
+    ? classes.navigationContainer : classes.mobileNavigationContainer;
+  const promptClasses = useDesktop ? classes.prompt : classes.mobilePrompt;
+
   const labelForGoToPage = '...';
   if (totalPages > 1 && page > 1) {
     const backLink = history.location.pathname;
@@ -182,15 +209,15 @@ const Pagination = ({
 
   return (
     <div className={classes.root}>
-      <div className={classes.prompt}>
+      <div className={promptClasses}>
         <RangeOfResults
           totalCount={totalPages}
           classes={classes}
           calculateRange={CalculatePageRange()}
         />
         {(backExists || nextExists) && (
-          <div className={classes.navigationContainer}>
-            <div className={classes.paginationListContainer}>
+          <div className={navigationContainerClasses}>
+            <div className={paginationListClasses}>
               <BackButton pageLink={backButton} classes={classes} />
               <RenderPaginationButtons
                 pagesToRender={calculatePaginationMenu()}
@@ -211,6 +238,7 @@ Pagination.propTypes = {
   totalCount: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   perPage: PropTypes.number.isRequired,
+  classes: PropTypes.shape({}).isRequired,
 };
 
 Pagination.defaultProps = {};
