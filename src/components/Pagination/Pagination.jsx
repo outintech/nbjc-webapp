@@ -85,6 +85,24 @@ const styles = () => ({
   },
 });
 
+const NextButton = ({ pageLink, classes }) => {
+  const color = pageLink === '' ? classes.inactiveColor : classes.activeColor;
+  return (
+    <a href={pageLink} className={color}>
+      {'>'}
+    </a>
+  );
+};
+
+const BackButton = ({ pageLink, classes }) => {
+  const color = pageLink === '' ? classes.inactiveColor : classes.activeColor;
+  return (
+    <a href={pageLink} className={color}>
+      {'<'}
+    </a>
+  );
+};
+
 const Pagination = ({
   totalCount,
   page,
@@ -103,36 +121,21 @@ const Pagination = ({
     backExists = true;
     query.set('page', page - 1);
     query.set('perPage', perPage);
-    backButton = (
-      <a href={`${backLink}?${query.toString()}`}>
-        {'<'}
-      </a>
-    );
-  } else {
-    backButton = (
-      <div className={classes.inactiveButton}>
-        {'<'}
-      </div>
-    );
+    backButton = `${backLink}?${query.toString()}`;
   }
-
   if (totalPages > 1 && page < totalPages) {
     const nextLink = history.location.pathname;
     nextExists = true;
     query.set('page', page + 1);
     query.set('perPage', perPage);
-    nextButton = (
-      <a href={`${nextLink}?${query.toString()}`}>
-        {'>'}
-      </a>
-    );
-  } else {
-    nextButton = (
-      <div className={classes.inactiveButton}>
-        {'>'}
-      </div>
-    );
+    nextButton = `${nextLink}?${query.toString()}`;
   }
+
+  const calculatePageRange = () => {
+    const startingRange = (page - 1) * perPage + 1;
+    const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
+    return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
+  };
 
   const paginationButton = (link, pageNumber, isActive) => (
     <a href={link} className={classes.paginationLinkContainers}>
@@ -146,12 +149,6 @@ const Pagination = ({
       </div>
     </a>
   );
-
-  const calculatePageRange = () => {
-    const startingRange = (page - 1) * perPage + 1;
-    const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
-    return `Showing ${startingRange} - ${endingRange} of ${totalCount} results`;
-  };
 
   const calculatePaginationMenu = () => {
     const menu = [page];
@@ -189,7 +186,7 @@ const Pagination = ({
             <div className={classes.navigationContainer}>
               <div className={classes.paginationContainer}>
                 <div className={classes.navigationButtonContainers}>
-                  {backButton}
+                  <BackButton pageLink={backButton} classes={classes} />
                 </div>
                 <div className={classes.paginationLinkContainers}>
                   {calculatePaginationMenu().map((pages) => (
@@ -197,7 +194,7 @@ const Pagination = ({
                   ))}
                 </div>
                 <div className={classes.navigationContainer}>
-                  {nextButton}
+                  <NextButton pageLink={nextButton} classes={classes} />
                 </div>
               </div>
               <div className={classes.pageInputContainer}>
