@@ -111,7 +111,10 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   )
 );
 
-const PaginationButton = ({ pageNumber, classes }) => {
+const PaginationButton = ({ pageNumber, classes, goToPageLabel }) => {
+  if (pageNumber === goToPageLabel) {
+    return <div>...</div>;
+  }
   const calculateLink = '/';
   return (
     <>
@@ -124,9 +127,9 @@ const PaginationButton = ({ pageNumber, classes }) => {
   );
 };
 
-const RenderPaginationButtons = ({ pagesToRender, classes }) => (
-  pagesToRender.map((page) => (
-    <PaginationButton pageNumber={page} classes={classes} />
+const RenderPaginationButtons = ({ pagesToRender, classes, goToPageLabel }) => (
+  pagesToRender.filter((page) => page !== null).map((page) => (
+    <PaginationButton pageNumber={page} classes={classes} goToPageLabel={goToPageLabel} />
   ))
 );
 
@@ -143,6 +146,7 @@ const Pagination = ({
   let backExists;
   let nextExists;
   let nextButton;
+  const labelForGoToPage = '...';
   if (totalPages > 1 && page > 1) {
     const backLink = history.location.pathname;
     backExists = true;
@@ -165,25 +169,14 @@ const Pagination = ({
   };
 
   const calculatePaginationMenu = () => {
-    const menu = [page];
-    const nextPage = page + 1;
-    const prevPage = page - 1;
-
-    if ((totalPages > 1 && page > 1)) {
-      menu.unshift(prevPage);
-    }
-
-    if ((totalPages > 1 && page < totalPages) === false) {
-      return menu;
-    }
-
-    if (page + 3 <= totalPages) {
-      return menu.concat([nextPage, '...', totalPages]);
-    }
-    if (page + 2 > totalPages) {
-      return menu.concat([nextPage]);
-    }
-    return menu.concat([nextPage, nextPage + 1]);
+    const pagesToRender = {
+      prevPage: ((totalPages > 1 && page > 1) ? page - 1 : null),
+      nextPage: ((page + 1 >= totalPages) ? page + 1 : null),
+      nextNextPage: ((page + 2 === totalPages) ? page + 2 : null),
+      ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
+      lastPage: ((totalPages !== page) ? totalPages : null),
+    };
+    return Object.values(pagesToRender);
   };
 
   return (
@@ -201,6 +194,7 @@ const Pagination = ({
               <RenderPaginationButtons
                 pagesToRender={calculatePaginationMenu()}
                 classes={classes}
+                goToPageLabel={labelForGoToPage}
               />
               <NextButton pageLink={nextButton} classes={classes} />
             </div>
