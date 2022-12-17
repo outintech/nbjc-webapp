@@ -6,14 +6,12 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
-
 import StarIcon from '@material-ui/icons/Star';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LanguageIcon from '@material-ui/icons/Language';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -29,16 +27,13 @@ const styles = (theme) => ({
     height: '100%',
     backgroundColor: '#FFFFFF',
   },
-  searchContentContainer: {
+  cardParentContainer: {
     display: 'flex',
     padding: 24,
   },
   imageContainer: {
     marginRight: 24,
     position: 'relative',
-    maxWidth: 254,
-    maxHeight: 184,
-    minHeight: 184,
     flexGrow: 1,
     overflow: 'hidden',
   },
@@ -48,6 +43,16 @@ const styles = (theme) => ({
     objectFit: 'cover',
     borderRadius: '4px',
   },
+  largeImageDimensions: {
+    maxWidth: 254,
+    maxHeight: 184,
+    minHeight: 184,
+  },
+  smallImageDimensions: {
+    maxWidth: 127,
+    maxHeight: 92,
+    minHeight: 92,
+  },
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -56,7 +61,14 @@ const styles = (theme) => ({
   businessTitle: {
     marginBottom: 0,
     letterSpacing: '-0.4px',
-    lineHeight: '28px',
+    height: '100%',
+    color: '#1E1131',
+    margin: 0,
+    flex: 1,
+  },
+  mobileBusinessTitle: {
+    marginBottom: 0,
+    letterSpacing: '-0.4px',
     height: '100%',
     color: '#1E1131',
     margin: 0,
@@ -83,6 +95,11 @@ const styles = (theme) => ({
     fontWeight: 700,
     display: 'flex',
   },
+  mobileTitleContainer: {
+    fontSize: '16px',
+    fontWeight: 700,
+    display: 'flex',
+  },
   CTAcontainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
@@ -104,6 +121,11 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  mobileBottomContent: {
+    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 10,
+  },
   ratingContainer: {
     display: 'flex',
     textDecoration: 'none',
@@ -118,42 +140,38 @@ const styles = (theme) => ({
   addressString: {
     textDecoration: 'underline',
   },
-  mobileImageContainer: {
-    marginRight: 24,
-    position: 'relative',
-    maxWidth: 127,
-    maxHeight: 92,
-    minHeight: 92,
-    flexGrow: 1,
-    overflow: 'hidden',
-  },
-  mobileTitleContainer: {
-    fontSize: '16px',
-    fontWeight: 700,
-    display: 'flex',
-  },
-  mobileBusinessTitle: {
-    marginBottom: 0,
-    letterSpacing: '-0.4px',
-    height: '100%',
-    color: '#1E1131',
-    margin: 0,
-    flex: 1,
-  },
+
   hideElement: {
     display: 'none',
   },
-  mobileBottomContent: {
-    marginBottom: 10,
-    marginTop: 10,
-    marginLeft: 10,
-  },
+
   mobileContainer: {
     display: 'flex',
     marginLeft: '5px',
     marginTop: '5px',
   },
+  ctaSpacing: {
+    marginRight: 2,
+  },
+  indexNumberMargins: {
+    marginRight: 5,
+  },
 });
+
+const convertAddressToGoogleMapsLink = (businessAddress) => {
+  const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
+  return googleAPIQuery + encodeURIComponent(businessAddress.address);
+};
+
+const formatTenDigitPhoneNumber = (phoneNumberString) => {
+  const cleaned = (`'' + ${phoneNumberString}`).replace(/\D/g, '');
+  const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    const intlCode = (match[1] ? '+1 ' : '');
+    return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+  }
+  return 'No number found';
+};
 
 const BusinessCard = ({
   business: {
@@ -174,32 +192,21 @@ const BusinessCard = ({
 }) => {
   const useDesktop = useMediaQuery('(min-width:838px)');
 
-  const convertAddressToGoogleMapsLink = (businessAddress) => {
-    const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
-    return googleAPIQuery + encodeURIComponent(businessAddress.address);
+  const Image = () => {
+    const CardImage = imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
+    const ImageDimension = useDesktop ? classes.largeImageDimensions : classes.smallImageDimensions;
+    return (
+      <Box className={[classes.imageContainer, ImageDimension]}>
+        <a href={`/spaces/${id}`}>
+          <img src={CardImage} alt="business" className={classes.image} />
+        </a>
+      </Box>
+    );
   };
-
-  const formatTenDigitPhoneNumber = (phoneNumberString) => {
-    const cleaned = (`'' + ${phoneNumberString}`).replace(/\D/g, '');
-    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      const intlCode = (match[1] ? '+1 ' : '');
-      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
-    }
-    return 'No number found';
-  };
-
-  const Image = () => (
-    <Box className={useDesktop ? classes.imageContainer : classes.mobileImageContainer}>
-      <a href={`/spaces/${id}`}>
-        <img src={imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'} alt="alt-text" className={classes.image} />
-      </a>
-    </Box>
-  );
 
   return (
     <Box className={classes.root}>
-      <Box className={useDesktop ? classes.searchContentContainer : []}>
+      <Box className={useDesktop ? classes.cardParentContainer : []}>
         {useDesktop ? <Image /> : null}
         <Box className={classes.contentContainer}>
           <Box className={useDesktop ? [] : classes.mobileContainer}>
@@ -207,7 +214,7 @@ const BusinessCard = ({
             <Box className={classes.titleAddressContainer}>
               <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
                 <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
-                  <span style={{ marginRight: 5 }}>
+                  <span className={classes.indexNumberMargins}>
                     {count}
                     .
                   </span>
@@ -237,11 +244,11 @@ const BusinessCard = ({
             <Box className={classes.CTAcontainer}>
               <Box className={classes.buttonContainer}>
                 <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-                  <RateReviewIcon color="secondary" fontSize="small" style={{ marginRight: 2 }} />
+                  <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
                   <span className={classes.grayColor}>Add Review</span>
                 </a>
                 <Box className={classes.ratingContainer}>
-                  <span style={{ marginRight: 1 }}>Rating</span>
+                  <span className={classes.ctaSpacing}>Rating</span>
                   <StarIcon color="secondary" fontSize="small" />
                   <span className={classes.purpleColor}>{averageRating}</span>
                 </Box>
