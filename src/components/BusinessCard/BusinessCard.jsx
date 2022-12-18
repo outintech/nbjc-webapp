@@ -23,9 +23,10 @@ const styles = (theme) => ({
   root: {
     borderRadius: '4px',
     border: '1px solid #E5E5E5',
-    width: 'auto',
+    width: '100%',
     height: '100%',
     backgroundColor: '#FFFFFF',
+    overflow: 'hidden',
   },
   cardParentContainer: {
     display: 'flex',
@@ -52,6 +53,7 @@ const styles = (theme) => ({
     maxWidth: 127,
     maxHeight: 92,
     minHeight: 92,
+    minWidth: 127,
   },
   contentContainer: {
     display: 'flex',
@@ -139,6 +141,9 @@ const styles = (theme) => ({
   },
   addressString: {
     textDecoration: 'underline',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   hideElement: {
@@ -215,14 +220,13 @@ const BusinessCard = ({
               <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
                 <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
                   <span className={classes.indexNumberMargins}>
-                    {count}
-                    .
+                    {`${count}.`}
                   </span>
                   {name}
                 </p>
                 <MoreVertIcon />
               </Box>
-              <Box className={classes.addressContainer}>
+              <Box>
                 <a
                   href={convertAddressToGoogleMapsLink({ address })}
                   className={classes.addressContainer}
