@@ -64,6 +64,7 @@ const styles = () => ({
   TopCardContainer: {
     marginBottom: 10,
     width: '100%',
+    display: 'flex',
   },
   titleBarContainer: {
     fontSize: '18px',
@@ -74,6 +75,11 @@ const styles = () => ({
   },
   mobileTitleBar: {
     fontSize: '16px',
+  },
+  TitleAddressParentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
   },
   CTAParentContainer: {
     borderTop: '1px solid #E5E5E5',
@@ -162,16 +168,27 @@ const TopCardContent = (
     useDesktop,
     name,
     address,
+    imageUrl,
+    id,
   },
 ) => (
   <Box className={classes.TopCardContainer}>
-    <TitleBar
+    <Image
       classes={classes}
-      count={count}
+      imageUrl={imageUrl}
       useDesktop={useDesktop}
-      businessName={name}
+      id={id}
+      showImage={!useDesktop}
     />
-    <AddressRow classes={classes} address={address} />
+    <Box className={classes.TitleAddressParentContainer}>
+      <TitleBar
+        classes={classes}
+        count={count}
+        useDesktop={useDesktop}
+        businessName={name}
+      />
+      <AddressRow classes={classes} address={address} />
+    </Box>
   </Box>
 );
 
@@ -334,7 +351,7 @@ const BusinessCard = ({
           imageUrl={imageUrl}
           useDesktop={useDesktop}
           id={id}
-          showImage={!useDesktop || useDesktop}
+          showImage={useDesktop}
         />
         <Box className={classes.CardInformationContainer}>
           <TopCardContent
@@ -343,6 +360,8 @@ const BusinessCard = ({
             useDesktop={useDesktop}
             count={count}
             name={name}
+            imageUrl={imageUrl}
+            id={id}
           />
           <BottomCardContent
             classes={classes}
