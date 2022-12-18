@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import cx from 'classnames';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
-
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
@@ -17,14 +15,10 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import BusinessCard from '../../components/BusinessCard';
 import FilterPanel from '../../components/FilterPanel';
 import Pagination from '../../components/Pagination';
-
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
 
-const styles = (theme) => ({
-  result: {
-    // This is for setting the margins of the results returned from search.
-  },
+const styles = () => ({
   content: {
     backgroundColor: '#FFFFFF',
     width: '100%',
@@ -253,7 +247,6 @@ const Search = ({
                     business={result}
                     key={result.id}
                     count={(pagination.page - 1) * 10 + index + 1}
-                    overrideClasses={{ root: classes.result }}
                   />
                 </div>
               ))}

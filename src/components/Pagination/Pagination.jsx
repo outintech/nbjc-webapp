@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -158,6 +156,19 @@ const BackButton = ({ pageLink, classes }) => {
   );
 };
 
+const CheckValidPageNumber = (totalPages, input) => {
+  if (typeof input !== 'string') {
+    return false;
+  }
+  const pageNum = Number(input);
+  const checkValidType = Number.isInteger(pageNum);
+  const checkValidRange = pageNum >= 1 && pageNum <= totalPages;
+  if (checkValidType && checkValidRange) {
+    return true;
+  }
+  return false;
+};
+
 const GoToPage = ({
   classes,
   totalPages,
@@ -170,7 +181,13 @@ const GoToPage = ({
   const GoToPageClasses = `${classes.goToPageContainer} ${ShowContent}`;
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (CheckValidPageNumber(totalPages, input) === false) {
+      return;
+    }
     navigationObject.history.push(getPageLink(...Object.values(navigationObject), input));
+    navigationObject.history.go(
+      navigationObject.history.location.pathname + navigationObject.history.location.search,
+    );
   };
   return (
     <div className={GoToPageClasses}>
