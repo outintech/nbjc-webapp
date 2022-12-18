@@ -17,9 +17,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { spaceProps } from '../../types';
 import ChipList from '../ChipList';
-import useQuery from '../../hooks/useQuery';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     borderRadius: '4px',
     border: '1px solid #E5E5E5',
@@ -28,52 +27,29 @@ const styles = (theme) => ({
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
   },
-  cardParentContainer: {
-    display: 'flex',
-    padding: 24,
-  },
   imageContainer: {
     marginRight: 24,
     position: 'relative',
     flexGrow: 1,
     overflow: 'hidden',
-  },
-  cardImage: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: '4px',
-  },
-  largeImageDimensions: {
     maxWidth: 254,
     maxHeight: 184,
     minHeight: 184,
   },
-  smallImageDimensions: {
+  imageContainerMobile: {
     maxWidth: 127,
     maxHeight: 92,
     minHeight: 92,
     minWidth: 127,
   },
-  contentContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-  businessTitle: {
-    marginBottom: 0,
-    letterSpacing: '-0.4px',
+  cardImage: {
+    width: '100%',
     height: '100%',
-    color: '#1E1131',
-    margin: 0,
-    flex: 1,
+    borderRadius: '4px',
   },
-  mobileBusinessTitle: {
-    marginBottom: 0,
+  businessTitleContainer: {
     letterSpacing: '-0.4px',
-    height: '100%',
     color: '#1E1131',
-    margin: 0,
     flex: 1,
   },
   addressIcon: {
@@ -85,78 +61,57 @@ const styles = (theme) => ({
     color: '#666666',
     marginBottom: '2px',
   },
-  titleAddressContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 8,
+  TopCardContainer: {
+    marginBottom: 4,
     width: '100%',
   },
-  titleContainer: {
-    height: '100%',
+  titleBarContainer: {
     fontSize: '18px',
     fontWeight: 700,
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  mobileTitleContainer: {
+  mobileTitleBar: {
     fontSize: '16px',
-    fontWeight: 700,
-    display: 'flex',
   },
   CTAParentContainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
+    maxWidth: '800px',
   },
   CTAContainer: {
     display: 'flex',
-    maxWidth: '800px',
   },
-  chipContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 3,
-    maxWidth: '800px',
-  },
-  bottomCardRowContainer: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  mobileBottomMargins: {
-    marginBottom: 10,
-    marginTop: 10,
-    marginLeft: 10,
-  },
-  ratingContainer: {
+  CTAButtonContainer: {
     display: 'flex',
     textDecoration: 'none',
     marginRight: 'auto',
     color: '#666666',
   },
-  purple: {
+  purpleIcon: {
     color: '#633AA3',
-  },
-  gray: {
-    color: '#666666',
   },
   addressString: {
     textDecoration: 'underline',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     color: '#666666',
   },
-
-  hideElement: {
-    display: 'none',
+  ordinalNumberMargins: {
+    margin: '0 5px',
   },
-
-  mobileContainer: {
+  BottomCardContainer: {
     display: 'flex',
-    marginLeft: '5px',
-    marginTop: '5px',
+    flexDirection: 'column',
+    flex: 1,
   },
-  indexNumberMargins: {
-    marginRight: 5,
+  ChipList: {
+    display: 'flex',
+    flex: 1,
+  },
+  CardInformationContainer: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -177,15 +132,18 @@ const formatPhoneNumber = (phoneNumberString) => {
 
 const Image = (
   {
-    useDesktop, classes, id, imageUrl,
+    useDesktop, classes, id, imageUrl, showImage,
   },
 ) => {
+  if (showImage === false) {
+    return null;
+  }
   const placeholderImage = 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
-  const dimensions = useDesktop ? classes.largeImageDimensions : classes.smallImageDimensions;
+  const ImageSizing = useDesktop ? '' : classes.imageContainerMobile;
   const CardImage = imageUrl || placeholderImage;
   const LinkToSpace = `/spaces/${id}`;
   return (
-    <Box className={`${classes.imageContainer} ${dimensions}`}>
+    <Box className={`${classes.imageContainer} ${ImageSizing}`}>
       <a href={LinkToSpace}>
         <img src={CardImage} alt="business" className={classes.cardImage} />
       </a>
@@ -193,7 +151,64 @@ const Image = (
   );
 };
 
-const DisplayAddressRow = ({ classes, address }) => {
+const TopCardContent = (
+  {
+    classes,
+    count,
+    useDesktop,
+    name,
+    address,
+  },
+) => (
+  <Box className={classes.TopCardContainer}>
+    <TitleBar
+      classes={classes}
+      count={count}
+      useDesktop={useDesktop}
+      businessName={name}
+    />
+    <AddressRow classes={classes} address={address} />
+  </Box>
+);
+
+const OrdinalNumber = ({ classes, count }) => {
+  const ordinalNumberString = `${count}.`;
+  return (
+    <span className={classes.ordinalNumberMargins}>
+      {ordinalNumberString}
+    </span>
+  );
+};
+
+const ShareMenu = () => {
+  const onClick = 'TODO';
+  return (
+    <>
+      <MoreVertIcon />
+    </>
+  );
+};
+
+const TitleBar = ({
+  classes,
+  useDesktop,
+  count,
+  businessName,
+}) => {
+  const smallerFont = useDesktop ? '' : classes.mobileTitleBar;
+  const ContainerClasses = `${classes.titleBarContainer} ${smallerFont}`;
+  return (
+    <Box className={ContainerClasses}>
+      <span className={classes.businessTitleContainer}>
+        <OrdinalNumber classes={classes} count={count} />
+        {businessName}
+      </span>
+      <ShareMenu />
+    </Box>
+  );
+};
+
+const AddressRow = ({ classes, address }) => {
   const AddressLink = convertAddressToGoogleMapsLink(address);
   return (
     <>
@@ -215,7 +230,7 @@ const DisplayAddressRow = ({ classes, address }) => {
 const AddReviewCTA = ({ id, classes }) => {
   const link = `/spaces/${id}/reviews/new`;
   return (
-    <a href={link} className={classes.ratingContainer}>
+    <a href={link} className={classes.CTAButtonContainer}>
       <RateReviewIcon color="secondary" fontSize="small" />
       <span>Add Review</span>
     </a>
@@ -225,10 +240,10 @@ const AddReviewCTA = ({ id, classes }) => {
 const RatingCTA = ({ classes, averageRating }) => {
   const label = 'Rating';
   return (
-    <Box className={classes.ratingContainer}>
+    <Box className={classes.CTAButtonContainer}>
       <span>{label}</span>
       <StarIcon color="secondary" fontSize="small" />
-      <span className={classes.purple}>{averageRating}</span>
+      <span className={classes.purpleIcon}>{averageRating}</span>
     </Box>
   );
 };
@@ -238,8 +253,8 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
   const label = (<span>{formatPhoneNumber(phoneNumber)}</span>);
   const displayLabelOnDesktop = useDesktop ? label : null;
   return (
-    <a href={phoneString} className={classes.ratingContainer}>
-      <PhoneIcon className={classes.purple} fontSize="small" />
+    <a href={phoneString} className={classes.CTAButtonContainer}>
+      <PhoneIcon className={classes.purpleIcon} fontSize="small" />
       {displayLabelOnDesktop}
     </a>
   );
@@ -248,14 +263,14 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
 const VisitWebsiteCTA = ({ classes, useDesktop }) => {
   const label = useDesktop ? <span>Visit Website</span> : null;
   return (
-    <Box className={classes.ratingContainer}>
+    <Box className={classes.CTAButtonContainer}>
       <LanguageIcon color="secondary" fontSize="small" />
       {label}
     </Box>
   );
 };
 
-const DisplayCTAs = (
+const CTAs = (
   {
     classes, id, averageRating, phoneNumber, useDesktop,
   },
@@ -270,32 +285,24 @@ const DisplayCTAs = (
   </Box>
 );
 
-const DisplayChips = ({ classes, filters }) => (
-  <Box className={classes.chipContainer}>
-    <ChipList chips={filters} />
-  </Box>
-);
-
-const DisplayBottomCardContent = (
+const BottomCardContent = (
   {
     classes, id, averageRating, phoneNumber, useDesktop, filters,
   },
-) => {
-  const addMarginsForMobile = useDesktop ? '' : classes.mobileMargins;
-  const ParentContainerClass = `${classes.bottomCardRowContainer} ${addMarginsForMobile}`;
-  return (
-    <Box className={ParentContainerClass}>
-      <DisplayChips classes={classes} filters={filters} />
-      <DisplayCTAs
-        classes={classes}
-        id={id}
-        averageRating={averageRating}
-        phoneNumber={phoneNumber}
-        useDesktop={useDesktop}
-      />
+) => (
+  <Box className={classes.BottomCardContainer}>
+    <Box className={classes.ChipList}>
+      <ChipList chips={filters} />
     </Box>
-  );
-};
+    <CTAs
+      classes={classes}
+      id={id}
+      averageRating={averageRating}
+      phoneNumber={phoneNumber}
+      useDesktop={useDesktop}
+    />
+  </Box>
+);
 
 const BusinessCard = ({
   business: {
@@ -311,46 +318,29 @@ const BusinessCard = ({
     url,
   },
   classes,
-  overrideClasses,
   count,
 }) => {
   const useDesktop = useMediaQuery('(min-width:838px)');
 
   return (
     <Box className={classes.root}>
-      <Box className={useDesktop ? classes.cardParentContainer : []}>
-        {useDesktop ? (
-          <Image
+      <Box style={{ display: 'flex' }}>
+        <Image
+          classes={classes}
+          imageUrl={imageUrl}
+          useDesktop={useDesktop}
+          id={id}
+          showImage={!useDesktop || useDesktop}
+        />
+        <Box className={classes.CardInformationContainer}>
+          <TopCardContent
             classes={classes}
-            imageUrl={imageUrl}
+            address={address}
             useDesktop={useDesktop}
-            id={id}
+            count={count}
+            name={name}
           />
-        ) : null}
-        <Box className={classes.contentContainer}>
-          <Box className={useDesktop ? [] : classes.mobileContainer}>
-            {useDesktop ? null : (
-              <Image
-                classes={classes}
-                imageUrl={imageUrl}
-                useDesktop={useDesktop}
-                id={id}
-              />
-            )}
-            <Box className={classes.titleAddressContainer}>
-              <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
-                <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
-                  <span className={classes.indexNumberMargins}>
-                    {`${count}.`}
-                  </span>
-                  {name}
-                </p>
-                <MoreVertIcon />
-              </Box>
-              <DisplayAddressRow classes={classes} address={address} />
-            </Box>
-          </Box>
-          <DisplayBottomCardContent
+          <BottomCardContent
             classes={classes}
             id={id}
             averageRating={averageRating}
