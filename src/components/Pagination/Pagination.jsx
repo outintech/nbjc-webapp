@@ -39,6 +39,8 @@ const styles = () => ({
     flexGrow: 1,
     justifyContent: 'center',
     fontSize: '16px',
+    height: '100%',
+
   },
   navigationContainer: {
     display: 'flex',
@@ -108,6 +110,7 @@ const styles = () => ({
     color: '#FFFFFF',
     backgroundColor: '#633AA3',
     borderRadius: '2px',
+    fontWeight: 500,
   },
   hideDisplay: {
     display: 'none',
@@ -125,6 +128,12 @@ const styles = () => ({
     fontSize: 30,
     fontWeight: 700,
   },
+  centerText: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 const getPageLink = (history, query, perPage, page) => {
@@ -140,7 +149,7 @@ const NextButton = ({ pageLink, classes }) => {
   const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
     <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none">
-      <NavigateNextIcon />
+      <NavigateNextIcon className={classes.centerText} />
     </Link>
   );
 };
@@ -151,7 +160,7 @@ const BackButton = ({ pageLink, classes }) => {
   const backClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
     <Link href={pageLink} aria-label="Go previous page" className={backClasses} underline="none">
-      <NavigateBeforeIcon />
+      <NavigateBeforeIcon className={classes.centerText} />
     </Link>
   );
 };
@@ -208,7 +217,9 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   (totalCount > 0)
   && (
     <Typography variant="h5" align="center" className={classes.showingText}>
-      {calculateRange}
+      <span className={classes.centerText}>
+        {calculateRange}
+      </span>
     </Typography>
   )
 );
@@ -254,7 +265,7 @@ const PaginationButton = ({
     <>
       <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
         <div className={classes.paginationButton}>
-          <span>{pageNumber}</span>
+          <span className={classes.centerText}>{pageNumber}</span>
         </div>
       </Link>
     </>
