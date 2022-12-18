@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import Input from '@material-ui/core/Input';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
-import { Typography, Link } from '@material-ui/core';
+import { Button, Typography, Link } from '@material-ui/core';
 
 import useQuery from '../../hooks/useQuery';
 
@@ -112,6 +112,19 @@ const styles = () => ({
   hideDisplay: {
     display: 'none',
   },
+  buttonOpenGoToPage: {
+    maxWidth: 28,
+    maxHeight: 28,
+    minWidth: 28,
+    minHeight: 28,
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '0 2px',
+  },
+  goToPageLabel: {
+    fontSize: 30,
+    fontWeight: 700,
+  },
 });
 
 const NextButton = ({ pageLink, classes }) => {
@@ -136,9 +149,9 @@ const BackButton = ({ pageLink, classes }) => {
   );
 };
 
-const GoToPage = ({ classes, totalPages, showGoToPage }) => {
+const GoToPage = ({ classes, totalPages, showButton }) => {
   const label = 'Go to page';
-  const ShowContent = showGoToPage ? undefined : classes.hideDisplay;
+  const ShowContent = showButton ? undefined : classes.hideDisplay;
   const GoToPageClasses = `${classes.goToPageContainer} ${ShowContent}`;
   return (
     <div className={GoToPageClasses}>
@@ -161,10 +174,21 @@ const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
   )
 );
 
-const OpenGoToPageButton = ({ goToPageLabel }) => {
-  const onClick = null;
+const OpenGoToPageButton = ({ goToPageLabel, setShowButton, classes }) => {
+  const [toggle, setToggle] = useState(true);
+  const GoToClasses = `${classes.activeColor} ${classes.buttonOpenGoToPage}`;
   return (
-    <div>{goToPageLabel}</div>
+    <Button
+      className={GoToClasses}
+      onClick={() => {
+        setToggle(!toggle);
+        setShowButton(toggle);
+      }}
+    >
+      <span classNames={classes.goToPageLabel}>
+        {goToPageLabel}
+      </span>
+    </Button>
   );
 };
 
@@ -174,9 +198,16 @@ const PaginationButton = ({
   goToPageLabel,
   currPage,
   link,
+  setShowButton,
 }) => {
   if (pageNumber === goToPageLabel) {
-    return <OpenGoToPageButton goToPageLabel={goToPageLabel} />;
+    return (
+      <OpenGoToPageButton
+        goToPageLabel={goToPageLabel}
+        setShowButton={setShowButton}
+        classes={classes}
+      />
+    );
   }
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
   const PaginationButtonClasses = `${classes.paginationLabel} ${isCurrentPage}`;
@@ -197,6 +228,7 @@ const RenderPaginationButtons = (
     classes,
     goToPageLabel,
     currPage,
+    setShowButton,
   },
 ) => (
   pagesToRender.map((page) => (
@@ -206,6 +238,7 @@ const RenderPaginationButtons = (
       goToPageLabel={goToPageLabel}
       currPage={currPage}
       link={page.link}
+      setShowButton={setShowButton}
     />
   ))
 );
@@ -236,6 +269,7 @@ const Pagination = ({
   classes,
 }) => {
   const useDesktop = useMediaQuery('(min-width:838px)');
+  const [showButton, setShowButton] = useState(false);
   const query = useQuery();
   const history = useHistory();
   const totalPages = Math.ceil(totalCount / perPage);
@@ -297,10 +331,11 @@ const Pagination = ({
                   classes={classes}
                   goToPageLabel={labelForGoToPage}
                   currPage={page}
+                  setShowButton={setShowButton}
                 />
                 <NextButton pageLink={nextButton} classes={classes} />
               </div>
-              <GoToPage totalPages={totalPages} classes={classes} />
+              <GoToPage totalPages={totalPages} classes={classes} showButton={showButton} />
             </>
           )}
         </div>
