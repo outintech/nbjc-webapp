@@ -127,6 +127,13 @@ const styles = () => ({
   },
 });
 
+const getPageLink = (history, query, perPage, page) => {
+  const base = history.location.pathname;
+  query.set('page', page);
+  query.set('perPage', perPage);
+  return `${base}?${query.toString()}`;
+};
+
 const NextButton = ({ pageLink, classes }) => {
   const color = pageLink === undefined ? classes.inactiveColor : classes.activeColor;
   const removeUnderline = classes.paginationLabel;
@@ -149,18 +156,31 @@ const BackButton = ({ pageLink, classes }) => {
   );
 };
 
-const GoToPage = ({ classes, totalPages, showButton }) => {
+const GoToPage = ({
+  classes,
+  totalPages,
+  showButton,
+  navigationObject,
+}) => {
+  const [input, setInput] = useState('');
   const label = 'Go to page';
   const ShowContent = showButton ? undefined : classes.hideDisplay;
   const GoToPageClasses = `${classes.goToPageContainer} ${ShowContent}`;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigationObject.history.push(getPageLink(...Object.values(navigationObject), input));
+  };
   return (
     <div className={GoToPageClasses}>
-      <span>{label}</span>
-      <Input
-        inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
-        defaultValue={totalPages}
-        className={classes.pageInputNavigation}
-      />
+      <form onSubmit={handleSubmit}>
+        <span>{label}</span>
+        <Input
+          inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
+          defaultValue={input}
+          className={classes.pageInputNavigation}
+          onChange={(event) => setInput(event.target.value)}
+        />
+      </form>
     </div>
   );
 };
@@ -253,12 +273,9 @@ const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, qu
     lastPage: ((totalPages !== page) ? totalPages : null),
   };
   pagesToRender = Object.values(pagesToRender).filter((pgNum) => pgNum !== null);
-  const pagesWithLinks = pagesToRender.map((pg) => {
-    const base = history.location.pathname;
-    query.set('page', pg);
-    query.set('perPage', perPage);
-    return { pageNumber: pg, link: `${base}?${query.toString()}` };
-  });
+  const pagesWithLinks = pagesToRender.map((pg) => (
+    { pageNumber: pg, link: getPageLink(history, query, perPage, pg) }
+  ));
   return pagesWithLinks;
 };
 
@@ -307,6 +324,10 @@ const Pagination = ({
     return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
   };
 
+  const navigationObject = {
+    history, query, perPage,
+  };
+
   return (
     <div className={classes.root}>
       <div className={promptClasses}>
@@ -335,7 +356,12 @@ const Pagination = ({
                 />
                 <NextButton pageLink={nextButton} classes={classes} />
               </div>
-              <GoToPage totalPages={totalPages} classes={classes} showButton={showButton} />
+              <GoToPage
+                totalPages={totalPages}
+                classes={classes}
+                showButton={showButton}
+                navigationObject={navigationObject}
+              />
             </>
           )}
         </div>
