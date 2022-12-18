@@ -76,7 +76,7 @@ const styles = (theme) => ({
     margin: 0,
     flex: 1,
   },
-  icon: {
+  addressIcon: {
     height: '100%',
     width: '23px',
   },
@@ -102,28 +102,26 @@ const styles = (theme) => ({
     fontWeight: 700,
     display: 'flex',
   },
-  CTAcontainer: {
+  CTAParentContainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
   },
-  buttonContainer: {
+  CTAContainer: {
     display: 'flex',
-    alignItems: 'flex-end',
-    textAlign: 'center',
     maxWidth: '800px',
   },
-  tagContainer: {
+  chipContainer: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 3,
     maxWidth: '800px',
   },
-  bottomContent: {
+  bottomCardRowContainer: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
-  mobileBottomContent: {
+  mobileBottomMargins: {
     marginBottom: 10,
     marginTop: 10,
     marginLeft: 10,
@@ -132,6 +130,7 @@ const styles = (theme) => ({
     display: 'flex',
     textDecoration: 'none',
     marginRight: 'auto',
+    color: '#666666',
   },
   purple: {
     color: '#633AA3',
@@ -144,6 +143,7 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    color: '#666666',
   },
 
   hideElement: {
@@ -154,9 +154,6 @@ const styles = (theme) => ({
     display: 'flex',
     marginLeft: '5px',
     marginTop: '5px',
-  },
-  ctaSpacing: {
-    marginRight: 2,
   },
   indexNumberMargins: {
     marginRight: 5,
@@ -196,11 +193,40 @@ const Image = (
   );
 };
 
+const DisplayAddressRow = ({ classes, address }) => {
+  const AddressLink = convertAddressToGoogleMapsLink(address);
+  return (
+    <>
+      <a
+        href={AddressLink}
+        className={classes.addressContainer}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <LocationOnIcon className={classes.addressIcon} />
+        <Typography variant="body1" className={classes.addressString}>
+          {address}
+        </Typography>
+      </a>
+    </>
+  );
+};
+
+const AddReviewCTA = ({ id, classes }) => {
+  const link = `/spaces/${id}/reviews/new`;
+  return (
+    <a href={link} className={classes.ratingContainer}>
+      <RateReviewIcon color="secondary" fontSize="small" />
+      <span>Add Review</span>
+    </a>
+  );
+};
+
 const RatingCTA = ({ classes, averageRating }) => {
   const label = 'Rating';
   return (
-    <Box className={[classes.ratingContainer, classes.gray]}>
-      <span className={classes.ctaSpacing}>{label}</span>
+    <Box className={classes.ratingContainer}>
+      <span>{label}</span>
       <StarIcon color="secondary" fontSize="small" />
       <span className={classes.purple}>{averageRating}</span>
     </Box>
@@ -209,26 +235,64 @@ const RatingCTA = ({ classes, averageRating }) => {
 
 const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
   const phoneString = `tel:${phoneNumber}`;
-  const PhoneLabel = (
-    <span className={classes.gray}>
-      {formatPhoneNumber(phoneNumber)}
-    </span>
-  );
-  const PhoneLabelOnDesktop = useDesktop ? PhoneLabel : null;
+  const label = (<span>{formatPhoneNumber(phoneNumber)}</span>);
+  const displayLabelOnDesktop = useDesktop ? label : null;
   return (
     <a href={phoneString} className={classes.ratingContainer}>
       <PhoneIcon className={classes.purple} fontSize="small" />
-      {PhoneLabelOnDesktop}
+      {displayLabelOnDesktop}
     </a>
   );
 };
 
 const VisitWebsiteCTA = ({ classes, useDesktop }) => {
-  const displayLabel = useDesktop ? <span>Visit Website</span> : null;
+  const label = useDesktop ? <span>Visit Website</span> : null;
   return (
     <Box className={classes.ratingContainer}>
       <LanguageIcon color="secondary" fontSize="small" />
-      {displayLabel}
+      {label}
+    </Box>
+  );
+};
+
+const DisplayCTAs = (
+  {
+    classes, id, averageRating, phoneNumber, useDesktop,
+  },
+) => (
+  <Box className={classes.CTAParentContainer}>
+    <Box className={classes.CTAContainer}>
+      <AddReviewCTA classes={classes} id={id} />
+      <RatingCTA classes={classes} averageRating={averageRating} />
+      <CallPhoneCTA phoneNumber={phoneNumber} classes={classes} useDesktop={useDesktop} />
+      <VisitWebsiteCTA classes={classes} useDesktop={useDesktop} />
+    </Box>
+  </Box>
+);
+
+const DisplayChips = ({ classes, filters }) => (
+  <Box className={classes.chipContainer}>
+    <ChipList chips={filters} />
+  </Box>
+);
+
+const DisplayBottomCardContent = (
+  {
+    classes, id, averageRating, phoneNumber, useDesktop, filters,
+  },
+) => {
+  const addMarginsForMobile = useDesktop ? '' : classes.mobileMargins;
+  const ParentContainerClass = `${classes.bottomCardRowContainer} ${addMarginsForMobile}`;
+  return (
+    <Box className={ParentContainerClass}>
+      <DisplayChips classes={classes} filters={filters} />
+      <DisplayCTAs
+        classes={classes}
+        id={id}
+        averageRating={averageRating}
+        phoneNumber={phoneNumber}
+        useDesktop={useDesktop}
+      />
     </Box>
   );
 };
@@ -283,41 +347,17 @@ const BusinessCard = ({
                 </p>
                 <MoreVertIcon />
               </Box>
-              <Box>
-                <a
-                  href={convertAddressToGoogleMapsLink({ address })}
-                  className={classes.addressContainer}
-                >
-                  <LocationOnIcon className={classes.icon} />
-                  <Typography variant="body1" className={[classes.gray, classes.addressString]}>
-                    {address}
-                  </Typography>
-                </a>
-              </Box>
+              <DisplayAddressRow classes={classes} address={address} />
             </Box>
           </Box>
-          <Box className={useDesktop
-            ? classes.bottomContent : [classes.bottomContent, classes.mobileBottomContent]}
-          >
-            <Box className={classes.tagContainer}>
-              <ChipList chips={filters} />
-            </Box>
-            <Box className={classes.CTAcontainer}>
-              <Box className={classes.buttonContainer}>
-                <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
-                  <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
-                  <span className={classes.gray}>Add Review</span>
-                </a>
-                <Box className={[classes.ratingContainer, classes.gray]}>
-                  <span className={classes.ctaSpacing}>Rating</span>
-                  <StarIcon color="secondary" fontSize="small" />
-                  <span className={classes.purple}>{averageRating}</span>
-                </Box>
-                <CallPhoneCTA phoneNumber={phoneNumber} classes={classes} useDesktop={useDesktop} />
-                <VisitWebsiteCTA classes={classes} useDesktop={useDesktop} />
-              </Box>
-            </Box>
-          </Box>
+          <DisplayBottomCardContent
+            classes={classes}
+            id={id}
+            averageRating={averageRating}
+            phoneNumber={phoneNumber}
+            useDesktop={useDesktop}
+            filters={filters}
+          />
         </Box>
       </Box>
     </Box>
