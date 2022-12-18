@@ -62,7 +62,7 @@ const styles = () => ({
     marginBottom: '2px',
   },
   TopCardContainer: {
-    marginBottom: 4,
+    marginBottom: 10,
     width: '100%',
   },
   titleBarContainer: {
@@ -113,6 +113,9 @@ const styles = () => ({
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
+  },
+  BusinessCardContainer: {
+    display: 'flex',
   },
 });
 
@@ -325,7 +328,7 @@ const BusinessCard = ({
 
   return (
     <Box className={classes.root}>
-      <Box style={{ display: 'flex' }}>
+      <Box className={classes.BusinessCardContainer}>
         <Image
           classes={classes}
           imageUrl={imageUrl}
