@@ -84,11 +84,11 @@ const styles = () => ({
   CTAParentContainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
-    maxWidth: '800px',
     minHeight: '40px',
   },
   CTAContainer: {
     display: 'flex',
+    maxWidth: '800px',
   },
   CTAButtonContainer: {
     display: 'flex',
@@ -122,6 +122,7 @@ const styles = () => ({
   },
   BusinessCardContainer: {
     display: 'flex',
+    margin: 16,
   },
 });
 
