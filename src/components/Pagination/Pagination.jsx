@@ -232,7 +232,7 @@ const PaginationButton = ({
     );
   }
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
-  const PaginationButtonClasses = `${classes.paginationLabel} ${isCurrentPage}`;
+  const PaginationButtonClasses = `${classes.paginationLabel} ${classes.activeColor} ${isCurrentPage}`;
   return (
     <>
       <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
