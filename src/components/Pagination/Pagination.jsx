@@ -8,6 +8,8 @@ import Input from '@material-ui/core/Input';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Typography, Link } from '@material-ui/core';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 import useQuery from '../../hooks/useQuery';
 
@@ -140,7 +142,7 @@ const NextButton = ({ pageLink, classes }) => {
   const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
     <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none">
-      {'>'}
+      <NavigateNextIcon />
     </Link>
   );
 };
@@ -151,7 +153,7 @@ const BackButton = ({ pageLink, classes }) => {
   const backClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
     <Link href={pageLink} aria-label="Go previous page" className={backClasses} underline="none">
-      {'<'}
+      <NavigateBeforeIcon />
     </Link>
   );
 };
