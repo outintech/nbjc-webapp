@@ -79,6 +79,7 @@ const styles = () => ({
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
     maxWidth: '800px',
+    minHeight: '40px',
   },
   CTAContainer: {
     display: 'flex',
