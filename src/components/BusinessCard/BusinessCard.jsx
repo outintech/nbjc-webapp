@@ -247,7 +247,7 @@ const BusinessCard = ({
                   <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
                   <span className={classes.grayColor}>Add Review</span>
                 </a>
-                <Box className={classes.ratingContainer}>
+                <Box className={[classes.ratingContainer, classes.grayColor]}>
                   <span className={classes.ctaSpacing}>Rating</span>
                   <StarIcon color="secondary" fontSize="small" />
                   <span className={classes.purpleColor}>{averageRating}</span>
