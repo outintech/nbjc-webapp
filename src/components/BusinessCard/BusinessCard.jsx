@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -38,7 +38,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     overflow: 'hidden',
   },
-  image: {
+  cardImage: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
@@ -133,10 +133,10 @@ const styles = (theme) => ({
     textDecoration: 'none',
     marginRight: 'auto',
   },
-  purpleColor: {
+  purple: {
     color: '#633AA3',
   },
-  grayColor: {
+  gray: {
     color: '#666666',
   },
   addressString: {
@@ -168,7 +168,7 @@ const convertAddressToGoogleMapsLink = (businessAddress) => {
   return googleAPIQuery + encodeURIComponent(businessAddress.address);
 };
 
-const formatTenDigitPhoneNumber = (phoneNumberString) => {
+const formatPhoneNumber = (phoneNumberString) => {
   const cleaned = (`'' + ${phoneNumberString}`).replace(/\D/g, '');
   const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
   if (match) {
@@ -176,6 +176,61 @@ const formatTenDigitPhoneNumber = (phoneNumberString) => {
     return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
   }
   return 'No number found';
+};
+
+const Image = (
+  {
+    useDesktop, classes, id, imageUrl,
+  },
+) => {
+  const placeholderImage = 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
+  const dimensions = useDesktop ? classes.largeImageDimensions : classes.smallImageDimensions;
+  const CardImage = imageUrl || placeholderImage;
+  const LinkToSpace = `/spaces/${id}`;
+  return (
+    <Box className={`${classes.imageContainer} ${dimensions}`}>
+      <a href={LinkToSpace}>
+        <img src={CardImage} alt="business" className={classes.cardImage} />
+      </a>
+    </Box>
+  );
+};
+
+const RatingCTA = ({ classes, averageRating }) => {
+  const label = 'Rating';
+  return (
+    <Box className={[classes.ratingContainer, classes.gray]}>
+      <span className={classes.ctaSpacing}>{label}</span>
+      <StarIcon color="secondary" fontSize="small" />
+      <span className={classes.purple}>{averageRating}</span>
+    </Box>
+  );
+};
+
+const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
+  const phoneString = `tel:${phoneNumber}`;
+  const PhoneLabel = (
+    <span className={classes.gray}>
+      {formatPhoneNumber(phoneNumber)}
+    </span>
+  );
+  const PhoneLabelOnDesktop = useDesktop ? PhoneLabel : null;
+  return (
+    <a href={phoneString} className={classes.ratingContainer}>
+      <PhoneIcon className={classes.purple} fontSize="small" />
+      {PhoneLabelOnDesktop}
+    </a>
+  );
+};
+
+const VisitWebsiteCTA = ({ classes, useDesktop }) => {
+  const displayLabel = useDesktop ? <span>Visit Website</span> : null;
+  return (
+    <Box className={classes.ratingContainer}>
+      <LanguageIcon color="secondary" fontSize="small" />
+      {displayLabel}
+    </Box>
+  );
 };
 
 const BusinessCard = ({
@@ -197,25 +252,27 @@ const BusinessCard = ({
 }) => {
   const useDesktop = useMediaQuery('(min-width:838px)');
 
-  const Image = () => {
-    const CardImage = imageUrl || 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
-    const ImageDimension = useDesktop ? classes.largeImageDimensions : classes.smallImageDimensions;
-    return (
-      <Box className={[classes.imageContainer, ImageDimension]}>
-        <a href={`/spaces/${id}`}>
-          <img src={CardImage} alt="business" className={classes.image} />
-        </a>
-      </Box>
-    );
-  };
-
   return (
     <Box className={classes.root}>
       <Box className={useDesktop ? classes.cardParentContainer : []}>
-        {useDesktop ? <Image /> : null}
+        {useDesktop ? (
+          <Image
+            classes={classes}
+            imageUrl={imageUrl}
+            useDesktop={useDesktop}
+            id={id}
+          />
+        ) : null}
         <Box className={classes.contentContainer}>
           <Box className={useDesktop ? [] : classes.mobileContainer}>
-            {useDesktop ? null : <Image />}
+            {useDesktop ? null : (
+              <Image
+                classes={classes}
+                imageUrl={imageUrl}
+                useDesktop={useDesktop}
+                id={id}
+              />
+            )}
             <Box className={classes.titleAddressContainer}>
               <Box className={useDesktop ? classes.titleContainer : classes.mobileTitleContainer}>
                 <p className={useDesktop ? classes.businessTitle : classes.mobileBusinessTitle}>
@@ -232,7 +289,7 @@ const BusinessCard = ({
                   className={classes.addressContainer}
                 >
                   <LocationOnIcon className={classes.icon} />
-                  <Typography variant="body1" className={[classes.grayColor, classes.addressString]}>
+                  <Typography variant="body1" className={[classes.gray, classes.addressString]}>
                     {address}
                   </Typography>
                 </a>
@@ -249,25 +306,15 @@ const BusinessCard = ({
               <Box className={classes.buttonContainer}>
                 <a href={`/spaces/${id}/reviews/new`} className={classes.ratingContainer}>
                   <RateReviewIcon color="secondary" fontSize="small" className={classes.ctaSpacing} />
-                  <span className={classes.grayColor}>Add Review</span>
+                  <span className={classes.gray}>Add Review</span>
                 </a>
-                <Box className={[classes.ratingContainer, classes.grayColor]}>
+                <Box className={[classes.ratingContainer, classes.gray]}>
                   <span className={classes.ctaSpacing}>Rating</span>
                   <StarIcon color="secondary" fontSize="small" />
-                  <span className={classes.purpleColor}>{averageRating}</span>
+                  <span className={classes.purple}>{averageRating}</span>
                 </Box>
-                <a href={`tel:${phoneNumber}`} className={classes.ratingContainer}>
-                  <PhoneIcon className={classes.purpleColor} fontSize="small" />
-                  {useDesktop ? (
-                    <span className={classes.grayColor}>
-                      {formatTenDigitPhoneNumber(phoneNumber)}
-                    </span>
-                  ) : null}
-                </a>
-                <Box className={classes.ratingContainer}>
-                  <LanguageIcon color="secondary" fontSize="small" />
-                  {useDesktop ? <span>Visit Website</span> : null}
-                </Box>
+                <CallPhoneCTA phoneNumber={phoneNumber} classes={classes} useDesktop={useDesktop} />
+                <VisitWebsiteCTA classes={classes} useDesktop={useDesktop} />
               </Box>
             </Box>
           </Box>
