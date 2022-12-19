@@ -82,10 +82,10 @@ const styles = () => ({
     lineHeight: '32px',
     marginBottom: 16,
   },
-  leftSideFilter: {
+  SortLeftContainer: {
     flex: 1,
   },
-  rightSideFilter: {
+  SortRightContainer: {
     display: 'flex',
   },
   filterDropdown: {
@@ -124,6 +124,9 @@ const styles = () => ({
     lineHeight: '17.5px',
     color: '#1E1131',
     marginRight: 6,
+  },
+  SortParentContainer: {
+    display: 'flex',
   },
 });
 
@@ -207,6 +210,18 @@ const RatingSortContainer = ({ classes }) => {
     </div>
   );
 };
+
+const SortByBar = ({ classes, pagination }) => (
+  <section className={classes.SortParentContainer}>
+    <div className={classes.SortLeftContainer}>
+      <SortingPerPageContainer classes={classes} perPage={pagination.per_page} />
+    </div>
+    <div className={classes.SortRightContainer}>
+      <DistanceSortContainer classes={classes} />
+      <RatingSortContainer classes={classes} />
+    </div>
+  </section>
+);
 
 const Search = ({
   classes,
@@ -301,15 +316,7 @@ const Search = ({
                     </Button>
                   </div>
                 )}
-                <div style={{ display: 'flex' }}>
-                  <div className={classes.leftSideFilter}>
-                    <SortingPerPageContainer classes={classes} perPage={pagination.per_page} />
-                  </div>
-                  <div className={classes.rightSideFilter}>
-                    <DistanceSortContainer classes={classes} />
-                    <RatingSortContainer classes={classes} />
-                  </div>
-                </div>
+                <SortByBar classes={classes} pagination={pagination} />
               </div>
             )
             : null}
