@@ -147,6 +147,12 @@ const styles = () => ({
   SortParentContainerMobile: {
     flexDirection: 'column',
   },
+  CardMargins: {
+    marginBottom: 40,
+  },
+  HeaderMargins: {
+    marginTop: 24,
+  },
 });
 
 const PerPageDropDown = ({ classes, perPage }) => {
@@ -304,6 +310,58 @@ const MobileHeaderRow = (
   );
 };
 
+const FilterPanelAside = ({
+  openFilter,
+  setOpenFilter,
+  isWiderThanBreakpoint,
+  indicators,
+  search,
+  updateSearch,
+  searchResults,
+  classes,
+}) => {
+  const ShowFilterPanel = searchResults !== null && searchResults.length > 0
+    && (isWiderThanBreakpoint || openFilter);
+  if (ShowFilterPanel === false) {
+    return null;
+  }
+  return (
+    <div className={classes.filtersContainer}>
+      <FilterPanel
+        open={openFilter}
+        onClose={() => setOpenFilter(false)}
+        type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
+        allIndicators={indicators}
+        search={search}
+        updateSearch={updateSearch}
+        resultCount={searchResults.length}
+      />
+    </div>
+  );
+};
+
+const TopSortByMenus = ({
+  classes, pagination, setOpenFilter, openFilter, isWiderThanBreakpoint, display,
+}) => {
+  if (display === false) {
+    return null;
+  }
+  const SortBar = isWiderThanBreakpoint ? <SortByBar classes={classes} pagination={pagination} />
+    : <SortByBarMobile classes={classes} pagination={pagination} />;
+  return (
+    <header className={classes.HeaderMargins}>
+      <NumberOfResultsHeader classes={classes} pagination={pagination} />
+      <MobileHeaderRow
+        classes={classes}
+        setOpenFilter={setOpenFilter}
+        openFilter={openFilter}
+        display={!isWiderThanBreakpoint}
+      />
+      {SortBar}
+    </header>
+  );
+};
+
 const Search = ({
   classes,
   coords,
@@ -344,6 +402,7 @@ const Search = ({
   const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
   const SearchPageMargins = isWiderThanBreakpoint ? classes.DesktopMargins : classes.MobileMargins;
   const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
+  const doSearchResultsExist = searchResults !== null && searchResults.length > 0;
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
 
@@ -359,41 +418,28 @@ const Search = ({
         />
       )}
       <div className={cx(classes.resultsWrapper, { [classes.desktop]: isWiderThanBreakpoint })}>
-        {searchResults !== null
-          && searchResults.length > 0
-          && (isWiderThanBreakpoint || openFilter)
-          && (
-            <div className={classes.filtersContainer}>
-              <FilterPanel
-                open={openFilter}
-                onClose={() => setOpenFilter(false)}
-                type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
-                allIndicators={indicators}
-                search={search}
-                updateSearch={updateSearch}
-                resultCount={searchResults.length}
-              />
-            </div>
-          )}
+        <FilterPanelAside
+          openFilter={openFilter}
+          setOpenFilter={setOpenFilter}
+          isWiderThanBreakpoint={isWiderThanBreakpoint}
+          indicators={indicators}
+          search={search}
+          updateSearch={updateSearch}
+          searchResults={searchResults}
+          classes={classes}
+        />
         <div className={SearchPageMargins}>
-          {searchResults !== null && searchResults.length > 0
-            ? (
-              <header style={{ marginTop: '24px' }}>
-                <NumberOfResultsHeader classes={classes} pagination={pagination} />
-                <MobileHeaderRow
-                  classes={classes}
-                  setOpenFilter={setOpenFilter}
-                  openFilter={openFilter}
-                  display={!isWiderThanBreakpoint}
-                />
-                {isWiderThanBreakpoint ? <SortByBar classes={classes} pagination={pagination} />
-                  : <SortByBarMobile classes={classes} pagination={pagination} />}
-              </header>
-            )
-            : null}
+          <TopSortByMenus
+            classes={classes}
+            pagination={pagination}
+            setOpenFilter={setOpenFilter}
+            openFilter={openFilter}
+            isWiderThanBreakpoint={isWiderThanBreakpoint}
+            display={doSearchResultsExist}
+          />
           <div>
             {FoundOneOrMoreResults && searchResults.map((result, index) => (
-              <div style={{ marginBottom: 40 }} key={result.id}>
+              <div className={classes.CardMargins} key={result.id}>
                 <BusinessCard
                   business={result}
                   key={result.id}
@@ -414,7 +460,6 @@ const Search = ({
           )}
         </div>
       </div>
-
       {searchResults !== null
         && search.searchTerm !== null
         && searchResults.length === 0
