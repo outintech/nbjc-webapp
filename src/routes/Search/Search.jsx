@@ -7,6 +7,8 @@ import cx from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
@@ -110,7 +112,101 @@ const styles = () => ({
   searchBodyContainer: {
     width: '100%',
   },
+  SortingPerPageContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    color: '#633AA3',
+    textTransform: 'none',
+  },
+  SearchSettingLabel: {
+    fontWeight: 600,
+    lineHeight: '17.5px',
+    color: '#1E1131',
+    marginRight: 6,
+  },
 });
+
+const PerPageDropDown = ({ classes, perPage }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const placeholderValue = `${perPage} per page`;
+  return (
+    <>
+      <Button
+        onClick={handleClick}
+        variant="text"
+        size="small"
+        aria-controls={open ? 'Perpage-Menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+      >
+        <div className={classes.SortingPerPageContainer}>
+          <span>{placeholderValue}</span>
+          <ArrowDropDownIcon />
+        </div>
+      </Button>
+      <Menu
+        id="Perpage-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        MenuListProps={{
+          'aria-labelledby': 'How many results',
+        }}
+      >
+        <MenuItem onClick={handleClose}>10 per page</MenuItem>
+        <MenuItem onClick={handleClose}>25 per page</MenuItem>
+        <MenuItem onClick={handleClose}>50 per page</MenuItem>
+      </Menu>
+    </>
+  );
+};
+
+const SortingPerPageContainer = ({ classes, perPage }) => {
+  const label = 'Showing:';
+  return (
+    <div className={classes.SortingPerPageContainer}>
+      <span className={classes.SearchSettingLabel}>{label}</span>
+      <PerPageDropDown classes={classes} perPage={perPage} />
+    </div>
+  );
+};
+
+const DistanceSortContainer = ({ classes }) => {
+  const label = 'Distance:';
+  return (
+    <div className={classes.SortingPerPageContainer}>
+      <span className={classes.SearchSettingLabel}>{label}</span>
+      <ArrowDropDownIcon />
+    </div>
+  );
+};
+
+const RatingSortContainer = ({ classes }) => {
+  const label = 'Sort by:';
+  return (
+    <div className={classes.SortingPerPageContainer}>
+      <span className={classes.SearchSettingLabel}>{label}</span>
+      <ArrowDropDownIcon />
+    </div>
+  );
+};
 
 const Search = ({
   classes,
@@ -130,6 +226,7 @@ const Search = ({
     userLocation,
     indicators = [],
   } = useSearch({ userCoords: coords, isGeolocationEnabled });
+
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -206,29 +303,11 @@ const Search = ({
                 )}
                 <div style={{ display: 'flex' }}>
                   <div className={classes.leftSideFilter}>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Showing:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>10 per page</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
+                    <SortingPerPageContainer classes={classes} perPage={pagination.per_page} />
                   </div>
                   <div className={classes.rightSideFilter}>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Distance:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>5 miles</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Sort by:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>Highly Rated</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
+                    <DistanceSortContainer classes={classes} />
+                    <RatingSortContainer classes={classes} />
                   </div>
                 </div>
               </div>
