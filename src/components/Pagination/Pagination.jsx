@@ -92,7 +92,7 @@ const styles = () => ({
   },
   mobilePaginationListContainer: {
     display: 'flex',
-    marginTop: 44,
+    marginTop: 0,
     justifyContent: 'center',
   },
   paginationLabel: {
@@ -213,16 +213,25 @@ const GoToPage = ({
   );
 };
 
-const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
-  (totalCount > 0)
-  && (
-    <Typography variant="h5" align="center" className={classes.showingText}>
-      <span className={classes.centerText}>
-        {calculateRange}
-      </span>
-    </Typography>
-  )
-);
+const RangeOfResults = (
+  {
+    classes, totalCount, calculateRange, desktopDimensions,
+  },
+) => {
+  if (desktopDimensions === false) {
+    return null;
+  }
+  return (
+    (totalCount > 0) && (desktopDimensions)
+    && (
+      <Typography variant="h5" align="center" className={classes.showingText}>
+        <span className={classes.centerText}>
+          {calculateRange}
+        </span>
+      </Typography>
+    )
+  );
+};
 
 const OpenGoToPageButton = ({ goToPageLabel, setShowButton, classes }) => {
   const [toggle, setToggle] = useState(true);
@@ -367,6 +376,7 @@ const Pagination = ({
             totalCount={totalPages}
             classes={classes}
             calculateRange={CalculatePageRange()}
+            desktopDimensions={useDesktop}
           />
         </div>
         <div className={navigationContainerClasses}>
