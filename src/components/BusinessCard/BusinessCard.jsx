@@ -98,6 +98,7 @@ const styles = () => ({
   },
   purpleIcon: {
     color: '#633AA3',
+    fontWeight: 500,
   },
   addressString: {
     textDecoration: 'underline',
