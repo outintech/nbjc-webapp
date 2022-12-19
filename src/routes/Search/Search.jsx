@@ -64,16 +64,20 @@ const styles = () => ({
     flexGrow: 2,
   },
   filterButton: {
-    width: '100px !important',
+    width: '76px !important',
     marginBottom: '16px',
     height: 36,
     border: '#EBE5F6 1px solid',
+    padding: 8,
+    gap: 10,
+    borderRadius: 4,
   },
   filterButtonText: {
     fontWeight: 600,
     fontSize: '14px',
     lineHeight: '20px',
     color: '#1E1131',
+    textTransform: 'none',
   },
   NumOfResultsContainer: {
     fontWeight: 600,
@@ -81,6 +85,13 @@ const styles = () => ({
     color: '#1E1131',
     lineHeight: '32px',
     marginBottom: 16,
+  },
+  NumResultsMobileFont: {
+    fontWeight: 600,
+    fontSize: '20px',
+    color: '#1E1131',
+    lineHeight: '25px',
+    marginBottom: 8,
   },
   SortLeftContainer: {
     flex: 1,
@@ -269,12 +280,12 @@ const SortByBarBottomMobile = ({ classes, perPage }) => (
   </section>
 );
 
-const NumberOfResultsHeader = ({ classes, pagination }) => {
-  const numOfResults = pagination.total_count;
-  const resultString = numOfResults >= 2 ? 'Results' : 'Result';
-  const headerText = `${numOfResults} Search ${resultString}`;
+const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
+  const resultString = pagination.total_count >= 2 ? 'Results' : 'Result';
+  const headerText = `${pagination.total_count} Search ${resultString}`;
+  const headerClass = mobile ? classes.NumResultsMobileFont : classes.NumOfResultsContainer;
   return (
-    <div className={classes.NumOfResultsContainer}>
+    <div className={headerClass}>
       {headerText}
     </div>
   );
@@ -288,7 +299,7 @@ const OpenFilterPanelButton = ({ classes, openFilter, setOpenFilter }) => (
       color="primary"
       className={classes.filterButton}
     >
-      FILTER
+      <span className={classes.filterButtonText}>Filter</span>
     </Button>
   </div>
 );
@@ -350,7 +361,11 @@ const TopSortByMenus = ({
     : <SortByBarMobile classes={classes} pagination={pagination} />;
   return (
     <header className={classes.HeaderMargins}>
-      <NumberOfResultsHeader classes={classes} pagination={pagination} />
+      <NumberOfResultsHeader
+        classes={classes}
+        pagination={pagination}
+        mobile={!isWiderThanBreakpoint}
+      />
       <MobileHeaderRow
         classes={classes}
         setOpenFilter={setOpenFilter}
@@ -402,7 +417,6 @@ const Search = ({
   const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
   const SearchPageMargins = isWiderThanBreakpoint ? classes.DesktopMargins : classes.MobileMargins;
   const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
-  const doSearchResultsExist = searchResults !== null && searchResults.length > 0;
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
 
@@ -435,7 +449,7 @@ const Search = ({
             setOpenFilter={setOpenFilter}
             openFilter={openFilter}
             isWiderThanBreakpoint={isWiderThanBreakpoint}
-            display={doSearchResultsExist}
+            display={FoundOneOrMoreResults}
           />
           <div>
             {FoundOneOrMoreResults && searchResults.map((result, index) => (
