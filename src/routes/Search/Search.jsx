@@ -33,12 +33,12 @@ const styles = () => ({
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
   },
-  searchResult: {
+  DesktopMargins: {
     marginLeft: 40,
     marginBottom: 20,
     marginRight: 142,
   },
-  searchResultBreakpoint: {
+  MobileMargins: {
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
@@ -75,7 +75,7 @@ const styles = () => ({
     lineHeight: '20px',
     color: '#1E1131',
   },
-  searchCountHeader: {
+  NumOfResultsContainer: {
     fontWeight: 600,
     fontSize: '32px',
     color: '#1E1131',
@@ -112,12 +112,21 @@ const styles = () => ({
   searchBodyContainer: {
     width: '100%',
   },
-  SortingPerPageContainer: {
+  SortMenuContainer: {
     display: 'flex',
     textAlign: 'center',
     alignItems: 'center',
     color: '#633AA3',
     textTransform: 'none',
+  },
+  SortMobileMenuContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    width: '100%',
+    minHeight: '40px',
+    backgroundColor: '#F2F2F2',
+    marginBottom: 8,
   },
   SearchSettingLabel: {
     fontWeight: 600,
@@ -125,8 +134,18 @@ const styles = () => ({
     color: '#1E1131',
     marginRight: 6,
   },
+  SearchSettingMobileLabel: {
+    fontWeight: 400,
+    lineHeight: '17.5px',
+    color: '#1E1131',
+    fontSize: '16px',
+    marginLeft: 32,
+  },
   SortParentContainer: {
     display: 'flex',
+  },
+  SortParentContainerMobile: {
+    flexDirection: 'column',
   },
 });
 
@@ -151,7 +170,7 @@ const PerPageDropDown = ({ classes, perPage }) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
-        <div className={classes.SortingPerPageContainer}>
+        <div className={classes.SortMenuContainer}>
           <span>{placeholderValue}</span>
           <ArrowDropDownIcon />
         </div>
@@ -181,31 +200,39 @@ const PerPageDropDown = ({ classes, perPage }) => {
   );
 };
 
-const SortingPerPageContainer = ({ classes, perPage }) => {
+const SortingPerPageContainer = ({ classes, perPage, mobile }) => {
   const label = 'Showing:';
+  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
+  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
   return (
-    <div className={classes.SortingPerPageContainer}>
-      <span className={classes.SearchSettingLabel}>{label}</span>
+    <div className={SortContainerClass}>
+      <span className={SearchSettingClass}>{label}</span>
       <PerPageDropDown classes={classes} perPage={perPage} />
     </div>
   );
 };
 
-const DistanceSortContainer = ({ classes }) => {
+const DistanceSortContainer = ({ classes, mobile }) => {
   const label = 'Distance:';
+  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
+  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
+
   return (
-    <div className={classes.SortingPerPageContainer}>
-      <span className={classes.SearchSettingLabel}>{label}</span>
+    <div className={SortContainerClass}>
+      <span className={SearchSettingClass}>{label}</span>
       <ArrowDropDownIcon />
     </div>
   );
 };
 
-const RatingSortContainer = ({ classes }) => {
+const RatingSortContainer = ({ classes, mobile }) => {
   const label = 'Sort by:';
+  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
+  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
+
   return (
-    <div className={classes.SortingPerPageContainer}>
-      <span className={classes.SearchSettingLabel}>{label}</span>
+    <div className={SortContainerClass}>
+      <span className={SearchSettingClass}>{label}</span>
       <ArrowDropDownIcon />
     </div>
   );
@@ -223,13 +250,65 @@ const SortByBar = ({ classes, pagination }) => (
   </section>
 );
 
+const SortByBarMobile = ({ classes }) => (
+  <section className={classes.SortMobileParentContainer}>
+    <RatingSortContainer classes={classes} mobile />
+    <DistanceSortContainer classes={classes} mobile />
+  </section>
+);
+
+const SortByBarBottomMobile = ({ classes, perPage }) => (
+  <section className={classes.SortParentContainer}>
+    <SortingPerPageContainer classes={classes} perPage={perPage} mobile />
+  </section>
+);
+
+const NumberOfResultsHeader = ({ classes, pagination }) => {
+  const numOfResults = pagination.total_count;
+  const resultString = numOfResults >= 2 ? 'Results' : 'Result';
+  const headerText = `${numOfResults} Search ${resultString}`;
+  return (
+    <div className={classes.NumOfResultsContainer}>
+      {headerText}
+    </div>
+  );
+};
+
+const OpenFilterPanelButton = ({ classes, openFilter, setOpenFilter }) => (
+  <div>
+    <Button
+      variant="outlined"
+      onClick={() => setOpenFilter(!openFilter)}
+      color="primary"
+      className={classes.filterButton}
+    >
+      FILTER
+    </Button>
+  </div>
+);
+
+const MobileHeaderRow = (
+  {
+    classes, openFilter, setOpenFilter, display,
+  },
+) => {
+  if (display === false) {
+    return null;
+  }
+  return (
+    <OpenFilterPanelButton
+      classes={classes}
+      openFilter={openFilter}
+      setOpenFilter={setOpenFilter}
+    />
+  );
+};
+
 const Search = ({
   classes,
   coords,
   isGeolocationEnabled,
 }) => {
-  const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
-
   const [openFilter, setOpenFilter] = useState(false);
   const {
     updateSearch,
@@ -262,6 +341,10 @@ const Search = ({
     updateFilters('rating', changedFilters.stars);
   };
 
+  const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
+  const SearchPageMargins = isWiderThanBreakpoint ? classes.DesktopMargins : classes.MobileMargins;
+  const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
+
   const isGeoLoading = isGeolocationEnabled && coords === null;
 
   return (
@@ -292,56 +375,36 @@ const Search = ({
               />
             </div>
           )}
-        <div className={classes.searchBodyContainer}>
+        <div className={SearchPageMargins}>
           {searchResults !== null && searchResults.length > 0
             ? (
-              <div
-                className={isWiderThanBreakpoint
-                  ? classes.searchResult
-                  : classes.searchResultBreakpoint}
-                style={{ marginTop: '24px' }}
-              >
-                <div className={classes.searchCountHeader}>
-                  {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
-                </div>
-                {!isWiderThanBreakpoint && (
-                  <div>
-                    <Button
-                      variant="outlined"
-                      onClick={() => setOpenFilter(!openFilter)}
-                      color="primary"
-                      className={classes.filterButton}
-                    >
-                      FILTER
-                    </Button>
-                  </div>
-                )}
-                <SortByBar classes={classes} pagination={pagination} />
-              </div>
+              <header style={{ marginTop: '24px' }}>
+                <NumberOfResultsHeader classes={classes} pagination={pagination} />
+                <MobileHeaderRow
+                  classes={classes}
+                  setOpenFilter={setOpenFilter}
+                  openFilter={openFilter}
+                  display={!isWiderThanBreakpoint}
+                />
+                {isWiderThanBreakpoint ? <SortByBar classes={classes} pagination={pagination} />
+                  : <SortByBarMobile classes={classes} pagination={pagination} />}
+              </header>
             )
             : null}
           <div>
-            {searchResults !== null && searchResults.length > 0
-              && searchResults.map((result, index) => (
-                <div
-                  className={isWiderThanBreakpoint
-                    ? classes.searchResult
-                    : classes.searchResultBreakpoint}
+            {FoundOneOrMoreResults && searchResults.map((result, index) => (
+              <div style={{ marginBottom: 40 }} key={result.id}>
+                <BusinessCard
+                  business={result}
                   key={result.id}
-                >
-                  <BusinessCard
-                    business={result}
-                    key={result.id}
-                    count={(pagination.page - 1) * 10 + index + 1}
-                  />
-                </div>
-              ))}
+                  count={(pagination.page - 1) * 10 + index + 1}
+                />
+              </div>
+            ))}
           </div>
-          {pagination && pagination !== null && (
-            <div className={isWiderThanBreakpoint
-              ? classes.searchResult
-              : classes.searchResultBreakpoint}
-            >
+          {pagination && pagination !== null && !loading && (
+            <div>
+              {isWiderThanBreakpoint ? '' : <SortByBarBottomMobile classes={classes} perPage={pagination.per_page} mobile />}
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
