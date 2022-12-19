@@ -352,25 +352,25 @@ const FilterPanelAside = ({
 };
 
 const TopSortByMenus = ({
-  classes, pagination, setOpenFilter, openFilter, isWiderThanBreakpoint, display,
+  classes, pagination, setOpenFilter, openFilter, useDesktop, display,
 }) => {
   if (display === false) {
     return null;
   }
-  const SortBar = isWiderThanBreakpoint ? <SortByBar classes={classes} pagination={pagination} />
+  const SortBar = useDesktop ? <SortByBar classes={classes} pagination={pagination} />
     : <SortByBarMobile classes={classes} pagination={pagination} />;
   return (
     <header className={classes.HeaderMargins}>
       <NumberOfResultsHeader
         classes={classes}
         pagination={pagination}
-        mobile={!isWiderThanBreakpoint}
+        mobile={!useDesktop}
       />
       <MobileHeaderRow
         classes={classes}
         setOpenFilter={setOpenFilter}
         openFilter={openFilter}
-        display={!isWiderThanBreakpoint}
+        display={!useDesktop}
       />
       {SortBar}
     </header>
@@ -415,6 +415,7 @@ const Search = ({
   };
 
   const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
+  const useDesktop = useMediaQuery('(min-width:838px)');
   const SearchPageMargins = isWiderThanBreakpoint ? classes.DesktopMargins : classes.MobileMargins;
   const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
 
@@ -448,7 +449,7 @@ const Search = ({
             pagination={pagination}
             setOpenFilter={setOpenFilter}
             openFilter={openFilter}
-            isWiderThanBreakpoint={isWiderThanBreakpoint}
+            useDesktop={useDesktop}
             display={FoundOneOrMoreResults}
           />
           <div>
@@ -464,7 +465,7 @@ const Search = ({
           </div>
           {pagination && pagination !== null && !loading && (
             <div>
-              {isWiderThanBreakpoint ? '' : <SortByBarBottomMobile classes={classes} perPage={pagination.per_page} mobile />}
+              {useDesktop ? '' : <SortByBarBottomMobile classes={classes} perPage={pagination.per_page} mobile />}
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
