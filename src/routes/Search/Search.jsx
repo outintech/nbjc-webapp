@@ -217,8 +217,11 @@ const PerPageDropDown = ({ classes, perPage }) => {
   );
 };
 
-const SortingPerPageContainer = ({ classes, perPage, mobile }) => {
-  const label = 'Showing:';
+const ReusableMenuContainer = (
+  {
+    classes, perPage, mobile, label,
+  },
+) => {
   const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
   const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
   return (
@@ -229,54 +232,31 @@ const SortingPerPageContainer = ({ classes, perPage, mobile }) => {
   );
 };
 
-const DistanceSortContainer = ({ classes, mobile }) => {
-  const label = 'Distance:';
-  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
-  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
-
+const SortByBar = ({ classes, pagination, mobile }) => {
+  if (mobile) {
+    return (
+      <section className={classes.SortMobileParentContainer}>
+        <ReusableMenuContainer classes={classes} mobile label="Distance:" perPage={pagination.per_page} />
+        <ReusableMenuContainer classes={classes} mobile label="Sort by:" perPage={pagination.per_page} />
+      </section>
+    );
+  }
   return (
-    <div className={SortContainerClass}>
-      <span className={SearchSettingClass}>{label}</span>
-      <ArrowDropDownIcon />
-    </div>
+    <section className={classes.SortParentContainer}>
+      <div className={classes.SortLeftContainer}>
+        <ReusableMenuContainer classes={classes} label="Showing:" perPage={pagination.per_page} />
+      </div>
+      <div className={classes.SortRightContainer}>
+        <ReusableMenuContainer classes={classes} label="Distance:" perPage={pagination.per_page} />
+        <ReusableMenuContainer classes={classes} label="Sort by:" perPage={pagination.per_page} />
+      </div>
+    </section>
   );
 };
-
-const RatingSortContainer = ({ classes, mobile }) => {
-  const label = 'Sort by:';
-  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
-  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
-
-  return (
-    <div className={SortContainerClass}>
-      <span className={SearchSettingClass}>{label}</span>
-      <ArrowDropDownIcon />
-    </div>
-  );
-};
-
-const SortByBar = ({ classes, pagination }) => (
-  <section className={classes.SortParentContainer}>
-    <div className={classes.SortLeftContainer}>
-      <SortingPerPageContainer classes={classes} perPage={pagination.per_page} />
-    </div>
-    <div className={classes.SortRightContainer}>
-      <DistanceSortContainer classes={classes} />
-      <RatingSortContainer classes={classes} />
-    </div>
-  </section>
-);
-
-const SortByBarMobile = ({ classes }) => (
-  <section className={classes.SortMobileParentContainer}>
-    <RatingSortContainer classes={classes} mobile />
-    <DistanceSortContainer classes={classes} mobile />
-  </section>
-);
 
 const SortByBarBottomMobile = ({ classes, perPage }) => (
   <section className={classes.SortParentContainer}>
-    <SortingPerPageContainer classes={classes} perPage={perPage} mobile />
+    <ReusableMenuContainer classes={classes} label="Showing:" perPage={perPage} mobile />
   </section>
 );
 
@@ -292,16 +272,14 @@ const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
 };
 
 const OpenFilterPanelButton = ({ classes, openFilter, setOpenFilter }) => (
-  <div>
-    <Button
-      variant="outlined"
-      onClick={() => setOpenFilter(!openFilter)}
-      color="primary"
-      className={classes.filterButton}
-    >
-      <span className={classes.filterButtonText}>Filter</span>
-    </Button>
-  </div>
+  <Button
+    variant="outlined"
+    onClick={() => setOpenFilter(!openFilter)}
+    color="primary"
+    className={classes.filterButton}
+  >
+    <span className={classes.filterButtonText}>Filter</span>
+  </Button>
 );
 
 const MobileHeaderRow = (
@@ -357,8 +335,6 @@ const TopSortByMenus = ({
   if (display === false) {
     return null;
   }
-  const SortBar = useDesktop ? <SortByBar classes={classes} pagination={pagination} />
-    : <SortByBarMobile classes={classes} pagination={pagination} />;
   return (
     <header className={classes.HeaderMargins}>
       <NumberOfResultsHeader
@@ -372,7 +348,7 @@ const TopSortByMenus = ({
         openFilter={openFilter}
         display={!useDesktop}
       />
-      {SortBar}
+      <SortByBar classes={classes} pagination={pagination} mobile={!useDesktop} />
     </header>
   );
 };
