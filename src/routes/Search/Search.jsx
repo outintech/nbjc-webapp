@@ -71,6 +71,7 @@ const styles = () => ({
     padding: 8,
     gap: 10,
     borderRadius: 4,
+    marginRight: 8,
   },
   filterButtonText: {
     fontWeight: 600,
@@ -163,13 +164,6 @@ const styles = () => ({
   },
   HeaderMargins: {
     marginTop: 24,
-  },
-  clearButtonFont: {
-    color: '#1E1131',
-    fontWeight: 600,
-    lineHeight: 'px',
-    fontSize: '14px',
-    height: 'inherit',
   },
 });
 
@@ -287,7 +281,7 @@ const OpenFilterPanelButton = (
     return null;
   }
   return (
-    <>
+    <div>
       <Button
         variant="outlined"
         onClick={() => setOpenFilter(!openFilter)}
@@ -297,13 +291,13 @@ const OpenFilterPanelButton = (
         <span className={classes.filterButtonText}>Filter</span>
       </Button>
       <Button
-        className={classes.clearButton}
+        className={classes.filterButton}
         onClick={() => null}
         style={{ backgroundColor: 'transparent' }}
       >
-        <span className={classes.clearButtonFont}>Clear All</span>
+        <span className={classes.filterButtonText}>Clear All</span>
       </Button>
-    </>
+    </div>
   );
 };
 
