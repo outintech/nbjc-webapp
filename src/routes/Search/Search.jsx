@@ -60,9 +60,6 @@ const styles = () => ({
       marginRight: 20,
     },
   },
-  searchresultsText: {
-    flexGrow: 2,
-  },
   filterButton: {
     width: '76px !important',
     marginBottom: '16px',
@@ -77,8 +74,14 @@ const styles = () => ({
     fontWeight: 600,
     fontSize: '14px',
     lineHeight: '20px',
-    color: '#1E1131',
     textTransform: 'none',
+  },
+  filterTextColor: {
+    color: '#1E1131',
+  },
+  clearAllColor: {
+    border: 0,
+    color: '#633AA3',
   },
   NumOfResultsContainer: {
     fontWeight: 600,
@@ -99,30 +102,6 @@ const styles = () => ({
   },
   SortRightContainer: {
     display: 'flex',
-  },
-  filterDropdown: {
-    display: 'flex',
-  },
-  boldedText: {
-    fontWeight: 600,
-    lineHeight: '17.5px',
-    color: '#1E1131',
-    marginRight: 6,
-  },
-  purpleText: {
-    display: 'flex',
-    color: '#633AA3',
-  },
-  arrowDropdown: {
-    marginRight: 6,
-    paddingBottom: 4,
-    verticalAlign: 'middle',
-  },
-  hiddenElement: {
-    display: 'none',
-  },
-  searchBodyContainer: {
-    width: '100%',
   },
   SortMenuContainer: {
     display: 'flex',
@@ -288,10 +267,10 @@ const OpenFilterPanelButton = (
         color="primary"
         className={classes.filterButton}
       >
-        <span className={classes.filterButtonText}>Filter</span>
+        <span className={`${classes.filterButtonText} ${classes.filterTextColor}`}>Filter</span>
       </Button>
       <Button
-        className={classes.filterButton}
+        className={`${classes.filterButton} ${classes.clearAllColor}`}
         onClick={() => null}
         style={{ backgroundColor: 'transparent' }}
       >
