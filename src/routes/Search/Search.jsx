@@ -184,7 +184,7 @@ const ReusableMenu = (
           PaperProps={{
             style: {
               left: '100%',
-              transform: 'translateX(-77%) translateY(32%)',
+              transform: 'translateX(-23%) translateY(32%)',
             },
           }}
           MenuListProps={{
@@ -235,7 +235,7 @@ const SortByMenu = ({ classes, mobile }) => (
 const ShowingPerPageMenu = ({ classes, mobile }) => (
   <ReusableMenu
     classes={classes}
-    menuValues={['Highly Rated']}
+    menuValues={['Name', 'Highly Rated', 'Recently Added', 'Most Reviewed']}
     menuStrings=""
     onMenuClick={[querySearch]}
     sortLabel="Sort by: "
