@@ -37,11 +37,13 @@ const styles = () => ({
     marginLeft: 40,
     marginBottom: 20,
     marginRight: 142,
+    flex: 1,
   },
   MobileMargins: {
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
+    flex: 1,
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -194,8 +196,7 @@ const ReusableMenu = (
         >
           {values.map((value) => (
             <MenuItem onClick={searchFunction}>
-              {value}
-              {placeholder}
+              {`${value} ${placeholder}`}
             </MenuItem>
           ))}
         </Menu>
@@ -213,7 +214,37 @@ const DistanceMenu = ({ classes, mobile }) => {
       classes={classes}
       searchFunction={searchFunction}
       mobile={mobile}
-      placeHolder={placeHolder}
+      placeholder={placeHolder}
+      values={values}
+    />
+  );
+};
+
+const SortByMenu = ({ classes, mobile }) => {
+  const searchFunction = null;
+  const values = [5, 10, 20];
+  const placeHolder = 'Sort by:';
+  return (
+    <ReusableMenu
+      classes={classes}
+      searchFunction={searchFunction}
+      mobile={mobile}
+      placeholder={placeHolder}
+      values={values}
+    />
+  );
+};
+
+const ShowingMenu = ({ classes, mobile }) => {
+  const searchFunction = null;
+  const values = [5, 10, 20];
+  const placeHolder = 'Showing:';
+  return (
+    <ReusableMenu
+      classes={classes}
+      searchFunction={searchFunction}
+      mobile={mobile}
+      placeholder={placeHolder}
       values={values}
     />
   );
@@ -226,22 +257,27 @@ const SortByBar = ({ classes, mobile }) => {
       {mobile ? null
         : (
           <div className={classes.SortLeftContainer}>
-            <DistanceMenu classes={classes} mobile={mobile} />
+            <ShowingMenu classes={classes} mobile={mobile} />
           </div>
         )}
       <div className={ContainerClass}>
         <DistanceMenu classes={classes} mobile={mobile} />
-        <DistanceMenu classes={classes} mobile={mobile} />
+        <SortByMenu classes={classes} mobile={mobile} />
       </div>
     </section>
   );
 };
 
-const SortByBarBottomMobile = ({ classes, mobile }) => (
-  <section className={classes.SortParentContainer}>
-    <DistanceMenu classes={classes} mobile={mobile} />
-  </section>
-);
+const SortByBarBottomMobile = ({ classes, useDesktop }) => {
+  if (useDesktop) {
+    return null;
+  }
+  return (
+    <section className={classes.SortParentContainer}>
+      <ShowingMenu classes={classes} mobile />
+    </section>
+  );
+};
 
 const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
   const resultString = pagination.total_count >= 2 ? 'Results' : 'Result';
@@ -425,7 +461,7 @@ const Search = ({
           </div>
           {pagination && pagination !== null && !loading && (
             <div>
-              {useDesktop ? '' : <SortByBarBottomMobile classes={classes} mobile />}
+              <SortByBarBottomMobile classes={classes} useDesktop={useDesktop} />
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}

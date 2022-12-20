@@ -120,6 +120,7 @@ const styles = () => ({
   ChipList: {
     display: 'flex',
     flex: 1,
+    maxWidth: '800px',
   },
   CardInformationContainer: {
     flexGrow: 1,
