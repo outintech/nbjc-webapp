@@ -133,7 +133,7 @@ const styles = () => ({
 
 const convertAddressToGoogleMapsLink = (businessAddress) => {
   const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
-  return googleAPIQuery + encodeURIComponent(businessAddress.address);
+  return googleAPIQuery + encodeURIComponent(businessAddress);
 };
 
 const formatPhoneNumber = (phoneNumberString) => {
