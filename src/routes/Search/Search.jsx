@@ -164,6 +164,13 @@ const styles = () => ({
   HeaderMargins: {
     marginTop: 24,
   },
+  clearButtonFont: {
+    color: '#1E1131',
+    fontWeight: 600,
+    lineHeight: 'px',
+    fontSize: '14px',
+    height: 'inherit',
+  },
 });
 
 const PerPageDropDown = ({ classes, perPage }) => {
@@ -271,31 +278,32 @@ const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
   );
 };
 
-const OpenFilterPanelButton = ({ classes, openFilter, setOpenFilter }) => (
-  <Button
-    variant="outlined"
-    onClick={() => setOpenFilter(!openFilter)}
-    color="primary"
-    className={classes.filterButton}
-  >
-    <span className={classes.filterButtonText}>Filter</span>
-  </Button>
-);
-
-const MobileHeaderRow = (
+const OpenFilterPanelButton = (
   {
-    classes, openFilter, setOpenFilter, display,
+    classes, openFilter, setOpenFilter, clearFilters, display,
   },
 ) => {
   if (display === false) {
     return null;
   }
   return (
-    <OpenFilterPanelButton
-      classes={classes}
-      openFilter={openFilter}
-      setOpenFilter={setOpenFilter}
-    />
+    <>
+      <Button
+        variant="outlined"
+        onClick={() => setOpenFilter(!openFilter)}
+        color="primary"
+        className={classes.filterButton}
+      >
+        <span className={classes.filterButtonText}>Filter</span>
+      </Button>
+      <Button
+        className={classes.clearButton}
+        onClick={() => null}
+        style={{ backgroundColor: 'transparent' }}
+      >
+        <span className={classes.clearButtonFont}>Clear All</span>
+      </Button>
+    </>
   );
 };
 
@@ -342,10 +350,10 @@ const TopSortByMenus = ({
         pagination={pagination}
         mobile={!useDesktop}
       />
-      <MobileHeaderRow
+      <OpenFilterPanelButton
         classes={classes}
-        setOpenFilter={setOpenFilter}
         openFilter={openFilter}
+        setOpenFilter={setOpenFilter}
         display={!useDesktop}
       />
       <SortByBar classes={classes} pagination={pagination} mobile={!useDesktop} />
