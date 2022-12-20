@@ -270,14 +270,22 @@ const PaginationButton = ({
   }
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
   const PaginationButtonClasses = `${classes.paginationLabel} ${classes.activeColor} ${isCurrentPage}`;
+  const PageNumberBox = (
+    <div className={classes.paginationButton}>
+      <span className={classes.centerText}>{pageNumber}</span>
+    </div>
+  );
+  if (currPage === pageNumber) {
+    return (
+      <div className={PaginationButtonClasses} underline="none">
+        {PageNumberBox}
+      </div>
+    );
+  }
   return (
-    <>
-      <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
-        <div className={classes.paginationButton}>
-          <span className={classes.centerText}>{pageNumber}</span>
-        </div>
-      </Link>
-    </>
+    <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
+      {PageNumberBox}
+    </Link>
   );
 };
 
