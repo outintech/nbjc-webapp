@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -160,9 +161,9 @@ const Image = (
   const LinkToSpace = `/spaces/${id}`;
   return (
     <Box className={`${classes.imageContainer} ${ImageSizing}`}>
-      <a href={LinkToSpace}>
+      <Link to={LinkToSpace}>
         <img src={CardImage} alt="business" className={classes.cardImage} />
-      </a>
+      </Link>
     </Box>
   );
 };
@@ -274,12 +275,12 @@ const AddressRow = ({ classes, address }) => {
 };
 
 const AddReviewCTA = ({ id, classes }) => {
-  const link = `/spaces/${id}/reviews/new`;
+  const spacesUrl = `/spaces/${id}/reviews/new`;
   return (
-    <a href={link} className={classes.CTAButtonContainer}>
+    <Link to={spacesUrl} className={classes.CTAButtonContainer}>
       <RateReviewIcon color="secondary" fontSize="small" />
       <span>Add Review</span>
-    </a>
+    </Link>
   );
 };
 
