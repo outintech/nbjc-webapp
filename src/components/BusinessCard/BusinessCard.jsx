@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 
 import {
   Box,
+  Button,
+  Menu,
+  MenuItem,
   Typography,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
+import ShareIcon from '@material-ui/icons/Share';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -204,10 +208,29 @@ const OrdinalNumber = ({ classes, count }) => {
 };
 
 const ShareMenu = () => {
-  const onClick = 'TODO';
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
-      <MoreVertIcon />
+      <Button onClick={handleClick}>
+        <MoreVertIcon />
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <ShareIcon color="black" />
+          Share
+        </MenuItem>
+      </Menu>
     </>
   );
 };
