@@ -12,6 +12,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import BusinessCard from '../../components/BusinessCard';
@@ -153,9 +156,14 @@ const ReusableMenu = (
   const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClickListItem = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setAnchorEl(null);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -164,19 +172,25 @@ const ReusableMenu = (
   return (
     <>
       <div className={SortContainerClass}>
-        <span className={SearchSettingClass}>
-          {sortLabel}
-        </span>
-        <Button
-          onClick={handleClick}
-          variant="text"
-          size="small"
+        <List
+          component="nav"
+          aria-label="Device settings"
+          sx={{ bgcolor: 'background.paper' }}
         >
-          <div className={classes.SortMenuContainer}>
-            <span>{`${currentValue} ${menuStrings}`}</span>
-            <ArrowDropDownIcon />
-          </div>
-        </Button>
+          <ListItem
+            button
+            id="lock-button"
+            aria-haspopup="listbox"
+            aria-controls="lock-menu"
+            aria-label="when device is locked"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClickListItem}
+          >
+            <ListItemText
+              primary={`${sortLabel} ${menuValues[selectedIndex]}`}
+            />
+          </ListItem>
+        </List>
         <Menu
           anchorEl={anchorEl}
           open={open}
@@ -191,10 +205,15 @@ const ReusableMenu = (
             style: {
               padding: 0,
             },
+            role: 'listbox',
           }}
         >
-          {menuValues.map((value) => (
-            <MenuItem onClick={onMenuClick}>
+          {menuValues.map((value, index) => (
+            <MenuItem
+              key={menuValues}
+              selected={index === selectedIndex}
+              onClick={(event) => handleMenuItemClick(event, index)}
+            >
               {`${value} ${menuStrings}`}
             </MenuItem>
           ))}
@@ -223,11 +242,11 @@ const DistanceMenu = ({ classes, mobile }) => (
 const SortByMenu = ({ classes, mobile }) => (
   <ReusableMenu
     classes={classes}
-    menuValues={[5, 10, 20]}
-    menuStrings="per page"
+    menuValues={['Name', 'Highly Rated', 'Recently Added', 'Most Reviewed']}
+    menuStrings=""
     onMenuClick={[querySearch]}
     sortLabel="Sort by: "
-    currentValue="5"
+    currentValue="Highly Rated"
     mobile={mobile}
   />
 );
@@ -235,11 +254,11 @@ const SortByMenu = ({ classes, mobile }) => (
 const ShowingPerPageMenu = ({ classes, mobile }) => (
   <ReusableMenu
     classes={classes}
-    menuValues={['Name', 'Highly Rated', 'Recently Added', 'Most Reviewed']}
-    menuStrings=""
+    menuValues={[5, 10, 20]}
+    menuStrings="per page"
     onMenuClick={[querySearch]}
     sortLabel="Sort by: "
-    currentValue="Highly Rated"
+    currentValue="5"
     mobile={mobile}
   />
 );
