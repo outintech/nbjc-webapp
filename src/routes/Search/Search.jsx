@@ -102,9 +102,6 @@ const styles = () => ({
   SortLeftContainer: {
     flex: 1,
   },
-  SortRightContainer: {
-    display: 'flex',
-  },
   SortMenuContainer: {
     display: 'flex',
     textAlign: 'center',
@@ -151,7 +148,7 @@ const styles = () => ({
 
 const ReusableMenu = (
   {
-    classes, values, placeholder, searchFunction = null, mobile,
+    classes, values, placeholder, searchFunction = null, mobile, unitString,
   },
 ) => {
   const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
@@ -166,7 +163,7 @@ const ReusableMenu = (
     setAnchorEl(null);
   };
 
-  const placeholderValue = `${values[0]} ${placeholder}`;
+  const placeholderValue = `${placeholder}`;
   return (
     <>
       <div className={SortContainerClass}>
@@ -177,7 +174,7 @@ const ReusableMenu = (
           size="small"
         >
           <div className={classes.SortMenuContainer}>
-            <span>{placeholderValue}</span>
+            <span>{`${values[0]} ${unitString}`}</span>
             <ArrowDropDownIcon />
           </div>
         </Button>
@@ -196,7 +193,7 @@ const ReusableMenu = (
         >
           {values.map((value) => (
             <MenuItem onClick={searchFunction}>
-              {`${value} ${placeholder}`}
+              {`${value} ${unitString}`}
             </MenuItem>
           ))}
         </Menu>
@@ -208,14 +205,14 @@ const ReusableMenu = (
 const DistanceMenu = ({ classes, mobile }) => {
   const searchFunction = null;
   const values = [5, 10, 20];
-  const placeHolder = 'Distance:';
   return (
     <ReusableMenu
       classes={classes}
       searchFunction={searchFunction}
       mobile={mobile}
-      placeholder={placeHolder}
+      placeholder="Distance:"
       values={values}
+      unitString="miles"
     />
   );
 };
@@ -223,13 +220,13 @@ const DistanceMenu = ({ classes, mobile }) => {
 const SortByMenu = ({ classes, mobile }) => {
   const searchFunction = null;
   const values = [5, 10, 20];
-  const placeHolder = 'Sort by:';
   return (
     <ReusableMenu
       classes={classes}
       searchFunction={searchFunction}
       mobile={mobile}
-      placeholder={placeHolder}
+      placeholder="Sort by:"
+      unitString="Highest Rated"
       values={values}
     />
   );
@@ -238,13 +235,13 @@ const SortByMenu = ({ classes, mobile }) => {
 const ShowingMenu = ({ classes, mobile }) => {
   const searchFunction = null;
   const values = [5, 10, 20];
-  const placeHolder = 'Showing:';
   return (
     <ReusableMenu
       classes={classes}
       searchFunction={searchFunction}
       mobile={mobile}
-      placeholder={placeHolder}
+      placeholder="Showing:"
+      unitString="per page"
       values={values}
     />
   );
