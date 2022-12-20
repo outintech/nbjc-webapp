@@ -56,6 +56,7 @@ const styles = {
     },
     alignItems: 'baseline',
     maxHeight: '80px',
+    marginTop: '5px',
     marginBottom: '5px',
   },
   nameFilter: {
