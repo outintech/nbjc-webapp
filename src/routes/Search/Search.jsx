@@ -93,9 +93,7 @@ const styles = () => ({
     marginBottom: 16,
   },
   NumResultsMobileFont: {
-    fontWeight: 600,
     fontSize: '20px',
-    color: '#1E1131',
     lineHeight: '25px',
     marginBottom: 8,
   },
@@ -148,7 +146,7 @@ const styles = () => ({
 
 const ReusableMenu = (
   {
-    classes, values, placeholder, searchFunction = null, mobile, unitString,
+    classes, menuValues, menuStrings, onMenuClick, sortLabel, currentValue = menuValues[0], mobile,
   },
 ) => {
   const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
@@ -163,18 +161,19 @@ const ReusableMenu = (
     setAnchorEl(null);
   };
 
-  const placeholderValue = `${placeholder}`;
   return (
     <>
       <div className={SortContainerClass}>
-        <span className={SearchSettingClass}>{placeholderValue}</span>
+        <span className={SearchSettingClass}>
+          {sortLabel}
+        </span>
         <Button
           onClick={handleClick}
           variant="text"
           size="small"
         >
           <div className={classes.SortMenuContainer}>
-            <span>{`${values[0]} ${unitString}`}</span>
+            <span>{`${currentValue} ${menuStrings}`}</span>
             <ArrowDropDownIcon />
           </div>
         </Button>
@@ -182,18 +181,21 @@ const ReusableMenu = (
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+          PaperProps={{
+            style: {
+              left: '100%',
+              transform: 'translateX(-77%) translateY(32%)',
+            },
           }}
-          transformOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+          MenuListProps={{
+            style: {
+              padding: 0,
+            },
           }}
         >
-          {values.map((value) => (
-            <MenuItem onClick={searchFunction}>
-              {`${value} ${unitString}`}
+          {menuValues.map((value) => (
+            <MenuItem onClick={onMenuClick}>
+              {`${value} ${menuStrings}`}
             </MenuItem>
           ))}
         </Menu>
@@ -202,59 +204,54 @@ const ReusableMenu = (
   );
 };
 
-const DistanceMenu = ({ classes, mobile }) => {
-  const searchFunction = null;
-  const values = [5, 10, 20];
-  return (
-    <ReusableMenu
-      classes={classes}
-      searchFunction={searchFunction}
-      mobile={mobile}
-      placeholder="Distance:"
-      values={values}
-      unitString="miles"
-    />
-  );
-};
+const querySearch = () => (
+  null
+);
 
-const SortByMenu = ({ classes, mobile }) => {
-  const searchFunction = null;
-  const values = [5, 10, 20];
-  return (
-    <ReusableMenu
-      classes={classes}
-      searchFunction={searchFunction}
-      mobile={mobile}
-      placeholder="Sort by:"
-      unitString="Highest Rated"
-      values={values}
-    />
-  );
-};
+const DistanceMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={[5, 10, 20]}
+    menuStrings="miles"
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="5"
+    mobile={mobile}
+  />
+);
 
-const ShowingMenu = ({ classes, mobile }) => {
-  const searchFunction = null;
-  const values = [5, 10, 20];
-  return (
-    <ReusableMenu
-      classes={classes}
-      searchFunction={searchFunction}
-      mobile={mobile}
-      placeholder="Showing:"
-      unitString="per page"
-      values={values}
-    />
-  );
-};
+const SortByMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={[5, 10, 20]}
+    menuStrings="per page"
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="5"
+    mobile={mobile}
+  />
+);
 
-const SortByBar = ({ classes, mobile }) => {
+const ShowingPerPageMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={['Highly Rated']}
+    menuStrings=""
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="Highly Rated"
+    mobile={mobile}
+  />
+);
+
+const TopSortRow = ({ classes, mobile }) => {
   const ContainerClass = mobile ? classes.ColumnContainer : classes.RowContainer;
   return (
     <section className={ContainerClass}>
       {mobile ? null
         : (
           <div className={classes.SortLeftContainer}>
-            <ShowingMenu classes={classes} mobile={mobile} />
+            <ShowingPerPageMenu classes={classes} />
           </div>
         )}
       <div className={ContainerClass}>
@@ -265,24 +262,24 @@ const SortByBar = ({ classes, mobile }) => {
   );
 };
 
-const SortByBarBottomMobile = ({ classes, useDesktop }) => {
+const SortRowMobile = ({ classes, useDesktop }) => {
   if (useDesktop) {
     return null;
   }
   return (
     <section className={classes.SortParentContainer}>
-      <ShowingMenu classes={classes} mobile />
+      <ShowingPerPageMenu classes={classes} mobile />
     </section>
   );
 };
 
 const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
   const resultString = pagination.total_count >= 2 ? 'Results' : 'Result';
-  const headerText = `${pagination.total_count} Search ${resultString}`;
-  const headerClass = mobile ? classes.NumResultsMobileFont : classes.NumOfResultsContainer;
+  const numOfResultsString = `${pagination.total_count} Search ${resultString}`;
+  const applyFonts = mobile ? classes.NumResultsMobileFont : '';
   return (
-    <div className={headerClass}>
-      {headerText}
+    <div className={`${classes.NumOfResultsContainer} ${applyFonts}`}>
+      {numOfResultsString}
     </div>
   );
 };
@@ -346,7 +343,7 @@ const FilterPanelAside = ({
   );
 };
 
-const TopSortByMenus = ({
+const SearchBodyHeader = ({
   classes, pagination, setOpenFilter, openFilter, useDesktop, display,
 }) => {
   if (display === false) {
@@ -365,7 +362,7 @@ const TopSortByMenus = ({
         setOpenFilter={setOpenFilter}
         display={!useDesktop}
       />
-      <SortByBar classes={classes} mobile={!useDesktop} />
+      <TopSortRow classes={classes} mobile={!useDesktop} />
     </header>
   );
 };
@@ -437,7 +434,7 @@ const Search = ({
           classes={classes}
         />
         <div className={SearchPageMargins}>
-          <TopSortByMenus
+          <SearchBodyHeader
             classes={classes}
             pagination={pagination}
             setOpenFilter={setOpenFilter}
@@ -458,7 +455,7 @@ const Search = ({
           </div>
           {pagination && pagination !== null && !loading && (
             <div>
-              <SortByBarBottomMobile classes={classes} useDesktop={useDesktop} />
+              <SortRowMobile classes={classes} useDesktop={useDesktop} />
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
