@@ -297,6 +297,9 @@ const RatingCTA = ({ classes, averageRating }) => {
 };
 
 const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
+  if (phoneNumber === '') {
+    return null;
+  }
   const phoneString = `tel:${phoneNumber}`;
   const label = (<span>{formatPhoneNumber(phoneNumber)}</span>);
   const displayLabelOnDesktop = useDesktop ? label : null;
