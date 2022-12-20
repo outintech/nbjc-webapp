@@ -132,10 +132,11 @@ const styles = () => ({
     fontSize: '16px',
     marginLeft: 32,
   },
-  SortParentContainer: {
+  RowContainer: {
     display: 'flex',
   },
-  SortParentContainerMobile: {
+  ColumnContainer: {
+    display: 'flex',
     flexDirection: 'column',
   },
   CardMargins: {
@@ -146,7 +147,14 @@ const styles = () => ({
   },
 });
 
-const PerPageDropDown = ({ classes, perPage }) => {
+const ReusableMenu = (
+  {
+    classes, values, placeholder, searchFunction = null, mobile,
+  },
+) => {
+  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
+  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -156,87 +164,82 @@ const PerPageDropDown = ({ classes, perPage }) => {
     setAnchorEl(null);
   };
 
-  const placeholderValue = `${perPage} per page`;
+  const placeholderValue = `${values[0]} ${placeholder}`;
   return (
     <>
-      <Button
-        onClick={handleClick}
-        variant="text"
-        size="small"
-        aria-controls={open ? 'Perpage-Menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-      >
-        <div className={classes.SortMenuContainer}>
-          <span>{placeholderValue}</span>
-          <ArrowDropDownIcon />
-        </div>
-      </Button>
-      <Menu
-        id="Perpage-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        MenuListProps={{
-          'aria-labelledby': 'How many results',
-        }}
-      >
-        <MenuItem onClick={handleClose}>10 per page</MenuItem>
-        <MenuItem onClick={handleClose}>25 per page</MenuItem>
-        <MenuItem onClick={handleClose}>50 per page</MenuItem>
-      </Menu>
+      <div className={SortContainerClass}>
+        <span className={SearchSettingClass}>{placeholderValue}</span>
+        <Button
+          onClick={handleClick}
+          variant="text"
+          size="small"
+        >
+          <div className={classes.SortMenuContainer}>
+            <span>{placeholderValue}</span>
+            <ArrowDropDownIcon />
+          </div>
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          {values.map((value) => (
+            <MenuItem onClick={searchFunction}>
+              {value}
+              {placeholder}
+            </MenuItem>
+          ))}
+        </Menu>
+      </div>
     </>
   );
 };
 
-const ReusableMenuContainer = (
-  {
-    classes, perPage, mobile, label,
-  },
-) => {
-  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
-  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
+const DistanceMenu = ({ classes, mobile }) => {
+  const searchFunction = null;
+  const values = [5, 10, 20];
+  const placeHolder = 'Distance:';
   return (
-    <div className={SortContainerClass}>
-      <span className={SearchSettingClass}>{label}</span>
-      <PerPageDropDown classes={classes} perPage={perPage} />
-    </div>
+    <ReusableMenu
+      classes={classes}
+      searchFunction={searchFunction}
+      mobile={mobile}
+      placeHolder={placeHolder}
+      values={values}
+    />
   );
 };
 
-const SortByBar = ({ classes, pagination, mobile }) => {
-  if (mobile) {
-    return (
-      <section className={classes.SortMobileParentContainer}>
-        <ReusableMenuContainer classes={classes} mobile label="Distance:" perPage={pagination.per_page} />
-        <ReusableMenuContainer classes={classes} mobile label="Sort by:" perPage={pagination.per_page} />
-      </section>
-    );
-  }
+const SortByBar = ({ classes, mobile }) => {
+  const ContainerClass = mobile ? classes.ColumnContainer : classes.RowContainer;
   return (
-    <section className={classes.SortParentContainer}>
-      <div className={classes.SortLeftContainer}>
-        <ReusableMenuContainer classes={classes} label="Showing:" perPage={pagination.per_page} />
-      </div>
-      <div className={classes.SortRightContainer}>
-        <ReusableMenuContainer classes={classes} label="Distance:" perPage={pagination.per_page} />
-        <ReusableMenuContainer classes={classes} label="Sort by:" perPage={pagination.per_page} />
+    <section className={ContainerClass}>
+      {mobile ? null
+        : (
+          <div className={classes.SortLeftContainer}>
+            <DistanceMenu classes={classes} mobile={mobile} />
+          </div>
+        )}
+      <div className={ContainerClass}>
+        <DistanceMenu classes={classes} mobile={mobile} />
+        <DistanceMenu classes={classes} mobile={mobile} />
       </div>
     </section>
   );
 };
 
-const SortByBarBottomMobile = ({ classes, perPage }) => (
+const SortByBarBottomMobile = ({ classes, mobile }) => (
   <section className={classes.SortParentContainer}>
-    <ReusableMenuContainer classes={classes} label="Showing:" perPage={perPage} mobile />
+    <DistanceMenu classes={classes} mobile={mobile} />
   </section>
 );
 
@@ -329,7 +332,7 @@ const TopSortByMenus = ({
         setOpenFilter={setOpenFilter}
         display={!useDesktop}
       />
-      <SortByBar classes={classes} pagination={pagination} mobile={!useDesktop} />
+      <SortByBar classes={classes} mobile={!useDesktop} />
     </header>
   );
 };
@@ -422,7 +425,7 @@ const Search = ({
           </div>
           {pagination && pagination !== null && !loading && (
             <div>
-              {useDesktop ? '' : <SortByBarBottomMobile classes={classes} perPage={pagination.per_page} mobile />}
+              {useDesktop ? '' : <SortByBarBottomMobile classes={classes} mobile />}
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
