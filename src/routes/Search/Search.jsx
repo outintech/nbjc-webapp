@@ -145,6 +145,9 @@ const styles = () => ({
   HeaderMargins: {
     marginTop: 24,
   },
+  overrideListItem: {
+    backgroundColor: 'pink',
+  },
 });
 
 const ReusableMenu = (
@@ -158,7 +161,7 @@ const ReusableMenu = (
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const open = Boolean(anchorEl);
-  const handleClickListItem = (event) => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuItemClick = (event, index) => {
@@ -169,28 +172,25 @@ const ReusableMenu = (
     setAnchorEl(null);
   };
 
+  console.log(selectedIndex);
+  console.log(menuValues);
+
   return (
     <>
       <div className={SortContainerClass}>
-        <List
-          component="nav"
-          aria-label="Device settings"
-          sx={{ bgcolor: 'background.paper' }}
+        <span className={SearchSettingClass}>
+          {sortLabel}
+        </span>
+        <Button
+          onClick={handleClick}
+          variant="text"
+          size="small"
         >
-          <ListItem
-            button
-            id="lock-button"
-            aria-haspopup="listbox"
-            aria-controls="lock-menu"
-            aria-label="when device is locked"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClickListItem}
-          >
-            <ListItemText
-              primary={`${sortLabel} ${menuValues[selectedIndex]}`}
-            />
-          </ListItem>
-        </List>
+          <div className={classes.SortMenuContainer}>
+            <span>{`${menuValues[selectedIndex]} ${menuStrings}`}</span>
+            <ArrowDropDownIcon />
+          </div>
+        </Button>
         <Menu
           anchorEl={anchorEl}
           open={open}
@@ -205,15 +205,10 @@ const ReusableMenu = (
             style: {
               padding: 0,
             },
-            role: 'listbox',
           }}
         >
           {menuValues.map((value, index) => (
-            <MenuItem
-              key={menuValues}
-              selected={index === selectedIndex}
-              onClick={(event) => handleMenuItemClick(event, index)}
-            >
+            <MenuItem onClick={(event) => handleMenuItemClick(event, index)}>
               {`${value} ${menuStrings}`}
             </MenuItem>
           ))}
