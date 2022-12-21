@@ -148,6 +148,9 @@ const styles = () => ({
   overrideListItem: {
     backgroundColor: 'pink',
   },
+  selectedChoice: {
+    fontWeight: 600,
+  },
 });
 
 const ReusableMenu = (
@@ -207,11 +210,18 @@ const ReusableMenu = (
             },
           }}
         >
-          {menuValues.map((value, index) => (
-            <MenuItem onClick={(event) => handleMenuItemClick(event, index)}>
-              {`${value} ${menuStrings}`}
-            </MenuItem>
-          ))}
+          {menuValues.map((value, index) => {
+            const boldedText = index === selectedIndex ? classes.selectedChoice : '';
+            return (
+              <MenuItem
+                selected={index === selectedIndex}
+                onClick={(event) => handleMenuItemClick(event, index)}
+                className={boldedText}
+              >
+                {`${value} ${menuStrings}`}
+              </MenuItem>
+            );
+          })}
         </Menu>
       </div>
     </>
