@@ -150,6 +150,8 @@ const styles = () => ({
   },
   selectedChoice: {
     fontWeight: 600,
+    backgroundColor: '#E5E5E5',
+    boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)',
   },
 });
 
@@ -207,6 +209,7 @@ const ReusableMenu = (
           MenuListProps={{
             style: {
               padding: 0,
+              backgroundColor: '#F2F2F2',
             },
           }}
         >
@@ -214,7 +217,6 @@ const ReusableMenu = (
             const boldedText = index === selectedIndex ? classes.selectedChoice : '';
             return (
               <MenuItem
-                selected={index === selectedIndex}
                 onClick={(event) => handleMenuItemClick(event, index)}
                 className={boldedText}
               >
