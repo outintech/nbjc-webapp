@@ -118,6 +118,8 @@ const styles = () => ({
     minHeight: '40px',
     backgroundColor: '#F2F2F2',
     marginBottom: 8,
+    lineHeight: '24px',
+    fontSize: '16px',
   },
   SearchSettingLabel: {
     fontWeight: 600,
@@ -127,7 +129,7 @@ const styles = () => ({
   },
   SearchSettingMobileLabel: {
     fontWeight: 400,
-    lineHeight: '17.5px',
+    lineHeight: '24px',
     color: '#1E1131',
     fontSize: '16px',
     marginLeft: 32,
@@ -177,9 +179,6 @@ const ReusableMenu = (
     setAnchorEl(null);
   };
 
-  console.log(selectedIndex);
-  console.log(menuValues);
-
   return (
     <>
       <div className={SortContainerClass}>
@@ -200,6 +199,7 @@ const ReusableMenu = (
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          MenuProps={{ variant: 'menu' }}
           PaperProps={{
             style: {
               left: '100%',
