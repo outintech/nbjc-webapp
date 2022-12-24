@@ -56,7 +56,7 @@ describe('Do the correct links exist in the Footer Component', () => {
 });
 
 describe('Do the internal links redirect you to the right path', () => {
-  it('should check for a CommunityGuidelinessLink redirects to the correct page', async () => {
+  it('should check for a CommunityGuidelinessLink redirects to the correct page', () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
