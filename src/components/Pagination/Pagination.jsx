@@ -203,6 +203,7 @@ const GoToPage = ({
       <form onSubmit={handleSubmit}>
         <span>{label}</span>
         <Input
+          type="number"
           inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
           defaultValue={input}
           className={classes.pageInputNavigation}
@@ -244,7 +245,7 @@ const OpenGoToPageButton = ({ goToPageLabel, setShowButton, classes }) => {
         setShowButton(toggle);
       }}
     >
-      <span classNames={classes.goToPageLabel}>
+      <span className={classes.goToPageLabel}>
         {goToPageLabel}
       </span>
     </Button>
@@ -306,6 +307,7 @@ const RenderPaginationButtons = (
       currPage={currPage}
       link={page.link}
       setShowButton={setShowButton}
+      key={page.pageNumber}
     />
   ))
 );
@@ -316,7 +318,7 @@ const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, qu
     currPage: page,
     nextPage: ((page + 1 < totalPages) ? page + 1 : null),
     nextNextPage: ((page + 2 < totalPages) ? page + 2 : null),
-    ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
+    ellipsis: ((page + 2 <= totalPages) ? labelForGoToPage : null),
     lastPage: ((totalPages !== page) ? totalPages : null),
   };
   pagesToRender = Object.values(pagesToRender).filter((pgNum) => pgNum !== null);

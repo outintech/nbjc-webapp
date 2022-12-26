@@ -295,7 +295,6 @@ const FilterPanel = ({
         placeholder="Search by name"
         value={nameFilterVal}
         InputProps={{
-          disableUnderline: true,
           padding: 5,
           classes: { borderRadius: 0 },
           endAdornment: (
