@@ -318,7 +318,7 @@ const Home = ({ classes }) => {
               Our mission is to spread the word about spaces where people can be themselves.
               All spaces and reviews are published by Lavender Book members.
             </Typography>
-            <Button href="/spaces/new" variant="outlined" className={[classes.searchButton, classes.textParagraphBody, classes.searchButtonContainer]}>
+            <Button href="/spaces/new" variant="outlined" className={`${classes.searchButton}, ${classes.textParagraphBody}, ${classes.searchButtonContainer}`}>
               Add a Space
             </Button>
           </Grid>
