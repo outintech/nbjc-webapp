@@ -1,63 +1,123 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 import AppBar from './AppBar';
 import { UserContext } from '../../context/UserContext';
 
-describe('AppBar', () => {
+describe('AppBar styling', () => {
   it('should check that the lavender book logo exists and is visible', () => {
-    const dummyValue = {
-      name: 'abcd',
-      userProfile: 'abcd',
+    const UserProfile = {
+      name: 'demo',
+      userProfile: { username: 'demoUser' },
     };
     render(
       <>
-        <UserContext.Provider value={dummyValue}>
+        <UserContext.Provider value={UserProfile}>
           <BrowserRouter>
-            <Switch>
-              <AppBar />
-            </Switch>
+            <AppBar />
           </BrowserRouter>
         </UserContext.Provider>
       </>,
-
     );
+    const logo = screen.findByAltText('logo');
+    expect(logo).toBeInTheDocument();
   });
+  it('should check if the users account name is too large it be truncated and displayed instead', () => {
+    const UserProfile = {
+      name: 'demo',
+      userProfile: { username: 'demoUserWithAReallyLogName' },
+    };
+    render(
+      <>
+        <UserContext.Provider value={UserProfile}>
+          <BrowserRouter>
+            <AppBar />
+          </BrowserRouter>
+        </UserContext.Provider>
+      </>,
+    );
+    const userMenu = screen.getByText('demoUserWi....');
+    expect(userMenu).toBeInTheDocument();
+  });
+});
+
+describe('AppBar with a logged in user', () => {
+  const UserProfile = {
+    name: 'demo',
+    userProfile: { username: 'demoUser' },
+  };
+  it('should check if the username appears and clicking it opens a dropdown menu', () => {
+    render(
+      <>
+        <UserContext.Provider value={UserProfile}>
+          <BrowserRouter>
+            <AppBar />
+          </BrowserRouter>
+        </UserContext.Provider>
+      </>,
+    );
+    const userMenu = screen.getByText('demoUser');
+    expect(userMenu).toBeInTheDocument();
+    userEvent.click(userMenu);
+    const MyProfileButton = screen.getByText('My Profile');
+    const LogOutButton = screen.getByText('Sign Out');
+    expect(MyProfileButton).toBeInTheDocument();
+    expect(LogOutButton).toBeInTheDocument();
+  });
+  it('clicking on the profile button in the users dropdown should redirect them to the proper page', async () => {
+    render(
+      <>
+        <UserContext.Provider value={UserProfile}>
+          <BrowserRouter>
+            <AppBar />
+          </BrowserRouter>
+        </UserContext.Provider>
+      </>,
+    );
+    const userMenu = screen.getByText('demoUser');
+    userEvent.click(userMenu);
+    const MyProfileButton = screen.getByText('My Profile');
+    userEvent.click(MyProfileButton);
+    await waitFor(() => expect(window.location.href).toBe('http://localhost/profile'));
+  });
+});
+
+describe('AppBar without logged in user', () => {
   it('should check if a user is not logged in that the Log In button displays', () => {
-
+    const UserProfile = {
+      name: undefined,
+      userProfile: { username: undefined },
+    };
+    render(
+      <>
+        <UserContext.Provider value={UserProfile}>
+          <BrowserRouter>
+            <AppBar />
+          </BrowserRouter>
+        </UserContext.Provider>
+      </>,
+    );
+    const logInMenu = screen.getByText('Log In');
+    expect(logInMenu).toBeInTheDocument();
   });
-  it('should check that Add a Space link exists in the AppBar', () => {
-
-  });
-  it('should remove the Add a Space text when the dimensions get smaller enough', () => {
-
-  });
-  it('should check that the navBar is white', () => {
-
-  });
-  it('should check if the user is logged in it displays the users account name instead of log in', () => {
-
-  });
-  it('should check if the users account name is too large it be concanated and displayed instead', () => {
-
-  });
-  it('should check if theres a dropdown menu when the user is logged in', () => {
-
-  });
-  it('should check that there is not a dropdown menu when the user is logged in', () => {
-
-  });
-  it('if the user is logged in the dropdown menu should allow the user to click the dropdown menu and log out', () => {
-
-  });
-  it('if the user is logged in and clicks the dropdown button if the user clicks out of it the dropdown should disappaer', () => {
-
-  });
-  it('if the user is logged in, there should be an option in the dropdown allowing the user to check their profile', () => {
-
-  });
-  it('if the user clicks on the check profile, they should be redirected to the right page', () => {
-
+  it('should check if the log in button exists and has the correct href', async () => {
+    const UserProfile = {
+      name: undefined,
+      userProfile: { username: undefined },
+    };
+    render(
+      <>
+        <UserContext.Provider value={UserProfile}>
+          <BrowserRouter>
+            <AppBar />
+          </BrowserRouter>
+        </UserContext.Provider>
+      </>,
+    );
+    const logInButton = screen.getByText('Log In', { selector: 'a' });
+    expect(logInButton).toBeInTheDocument();
+    expect(logInButton.closest('a')).toHaveAttribute('href', '/profile');
   });
 });
