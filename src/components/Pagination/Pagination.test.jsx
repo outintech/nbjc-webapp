@@ -24,4 +24,31 @@ describe('Pagination testing', () => {
   it('should go to the previous page when clicking on the back button if it exists', () => {
 
   });
+  it('should properly check if the next page exists', () => {
+
+  });
+  it('should return the correct value if given a non-existant page', () => {
+
+  });
+  it('if the user types in a invalid input to the GoToPage it should show a error prompt', () => {
+
+  });
+  it('if the user clicks on the input field on the GoToPage and presses enter it should navigate to the correct page', () => {
+
+  });
+  it('should render the correct page range if theres more than one page', () => {
+
+  });
+  it('should not render any page range if theres only one page', () => {
+
+  });
+  it('should display a button that opens the goToPage component and closes it', () => {
+
+  });
+  it('given certain screen sizes, pagination should be centered or not', () => {
+
+  });
+  it('given various combinations, pagination should render the correct combination of pages', () => {
+
+  });
 });
