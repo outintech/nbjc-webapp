@@ -213,12 +213,14 @@ const Home = ({ classes }) => {
     ];
     return (
       <Box className={classes.searchButtonContainer}>
-        {locationButtons.map((buttonData) => (
+        {locationButtons.map((buttonData, index) => (
           <Button
             variant="outlined"
             startIcon={buttonData.icon}
             onClick={(event) => handleClick(event, buttonData.search)}
             className={classes.searchButton}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
           >
             {buttonData.name}
           </Button>
@@ -238,8 +240,14 @@ const Home = ({ classes }) => {
     ];
     return (
       <Box className={classes.searchButtonContainer}>
-        {categoryButtons.map((buttonData) => (
-          <Button variant="outlined" className={classes.searchButton} startIcon={buttonData.icon}>
+        {categoryButtons.map((buttonData, index) => (
+          <Button
+            variant="outlined"
+            className={classes.searchButton}
+            startIcon={buttonData.icon}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+          >
             {buttonData.name}
           </Button>
         ))}
