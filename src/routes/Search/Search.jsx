@@ -36,13 +36,13 @@ const styles = () => ({
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
   },
-  DesktopMargins: {
+  desktopMargins: {
     marginLeft: 40,
     marginBottom: 20,
     marginRight: 142,
     flex: 1,
   },
-  MobileMargins: {
+  mobileMargins: {
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
@@ -88,29 +88,29 @@ const styles = () => ({
     border: 0,
     color: '#633AA3',
   },
-  NumOfResultsContainer: {
+  numOfResultsContainer: {
     fontWeight: 600,
     fontSize: '32px',
     color: '#1E1131',
     lineHeight: '32px',
     marginBottom: 16,
   },
-  NumResultsMobileFont: {
+  numResultsMobileFont: {
     fontSize: '20px',
     lineHeight: '25px',
     marginBottom: 8,
   },
-  SortLeftContainer: {
+  sortLeftContainer: {
     flex: 1,
   },
-  SortMenuContainer: {
+  sortMenuContainer: {
     display: 'flex',
     textAlign: 'center',
     alignItems: 'center',
     color: '#633AA3',
     textTransform: 'none',
   },
-  SortMobileMenuContainer: {
+  sortMobileMenuContainer: {
     display: 'flex',
     textAlign: 'center',
     alignItems: 'center',
@@ -121,30 +121,30 @@ const styles = () => ({
     lineHeight: '24px',
     fontSize: '16px',
   },
-  SearchSettingLabel: {
+  searchSettingLabel: {
     fontWeight: 600,
     lineHeight: '17.5px',
     color: '#1E1131',
     marginRight: 6,
   },
-  SearchSettingMobileLabel: {
+  searchSettingMobileLabel: {
     fontWeight: 400,
     lineHeight: '24px',
     color: '#1E1131',
     fontSize: '16px',
     marginLeft: 32,
   },
-  RowContainer: {
+  rowContainer: {
     display: 'flex',
   },
-  ColumnContainer: {
+  columnContainer: {
     display: 'flex',
     flexDirection: 'column',
   },
-  CardMargins: {
+  cardMargins: {
     marginBottom: 40,
   },
-  HeaderMargins: {
+  headerMargins: {
     marginTop: 24,
   },
   overrideListItem: {
@@ -162,8 +162,8 @@ const ReusableMenu = (
     classes, menuValues, menuStrings, onMenuClick, sortLabel, currentValue = menuValues[0], mobile,
   },
 ) => {
-  const SortContainerClass = mobile ? classes.SortMobileMenuContainer : classes.SortMenuContainer;
-  const SearchSettingClass = mobile ? classes.SearchSettingMobileLabel : classes.SearchSettingLabel;
+  const SortContainerClass = mobile ? classes.sortMobileMenuContainer : classes.sortMenuContainer;
+  const SearchSettingClass = mobile ? classes.searchSettingMobileLabel : classes.searchSettingLabel;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -190,7 +190,7 @@ const ReusableMenu = (
           variant="text"
           size="small"
         >
-          <div className={classes.SortMenuContainer}>
+          <div className={classes.sortMenuContainer}>
             <span>{`${menuValues[selectedIndex]} ${menuStrings}`}</span>
             <ArrowDropDownIcon />
           </div>
@@ -219,6 +219,8 @@ const ReusableMenu = (
               <MenuItem
                 onClick={(event) => handleMenuItemClick(event, index)}
                 className={boldedText}
+                /* eslint-disable react/no-array-index-key */
+                key={index}
               >
                 {`${value} ${menuStrings}`}
               </MenuItem>
@@ -271,12 +273,12 @@ const ShowingPerPageMenu = ({ classes, mobile }) => (
 );
 
 const TopSortRow = ({ classes, mobile }) => {
-  const ContainerClass = mobile ? classes.ColumnContainer : classes.RowContainer;
+  const ContainerClass = mobile ? classes.columnContainer : classes.rowContainer;
   return (
     <section className={ContainerClass}>
       {mobile ? null
         : (
-          <div className={classes.SortLeftContainer}>
+          <div className={classes.sortLeftContainer}>
             <ShowingPerPageMenu classes={classes} />
           </div>
         )}
@@ -302,9 +304,9 @@ const SortRowMobile = ({ classes, useDesktop }) => {
 const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
   const resultString = pagination.total_count >= 2 ? 'Results' : 'Result';
   const numOfResultsString = `${pagination.total_count} Search ${resultString}`;
-  const applyFonts = mobile ? classes.NumResultsMobileFont : '';
+  const applyFonts = mobile ? classes.numResultsMobileFont : '';
   return (
-    <div className={`${classes.NumOfResultsContainer} ${applyFonts}`}>
+    <div className={`${classes.numOfResultsContainer} ${applyFonts}`}>
       {numOfResultsString}
     </div>
   );
@@ -376,7 +378,7 @@ const SearchBodyHeader = ({
     return null;
   }
   return (
-    <header className={classes.HeaderMargins}>
+    <header className={classes.headerMargins}>
       <NumberOfResultsHeader
         classes={classes}
         pagination={pagination}
@@ -432,7 +434,7 @@ const Search = ({
 
   const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
   const useDesktop = useMediaQuery('(min-width:838px)');
-  const SearchPageMargins = isWiderThanBreakpoint ? classes.DesktopMargins : classes.MobileMargins;
+  const SearchPageMargins = isWiderThanBreakpoint ? classes.desktopMargins : classes.mobileMargins;
   const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
 
   const isGeoLoading = isGeolocationEnabled && coords === null;
@@ -470,7 +472,7 @@ const Search = ({
           />
           <div>
             {FoundOneOrMoreResults && searchResults.map((result, index) => (
-              <div className={classes.CardMargins} key={result.id}>
+              <div className={classes.cardMargins} key={result.id}>
                 <BusinessCard
                   business={result}
                   key={result.id}

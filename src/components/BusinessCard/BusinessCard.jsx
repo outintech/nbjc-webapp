@@ -66,7 +66,7 @@ const styles = () => ({
     color: '#666666',
     marginBottom: '2px',
   },
-  TopCardContainer: {
+  topCardContainer: {
     marginBottom: 10,
     width: '100%',
     display: 'flex',
@@ -81,21 +81,21 @@ const styles = () => ({
   mobileTitleBar: {
     fontSize: '16px',
   },
-  TitleAddressParentContainer: {
+  titleAddressParentContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
   },
-  CTAParentContainer: {
+  ctaParentContainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
     minHeight: '40px',
   },
-  CTAContainer: {
+  ctaContainer: {
     display: 'flex',
     maxWidth: '800px',
   },
-  CTAButtonContainer: {
+  ctaButtonContainer: {
     display: 'flex',
     textDecoration: 'none',
     marginRight: 'auto',
@@ -112,24 +112,27 @@ const styles = () => ({
   ordinalNumberMargins: {
     margin: '0 5px',
   },
-  BottomCardContainer: {
+  bottomCardContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
   },
-  ChipList: {
+  chipList: {
     display: 'flex',
     flex: 1,
     maxWidth: '800px',
   },
-  CardInformationContainer: {
+  cardInformationContainer: {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
   },
-  BusinessCardContainer: {
+  businessCardContainer: {
     display: 'flex',
     margin: 16,
+  },
+  shareButton: {
+    color: 'black',
   },
 });
 
@@ -180,7 +183,7 @@ const TopCardContent = (
     id,
   },
 ) => (
-  <Box className={classes.TopCardContainer}>
+  <Box className={classes.topCardContainer}>
     <Image
       classes={classes}
       imageUrl={imageUrl}
@@ -188,7 +191,7 @@ const TopCardContent = (
       id={id}
       showImage={!useDesktop}
     />
-    <Box className={classes.TitleAddressParentContainer}>
+    <Box className={classes.titleAddressParentContainer}>
       <TitleBar
         classes={classes}
         count={count}
@@ -209,7 +212,7 @@ const OrdinalNumber = ({ classes, count }) => {
   );
 };
 
-const ShareMenu = () => {
+const ShareMenu = ({ classes }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -229,7 +232,7 @@ const ShareMenu = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <ShareIcon color="black" />
+          <ShareIcon className={classes.shareButton} />
           Share
         </MenuItem>
       </Menu>
@@ -251,7 +254,7 @@ const TitleBar = ({
         <OrdinalNumber classes={classes} count={count} />
         {businessName}
       </span>
-      <ShareMenu />
+      <ShareMenu classes={classes} />
     </Box>
   );
 };
@@ -271,6 +274,7 @@ const AddressRow = ({ classes, address }) => {
           {address}
         </Typography>
       </a>
+      <div style={{ flex: 1 }} />
     </>
   );
 };
@@ -278,7 +282,7 @@ const AddressRow = ({ classes, address }) => {
 const AddReviewCTA = ({ id, classes }) => {
   const spacesUrl = `/spaces/${id}/reviews/new`;
   return (
-    <Link to={spacesUrl} className={classes.CTAButtonContainer}>
+    <Link to={spacesUrl} className={classes.ctaButtonContainer}>
       <RateReviewIcon color="secondary" fontSize="small" />
       <span>Add Review</span>
     </Link>
@@ -288,7 +292,7 @@ const AddReviewCTA = ({ id, classes }) => {
 const RatingCTA = ({ classes, averageRating }) => {
   const label = 'Rating';
   return (
-    <Box className={classes.CTAButtonContainer}>
+    <Box className={classes.ctaButtonContainer}>
       <span>{label}</span>
       <StarIcon color="secondary" fontSize="small" />
       <span className={classes.purpleIcon}>{averageRating}</span>
@@ -304,7 +308,7 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
   const label = (<span>{formatPhoneNumber(phoneNumber)}</span>);
   const displayLabelOnDesktop = useDesktop ? label : null;
   return (
-    <a href={phoneString} className={classes.CTAButtonContainer}>
+    <a href={phoneString} className={classes.ctaButtonContainer}>
       <PhoneIcon className={classes.purpleIcon} fontSize="small" />
       {displayLabelOnDesktop}
     </a>
@@ -314,7 +318,7 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
 const VisitWebsiteCTA = ({ classes, useDesktop }) => {
   const label = useDesktop ? <span>Visit Website</span> : null;
   return (
-    <Box className={classes.CTAButtonContainer}>
+    <Box className={classes.ctaButtonContainer}>
       <LanguageIcon color="secondary" fontSize="small" />
       {label}
     </Box>
@@ -326,8 +330,8 @@ const CTAs = (
     classes, id, averageRating, phoneNumber, useDesktop,
   },
 ) => (
-  <Box className={classes.CTAParentContainer}>
-    <Box className={classes.CTAContainer}>
+  <Box className={classes.ctaParentContainer}>
+    <Box className={classes.ctaContainer}>
       <AddReviewCTA classes={classes} id={id} />
       <RatingCTA classes={classes} averageRating={averageRating} />
       <CallPhoneCTA phoneNumber={phoneNumber} classes={classes} useDesktop={useDesktop} />
@@ -341,8 +345,8 @@ const BottomCardContent = (
     classes, id, averageRating, phoneNumber, useDesktop, filters,
   },
 ) => (
-  <Box className={classes.BottomCardContainer}>
-    <Box className={classes.ChipList}>
+  <Box className={classes.bottomCardContainer}>
+    <Box className={classes.chipList}>
       <ChipList chips={filters} />
     </Box>
     <CTAs
@@ -375,7 +379,7 @@ const BusinessCard = ({
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.BusinessCardContainer}>
+      <Box className={classes.businessCardContainer}>
         <Image
           classes={classes}
           imageUrl={imageUrl}
@@ -383,7 +387,7 @@ const BusinessCard = ({
           id={id}
           showImage={useDesktop}
         />
-        <Box className={classes.CardInformationContainer}>
+        <Box className={classes.cardInformationContainer}>
           <TopCardContent
             classes={classes}
             address={address}
