@@ -9,9 +9,9 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.navWhite.dark,
+    backgroundColor: '#351F57',
     display: 'flex',
-    color: theme.palette.navWhite.contrastText,
+    color: '#FFFFFF',
     minHeight: 75,
     backgroundClip: 'padding-box',
     [theme.breakpoints.up('xs')]: {
