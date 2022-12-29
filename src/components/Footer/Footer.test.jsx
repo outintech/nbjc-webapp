@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 
 import Footer from './Footer';
 
@@ -43,18 +43,19 @@ const itIsExternalLink = (linkName) => {
   });
 };
 
-/*
-const itNavigatesToCorrectPage = (linkName) => {
+const itIsInternalLink = (linkName, hrefString) => {
+  it('It is not currently on the correct page', () => {
+    renderFooter();
+    expect(window.location.pathname).not.toBe(hrefString);
+  });
   it('It navigates to the correct page when clicked', async () => {
     renderFooter();
     const link = screen.getByRole('link', { name: linkName });
 
     await userEvent.click(link);
-
-    expect(screen.getByText(linkName)).toBe('hi');
+    expect(window.location.pathname).toBe(hrefString);
   });
 };
-*/
 
 describe('Privacy Policy Link', () => {
   const policyLabel = 'Privacy Policy';
@@ -70,4 +71,12 @@ describe('National Black Justice Coalition Link', () => {
   itIsExternalLink(NBJCLabel);
   itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
   itHasCorrectLabel(NBJCLabel);
+});
+
+describe('Community Guidelines Link', () => {
+  const CGLabel = 'Community Guidelines';
+  itRendersAsALink(CGLabel);
+  itIsInternalLink(CGLabel, '/community-guidelines');
+  itHasCorrectHref(CGLabel, '/community-guidelines');
+  itHasCorrectLabel(CGLabel);
 });
