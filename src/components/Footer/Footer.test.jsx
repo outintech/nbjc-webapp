@@ -32,7 +32,7 @@ const itHasCorrectHref = (linkName, hrefString) => {
   });
 };
 
-const itIsExternalLink = (linkName) => {
+const itOpensLinkInAnotherTab = (linkName) => {
   it('It has a target value of _blank', () => {
     renderFooter();
     expect(screen.getByRole('link', { name: linkName })).toHaveAttribute('target', '_blank');
@@ -43,7 +43,7 @@ const itIsExternalLink = (linkName) => {
   });
 };
 
-const itIsInternalLink = (linkName, hrefString) => {
+const itRedirectsUserToCorrectPage = (linkName, hrefString) => {
   it('It is not currently on the correct page', () => {
     renderFooter();
     expect(window.location.pathname).not.toBe(hrefString);
@@ -60,7 +60,7 @@ const itIsInternalLink = (linkName, hrefString) => {
 describe('Privacy Policy Link', () => {
   const policyLabel = 'Privacy Policy';
   itRendersAsALink(policyLabel);
-  itIsExternalLink(policyLabel);
+  itOpensLinkInAnotherTab(policyLabel);
   itHasCorrectHref(policyLabel, 'https://nbjc.org/privacy-policy/');
   itHasCorrectLinkLabel(policyLabel);
 });
@@ -68,7 +68,7 @@ describe('Privacy Policy Link', () => {
 describe('National Black Justice Coalition Link', () => {
   const NBJCLabel = 'National Black Justice Coalition';
   itRendersAsALink(NBJCLabel);
-  itIsExternalLink(NBJCLabel);
+  itOpensLinkInAnotherTab(NBJCLabel);
   itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
   itHasCorrectLinkLabel(NBJCLabel);
 });
@@ -76,7 +76,7 @@ describe('National Black Justice Coalition Link', () => {
 describe('Out in Tech Link', () => {
   const OITLabel = 'Out in Tech';
   itRendersAsALink(OITLabel);
-  itIsExternalLink(OITLabel);
+  itOpensLinkInAnotherTab(OITLabel);
   itHasCorrectHref(OITLabel, 'https://outintech.com/');
   itHasCorrectLinkLabel(OITLabel);
 });
@@ -84,7 +84,7 @@ describe('Out in Tech Link', () => {
 describe('Community Guidelines Link', () => {
   const CGLabel = 'Community Guidelines';
   itRendersAsALink(CGLabel);
-  itIsInternalLink(CGLabel, '/community-guidelines');
+  itRedirectsUserToCorrectPage(CGLabel, '/community-guidelines');
   itHasCorrectHref(CGLabel, '/community-guidelines');
   itHasCorrectLinkLabel(CGLabel);
 });
@@ -93,7 +93,7 @@ describe('Donate Link', () => {
   const DonateLabel = 'Donate';
   itRendersAsALink(DonateLabel);
   itHasCorrectHref(DonateLabel, '/donate');
-  itIsInternalLink(DonateLabel, '/donate');
+  itRedirectsUserToCorrectPage(DonateLabel, '/donate');
   itHasCorrectLinkLabel(DonateLabel);
 });
 
@@ -101,7 +101,7 @@ describe('Terms of Service Link', () => {
   const TOSLabel = 'Terms of Service';
   itRendersAsALink(TOSLabel);
   itHasCorrectHref(TOSLabel, '/terms-of-service');
-  itIsInternalLink(TOSLabel, '/terms-of-service');
+  itRedirectsUserToCorrectPage(TOSLabel, '/terms-of-service');
   itHasCorrectLinkLabel(TOSLabel);
 });
 
@@ -109,7 +109,7 @@ describe('Infringement Policies Link', () => {
   const IFLabel = 'Infringement Policies';
   itRendersAsALink(IFLabel);
   itHasCorrectHref(IFLabel, '/infringement-policies');
-  itIsInternalLink(IFLabel, '/infringement-policies');
+  itRedirectsUserToCorrectPage(IFLabel, '/infringement-policies');
   itHasCorrectLinkLabel(IFLabel);
 });
 
