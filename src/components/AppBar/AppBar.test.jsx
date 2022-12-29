@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -114,23 +113,25 @@ const itRendersMenuDropdownForUsers = () => {
   });
 };
 
+const itRedirectsUserToLogin = () => {
+  it('It navigates to the profile page to log in when clicked', async () => {
+    renderAppBarWithUser(noUser);
+    const Login = screen.getByText('Log In');
+    await userEvent.click(Login);
+
+    expect(window.location.pathname).toBe('/profile');
+  });
+};
+
 describe('Log In Menu', () => {
   itRendersLogInForNoUser();
   itRendersUserAccountName();
   itTruncatesLongUserNames();
   itRendersMenuDropdownForUsers();
+  itRedirectsUserToLogin();
 });
 
-const itChecksCurrentPage = (pathString) => {
-  it(`It is not currently on the ${pathString} page`, () => {
-    renderAppBarWithUser(noUser);
-    expect(window.location.pathname).not.toBe(pathString);
-  });
-};
-
 const itRedirectsUserToProfilePage = () => {
-  const hrefString = '/profile';
-  itChecksCurrentPage(hrefString);
   it('It navigates to the profile page when clicked', async () => {
     renderAppBarWithUser(demoUser);
     const dropdownMenu = screen.getByTestId('open-user-dropdown');
@@ -139,7 +140,7 @@ const itRedirectsUserToProfilePage = () => {
 
     await userEvent.click(profileLink);
 
-    expect(window.location.pathname).toBe(hrefString);
+    expect(window.location.pathname).toBe('/profile');
   });
 };
 
@@ -185,21 +186,68 @@ describe('Profile Button', () => {
   itHasACorrectLabel();
 });
 
-describe('Log In Button', () => {
-  // Redirects to the correct page
-  // Has the correct label.
-});
+const logsOutUserOnClick = () => {
+  it('It logs out the user on click', () => {
+
+  });
+};
+
+const itHasLogOutLabel = () => {
+  it('It has a log out label', () => {
+
+  });
+};
+
+const itHasLogOutIcon = () => {
+  it('It has a log out icon', () => {
+
+  });
+};
 
 describe('Sign out Button', () => {
-  // Mock logout function and test that it gets called on click.
-  // Has the correct label.
-  // Has an icon.
+  logsOutUserOnClick();
+  itHasLogOutLabel();
+  itHasLogOutIcon();
 });
 
+const itRendersAddASpaceLink = () => {
+  it('It renders an add a space link', () => {
+    renderAppBarWithUser(noUser);
+    const addASpace = screen.getByTestId('add-a-space-link');
+    expect(addASpace).toBeInTheDocument();
+  });
+};
+
+const itRedirectsUserToAddASpacePage = () => {
+  /*
+  it('It redirects user to add a space page when clicked', async () => {
+    renderAppBarWithUser(noUser);
+    const addASpace = screen.getByTestId('add-a-space-link');
+
+    await userEvent.click(addASpace);
+    expect(window.location.pathname).toBe('/spaces/new');
+  });
+  */
+};
+
+const itRendersTheCorrectIcon = () => {
+  it('It renders an icon', () => {
+
+  });
+};
+
+const itRendersAddASpaceLabel = () => {
+  it('It renders the label on larger screens', () => {
+
+  });
+  it('It does not render the label on smaller screens', () => {
+
+  });
+};
+
 describe('Add a Space Button', () => {
-  // Check to see if it contains the correct icon
-  // Check to see if it contains the right label
-  // Check to see if the icon still appears for smaller screen sizes
-  // Check to see if the label doesn't appear for smaller screen sizes.
-  // Check that you get redirected to the correct location when clicking on it.
+  itRendersAddASpaceLink();
+  itRedirectsUserToAddASpacePage();
+  itRendersTheCorrectIcon();
+  itRendersAddASpaceLabel();
 });

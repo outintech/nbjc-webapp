@@ -144,7 +144,7 @@ const AppBar = ({
             <AccountCircleIcon data-testid="profile-icon" />
             My Profile
           </MenuItem>
-          <MenuItem onClick={signOut}>
+          <MenuItem onClick={signOut} data-testid="sign-out-link">
             <LogoutIcon />
             Sign Out
           </MenuItem>
@@ -156,7 +156,7 @@ const AppBar = ({
   const AddASpace = () => {
     const matches = useMediaQuery('(min-width:426px)');
     return (
-      <Box className={classes.navLinkBar}>
+      <Box className={classes.navLinkBar} data-testid="add-a-space-link">
         <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
           <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
           {matches ? 'Add a Space' : ''}
