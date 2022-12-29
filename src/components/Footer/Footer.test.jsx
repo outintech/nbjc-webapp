@@ -130,15 +130,15 @@ const itHasCorrectCopyrightLabel = () => {
   });
 };
 
-const itRendersAsText = () => {
+const itRendersAsText = (stringToMatch) => {
   it('It renders as a text element', () => {
     renderFooter();
-    expect(screen.getByText('Copyright', { exact: false })).toBeInTheDocument();
+    expect(screen.getByText(stringToMatch, { exact: false })).toBeInTheDocument();
   });
 };
 
 describe('Copyright String', () => {
-  itRendersAsText();
+  itRendersAsText('Copyright');
   itHasCorrectYear();
   itHasCorrectCopyrightLabel();
 });
