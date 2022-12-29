@@ -5,9 +5,9 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.navBlack.main,
+    backgroundColor: theme.palette.navWhite.main,
     display: 'flex',
-    color: theme.palette.navBlack.contrastText,
+    color: theme.palette.navWhite.contrastText,
     minHeight: 75,
     width: '100%',
     backgroundClip: 'padding-box',
