@@ -1,45 +1,60 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/';
+// import userEvent from '@testing-library/user-event';
 
 import Footer from './Footer';
 
 const renderFooter = () => (
-  render(
-    <BrowserRouter>
-      <Footer />
-    </BrowserRouter>,
-  )
+  render(<Footer />, { wrapper: BrowserRouter })
 );
 
 const itHasCorrectLabel = (linkName) => {
   it('It has the correct label', () => {
     renderFooter();
-    expect(screen.getByText(linkName)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: linkName })).toBeInTheDocument();
   });
 };
 
 const itRendersAsALink = (linkName) => {
   it('It renders as a link', () => {
     renderFooter();
-    expect(screen.getByText(linkName)).toHaveAttribute('href');
+    expect(screen.getByRole('link', { name: linkName })).toHaveAttribute('href');
   });
 };
 
 const itHasCorrectHref = (linkName, hrefString) => {
   it('It has the correct href', () => {
     renderFooter();
-    expect(screen.getByText(linkName)).toHaveAttribute('href', hrefString);
+    expect(screen.getByRole('link', { name: linkName })).toHaveAttribute('href', hrefString);
   });
 };
 
 const itIsExternalLink = (linkName) => {
-  it('It is an external link', () => {
+  it('It has a target value of _blank', () => {
     renderFooter();
-    expect(screen.getByText(linkName)).toHaveAttribute('target', '_blank');
+    expect(screen.getByRole('link', { name: linkName })).toHaveAttribute('target', '_blank');
+  });
+  it('It has a rel value of noreferrer', () => {
+    renderFooter();
+    expect(screen.getByRole('link', { name: linkName })).toHaveAttribute('rel', 'noreferrer');
   });
 };
+
+/*
+const itNavigatesToCorrectPage = (linkName) => {
+  it('It navigates to the correct page when clicked', async () => {
+    renderFooter();
+    const link = screen.getByRole('link', { name: linkName });
+
+    await userEvent.click(link);
+
+    expect(screen.getByText(linkName)).toBe('hi');
+  });
+};
+*/
 
 describe('Privacy Policy Link', () => {
   const policyLabel = 'Privacy Policy';
@@ -47,5 +62,12 @@ describe('Privacy Policy Link', () => {
   itIsExternalLink(policyLabel);
   itHasCorrectHref(policyLabel, 'https://nbjc.org/privacy-policy/');
   itHasCorrectLabel(policyLabel);
-  // itRedirectsOnClick(policyLabel);
+});
+
+describe('National Black Justice Coalition Link', () => {
+  const NBJCLabel = 'National Black Justice Coalition';
+  itRendersAsALink(NBJCLabel);
+  itIsExternalLink(NBJCLabel);
+  itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
+  itHasCorrectLabel(NBJCLabel);
 });
