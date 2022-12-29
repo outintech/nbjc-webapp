@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink } from 'react-router-dom';
-
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
-
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
-
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
@@ -31,12 +28,12 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navWhite.light,
-    color: theme.palette.navWhite.contrastText,
+    backgroundColor: '#FFFFFF',
+    color: '#FFFFFF',
   },
   links: {
     marginRight: '1rem',
-    color: theme.palette.navWhite.textDark,
+    color: '#1E1131',
     fontSize: '1.1rem',
     fontWeight: 600,
     backgroundColor: 'transparent',
