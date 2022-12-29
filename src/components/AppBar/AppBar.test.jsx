@@ -36,7 +36,6 @@ const itShouldHaveLogo = () => {
 
 describe('AppBar', () => {
   itShouldHaveLogo();
-  // Check to see if it renders
 });
 
 const itRendersLogInForNoUser = () => {
@@ -90,20 +89,28 @@ const itTruncatesLongUserNames = () => {
 };
 
 const itRendersMenuDropdownForUsers = () => {
-  it('It renders a button when the user is logged in', () => {
+  it('It renders a button for a dropdown menu when the user is logged in', () => {
     renderAppBarWithUser(demoUser);
+    const button = screen.getByTestId('open-user-dropdown');
+    expect(button).toBeInTheDocument();
   });
-  it('It renders a button that has a on click to open a menu when the user is logged in', () => {
-
+  it('It does not render a button for a dropdown menu when there is no logged in user', () => {
+    renderAppBarWithUser(noUser);
+    const button = screen.queryByTestId('open-user-dropdown');
+    expect(button).not.toBeInTheDocument();
   });
-  it('It renders a menu when the user is logged in', () => {
+  it('It opens a menu when button is clicked on', () => {
+    renderAppBarWithUser(demoUser);
+    const dropdownMenu = screen.getByTestId('open-user-dropdown');
 
+    userEvent.click(dropdownMenu);
+    const menu = screen.getByTestId('user-dropdown-menu');
+    expect(menu).toBeInTheDocument();
   });
-  it('It does not render a button when there is no logged in user', () => {
-
-  });
-  it('It does not render a menu when there is no logged in user', () => {
-
+  it('It does not display menu when not clicked on', () => {
+    renderAppBarWithUser(demoUser);
+    const menu = screen.queryByTestId('user-dropdown-menu');
+    expect(menu).not.toBeInTheDocument();
   });
 };
 
@@ -114,13 +121,76 @@ describe('Log In Menu', () => {
   itRendersMenuDropdownForUsers();
 });
 
+const itChecksCurrentPage = (pathString) => {
+  it(`It is not currently on the ${pathString} page`, () => {
+    renderAppBarWithUser(noUser);
+    expect(window.location.pathname).not.toBe(pathString);
+  });
+};
+
+const itRedirectsUserToProfilePage = () => {
+  const hrefString = '/profile';
+  itChecksCurrentPage(hrefString);
+  it('It navigates to the profile page when clicked', async () => {
+    renderAppBarWithUser(demoUser);
+    const dropdownMenu = screen.getByTestId('open-user-dropdown');
+    userEvent.click(dropdownMenu);
+    const profileLink = screen.getByText('My Profile');
+
+    await userEvent.click(profileLink);
+
+    expect(window.location.pathname).toBe(hrefString);
+  });
+};
+
+const itRendersAProfileButton = () => {
+  it('It renders a profile button with the correct label', () => {
+    renderAppBarWithUser(demoUser);
+    const dropdownMenu = screen.getByTestId('open-user-dropdown');
+    userEvent.click(dropdownMenu);
+    const profileLink = screen.getByTestId('profile-icon');
+    expect(profileLink).toBeInTheDocument();
+  });
+};
+
+const itRendersWithAIcon = () => {
+  it('It renders an icon', () => {
+    renderAppBarWithUser(demoUser);
+    const dropdownMenu = screen.getByTestId('open-user-dropdown');
+    userEvent.click(dropdownMenu);
+    const icon = screen.queryByTestId('profile-icon');
+    expect(icon).toBeInTheDocument();
+  });
+  it('The icon is not rendered if the component is not rendered', () => {
+    renderAppBarWithUser(demoUser);
+    const icon = screen.queryByTestId('profile-icon');
+    expect(icon).not.toBeInTheDocument();
+  });
+};
+
+const itHasACorrectLabel = () => {
+  it('It has a correct label', () => {
+    renderAppBarWithUser(demoUser);
+    userEvent.click(screen.getByTestId('open-user-dropdown'));
+    const profileLink = screen.getByTestId('profile-link');
+
+    expect(profileLink.textContent).toBe('My Profile');
+  });
+};
+
 describe('Profile Button', () => {
-  // Redirects to correct page.
-  // Has the correct label.
-  // Has an icon.
+  itRendersAProfileButton();
+  itRedirectsUserToProfilePage();
+  itRendersWithAIcon();
+  itHasACorrectLabel();
 });
 
-describe('Log out Button', () => {
+describe('Log In Button', () => {
+  // Redirects to the correct page
+  // Has the correct label.
+});
+
+describe('Sign out Button', () => {
   // Mock logout function and test that it gets called on click.
   // Has the correct label.
   // Has an icon.
@@ -133,27 +203,3 @@ describe('Add a Space Button', () => {
   // Check to see if the label doesn't appear for smaller screen sizes.
   // Check that you get redirected to the correct location when clicking on it.
 });
-
-/*
-    const userMenu = screen.getByText('demoUser');
-  expect(userMenu).toBeInTheDocument();
-  userEvent.click(userMenu);
-  const MyProfileButton = screen.getByText('My Profile');
-  const LogOutButton = screen.getByText('Sign Out');
-  expect(MyProfileButton).toBeInTheDocument();
-  expect(LogOutButton).toBeInTheDocument();
-*/
-
-const itRedirectsToCorrectPage = () => {
-  /*     const userMenu = screen.getByText('demoUser');
-     userEvent.click(userMenu);
-     const MyProfileButton = screen.getByText('My Profile');
-     userEvent.click(MyProfileButton);
-     await waitFor(() => expect(window.location.href).toBe('http://localhost/profile'));
-   */
-};
-
-/*     const logInButton = screen.getByText('Log In', { selector: 'a' });
-    expect(logInButton).toBeInTheDocument();
-    expect(logInButton.closest('a')).toHaveAttribute('href', '/profile');
-*/

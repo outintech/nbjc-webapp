@@ -120,6 +120,7 @@ const AppBar = ({
           aria-expanded={open ? 'true' : undefined}
           className={classes.links}
           onClick={handleClick}
+          data-testid="open-user-dropdown"
         >
           {TruncateUserName(userContext.userProfile.username)}
         </Button>
@@ -132,14 +133,15 @@ const AppBar = ({
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+          data-testid="user-dropdown-menu"
           PaperProps={{
             style: {
               background: '#EBE5F6',
             },
           }}
         >
-          <MenuItem onClick={navigateToProfile}>
-            <AccountCircleIcon />
+          <MenuItem onClick={navigateToProfile} data-testid="profile-link">
+            <AccountCircleIcon data-testid="profile-icon" />
             My Profile
           </MenuItem>
           <MenuItem onClick={signOut}>
