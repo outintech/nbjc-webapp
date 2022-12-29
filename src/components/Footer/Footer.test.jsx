@@ -11,7 +11,7 @@ const renderFooter = () => (
   render(<Footer />, { wrapper: BrowserRouter })
 );
 
-const itHasCorrectLabel = (linkName) => {
+const itHasCorrectLinkLabel = (linkName) => {
   it('It has the correct label', () => {
     renderFooter();
     expect(screen.getByRole('link', { name: linkName })).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('Privacy Policy Link', () => {
   itRendersAsALink(policyLabel);
   itIsExternalLink(policyLabel);
   itHasCorrectHref(policyLabel, 'https://nbjc.org/privacy-policy/');
-  itHasCorrectLabel(policyLabel);
+  itHasCorrectLinkLabel(policyLabel);
 });
 
 describe('National Black Justice Coalition Link', () => {
@@ -70,7 +70,15 @@ describe('National Black Justice Coalition Link', () => {
   itRendersAsALink(NBJCLabel);
   itIsExternalLink(NBJCLabel);
   itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
-  itHasCorrectLabel(NBJCLabel);
+  itHasCorrectLinkLabel(NBJCLabel);
+});
+
+describe('Out in Tech Link', () => {
+  const OITLabel = 'Out in Tech';
+  itRendersAsALink(OITLabel);
+  itIsExternalLink(OITLabel);
+  itHasCorrectHref(OITLabel, 'https://outintech.com/');
+  itHasCorrectLinkLabel(OITLabel);
 });
 
 describe('Community Guidelines Link', () => {
@@ -78,5 +86,59 @@ describe('Community Guidelines Link', () => {
   itRendersAsALink(CGLabel);
   itIsInternalLink(CGLabel, '/community-guidelines');
   itHasCorrectHref(CGLabel, '/community-guidelines');
-  itHasCorrectLabel(CGLabel);
+  itHasCorrectLinkLabel(CGLabel);
+});
+
+describe('Donate Link', () => {
+  const DonateLabel = 'Donate';
+  itRendersAsALink(DonateLabel);
+  itHasCorrectHref(DonateLabel, '/donate');
+  itIsInternalLink(DonateLabel, '/donate');
+  itHasCorrectLinkLabel(DonateLabel);
+});
+
+describe('Terms of Service Link', () => {
+  const TOSLabel = 'Terms of Service';
+  itRendersAsALink(TOSLabel);
+  itHasCorrectHref(TOSLabel, '/terms-of-service');
+  itIsInternalLink(TOSLabel, '/terms-of-service');
+  itHasCorrectLinkLabel(TOSLabel);
+});
+
+describe('Infringement Policies Link', () => {
+  const IFLabel = 'Infringement Policies';
+  itRendersAsALink(IFLabel);
+  itHasCorrectHref(IFLabel, '/infringement-policies');
+  itIsInternalLink(IFLabel, '/infringement-policies');
+  itHasCorrectLinkLabel(IFLabel);
+});
+
+const itHasCorrectYear = () => {
+  it('It has the correct year', () => {
+    const currentYearString = (new Date().getFullYear()).toString();
+    renderFooter();
+    expect(screen.getByText(currentYearString, { exact: false })).toBeInTheDocument();
+  });
+};
+
+const itHasCorrectCopyrightLabel = () => {
+  it('It has the correct copyright label', () => {
+    const currentYear = new Date().getFullYear();
+    renderFooter();
+    const copyrightLabel = screen.getByText('Copyright', { exact: false }).textContent;
+    expect(copyrightLabel).toBe(`Copyright ${currentYear} NBJC`);
+  });
+};
+
+const itRendersAsText = () => {
+  it('It renders as a text element', () => {
+    renderFooter();
+    expect(screen.getByText('Copyright', { exact: false })).toBeInTheDocument();
+  });
+};
+
+describe('Copyright String', () => {
+  itRendersAsText();
+  itHasCorrectYear();
+  itHasCorrectCopyrightLabel();
 });
