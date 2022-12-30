@@ -187,18 +187,40 @@ const ParentRowContainer = (
     classes,
     rowObject,
   },
-) => (
-  <Box className={classes.desktopImageTextContainer}>
-    <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
-    <Box className={classes.textContainer}>
-      <RowTextContent
-        classes={classes}
-        titleString={rowObject.title}
-        bodyString={rowObject.body}
-      />
+) => {
+  const imageComponent = (
+    <img src={rowObject.imageUrl} alt={rowObject.imageAltText} className={classes.image} />);
+  const displayImageOnFlip = rowObject.flippedImageSide ? imageComponent : null;
+  const displayImageWithoutFlip = rowObject.flippedImageSide ? null : imageComponent;
+  return (
+    <Box className={classes.desktopImageTextContainer}>
+      {displayImageWithoutFlip}
+      <Box className={classes.textContainer}>
+        <RowTextContent
+          classes={classes}
+          titleString={rowObject.title}
+          bodyString={rowObject.body}
+        />
+        {rowObject.buttonRowFunction}
+      </Box>
+      {displayImageOnFlip}
     </Box>
-  </Box>
-);
+  );
+};
+
+ParentRowContainer.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  rowObject: PropTypes.objectOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string,
+      imageUrl: PropTypes.string.isRequired,
+      imageAltText: PropTypes.string.isRequired,
+      flippedImageSide: PropTypes.bool,
+      buttonRowFunction: PropTypes.func,
+    }),
+  ).isRequired,
+};
 
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
@@ -321,16 +343,24 @@ const Home = ({ classes }) => {
       body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
       imageUrl: PrideParadeImageLarge,
       imageAltText: 'happy black person at pride parade',
-      flippedImageSide: true,
+      flippedImageSide: false,
       buttonRowFunction: null,
     },
     rowTwo: {
-      title: 'The Mission',
-      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      title: 'Discover New Spaces',
+      body: 'Lavender Book is here whether you are traveling or looking for a new local hangout spot.',
+      imageUrl: GroupPrideImageLarge,
+      imageAltText: 'three black people having fun on a street',
+      flippedImageSide: true,
+      buttonRowFunction: QuickLocationButtons(),
     },
     rowThree: {
-      title: 'The Mission',
-      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      title: 'What types of spaces can I search?',
+      body: 'Not sure where to start? Use the categories below to narrow your search to specific types of spaces.',
+      imageUrl: RainbowMuralImageLarge,
+      imageAltText: 'black person in front of rainbow mural',
+      flippedImageSide: false,
+      buttonRowFunction: QuickCategoryButtons(),
     },
   };
 
