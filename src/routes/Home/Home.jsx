@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   Box,
@@ -139,19 +140,65 @@ const styles = (theme) => ({
   },
 });
 
-const RowTextContent = ({ classes, titleString, bodyString }) => {
+const RowTextContent = (
+  {
+    classes,
+    titleString,
+    bodyString,
+    alignDirection,
+  },
+) => (
   <>
-    <Typography variant="h2" align="left" className={classes.textHeader}>
+    <Typography variant="h2" align={alignDirection} className={classes.textHeader}>
       {titleString}
-      The Mission
     </Typography>
-    <Typography variant="body1" align="left" className={classes.textParagraphBody}>
+    <Typography variant="body1" align={alignDirection} className={classes.textParagraphBody}>
       {bodyString}
-      Our mission is to spread the word about spaces where people can be themselves.
-      All spaces and reviews are published by Lavender Book members.
     </Typography>
-  </>;
+  </>
+);
+
+RowTextContent.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  titleString: PropTypes.string.isRequired,
+  bodyString: PropTypes.string,
+  alignDirection: PropTypes.string,
 };
+
+RowTextContent.defaultProps = {
+  bodyString: '',
+  alignDirection: 'left',
+};
+
+const ButtonComponent = ({ classes, hrefString, buttonLabel }) => (
+  <Button href={hrefString} variant="outlined" className={classes.searchButton}>
+    {buttonLabel}
+  </Button>
+);
+
+ButtonComponent.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  hrefString: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string.isRequired,
+};
+
+const ParentRowContainer = (
+  {
+    classes,
+    rowObject,
+  },
+) => (
+  <Box className={classes.desktopImageTextContainer}>
+    <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
+    <Box className={classes.textContainer}>
+      <RowTextContent
+        classes={classes}
+        titleString={rowObject.title}
+        bodyString={rowObject.body}
+      />
+    </Box>
+  </Box>
+);
 
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
@@ -164,23 +211,6 @@ const Home = ({ classes }) => {
       pathname: '/search/results',
       search: `?searchTerm=&category=&location=${param}`,
     });
-  };
-
-  const rowContent = {
-    rowOne: {
-      title: 'The Mission',
-      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
-      imageUrl: PrideParadeImageLarge,
-      imageAltText: 'happy black person at pride parade',
-      flippedImageSide: true,
-      buttonRowFunction: null,
-    },
-    rowTwo: {
-
-    },
-    rowThree: {
-
-    },
   };
 
   const SupportButton = () => {
@@ -285,105 +315,32 @@ const Home = ({ classes }) => {
     );
   };
 
+  const rowContent = {
+    rowOne: {
+      title: 'The Mission',
+      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      imageUrl: PrideParadeImageLarge,
+      imageAltText: 'happy black person at pride parade',
+      flippedImageSide: true,
+      buttonRowFunction: null,
+    },
+    rowTwo: {
+      title: 'The Mission',
+      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+    },
+    rowThree: {
+      title: 'The Mission',
+      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+    },
+  };
+
   return (
-    desktopBreakpoint ? (
-      <Box className={classes.root}>
-        <Box className={classes.desktopImageTextContainer}>
-          <img src={PrideParadeImageLarge} alt="happy black person at pride parade" className={classes.image} />
-          <Box className={classes.textContainer}>
-            <Typography variant="h2" align="left" className={classes.textHeader}>
-              The Mission
-            </Typography>
-            <Typography variant="body1" align="left" className={classes.textParagraphBody}>
-              Our mission is to spread the word about spaces where people can be themselves.
-              All spaces and reviews are published by Lavender Book members.
-            </Typography>
-            <Box>
-              <Button href="/spaces/new" variant="outlined" className={classes.searchButton}>
-                Add a Space
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-        <Box className={classes.desktopImageTextContainer}>
-          <Box className={classes.textContainer}>
-            <Typography variant="h2" align="left" className={classes.textHeader}>
-              Discover New Spaces
-            </Typography>
-            <Typography variant="body1" align="left" className={classes.textParagraphBody}>
-              Lavender Book is here whether you are traveling or looking for a new local
-              hangout spot.
-            </Typography>
-            <QuickLocationButtons />
-          </Box>
-          <img src={GroupPrideImageLarge} alt="three black people having fun on a street" className={classes.image} />
-        </Box>
-        <Box className={classes.desktopImageTextContainer}>
-          <img src={RainbowMuralImageLarge} alt="black person in front of rainbow mural" className={classes.image} />
-          <Box className={classes.textContainer}>
-            <Typography variant="h2" className={classes.textHeader} align="left">
-              What types of spaces can I search?
-            </Typography>
-            <Typography variant="body1" className={classes.textParagraphBody} align="left">
-              Not sure where to start? Use the categories below to narrow your search to specific
-              types of spaces.
-            </Typography>
-            <QuickCategoryButtons />
-          </Box>
-        </Box>
-        <SupportButton />
-      </Box>
-    ) : (
-      <Box className={classes.root}>
-        <Grid container>
-          <Grid item xs={12} md={4} className={classes.centerContent}>
-            {mobileBreakpoint ? <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.mobileImage} />
-              : <img src={PrideParadeImage} alt="happy black person at pride parade" className={classes.smallMobileImage} />}
-          </Grid>
-          <Grid item xs={12} md={8} className={classes.textContainer}>
-            <Typography variant="h2" align="center" className={classes.textHeader}>
-              The Mission
-            </Typography>
-            <Typography variant="body1" align="center" className={classes.textParagraphBody}>
-              Our mission is to spread the word about spaces where people can be themselves.
-              All spaces and reviews are published by Lavender Book members.
-            </Typography>
-            <Button href="/spaces/new" variant="outlined" className={`${classes.searchButton}, ${classes.textParagraphBody}, ${classes.searchButtonContainer}`}>
-              Add a Space
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.centerContent}>
-            {mobileBreakpoint ? <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.mobileImage} />
-              : <img src={GroupPrideImage} alt="three black people having fun on a street" className={classes.smallMobileImage} />}
-          </Grid>
-          <Grid item xs={12} md={8} className={classes.textContainer}>
-            <Typography variant="h2" className={classes.textHeader} align="center">
-              Discover New Spaces
-            </Typography>
-            <Typography variant="body1" className={classes.textParagraphBody} align="center">
-              Lavender Book is here whether you are traveling or looking for a new local
-              hangout spot.
-            </Typography>
-            <QuickLocationButtons />
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.centerContent}>
-            {mobileBreakpoint ? <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.mobileImage} />
-              : <img src={RainbowMuralImage} alt="black person in front of rainbow mural" className={classes.smallMobileImage} />}
-          </Grid>
-          <Grid item xs={12} md={8} className={classes.textContainer}>
-            <Typography variant="h2" className={classes.textHeader} align="center">
-              What types of spaces can I search?
-            </Typography>
-            <Typography variant="body1" className={classes.textParagraphBody} align="center">
-              Not sure where to start? Use the categories below to narrow your search to specific
-              types of spaces.
-            </Typography>
-            <QuickCategoryButtons />
-          </Grid>
-        </Grid>
-        <SupportButton />
-      </Box>
-    )
+    <Box className={classes.root}>
+      <ParentRowContainer classes={classes} rowObject={rowContent.rowOne} />
+      <ParentRowContainer classes={classes} rowObject={rowContent.rowTwo} />
+      <ParentRowContainer classes={classes} rowObject={rowContent.rowThree} />
+      <SupportButton />
+    </Box>
   );
 };
 
