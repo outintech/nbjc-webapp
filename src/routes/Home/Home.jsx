@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -138,6 +139,20 @@ const styles = (theme) => ({
   },
 });
 
+const RowTextContent = ({ classes, titleString, bodyString }) => {
+  <>
+    <Typography variant="h2" align="left" className={classes.textHeader}>
+      {titleString}
+      The Mission
+    </Typography>
+    <Typography variant="body1" align="left" className={classes.textParagraphBody}>
+      {bodyString}
+      Our mission is to spread the word about spaces where people can be themselves.
+      All spaces and reviews are published by Lavender Book members.
+    </Typography>
+  </>;
+};
+
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   const desktopBreakpoint = useMediaQuery('(min-width:960px)');
@@ -149,6 +164,23 @@ const Home = ({ classes }) => {
       pathname: '/search/results',
       search: `?searchTerm=&category=&location=${param}`,
     });
+  };
+
+  const rowContent = {
+    rowOne: {
+      title: 'The Mission',
+      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      imageUrl: PrideParadeImageLarge,
+      imageAltText: 'happy black person at pride parade',
+      flippedImageSide: true,
+      buttonRowFunction: null,
+    },
+    rowTwo: {
+
+    },
+    rowThree: {
+
+    },
   };
 
   const SupportButton = () => {
