@@ -156,8 +156,8 @@ const AppBar = ({
   const AddASpace = () => {
     const matches = useMediaQuery('(min-width:426px)');
     return (
-      <Box className={classes.navLinkBar} data-testid="add-a-space-link">
-        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
+      <Box className={classes.navLinkBar}>
+        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }} data-testid="add-a-space-link">
           <AddCircleOutlineIcon className={classes.icons} fontSize="small" data-testid="add-a-space-icon" />
           {matches ? 'Add a Space' : ''}
         </NavLink>

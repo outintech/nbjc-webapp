@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 
 import AppBar from './AppBar';
 import { UserContext } from '../../context/UserContext';
@@ -115,11 +116,20 @@ const itRendersMenuDropdownForUsers = () => {
 
 const itRedirectsUserToLogin = () => {
   it('It navigates to the profile page to log in when clicked', async () => {
-    renderAppBarWithUser(noUser);
+    const history = createMemoryHistory();
+    render(
+      <UserContext.Provider value={noUser}>
+        <Router history={history}>
+          <AppBar />
+        </Router>
+      </UserContext.Provider>,
+    );
+    expect(history.location.pathname).toBe('/');
     const Login = screen.getByText('Log In');
+
     await userEvent.click(Login);
 
-    expect(window.location.pathname).toBe('/profile');
+    expect(history.location.pathname).toBe('/profile');
   });
 };
 
@@ -133,14 +143,22 @@ describe('Log In Menu', () => {
 
 const itRedirectsUserToProfilePage = () => {
   it('It navigates to the profile page when clicked', async () => {
-    renderAppBarWithUser(demoUser);
+    const history = createMemoryHistory();
+    render(
+      <UserContext.Provider value={demoUser}>
+        <Router history={history}>
+          <AppBar />
+        </Router>
+      </UserContext.Provider>,
+    );
     const dropdownMenu = screen.getByTestId('open-user-dropdown');
     userEvent.click(dropdownMenu);
     const profileLink = screen.getByText('My Profile');
 
+    expect(history.location.pathname).toBe('/');
     await userEvent.click(profileLink);
 
-    expect(window.location.pathname).toBe('/profile');
+    expect(history.location.pathname).toBe('/profile');
   });
 };
 
@@ -162,7 +180,7 @@ const itRendersWithAIcon = () => {
     const icon = screen.queryByTestId('profile-icon');
     expect(icon).toBeInTheDocument();
   });
-  it('The icon is not rendered if the component is not rendered', () => {
+  it('It does not render the icon if the component is not rendered', () => {
     renderAppBarWithUser(demoUser);
     const icon = screen.queryByTestId('profile-icon');
     expect(icon).not.toBeInTheDocument();
@@ -186,12 +204,6 @@ describe('Profile Button', () => {
   itHasACorrectLabel();
 });
 
-const itLogsOutUserOnClick = () => {
-  it('It logs out the user on click', () => {
-    // Mock user sign out.
-  });
-};
-
 const itHasSignOutLabel = () => {
   it('It has a sign out label', () => {
     renderAppBarWithUser(demoUser);
@@ -213,7 +225,6 @@ const itHasSignOutIcon = () => {
 };
 
 describe('Sign out Button', () => {
-  itLogsOutUserOnClick();
   itHasSignOutLabel();
   itHasSignOutIcon();
 });
@@ -227,16 +238,21 @@ const itRendersAddASpaceLink = () => {
 };
 
 const itRedirectsUserToAddASpacePage = () => {
-  /*
   it('It redirects user to add a space page when clicked', async () => {
-    renderAppBarWithUser(noUser);
+    const history = createMemoryHistory();
+    render(
+      <UserContext.Provider value={noUser}>
+        <Router history={history}>
+          <AppBar />
+        </Router>
+      </UserContext.Provider>,
+    );
+    expect(history.location.pathname).toBe('/');
     const addASpace = screen.getByTestId('add-a-space-link');
 
     await userEvent.click(addASpace);
-    expect(window.location.pathname).toBe('/spaces/new');
+    expect(history.location.pathname).toBe('/spaces/new');
   });
-  Might have some hoisting errors.
-  */
 };
 
 const itRendersAddASpaceIcon = () => {
@@ -252,8 +268,3 @@ describe('Add a Space Button', () => {
   itRedirectsUserToAddASpacePage();
   itRendersAddASpaceIcon();
 });
-
-/*
-  it('It tests rendering based on conditional widths')
-  Not sure this is possible with Jest. It might have to be a E2E test.
-*/
