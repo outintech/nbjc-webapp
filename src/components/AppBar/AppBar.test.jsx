@@ -186,28 +186,36 @@ describe('Profile Button', () => {
   itHasACorrectLabel();
 });
 
-const logsOutUserOnClick = () => {
+const itLogsOutUserOnClick = () => {
   it('It logs out the user on click', () => {
-
+    // Mock user sign out.
   });
 };
 
-const itHasLogOutLabel = () => {
-  it('It has a log out label', () => {
+const itHasSignOutLabel = () => {
+  it('It has a sign out label', () => {
+    renderAppBarWithUser(demoUser);
+    userEvent.click(screen.getByTestId('open-user-dropdown'));
+    const signOutLink = screen.getByTestId('sign-out-link');
 
+    expect(signOutLink.textContent).toBe('Sign Out');
   });
 };
 
-const itHasLogOutIcon = () => {
-  it('It has a log out icon', () => {
+const itHasSignOutIcon = () => {
+  it('It has a sign out icon', () => {
+    renderAppBarWithUser(demoUser);
+    userEvent.click(screen.getByTestId('open-user-dropdown'));
+    const signOutIcon = screen.getByTestId('sign-out-icon');
 
+    expect(signOutIcon).toBeInTheDocument();
   });
 };
 
 describe('Sign out Button', () => {
-  logsOutUserOnClick();
-  itHasLogOutLabel();
-  itHasLogOutIcon();
+  itLogsOutUserOnClick();
+  itHasSignOutLabel();
+  itHasSignOutIcon();
 });
 
 const itRendersAddASpaceLink = () => {
@@ -227,27 +235,25 @@ const itRedirectsUserToAddASpacePage = () => {
     await userEvent.click(addASpace);
     expect(window.location.pathname).toBe('/spaces/new');
   });
+  Might have some hoisting errors.
   */
 };
 
-const itRendersTheCorrectIcon = () => {
+const itRendersAddASpaceIcon = () => {
   it('It renders an icon', () => {
-
-  });
-};
-
-const itRendersAddASpaceLabel = () => {
-  it('It renders the label on larger screens', () => {
-
-  });
-  it('It does not render the label on smaller screens', () => {
-
+    renderAppBarWithUser(demoUser);
+    const icon = screen.queryByTestId('add-a-space-icon');
+    expect(icon).toBeInTheDocument();
   });
 };
 
 describe('Add a Space Button', () => {
   itRendersAddASpaceLink();
   itRedirectsUserToAddASpacePage();
-  itRendersTheCorrectIcon();
-  itRendersAddASpaceLabel();
+  itRendersAddASpaceIcon();
 });
+
+/*
+  it('It tests rendering based on conditional widths')
+  Not sure this is possible with Jest. It might have to be a E2E test.
+*/

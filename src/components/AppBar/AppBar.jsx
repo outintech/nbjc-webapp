@@ -145,7 +145,7 @@ const AppBar = ({
             My Profile
           </MenuItem>
           <MenuItem onClick={signOut} data-testid="sign-out-link">
-            <LogoutIcon />
+            <LogoutIcon data-testid="sign-out-icon" />
             Sign Out
           </MenuItem>
         </Menu>
@@ -158,7 +158,7 @@ const AppBar = ({
     return (
       <Box className={classes.navLinkBar} data-testid="add-a-space-link">
         <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
-          <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+          <AddCircleOutlineIcon className={classes.icons} fontSize="small" data-testid="add-a-space-icon" />
           {matches ? 'Add a Space' : ''}
         </NavLink>
       </Box>
