@@ -34,8 +34,31 @@ const itShouldHaveLogo = () => {
   });
 };
 
-describe('AppBar', () => {
+const itShouldRedirectToHome = () => {
+  it('It should redirect the user to home on click', async () => {
+    const history = createMemoryHistory();
+    render(
+      <UserContext.Provider value={noUser}>
+        <Router history={history}>
+          <AppBar />
+        </Router>
+      </UserContext.Provider>,
+    );
+    history.push({
+      pathname: '/profile',
+    });
+    expect(history.location.pathname).toBe('/profile');
+    const Logo = screen.getByAltText('logo');
+
+    await userEvent.click(Logo);
+
+    expect(history.location.pathname).toBe('/');
+  });
+};
+
+describe('Logo', () => {
   itShouldHaveLogo();
+  itShouldRedirectToHome();
 });
 
 const itRendersLogInForNoUser = () => {
