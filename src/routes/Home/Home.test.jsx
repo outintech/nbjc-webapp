@@ -1,28 +1,40 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Home from './Home';
 
-describe('Home component', () => {
-  beforeEach(() => {
-    render(
-      <Home />,
-    );
+describe('TopRow', () => {
+  it('It should render an image', () => {
+    render(<Home />);
+    // TODO: Double check if the alt text in Home follows conventions.
+    // const firstRowImage = screen.getByAltText('happy black person at pride parade');
+    // expect(firstRowImage).toBeInTheDocument();
   });
-  it('should have an image of a person in front of a pride parade', () => {
-    const ParadeImage = screen.getByAltText('happy black person at pride parade');
-    expect(ParadeImage).toBeInTheDocument();
+  it('should have a valid src', () => {
+
   });
-  it('should have a image of a person in front of a mural', () => {
-    const muralImage = screen.getByAltText('black person in front of rainbow mural');
-    expect(muralImage).toBeInTheDocument();
-  });
-  it('should have a image of three people having fun on the street', () => {
-    const streetImage = screen.getByAltText('three black people having fun on a street');
-    expect(streetImage).toBeInTheDocument();
-  });
-  it('should have a Add a Space button', () => {
-    const AddASpaceButton = screen.getByRole('link', { name: /Add a Space/ });
-    expect(AddASpaceButton);
-  });
+});
+
+describe('MiddleRow', () => {
+
+});
+
+describe('BottomRow', () => {
+
+});
+
+describe('Add a Space Button', () => {
+
+});
+
+describe('Quick Category Buttons', () => {
+
+});
+
+describe('Quick Location Buttons', () => {
+
+});
+
+describe('Support Button', () => {
+
 });

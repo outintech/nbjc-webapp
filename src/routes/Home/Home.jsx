@@ -61,13 +61,11 @@ const styles = (theme) => ({
     },
   },
   mobileImage: {
-    // 1st Breakpoint CSS.
     height: 'auto',
     width: 'auto',
     display: 'inherit',
   },
   smallMobileImage: {
-    // 2nd Breakpoint CSS.
     height: 'auto',
     width: 'auto',
     display: 'inherit',
@@ -143,7 +141,7 @@ const styles = (theme) => ({
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   const desktopBreakpoint = useMediaQuery('(min-width:960px)');
-  const mobileBreakpoint = useMediaQuery('(min-width: 425px');
+  const mobileBreakpoint = useMediaQuery('(min-width:425px');
   const history = useHistory();
 
   const handleClick = (event, param) => {
