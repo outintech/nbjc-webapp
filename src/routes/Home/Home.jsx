@@ -223,13 +223,6 @@ const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
   const history = useHistory();
 
-  const handleClick = (event, param) => {
-    history.push({
-      pathname: '/search/results',
-      search: `?searchTerm=&category=&location=${param}`,
-    });
-  };
-
   const SupportButton = () => {
     const supportLink = 'https://forms.gle/mLDNTMGxMojuiKKLA';
     return (
@@ -302,6 +295,12 @@ const Home = ({ classes }) => {
       { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
       { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
     ];
+    const handleClick = (event, param) => {
+      history.push({
+        pathname: '/search/results',
+        search: `?searchTerm=&category=&location=${param}`,
+      });
+    };
     return (
       <Box className={classes.searchButtonContainer}>
         {locationButtons.map((buttonData, index) => (
@@ -384,3 +383,14 @@ const Home = ({ classes }) => {
 };
 
 export default withStyles(styles)(Home);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  ParentRowContainer,
+  ButtonComponent,
+  RowTextContent,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}
