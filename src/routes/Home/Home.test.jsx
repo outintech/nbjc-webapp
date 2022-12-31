@@ -1,12 +1,41 @@
 /* eslint-disable */
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import Home from './Home';
+import { Tests } from './Home';
+const {
+  ParentRowContainer,
+  ButtonComponent,
+  RowTextContent,
+} = Tests;
+/*
+const ButtonComponent = ({ classes, hrefString, buttonLabel }) => (
+  <Button href={hrefString} variant="outlined" className={classes.searchButton}>
+    {buttonLabel}
+  </Button>
+);
+*/
+
+describe('ButtonComponent', () => {
+  it('It should render if all the props are passed in', () => {
+    render(<ButtonComponent />);
+  });
+});
 
 
-describe('TextRowContent', () => {
-  it('It should render the title given a title props', () => {
+
+const itRendersTitle = () => {
+  it('It should render the title passed in as title props', () => {
+    const title = 'Sample Title';
+    console.log(RowTextComponent);
+    render(<RowTextComponent title={title} />);
+    expect(screen.getByText('Sample Title'));
+  });
+};
+
+describe('RowTextContent', () => {
+  it('It should check that the title renders with testid', () => {
 
   });
   it('It should render the body text given a body props', () => {
