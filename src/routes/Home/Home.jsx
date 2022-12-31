@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -11,7 +10,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid,
   Typography,
   useMediaQuery,
   withStyles,
@@ -29,10 +27,6 @@ import { ReactComponent as RestaurantIcon } from '../../assets/noto_fork-and-kni
 import { ReactComponent as WellnessIcon } from '../../assets/noto_woman-in-lotus-position-dark-skin-tone.svg';
 import { ReactComponent as ShoppingIcon } from '../../assets/noto_shopping-bags.svg';
 import { ReactComponent as NightlifeIcon } from '../../assets/noto_cocktail-glass.svg';
-
-import PrideParadeImage from '../../assets/Rectangle 52.png';
-import GroupPrideImage from '../../assets/Rectangle 53.png';
-import RainbowMuralImage from '../../assets/Rectangle 54.png';
 
 import PrideParadeImageLarge from '../../assets/Rectangle 52@2x.png';
 import GroupPrideImageLarge from '../../assets/Rectangle 53@2x.png';
@@ -62,18 +56,6 @@ const styles = (theme) => ({
       marginBottom: '1rem',
     },
   },
-  mobileImage: {
-    height: 'auto',
-    width: 'auto',
-    display: 'inherit',
-  },
-  smallMobileImage: {
-    height: 'auto',
-    width: 'auto',
-    display: 'inherit',
-    maxWidth: '300px',
-    minWidth: '300px',
-  },
   searchButton: {
     [theme.breakpoints.up('lg')]: {
       // Width/Height is 1.7x larger than the base MUI button size.
@@ -84,6 +66,7 @@ const styles = (theme) => ({
     textTransform: 'none',
     border: '1px solid #EBE5F6',
     fontWeight: 600,
+    marginBottom: 4,
   },
   textContainer: {
     [theme.breakpoints.up('lg')]: {
@@ -109,6 +92,13 @@ const styles = (theme) => ({
     color: '#1E1131',
     fontSize: '20px',
   },
+  mobileImage: {
+    height: 'auto',
+    width: 'auto',
+    display: 'inherit',
+    maxWidth: '300px',
+    minWidth: '300px',
+  },
   searchButtonContainer: {
     [theme.breakpoints.up('md')]: {
       maxWidth: 550,
@@ -125,7 +115,7 @@ const styles = (theme) => ({
     gap: '1.5rem',
     marginBottom: '1rem',
   },
-  desktopImageTextContainer: {
+  rowContainer: {
     [theme.breakpoints.up('md')]: {
       gap: 40,
     },
@@ -134,9 +124,15 @@ const styles = (theme) => ({
     justifyContent: 'center',
     gap: 20,
   },
+  alignColumn: {
+    flexDirection: 'column',
+  },
   centerContent: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  expandWidth: {
+    width: '100%',
   },
 });
 
@@ -185,47 +181,46 @@ ButtonComponent.propTypes = {
 const ParentRowContainer = (
   {
     classes,
-    rowObject,
+    rowObject: {
+      imageUrl,
+      imageAltText,
+      flippedImageSide,
+      title,
+      body,
+      buttonRowFunction,
+    },
   },
 ) => {
+  const mediumWidth = useMediaQuery('(min-width:960px');
+  const smallWidth = useMediaQuery('(min-width:425px');
+  const imageSize = smallWidth ? classes.image : classes.mobileImage;
+  const displayAsColumn = mediumWidth ? null : classes.alignColumn;
+  const centerFont = mediumWidth ? 'left' : 'center';
+  const flipImage = mediumWidth ? flippedImageSide : false;
+
   const imageComponent = (
-    <img src={rowObject.imageUrl} alt={rowObject.imageAltText} className={classes.image} />);
-  const displayImageOnFlip = rowObject.flippedImageSide ? imageComponent : null;
-  const displayImageWithoutFlip = rowObject.flippedImageSide ? null : imageComponent;
+    <img src={imageUrl} alt={imageAltText} className={imageSize} />);
+  const displayImageOnFlip = flipImage ? imageComponent : null;
+  const displayImageWithoutFlip = flipImage ? null : imageComponent;
   return (
-    <Box className={classes.desktopImageTextContainer}>
+    <Box className={`${classes.rowContainer} ${displayAsColumn}`}>
       {displayImageWithoutFlip}
       <Box className={classes.textContainer}>
         <RowTextContent
           classes={classes}
-          titleString={rowObject.title}
-          bodyString={rowObject.body}
+          titleString={title}
+          bodyString={body}
+          alignDirection={centerFont}
         />
-        {rowObject.buttonRowFunction}
+        {buttonRowFunction(mediumWidth)}
       </Box>
       {displayImageOnFlip}
     </Box>
   );
 };
 
-ParentRowContainer.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  rowObject: PropTypes.objectOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      body: PropTypes.string,
-      imageUrl: PropTypes.string.isRequired,
-      imageAltText: PropTypes.string.isRequired,
-      flippedImageSide: PropTypes.bool,
-      buttonRowFunction: PropTypes.func,
-    }),
-  ).isRequired,
-};
-
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
-  const desktopBreakpoint = useMediaQuery('(min-width:960px)');
-  const mobileBreakpoint = useMediaQuery('(min-width:425px');
   const history = useHistory();
 
   const handleClick = (event, param) => {
@@ -283,6 +278,20 @@ const Home = ({ classes }) => {
         </Dialog>
       </Box>
     );
+  };
+
+  const AddASpaceButton = (breakpoint) => {
+    const baseButton = (
+      <Button href="/spaces/new" variant="outlined" className={classes.searchButton}>
+        Add a Space
+      </Button>
+    );
+    const wideButton = (
+      <Box className={`${classes.searchButtonContainer} ${classes.expandWidth}`}>
+        {baseButton}
+      </Box>
+    );
+    return breakpoint ? wideButton : baseButton;
   };
 
   const QuickLocationButtons = () => {
@@ -344,7 +353,7 @@ const Home = ({ classes }) => {
       imageUrl: PrideParadeImageLarge,
       imageAltText: 'happy black person at pride parade',
       flippedImageSide: false,
-      buttonRowFunction: null,
+      buttonRowFunction: AddASpaceButton,
     },
     rowTwo: {
       title: 'Discover New Spaces',
@@ -352,7 +361,7 @@ const Home = ({ classes }) => {
       imageUrl: GroupPrideImageLarge,
       imageAltText: 'three black people having fun on a street',
       flippedImageSide: true,
-      buttonRowFunction: QuickLocationButtons(),
+      buttonRowFunction: QuickLocationButtons,
     },
     rowThree: {
       title: 'What types of spaces can I search?',
@@ -360,7 +369,7 @@ const Home = ({ classes }) => {
       imageUrl: RainbowMuralImageLarge,
       imageAltText: 'black person in front of rainbow mural',
       flippedImageSide: false,
-      buttonRowFunction: QuickCategoryButtons(),
+      buttonRowFunction: QuickCategoryButtons,
     },
   };
 
