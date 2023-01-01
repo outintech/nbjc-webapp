@@ -1,6 +1,11 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { getByTestId, getByText, render, screen } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import userEvent from '@testing-library/user-event';
+import renderer from 'react-test-renderer';
+
 
 import Home from './Home';
 import { Tests } from './Home';
@@ -9,19 +14,77 @@ const {
   ButtonComponent,
   RowTextContent,
 } = Tests;
-/*
-const ButtonComponent = ({ classes, hrefString, buttonLabel }) => (
-  <Button href={hrefString} variant="outlined" className={classes.searchButton}>
-    {buttonLabel}
-  </Button>
-);
-*/
 
-describe('ButtonComponent', () => {
-  it('It should render if all the props are passed in', () => {
-    render(<ButtonComponent />);
+const itShouldRenderComponent = (Component, props) => {
+  it("It should render the component and match snapshot", () => {
+    const component = renderer.create(<Component {...props} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+}
+
+const itShouldRenderCorrectLabel = (props, label) => {
+  it("It should render the button's label", () => {
+    render(<ButtonComponent {...props} />);
+    expect(screen.getByText(label)).toBeInTheDocument();
+  });
+};
+
+const itShouldHaveCorrectHref = (props, label, path) => {
+  it('It should have the correct href value', async () => {
+    render(
+      <ButtonComponent {...props} />
+    );
+    const Button = screen.getByText(label);
+    expect(Button.hasAttribute('href', path));
+  });
+};
+
+describe('Home Route', () => {
+  describe('ButtonComponent', () => {
+    const buttonComponentTestProps = {
+      classes: {},
+      hrefString: '/profile',
+      buttonLabel: 'Profile',
+    };
+    itShouldRenderComponent(ButtonComponent, buttonComponentTestProps);
+    itShouldRenderCorrectLabel(buttonComponentTestProps, 'Profile');
+    itShouldHaveCorrectHref(buttonComponentTestProps, 'Profile', '/profile');
+  });
+
+  describe('RowTextContent', () => {
+    const rowTextContentTestProps = {
+      classes: {},
+      titleString: 'Diamonds, an analysis on long-term value',
+      bodyString: 'Gemstones have no universally accepted grading system. Diamonds are graded using a system developed by the Gemological Institute of America (GIA) in the early 1950s',
+      alignDirection: 'center',
+    };
+    itShouldRenderComponent(RowTextContent, rowTextContentTestProps);
+    it("It should have default alignDirection", () => {
+      expect(RowTextContent.defaultProps.alignDirection).toBeDefined();
+    });
+    it("It should have a default value of left for alignDirection", () => {
+      const defaultValue = RowTextContent.defaultProps.alignDirection;
+      expect(defaultValue).toBe('left');
+    });
+    it("It should render the correct title", () => {
+      render(<RowTextContent {...rowTextContentTestProps} />)
+      const titleElement = screen.getByTestId('row-title');
+      expect(titleElement.textContent).toBe('Diamonds, an analysis on long-term value');
+    });
+    it("It should render the correct body", () => {
+      render(<RowTextContent {...rowTextContentTestProps} />)
+      const bodyElement = screen.getByTestId('row-body');
+      expect(bodyElement.textContent).toBe('Gemstones have no universally accepted grading system. Diamonds are graded using a system developed by the Gemological Institute of America (GIA) in the early 1950s');
+    });
+    it("It should contain an h2 element", () => {
+      render(<RowTextContent {...rowTextContentTestProps} />)
+      expect(document.querySelector('h2')).toBeInTheDocument();
+    })
   });
 });
+
+
 
 
 
@@ -34,23 +97,6 @@ const itRendersTitle = () => {
   });
 };
 
-describe('RowTextContent', () => {
-  it('It should check that the title renders with testid', () => {
-
-  });
-  it('It should render the body text given a body props', () => {
-
-  });
-  it('It should not render and return null if not provided all of the props', () => {
-
-  });
-  it('It should have a title of type of h2', () => {
-
-  });
-  it('It should have a body string with a p element', () => {
-
-  });
-});
 
 
 

@@ -145,17 +145,16 @@ const RowTextContent = (
   },
 ) => (
   <>
-    <Typography variant="h2" align={alignDirection} className={classes.textHeader}>
+    <Typography variant="h2" align={alignDirection} className={classes.textHeader} data-testid="row-title">
       {titleString}
     </Typography>
-    <Typography variant="body1" align={alignDirection} className={classes.textParagraphBody}>
+    <Typography variant="body1" align={alignDirection} className={classes.textParagraphBody} data-testid="row-body">
       {bodyString}
     </Typography>
   </>
 );
 
 RowTextContent.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
   titleString: PropTypes.string.isRequired,
   bodyString: PropTypes.string,
   alignDirection: PropTypes.string,
