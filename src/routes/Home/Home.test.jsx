@@ -6,13 +6,16 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import renderer from 'react-test-renderer';
 
-
 import Home from './Home';
 import { Tests } from './Home';
 const {
   ParentRowContainer,
   ButtonComponent,
   RowTextContent,
+  QuickLocationButtons,
+  QuickCategoryButtons,
+  AddASpaceButton,
+  ButtonRow,
 } = Tests;
 
 const itShouldRenderComponent = (Component, props) => {

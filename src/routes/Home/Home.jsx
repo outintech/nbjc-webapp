@@ -124,7 +124,6 @@ const styles = (theme) => ({
   alignColumn: {
     flexDirection: 'column',
   },
-
   expandWidth: {
     width: '100%',
   },
@@ -325,6 +324,10 @@ export let Tests = {
   ParentRowContainer,
   ButtonComponent,
   RowTextContent,
+  QuickLocationButtons,
+  QuickCategoryButtons,
+  AddASpaceButton,
+  ButtonRow,
 };
 
 if (process.env.NODE_ENV !== 'test') {
