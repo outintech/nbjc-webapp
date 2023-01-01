@@ -196,11 +196,11 @@ const ParentRowContainer = (
   const displayAsColumn = mediumWidth ? null : classes.alignColumn;
   const centerFont = mediumWidth ? 'left' : 'center';
   const flipImage = mediumWidth ? flippedImageSide : false;
-
   const imageComponent = (
     <img src={imageUrl} alt={imageAltText} className={imageSize} />);
   const displayImageOnFlip = flipImage ? imageComponent : null;
   const displayImageWithoutFlip = flipImage ? null : imageComponent;
+
   return (
     <Box className={`${classes.rowContainer} ${displayAsColumn}`}>
       {displayImageWithoutFlip}
@@ -211,16 +211,83 @@ const ParentRowContainer = (
           bodyString={body}
           alignDirection={centerFont}
         />
-        {buttonRowFunction(mediumWidth)}
+        {buttonRowFunction(classes, mediumWidth)}
       </Box>
       {displayImageOnFlip}
     </Box>
   );
 };
 
+const AddASpaceButton = (classes, breakpoint) => {
+  const baseButton = (
+    <Button href="/spaces/new" variant="outlined" className={classes.searchButton} data-testid="add-space-button">
+      Add a Space
+    </Button>
+  );
+  const wideButton = (
+    <Box className={`${classes.searchButtonContainer} ${classes.expandWidth}`} data-testid="add-space-parent">
+      {baseButton}
+    </Box>
+  );
+  return breakpoint ? wideButton : baseButton;
+};
+
+const ButtonRow = ({ classes, buttonSet, handleClick }) => (
+  <Box className={classes.searchButtonContainer}>
+    {buttonSet.map((buttonData, index) => (
+      <Button
+        variant="outlined"
+        startIcon={buttonData.icon}
+        onClick={(event) => handleClick(event, buttonData.search)}
+        className={classes.searchButton}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+      >
+        {buttonData.name}
+      </Button>
+    ))}
+  </Box>
+);
+
+const QuickLocationButtons = (classes) => {
+  const history = useHistory();
+  const locationButtons = [
+    { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
+    { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
+    { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
+    { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
+    { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
+  ];
+  const handleClick = (event, param) => {
+    history.push({
+      pathname: '/search/results',
+      search: `?searchTerm=&category=&location=${param}`,
+    });
+  };
+  return (<ButtonRow classes={classes} handleClick={handleClick} buttonSet={locationButtons} />);
+};
+
+const QuickCategoryButtons = (classes) => {
+  const history = useHistory();
+  const categoryButtons = [
+    { name: 'Coffeeshops', icon: <CafeIcon /> },
+    { name: 'Barbershops', icon: <BarberIcon /> },
+    { name: 'Restaurants', icon: <RestaurantIcon /> },
+    { name: 'Wellness', icon: <WellnessIcon /> },
+    { name: 'Shopping', icon: <ShoppingIcon /> },
+    { name: 'Nightlife', icon: <NightlifeIcon /> },
+  ];
+  const handleClick = (event, param) => {
+    history.push({
+      pathname: '/search/results',
+      search: `?searchTerm=&category=&location=${param}`,
+    });
+  };
+  return (<ButtonRow classes={classes} buttonSet={categoryButtons} handleClick={handleClick} />);
+};
+
 const Home = ({ classes }) => {
   const [showSupportDialog, setShowSupportDialog] = useState(false);
-  const history = useHistory();
 
   const SupportButton = () => {
     const supportLink = 'https://forms.gle/mLDNTMGxMojuiKKLA';
@@ -268,78 +335,6 @@ const Home = ({ classes }) => {
             </Button>
           </DialogActions>
         </Dialog>
-      </Box>
-    );
-  };
-
-  const AddASpaceButton = (breakpoint) => {
-    const baseButton = (
-      <Button href="/spaces/new" variant="outlined" className={classes.searchButton}>
-        Add a Space
-      </Button>
-    );
-    const wideButton = (
-      <Box className={`${classes.searchButtonContainer} ${classes.expandWidth}`}>
-        {baseButton}
-      </Box>
-    );
-    return breakpoint ? wideButton : baseButton;
-  };
-
-  const QuickLocationButtons = () => {
-    const locationButtons = [
-      { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
-      { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
-      { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
-      { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
-      { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
-    ];
-    const handleClick = (event, param) => {
-      history.push({
-        pathname: '/search/results',
-        search: `?searchTerm=&category=&location=${param}`,
-      });
-    };
-    return (
-      <Box className={classes.searchButtonContainer}>
-        {locationButtons.map((buttonData, index) => (
-          <Button
-            variant="outlined"
-            startIcon={buttonData.icon}
-            onClick={(event) => handleClick(event, buttonData.search)}
-            className={classes.searchButton}
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-          >
-            {buttonData.name}
-          </Button>
-        ))}
-      </Box>
-    );
-  };
-
-  const QuickCategoryButtons = () => {
-    const categoryButtons = [
-      { name: 'Coffeeshops', icon: <CafeIcon /> },
-      { name: 'Barbershops', icon: <BarberIcon /> },
-      { name: 'Restaurants', icon: <RestaurantIcon /> },
-      { name: 'Wellness', icon: <WellnessIcon /> },
-      { name: 'Shopping', icon: <ShoppingIcon /> },
-      { name: 'Nightlife', icon: <NightlifeIcon /> },
-    ];
-    return (
-      <Box className={classes.searchButtonContainer}>
-        {categoryButtons.map((buttonData, index) => (
-          <Button
-            variant="outlined"
-            className={classes.searchButton}
-            startIcon={buttonData.icon}
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-          >
-            {buttonData.name}
-          </Button>
-        ))}
       </Box>
     );
   };

@@ -82,58 +82,42 @@ describe('Home Route', () => {
       expect(document.querySelector('h2')).toBeInTheDocument();
     })
   });
-});
 
-
-
-
-
-const itRendersTitle = () => {
-  it('It should render the title passed in as title props', () => {
-    const title = 'Sample Title';
-    console.log(RowTextComponent);
-    render(<RowTextComponent title={title} />);
-    expect(screen.getByText('Sample Title'));
-  });
-};
-
-
-
-
-
-
-describe('TopRow', () => {
-  it('It should render an image', () => {
-    render(<Home />);
-    // TODO: Double check if the alt text in Home follows conventions.
-    // const firstRowImage = screen.getByAltText('happy black person at pride parade');
-    // expect(firstRowImage).toBeInTheDocument();
-  });
-  it('should have a valid src', () => {
+  describe('ParentRowContainer', () => {
 
   });
-});
 
-describe('MiddleRow', () => {
+  describe('Add a Space Button', () => {
+    it("It should have the correct href value", () => {
+      render(<Home />);
+      const button = screen.getByTestId('add-space-button');
+      expect(button).toHaveAttribute('href', '/spaces/new');
+    });
+    it("It should have the correct label", () => {
+      render(<Home />);
+      const button = screen.getByTestId('add-space-button');
+      expect(button.textContent).toBe("Add a Space");
+    });
+  });
 
-});
+  describe('Quick Location Buttons & Quick Category Buttons', () => {
+    it('It should render an equal amount of buttons as the locationButton.length', () => {
 
-describe('BottomRow', () => {
+    });
+    it('It should correctly render the button label', () => {
 
-});
+    });
+    it('It should query a search on spaces when the user clicks the button', () => {
 
-describe('Add a Space Button', () => {
+    });
+    it('It should correctly search the right query when clicked on', () => {
 
-});
+    });
+    it('It should redirect the user to the correct path on click', () => {
 
-describe('Quick Category Buttons', () => {
+    });
+    it('It should render an icon with the label', () => {
 
-});
-
-describe('Quick Location Buttons', () => {
-
-});
-
-describe('Support Button', () => {
-
+    });
+  });
 });
