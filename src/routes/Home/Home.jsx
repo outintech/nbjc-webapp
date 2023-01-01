@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Typography,
   useMediaQuery,
   withStyles,
 } from '@material-ui/core/';
+
+import SupportButton from '../../components/SupportButton/SupportButton';
 
 import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
 import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
@@ -127,10 +124,7 @@ const styles = (theme) => ({
   alignColumn: {
     flexDirection: 'column',
   },
-  centerContent: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
+
   expandWidth: {
     width: '100%',
   },
@@ -287,58 +281,6 @@ const QuickCategoryButtons = (classes) => {
 };
 
 const Home = ({ classes }) => {
-  const [showSupportDialog, setShowSupportDialog] = useState(false);
-
-  const SupportButton = () => {
-    const supportLink = 'https://forms.gle/mLDNTMGxMojuiKKLA';
-    return (
-      <Box>
-        <Box className={classes.centerContent} style={{ marginTop: '1rem' }}>
-          <Button
-            variant="outlined"
-            className={classes.searchButton}
-            onClick={() => {
-              setShowSupportDialog(true);
-            }}
-          >
-            Report a Problem
-          </Button>
-        </Box>
-        <Dialog
-          open={showSupportDialog}
-          onClose={() => setShowSupportDialog(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            Leave The Lavender Book?
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Are you sure you want to leave The Lavender Book? You will be taken
-              to Google Forms to contact Support.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowSupportDialog(false)} color="primary">
-              Disagree
-            </Button>
-            <Button
-              onClick={() => {
-                window.open(supportLink, '_blank');
-                setShowSupportDialog(false);
-              }}
-              color="primary"
-              autoFocus
-            >
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
-    );
-  };
-
   const rowContent = {
     rowOne: {
       title: 'The Mission',
