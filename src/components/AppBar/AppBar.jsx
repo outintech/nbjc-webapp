@@ -126,7 +126,6 @@ const AppBar = ({
         </Button>
         <Menu
           id="log-in-positioned-menu"
-          aria-labelledby="log-in-positioned-button"
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
@@ -138,6 +137,9 @@ const AppBar = ({
             style: {
               background: '#EBE5F6',
             },
+          }}
+          MenuListProps={{
+            'aria-labelledby': 'log-in-positioned-button',
           }}
         >
           <MenuItem onClick={navigateToProfile} data-testid="profile-link">
