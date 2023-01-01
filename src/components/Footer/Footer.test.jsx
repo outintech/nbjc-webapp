@@ -57,88 +57,74 @@ const itRedirectsUserToCorrectPage = (linkName, hrefString) => {
   });
 };
 
-describe('Privacy Policy Link', () => {
-  const policyLabel = 'Privacy Policy';
-  itRendersAsALink(policyLabel);
-  itOpensLinkInAnotherTab(policyLabel);
-  itHasCorrectHref(policyLabel, 'https://nbjc.org/privacy-policy/');
-  itHasCorrectLinkLabel(policyLabel);
-});
-
-describe('National Black Justice Coalition Link', () => {
-  const NBJCLabel = 'National Black Justice Coalition';
-  itRendersAsALink(NBJCLabel);
-  itOpensLinkInAnotherTab(NBJCLabel);
-  itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
-  itHasCorrectLinkLabel(NBJCLabel);
-});
-
-describe('Out in Tech Link', () => {
-  const OITLabel = 'Out in Tech';
-  itRendersAsALink(OITLabel);
-  itOpensLinkInAnotherTab(OITLabel);
-  itHasCorrectHref(OITLabel, 'https://outintech.com/');
-  itHasCorrectLinkLabel(OITLabel);
-});
-
-describe('Community Guidelines Link', () => {
-  const CGLabel = 'Community Guidelines';
-  itRendersAsALink(CGLabel);
-  itRedirectsUserToCorrectPage(CGLabel, '/community-guidelines');
-  itHasCorrectHref(CGLabel, '/community-guidelines');
-  itHasCorrectLinkLabel(CGLabel);
-});
-
-describe('Donate Link', () => {
-  const DonateLabel = 'Donate';
-  itRendersAsALink(DonateLabel);
-  itHasCorrectHref(DonateLabel, '/donate');
-  itRedirectsUserToCorrectPage(DonateLabel, '/donate');
-  itHasCorrectLinkLabel(DonateLabel);
-});
-
-describe('Terms of Service Link', () => {
-  const TOSLabel = 'Terms of Service';
-  itRendersAsALink(TOSLabel);
-  itHasCorrectHref(TOSLabel, '/terms-of-service');
-  itRedirectsUserToCorrectPage(TOSLabel, '/terms-of-service');
-  itHasCorrectLinkLabel(TOSLabel);
-});
-
-describe('Infringement Policies Link', () => {
-  const IFLabel = 'Infringement Policies';
-  itRendersAsALink(IFLabel);
-  itHasCorrectHref(IFLabel, '/infringement-policies');
-  itRedirectsUserToCorrectPage(IFLabel, '/infringement-policies');
-  itHasCorrectLinkLabel(IFLabel);
-});
-
-const itHasCorrectYear = () => {
-  it('It has the correct year', () => {
-    const currentYearString = (new Date().getFullYear()).toString();
-    renderFooter();
-    expect(screen.getByText(currentYearString, { exact: false })).toBeInTheDocument();
+describe('Footer Component', () => {
+  describe('Privacy Policy Link', () => {
+    const policyLabel = 'Privacy Policy';
+    itRendersAsALink(policyLabel);
+    itOpensLinkInAnotherTab(policyLabel);
+    itHasCorrectHref(policyLabel, 'https://nbjc.org/privacy-policy/');
+    itHasCorrectLinkLabel(policyLabel);
   });
-};
 
-const itHasCorrectCopyrightLabel = () => {
-  it('It has the correct copyright label', () => {
-    const currentYear = new Date().getFullYear();
-    renderFooter();
-    const copyrightLabel = screen.getByText('Copyright', { exact: false }).textContent;
-    expect(copyrightLabel).toBe(`Copyright ${currentYear} NBJC`);
+  describe('National Black Justice Coalition Link', () => {
+    const NBJCLabel = 'National Black Justice Coalition';
+    itRendersAsALink(NBJCLabel);
+    itOpensLinkInAnotherTab(NBJCLabel);
+    itHasCorrectHref(NBJCLabel, 'https://nbjc.org/');
+    itHasCorrectLinkLabel(NBJCLabel);
   });
-};
 
-const itRendersAsText = (stringToMatch) => {
-  it('It renders as a text element', () => {
-    renderFooter();
-    expect(screen.getByText(stringToMatch, { exact: false })).toBeInTheDocument();
+  describe('Out in Tech Link', () => {
+    const OITLabel = 'Out in Tech';
+    itRendersAsALink(OITLabel);
+    itOpensLinkInAnotherTab(OITLabel);
+    itHasCorrectHref(OITLabel, 'https://outintech.com/');
+    itHasCorrectLinkLabel(OITLabel);
   });
-};
 
-describe('Copyright String', () => {
-  itRendersAsText('Copyright');
-  itHasCorrectYear();
-  itHasCorrectCopyrightLabel();
+  describe('Community Guidelines Link', () => {
+    const CGLabel = 'Community Guidelines';
+    itRendersAsALink(CGLabel);
+    itRedirectsUserToCorrectPage(CGLabel, '/community-guidelines');
+    itHasCorrectHref(CGLabel, '/community-guidelines');
+    itHasCorrectLinkLabel(CGLabel);
+  });
+
+  describe('Donate Link', () => {
+    const DonateLabel = 'Donate';
+    itRendersAsALink(DonateLabel);
+    itHasCorrectHref(DonateLabel, '/donate');
+    itRedirectsUserToCorrectPage(DonateLabel, '/donate');
+    itHasCorrectLinkLabel(DonateLabel);
+  });
+
+  describe('Terms of Service Link', () => {
+    const TOSLabel = 'Terms of Service';
+    itRendersAsALink(TOSLabel);
+    itHasCorrectHref(TOSLabel, '/terms-of-service');
+    itRedirectsUserToCorrectPage(TOSLabel, '/terms-of-service');
+    itHasCorrectLinkLabel(TOSLabel);
+  });
+
+  describe('Infringement Policies Link', () => {
+    const IFLabel = 'Infringement Policies';
+    itRendersAsALink(IFLabel);
+    itHasCorrectHref(IFLabel, '/infringement-policies');
+    itRedirectsUserToCorrectPage(IFLabel, '/infringement-policies');
+    itHasCorrectLinkLabel(IFLabel);
+  });
+
+  describe('Copyright String', () => {
+    it('It has the correct year', () => {
+      const currentYearString = (new Date().getFullYear()).toString();
+      renderFooter();
+      expect(screen.getByText(currentYearString, { exact: false })).toBeInTheDocument();
+    });
+    it('It has the correct copyright label', () => {
+      const currentYear = new Date().getFullYear();
+      renderFooter();
+      const copyrightLabel = screen.getByText('Copyright', { exact: false }).textContent;
+      expect(copyrightLabel).toBe(`Copyright ${currentYear} NBJC`);
+    });
+  });
 });
