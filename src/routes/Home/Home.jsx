@@ -193,6 +193,8 @@ const ParentRowContainer = (
     <img src={imageUrl} alt={imageAltText} className={imageSize} />);
   const displayImageOnFlip = flipImage ? imageComponent : null;
   const displayImageWithoutFlip = flipImage ? null : imageComponent;
+  const displayButtonsIfPassedAsProps = buttonRowFunction === undefined
+    ? null : buttonRowFunction(classes, mediumWidth);
 
   return (
     <Box className={`${classes.rowContainer} ${displayAsColumn}`}>
@@ -204,7 +206,7 @@ const ParentRowContainer = (
           bodyString={body}
           alignDirection={centerFont}
         />
-        {buttonRowFunction(classes, mediumWidth)}
+        {displayButtonsIfPassedAsProps}
       </Box>
       {displayImageOnFlip}
     </Box>
