@@ -309,9 +309,8 @@ const Home = ({ classes }) => {
 
   return (
     <Box className={classes.root}>
-      <ParentRowContainer classes={classes} rowObject={rowContent.rowOne} />
-      <ParentRowContainer classes={classes} rowObject={rowContent.rowTwo} />
-      <ParentRowContainer classes={classes} rowObject={rowContent.rowThree} />
+      {Object.keys(rowContent)
+        .map((rowObj) => <ParentRowContainer classes={classes} rowObject={rowContent[rowObj]} />)}
       <SupportButton />
     </Box>
   );
@@ -324,8 +323,6 @@ export let Tests = {
   ParentRowContainer,
   ButtonComponent,
   RowTextContent,
-  QuickLocationButtons,
-  QuickCategoryButtons,
   AddASpaceButton,
   ButtonRow,
 };

@@ -6,14 +6,15 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import renderer from 'react-test-renderer';
 
+import BlurLinearIcon from '@material-ui/icons/BlurLinearRounded';
+
 import Home from './Home';
 import { Tests } from './Home';
+import { BlurLinear } from '@material-ui/icons';
 const {
   ParentRowContainer,
   ButtonComponent,
   RowTextContent,
-  QuickLocationButtons,
-  QuickCategoryButtons,
   AddASpaceButton,
   ButtonRow,
 } = Tests;
@@ -26,23 +27,6 @@ const itShouldRenderComponent = (Component, props) => {
   });
 }
 
-const itShouldRenderCorrectLabel = (props, label) => {
-  it("It should render the button's label", () => {
-    render(<ButtonComponent {...props} />);
-    expect(screen.getByText(label)).toBeInTheDocument();
-  });
-};
-
-const itShouldHaveCorrectHref = (props, label, path) => {
-  it('It should have the correct href value', async () => {
-    render(
-      <ButtonComponent {...props} />
-    );
-    const Button = screen.getByText(label);
-    expect(Button.hasAttribute('href', path));
-  });
-};
-
 describe('Home Route', () => {
   describe('ButtonComponent', () => {
     const buttonComponentTestProps = {
@@ -51,8 +35,17 @@ describe('Home Route', () => {
       buttonLabel: 'Profile',
     };
     itShouldRenderComponent(ButtonComponent, buttonComponentTestProps);
-    itShouldRenderCorrectLabel(buttonComponentTestProps, 'Profile');
-    itShouldHaveCorrectHref(buttonComponentTestProps, 'Profile', '/profile');
+    it("It should render the button's label", () => {
+      render(<ButtonComponent {...buttonComponentTestProps} />);
+      expect(screen.getByText('Profile')).toBeInTheDocument();
+    });
+    it('It should have the correct href value', async () => {
+      render(
+        <ButtonComponent {...buttonComponentTestProps} />
+      );
+      const Button = screen.getByText('Profile');
+      expect(Button.hasAttribute('href', '/profile'));
+    });
   });
 
   describe('RowTextContent', () => {
@@ -86,41 +79,97 @@ describe('Home Route', () => {
     })
   });
 
-  describe('ParentRowContainer', () => {
-
-  });
-
   describe('Add a Space Button', () => {
+    itShouldRenderComponent(AddASpaceButton);
     it("It should have the correct href value", () => {
-      render(<Home />);
+      render(<AddASpaceButton />);
       const button = screen.getByTestId('add-space-button');
       expect(button).toHaveAttribute('href', '/spaces/new');
     });
     it("It should have the correct label", () => {
-      render(<Home />);
+      render(<AddASpaceButton />);
       const button = screen.getByTestId('add-space-button');
       expect(button.textContent).toBe("Add a Space");
     });
   });
 
-  describe('Quick Location Buttons & Quick Category Buttons', () => {
-    it('It should render an equal amount of buttons as the locationButton.length', () => {
-
+  describe('Button Row', () => {
+    const history = createMemoryHistory();
+    const handleClick = (event, param) => {
+      history.push({
+        pathname: '/search/results',
+        search: `?searchTerm=&category=&location=${param}`,
+      });
+    };
+    const buttonRowTestProps = {
+      classes: {},
+      buttonSet: [
+        { name: 'NYC', icon: <BlurLinearIcon />, search: 'New York City, NY' },
+        { name: 'Atlanta', icon: <BlurLinearIcon />, search: 'Atlanta, GA' },
+      ],
+      handleClick: handleClick,
+    };
+    itShouldRenderComponent(ButtonRow, buttonRowTestProps);
+    it('It should render the same # of buttons as the length of array of button objects passed in', async () => {
+      render(<ButtonRow {...buttonRowTestProps} />);
+      const buttons = await screen.getAllByRole('button');
+      expect(buttons).toHaveLength(2);
     });
-    it('It should correctly render the button label', () => {
-
+    it('It should render the different # of buttons with more button props', async () => {
+      const moreButtonsProps = {
+        classes: {},
+        buttonSet: [
+          { name: 'NYC', icon: <BlurLinearIcon />, search: 'New York City, NY' },
+          { name: 'San Diego', icon: <BlurLinearIcon />, search: 'San Diego, CA' },
+          { name: 'Phoenix', icon: <BlurLinearIcon />, search: 'Phoenix, AZ' },
+        ],
+        handleClick: handleClick
+      };
+      render(<ButtonRow {...moreButtonsProps} />);
+      const buttons = await screen.getAllByRole('button');
+      expect(buttons).toHaveLength(3);
     });
-    it('It should query a search on spaces when the user clicks the button', () => {
+    it('It should navigate to the correct path on click', () => {
+      render(
+        <Router history={history}>
+          <ButtonRow {...buttonRowTestProps} />
+        </Router>
+      );
+      const button = screen.getByText('Atlanta');
+      expect(button).toBeInTheDocument();
+      expect(history.location.pathname).toBe('/');
 
+      userEvent.click(button);
+      expect(history.length).toBe(2);
+      expect(history.location.pathname).toBe('/search/results');
     });
-    it('It should correctly search the right query when clicked on', () => {
-
+    it('It should have the correct label', () => {
+      render(<ButtonRow {...buttonRowTestProps} />);
+      expect(screen.getByText('NYC')).toBeInTheDocument();
     });
-    it('It should redirect the user to the correct path on click', () => {
-
-    });
-    it('It should render an icon with the label', () => {
-
+    it('It should have the correct label for the other button as well', () => {
+      render(<ButtonRow {...buttonRowTestProps} />);
+      expect(screen.getByText('Atlanta')).toBeInTheDocument();
     });
   });
+
+  describe('ParentRowContainer', () => {
+    it('It should not render any buttons with an empty buttonRowSet props passed in', async () => {
+      /*
+      const noButtonsProps = {
+        classes: {},
+        buttonSet: [],
+        handleClick: handleClick
+      };
+      render(<ButtonRow />);
+      const buttons = await screen.queryAllByRole('button');
+      expect(buttons).toHaveLength(0);
+      */
+    });
+  });
+
+  describe('Home Component', () => {
+
+  });
+
 });
