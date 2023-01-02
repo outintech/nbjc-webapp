@@ -328,6 +328,13 @@ const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, qu
   return pagesWithLinks;
 };
 
+const CalculatePageRange = (page, perPage, totalCount) => {
+  const startingRange = (page - 1) * perPage + 1;
+  const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
+  const resultString = endingRange <= 1 ? 'Result' : 'Results';
+  return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
+};
+
 const Pagination = ({
   totalCount,
   page,
@@ -366,13 +373,6 @@ const Pagination = ({
     nextButton = `${nextLink}?${query.toString()}`;
   }
 
-  const CalculatePageRange = () => {
-    const startingRange = (page - 1) * perPage + 1;
-    const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
-    const resultString = endingRange <= 1 ? 'Result' : 'Results';
-    return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
-  };
-
   const navigationObject = {
     history, query, perPage,
   };
@@ -385,7 +385,7 @@ const Pagination = ({
           <RangeOfResults
             totalCount={totalPages}
             classes={classes}
-            calculateRange={CalculatePageRange()}
+            calculateRange={CalculatePageRange(page, perPage, totalCount)}
             desktopDimensions={useDesktop}
           />
         </div>
