@@ -182,7 +182,7 @@ const ReusableMenu = (
   return (
     <>
       <div className={SortContainerClass}>
-        <span className={SearchSettingClass}>
+        <span className={SearchSettingClass} data-testid="menu-dropdown-label">
           {sortLabel}
         </span>
         <Button
@@ -199,7 +199,6 @@ const ReusableMenu = (
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          MenuProps={{ variant: 'menu' }}
           PaperProps={{
             style: {
               left: '100%',
@@ -531,3 +530,20 @@ Search.props = {
 Search.props = { ...Search.props, ...geoPropTypes };
 
 export default geolocated({ positionOptions: { timeout: 5000 } })(withStyles(styles)(Search));
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  ReusableMenu,
+  DistanceMenu,
+  SortByMenu,
+  ShowingPerPageMenu,
+  TopSortRow,
+  SortRowMobile,
+  NumberOfResultsHeader,
+  OpenFilterPanelButton,
+  FilterPanelAside,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}
