@@ -26,21 +26,6 @@ test.skip('Pagination', () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-// Work around to MUI bug with toHaveStyle https://github.com/testing-library/jest-dom/issues/350
-const convertHexToRGBA = (hexCode) => {
-  let hex = hexCode.replace('#', '');
-
-  if (hex.length === 3) {
-    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
-  }
-
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return { r, g, b };
-};
-
 describe('Pagination Component', () => {
   describe('NextButton', () => {
     const testProps = {
@@ -96,6 +81,42 @@ describe('Pagination Component', () => {
       expect(CheckValidPageNumber(20, 15)).toBe(true);
       expect(CheckValidPageNumber(40, 1)).toBe(true);
       expect(CheckValidPageNumber(5000000, 102460)).toBe(true);
+    });
+  });
+
+  describe('RangeOfResults', () => {
+    it('It should not render if it is smaller than the media query, desktopDimensions is false', () => {
+      const noRenderProps = {
+        classes: {},
+        totalCount: 40,
+        calculateRange: 'Showing',
+        desktopDimensions: false,
+      };
+      render(<RangeOfResults {...noRenderProps} />);
+      const rangeOfResults = screen.queryByText('Showing', { exact: false });
+      expect(rangeOfResults).not.toBeInTheDocument();
+    });
+    it('It should not render if the totalCount of results is 0', () => {
+      const noRenderProps = {
+        classes: {},
+        totalCount: 0,
+        calculateRange: 'Showing',
+        desktopDimensions: true,
+      };
+      render(<RangeOfResults {...noRenderProps} />);
+      const rangeOfResults = screen.queryByText('Showing', { exact: false });
+      expect(rangeOfResults).not.toBeInTheDocument();
+    });
+    it('It should render the range of results', () => {
+      const dummyProps = {
+        classes: {},
+        totalCount: 40,
+        calculateRange: `Showing ${5} - ${10} of ${40} results`,
+        desktopDimensions: true,
+      };
+      render(<RangeOfResults {...dummyProps} />);
+      const rangeOfResults = screen.queryByText('Showing', { exact: false });
+      expect(rangeOfResults).toBeInTheDocument();
     });
   });
 });
