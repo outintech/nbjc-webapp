@@ -223,7 +223,7 @@ const ShareMenu = ({ classes }) => {
   };
   return (
     <>
-      <Button onClick={handleClick}>
+      <Button onClick={handleClick} data-testid="share-button">
         <MoreVertIcon />
       </Button>
       <Menu
@@ -269,7 +269,7 @@ const AddressRow = ({ classes, address }) => {
         target="_blank"
         rel="noreferrer"
       >
-        <LocationOnIcon className={classes.addressIcon} />
+        <LocationOnIcon className={classes.addressIcon} data-testid="location-icon" />
         <Typography variant="body1" className={classes.addressString}>
           {address}
         </Typography>
@@ -283,7 +283,7 @@ const AddReviewCTA = ({ id, classes }) => {
   const spacesUrl = `/spaces/${id}/reviews/new`;
   return (
     <Link to={spacesUrl} className={classes.ctaButtonContainer}>
-      <RateReviewIcon color="secondary" fontSize="small" />
+      <RateReviewIcon color="secondary" fontSize="small" data-testid="review-icon" />
       <span>Add Review</span>
     </Link>
   );
@@ -422,3 +422,25 @@ BusinessCard.defaultProps = {
 };
 
 export default withStyles(styles)(BusinessCard);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  convertAddressToGoogleMapsLink,
+  formatPhoneNumber,
+  Image,
+  TopCardContent,
+  OrdinalNumber,
+  ShareMenu,
+  TitleBar,
+  AddressRow,
+  AddReviewCTA,
+  RatingCTA,
+  CallPhoneCTA,
+  VisitWebsiteCTA,
+  CTAs,
+  BottomCardContent,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}
