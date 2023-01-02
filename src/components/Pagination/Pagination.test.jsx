@@ -5,6 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import Pagination, { Tests } from './Pagination';
+import { Check } from '@material-ui/icons';
 
 const {
   getPageLink,
@@ -75,20 +76,26 @@ describe('Pagination Component', () => {
   });
 
   describe('CheckValidPageNumber', () => {
-
+    it('It should return false if the input was not of type string or type number', () => {
+      expect(CheckValidPageNumber(10, null)).toBe(false);
+      expect(CheckValidPageNumber(20, undefined)).toBe(false);
+      expect(CheckValidPageNumber(10, { input: 1 })).toBe(false);
+    });
+    it('It should return false if the value is a string or number but is not a integer', () => {
+      expect(CheckValidPageNumber(10, 4.52)).toBe(false);
+      expect(CheckValidPageNumber(20, '11.11')).toBe(false);
+    });
+    it('It should return false if the input is greater than totalPages', () => {
+      expect(CheckValidPageNumber(1, '2')).toBe(false);
+      expect(CheckValidPageNumber(1000000, 10000001)).toBe(false);
+    });
+    it('It should return true if the input is of type number or string, an integer and within the range 1-totalPages', () => {
+      expect(CheckValidPageNumber(20, '20')).toBe(true);
+      expect(CheckValidPageNumber(20, 20)).toBe(true);
+      expect(CheckValidPageNumber(20, '15')).toBe(true);
+      expect(CheckValidPageNumber(20, 15)).toBe(true);
+      expect(CheckValidPageNumber(40, 1)).toBe(true);
+      expect(CheckValidPageNumber(5000000, 102460)).toBe(true);
+    });
   });
 });
-
-/* const CheckValidPageNumber = (totalPages, input) => {
-  if (typeof input !== 'string') {
-    return false;
-  }
-  const pageNum = Number(input);
-  const checkValidType = Number.isInteger(pageNum);
-  const checkValidRange = pageNum >= 1 && pageNum <= totalPages;
-  if (checkValidType && checkValidRange) {
-    return true;
-  }
-  return false;
-};
-*/

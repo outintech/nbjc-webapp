@@ -166,7 +166,7 @@ const BackButton = ({ pageLink, classes }) => {
 };
 
 const CheckValidPageNumber = (totalPages, input) => {
-  if (typeof input !== 'string') {
+  if (typeof input !== 'string' && typeof input !== 'number') {
     return false;
   }
   const pageNum = Number(input);
