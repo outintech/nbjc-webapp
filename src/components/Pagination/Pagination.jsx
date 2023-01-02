@@ -148,7 +148,7 @@ const NextButton = ({ pageLink, classes }) => {
   const removeUnderline = classes.paginationLabel;
   const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none">
+    <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none" data-testid="next-button-icon">
       <NavigateNextIcon className={classes.centerText} />
     </Link>
   );
@@ -430,3 +430,22 @@ Pagination.propTypes = {
 Pagination.defaultProps = {};
 
 export default withStyles(styles)(Pagination);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  getPageLink,
+  NextButton,
+  BackButton,
+  CheckValidPageNumber,
+  GoToPage,
+  RangeOfResults,
+  OpenGoToPageButton,
+  PaginationButton,
+  RenderPaginationButtons,
+  calculatePaginationMenu,
+  CalculatePageRange,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}
