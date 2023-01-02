@@ -48,21 +48,3 @@ describe('SearchBar', () => {
     });
   });
 });
-
-describe('SearchBar Part 2', () => {
-  it('when the user clicks on the searchBar the users location should appear as the dropdown option if location is turned on', () => {
-
-  });
-  it('should check if location is not turned on the searchbar should not render any options when the input is empty', () => {
-
-  });
-  it('should throw an error and exit gracefully if no userLocation is provided', () => {
-
-  });
-  it('should append locations abbreviation state to the location name', () => {
-
-  });
-  it('should display the correct icon based on the type of autocomplete', () => {
-
-  });
-});
