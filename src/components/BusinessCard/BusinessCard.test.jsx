@@ -13,8 +13,6 @@ jest.mock('../ChipList', () => () => (<></>));
 const {
   convertAddressToGoogleMapsLink,
   formatPhoneNumber,
-  Image,
-  TopCardContent,
   OrdinalNumber,
   ShareMenu,
   TitleBar,
@@ -23,8 +21,6 @@ const {
   RatingCTA,
   CallPhoneCTA,
   VisitWebsiteCTA,
-  CTAs,
-  BottomCardContent,
 } = Tests;
 
 describe('BusinessCard', () => {
@@ -130,22 +126,83 @@ describe('BusinessCard', () => {
     });
   });
   describe('RatingCTA', () => {
-
+    const dummyProps = {
+      classes: {},
+      averageRating: 4.1,
+    };
+    it('It should have a correct label', () => {
+      render(<RatingCTA {...dummyProps} />);
+      const label = screen.getByText('Rating');
+      expect(label).toBeInTheDocument();
+    });
+    it('It should display the average rating', () => {
+      render(<RatingCTA {...dummyProps} />);
+      expect(screen.getByText('4.1')).toBeInTheDocument();
+    });
+  });
+  describe('CallPhoneCTA', () => {
+    const dummyProps = {
+      classes: {},
+      phoneNumber: '521-742-1234',
+      useDesktop: true,
+    };
+    it('It should not render if no phone number is provided', () => {
+      render(<CallPhoneCTA />);
+      expect(screen.queryByTestId('phone-icon')).not.toBeInTheDocument();
+    });
+    it('It should render the phone number after formatting', () => {
+      render(<CallPhoneCTA {...dummyProps} />);
+      expect(screen.getByText('521', { exact: false })).toBeInTheDocument();
+    });
+    it('It should have a icon if rendered with a phone number', () => {
+      render(<CallPhoneCTA {...dummyProps} />);
+      expect(screen.getByTestId('phone-icon')).toBeInTheDocument();
+    });
+    const smallWidthProps = {
+      classes: {},
+      phoneNumber: '521-742-1234',
+      useDesktop: false,
+    };
+    it('It should not render the phone number if the screen width is too small', () => {
+      render(<CallPhoneCTA {...smallWidthProps} />);
+      expect(screen.queryByText('521', { exact: false })).not.toBeInTheDocument();
+    });
+    it('It should render the icon even if the screen width is too small for the string phone number', () => {
+      render(<CallPhoneCTA {...smallWidthProps} />);
+      expect(screen.getByTestId('phone-icon')).toBeInTheDocument();
+    });
+  });
+  describe('VisitWebsiteCTA', () => {
+    const dummyProps = {
+      classes: {},
+      useDesktop: true,
+    };
+    it('It should have a correct label for large dimensions', () => {
+      render(<VisitWebsiteCTA {...dummyProps} />);
+      const label = screen.getByText('Visit Website');
+      expect(label).toBeInTheDocument();
+    });
+    it('It should render an icon', () => {
+      render(<VisitWebsiteCTA {...dummyProps} />);
+      const icon = screen.getByTestId('visit-website-icon');
+      expect(icon).toBeInTheDocument();
+    });
+    const smallWidthProps = {
+      classes: {},
+      useDesktop: false,
+    };
+    it('It should not render the label for smaller dimensions', () => {
+      render(<VisitWebsiteCTA {...smallWidthProps} />);
+      const label = screen.queryByText('Visit Website');
+      expect(label).not.toBeInTheDocument();
+    });
+    it('It should still render the icon for smaller dimensions', () => {
+      render(<VisitWebsiteCTA {...smallWidthProps} />);
+      const icon = screen.getByTestId('visit-website-icon');
+      expect(icon).toBeInTheDocument();
+    });
   });
 });
-
-/*
-const RatingCTA = ({ classes, averageRating }) => {
-  const label = 'Rating';
-  return (
-    <Box className={classes.ctaButtonContainer}>
-      <span>{label}</span>
-      <StarIcon color="secondary" fontSize="small" />
-      <span className={classes.purpleIcon}>{averageRating}</span>
-    </Box>
-  );
-};
-*/
 
 /*
 test('renders the BusinessCardComponent', () => {

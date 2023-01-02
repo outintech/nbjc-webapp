@@ -301,7 +301,7 @@ const RatingCTA = ({ classes, averageRating }) => {
 };
 
 const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
-  if (phoneNumber === '') {
+  if (phoneNumber === '' || phoneNumber === undefined) {
     return null;
   }
   const phoneString = `tel:${phoneNumber}`;
@@ -309,7 +309,7 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
   const displayLabelOnDesktop = useDesktop ? label : null;
   return (
     <a href={phoneString} className={classes.ctaButtonContainer}>
-      <PhoneIcon className={classes.purpleIcon} fontSize="small" />
+      <PhoneIcon className={classes.purpleIcon} fontSize="small" data-testid="phone-icon" />
       {displayLabelOnDesktop}
     </a>
   );
@@ -319,7 +319,7 @@ const VisitWebsiteCTA = ({ classes, useDesktop }) => {
   const label = useDesktop ? <span>Visit Website</span> : null;
   return (
     <Box className={classes.ctaButtonContainer}>
-      <LanguageIcon color="secondary" fontSize="small" />
+      <LanguageIcon color="secondary" fontSize="small" data-testid="visit-website-icon" />
       {label}
     </Box>
   );
@@ -427,8 +427,6 @@ export default withStyles(styles)(BusinessCard);
 export let Tests = {
   convertAddressToGoogleMapsLink,
   formatPhoneNumber,
-  Image,
-  TopCardContent,
   OrdinalNumber,
   ShareMenu,
   TitleBar,
@@ -437,8 +435,6 @@ export let Tests = {
   RatingCTA,
   CallPhoneCTA,
   VisitWebsiteCTA,
-  CTAs,
-  BottomCardContent,
 };
 
 if (process.env.NODE_ENV !== 'test') {
