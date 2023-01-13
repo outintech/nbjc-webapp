@@ -113,7 +113,7 @@ const styles = () => ({
     fontWeight: 500,
   },
   hideDisplay: {
-    display: 'none',
+    visibility: 'hidden',
   },
   buttonOpenGoToPage: {
     maxWidth: 28,
@@ -133,6 +133,11 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  alignPaginationRange: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -226,7 +231,7 @@ const RangeOfResults = (
     (totalCount > 0) && (desktopDimensions)
     && (
       <Typography variant="h5" align="center" className={classes.showingText}>
-        <span className={classes.centerText}>
+        <span className={classes.alignPaginationRange}>
           {calculateRange}
         </span>
       </Typography>
