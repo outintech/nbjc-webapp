@@ -1,15 +1,18 @@
 import React from 'react';
+
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.navWhite.main,
+    backgroundColor: '#351F57',
     display: 'flex',
-    color: theme.palette.navWhite.contrastText,
+    color: '#FFFFFF',
     minHeight: 75,
-    width: '100%',
     backgroundClip: 'padding-box',
     [theme.breakpoints.up('xs')]: {
       flexWrap: 'wrap',
@@ -26,86 +29,69 @@ const styles = (theme) => ({
       marginRight: 0,
       width: '100%',
     },
-    [theme.breakpoints.up('mobile')]: {
-      width: 'unset',
-    },
-    '& a': {
-      fontWeight: 'bold',
-    },
-  },
-  links: {
     display: 'flex',
-    marginRight: 20,
-    [theme.breakpoints.up('xs')]: {
-      marginTop: 10,
-      marginLeft: 20,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      marginTop: 20,
-      marginLeft: 'auto',
-    },
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   externalLink: {
-    // whiteSpace: 'nowrap',
     color: 'inherit',
+    fontWeight: 600,
   },
-  link: {
-    float: 'right',
-    fontSize: 14,
-    '& a': {
-      color: 'inherit',
-      marginRight: 20,
-      whiteSpace: 'pre-wrap',
-    },
-    '& a:last-of-type': {
-      marginRight: 0,
-    },
-  },
-  copyright: {
-    '&::before': {
-      content: '""',
-      marginRight: 10,
-      marginLeft: 10,
-      borderLeft: '1px solid white',
-      whiteSpace: 'pre-wrap',
-    },
+  buttonLink: {
+    color: 'inherit',
+    fontWeight: 400,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 
 const Footer = ({ classes }) => (
   <div className={classes.root}>
-    <div className={classes.info}>
-      <Typography variant="subtitle2">
-        The Lavender Book is a crowd-sourced application created
-        by the team at &nbsp;
-        <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-          National Black Justice Coalition
-        </a>
-        &nbsp; and &nbsp;
-        <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
-          Out in Tech
-        </a>
-      </Typography>
-    </div>
-    <div className={classes.links}>
-      <Typography className={classes.link}>
-        <a size="small" href="/community-guidelines">
+    <Grid container className={classes.info}>
+      <Grid item xs={12} md={5}>
+        <Typography variant="subtitle2">
+          The Lavender Book is a crowd-sourced application created
+          by the team at &nbsp;
+          <a href="https://nbjc.org/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            National Black Justice Coalition
+          </a>
+          &nbsp; and &nbsp;
+          <a href="https://outintech.com/" target="_blank" rel="noreferrer" className={classes.externalLink}>
+            Out in Tech
+          </a>
+        </Typography>
+      </Grid>
+      <Grid item>
+        <NavLink to="/community-guidelines" className={classes.buttonLink}>
           Community Guidelines
-        </a>
-        <a size="small" href="/terms-of-service">
+        </NavLink>
+      </Grid>
+      <Grid item>
+        <NavLink to="/terms-of-service" className={classes.buttonLink}>
           Terms of Service
-        </a>
-        <a size="small" href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank">
+        </NavLink>
+      </Grid>
+      <Grid item>
+        <NavLink to="/infringement-policies" className={classes.buttonLink}>
+          Infringement Policies
+        </NavLink>
+      </Grid>
+      <Grid item>
+        <a href="https://nbjc.org/privacy-policy/" rel="noreferrer" target="_blank" className={classes.buttonLink}>
           Privacy Policy
         </a>
-        <a size="small" href="/infringement-policies">
-          Infringement Policies
-        </a>
-        <Box component="span" className={classes.copyright}>
-          Copyright 2021 NBJC
+      </Grid>
+      <Grid item>
+        <NavLink to="/donate" className={classes.buttonLink}>
+          Donate
+        </NavLink>
+      </Grid>
+      <Grid item>
+        <Box>
+          {`Copyright ${new Date().getFullYear()} NBJC`}
         </Box>
-      </Typography>
-    </div>
+      </Grid>
+    </Grid>
   </div>
 );
 
