@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import SearchBar from '../SearchBar';
-import useMobileDevice from '../../hooks/useMobileDevice';
 
 const styles = (theme) => ({
   root: {
@@ -14,11 +13,15 @@ const styles = (theme) => ({
       'linear-gradient(#633AA3CC, #633AA3CC), url("/landing.png")',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+
     [theme.breakpoints.up('xs')]: {
-      height: 145,
+      height: 190,
     },
     [theme.breakpoints.up('md')]: {
       height: 262,
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 145,
     },
   },
   container: {
@@ -26,33 +29,44 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    width: '100%',
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
-    [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
+  },
+  title: {
+    [theme.breakpoints.up('xs')]: {
+      fontSize: '2.125rem',
     },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.875rem',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '20.5px',
+    },
+    fontWeight: 700,
+    lineHeight: '1.235',
+    marginBottom: '.6em',
+    width: 'auto',
   },
 });
 
-const Header = ({ classes }) => {
-  const [isMobileOrTablet] = useMobileDevice();
-  return (
-    <section>
-      <Box className={classes.root}>
-        <Box className={classes.container}>
-          <Typography
-            variant={isMobileOrTablet ? 'body1' : 'h4'}
-            gutterBottom
-          >
-            <b>Find spaces for Black Queer Folx</b>
-          </Typography>
-          <SearchBar />
-        </Box>
+const Header = ({ classes }) => (
+  <section>
+    <Box className={classes.root}>
+      <Box className={classes.container}>
+        <Typography
+          variant="h1"
+          gutterBottom
+          className={classes.title}
+        >
+          Find spaces for Black Queer Folx
+        </Typography>
+        <SearchBar />
       </Box>
-    </section>
-  );
-};
+    </Box>
+  </section>
+);
 
 Header.propTypes = {};
 
