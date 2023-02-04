@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useHistory } from 'react-router-dom';
-
 import { geolocated } from 'react-geolocated';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -22,7 +21,7 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import States from '../../api/states';
 import useSearch from '../../routes/Search/hooks/useSearch';
 
-const filterOptions = createFilterOptions({
+const autoCompleteSettings = createFilterOptions({
   limit: 5,
   trim: true,
   stringify: (option) => option.name,
@@ -31,37 +30,41 @@ const filterOptions = createFilterOptions({
 const styles = (theme) => ({
   root: {
     display: 'flex',
+    maxHeight: '48px',
+    height: '100%',
     alignItems: 'center',
-    [theme.breakpoints.up('xs')]: {
-      width: theme.spacing(34),
-    },
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(45),
-    },
-    [theme.breakpoints.up('md')]: {
-      width: theme.spacing(80),
-    },
+    maxWidth: '584px',
+    minWidth: '252px',
+    width: '90%',
   },
-  title: {
-    padding: '0 0.8rem',
+  searchInput: {
+    flex: 1,
+  },
+  dropdownIcon: {
+    color: theme.palette.primary.main,
+  },
+  dropdownMenu: {
     display: 'flex',
-    alignItems: 'center',
+    fontWeight: 'bold',
+  },
+  autoCompleteContainer: {
+    width: '100%',
+    display: 'flex',
     justifyContent: 'center',
   },
-  input: {
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'left',
+  submitButtonContainer: {
+    color: 'white',
+    backgroundColor: '#1E1131',
+    minWidth: '48px',
   },
-  icon: {
-    color: theme.palette.primary.main,
-    display: 'flex',
+  removeTextFieldRadius: {
+    borderRadius: 0,
   },
-  dropdown: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    fontWeight: 'bold',
+  placeholderFont: {
+    fontWeight: 500,
+    color: '#999999',
+    fontSize: '18px',
+    lineHeight: '22px',
   },
 });
 
@@ -77,11 +80,13 @@ const SearchBar = ({
   const geopositionLoading = promiseInProgress || (isGeolocationEnabled && coords === null);
 
   const [location, setLocation] = useState('');
-  const [autofillWithBlankInput, setAutoFillWithBlankInput] = useState([]);
+  const [userLocationAutocomplete, setUserLocationAutocomplete] = useState([]);
 
   useEffect(() => {
-    if (isGeolocationEnabled && !geopositionLoading && userLocation.address !== undefined) {
-      setAutoFillWithBlankInput([{ name: userLocation.address.city }]);
+    try {
+      setUserLocationAutocomplete([{ name: userLocation.address.city }]);
+    } catch (e) {
+      setUserLocationAutocomplete([]);
     }
   }, [geopositionLoading]);
 
@@ -89,7 +94,6 @@ const SearchBar = ({
     setLocation(event.target.value);
   };
 
-  // eslint-disable-next-line consistent-return
   const handleSubmit = (event) => {
     event.preventDefault();
     history.push({
@@ -98,39 +102,30 @@ const SearchBar = ({
     });
   };
 
-  const parseLocationObjectToString = (obj) => {
-    let locationObjString = `${obj.name}`;
-    if (obj.abbreviation) {
-      locationObjString += `, ${obj.abbreviation}`;
-    }
-    return locationObjString;
-  };
+  const parseLocationObjectToString = (obj) => (
+    obj.abbreviation ? `${obj.name}, ${obj.abbreviation}` : obj.name
+  );
 
   return (
-    <Paper component="form" onSubmit={handleSubmit}>
-      <Box className={classes.root}>
+    <Box className={classes.autoCompleteContainer}>
+      <Paper component="form" onSubmit={handleSubmit} className={classes.root}>
         <Autocomplete
-          className={classes.input}
-          options={location.trim() === '' ? autofillWithBlankInput : States}
+          className={classes.searchInput}
+          options={location.trim() === '' ? userLocationAutocomplete : States}
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => parseLocationObjectToString(option)}
-          onChange={(event, newLocation) => {
-            setLocation(parseLocationObjectToString(newLocation));
+          onChange={(event, selectedOption) => {
+            setLocation(parseLocationObjectToString(selectedOption));
           }}
           forcePopupIcon={false}
           disableClearable
-          filterSelectedOptions
-          filterOptions={filterOptions}
+          filterOptions={autoCompleteSettings}
           renderOption={(props) => {
             const dropdownText = parseLocationObjectToString(props);
-            const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.icon} />
-              : <LocationOnIcon className={classes.icon} />;
+            const dropdownIcon = location.trim() === '' ? <HomeIcon className={classes.dropdownIcon} />
+              : <LocationOnIcon className={classes.dropdownIcon} />;
             return (
-              <Box
-                component="div"
-                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                className={classes.dropdown}
-              >
+              <Box className={classes.dropdownMenu}>
                 {dropdownIcon}
                 {dropdownText}
               </Box>
@@ -140,30 +135,33 @@ const SearchBar = ({
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
+              // Padding is for lining up the gray outline of the textfield
+              InputProps={{
+                ...params.InputProps,
+                style: { padding: 5 },
+                classes: { root: classes.removeTextFieldRadius, input: classes.placeholderFont },
+              }}
               variant="outlined"
-              disableunderline="true"
-              InputProps={{ ...params.InputProps, style: { padding: 5 } }}
               onChange={handleTextInputChange}
               placeholder={placeholder}
             />
           )}
         />
         <Box
-          display="flex"
+          display="block"
           data-testid="searchbar-submit"
-          style={{ color: 'white', backgroundColor: '#1E1131' }}
+          className={classes.submitButtonContainer}
         >
           <IconButton
             type="submit"
-            sx={{ p: '10px' }}
             aria-label="search"
             color="inherit"
           >
             <SearchIcon />
           </IconButton>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    </Box>
   );
 };
 
