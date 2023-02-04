@@ -12,23 +12,6 @@ import {
 
 import SupportButton from '../../components/SupportButton/SupportButton';
 
-import { ReactComponent as SolIcon } from '../../assets/noto_statue-of-liberty.svg';
-import { ReactComponent as AtlantaIcon } from '../../assets/noto_peach.svg';
-import { ReactComponent as DCIcon } from '../../assets/noto_classical-building.svg';
-import { ReactComponent as HoustonIcon } from '../../assets/noto_cactus.svg';
-import { ReactComponent as LAIcon } from '../../assets/noto_palm-tree.svg';
-
-import { ReactComponent as CafeIcon } from '../../assets/noto_hot-beverage.svg';
-import { ReactComponent as BarberIcon } from '../../assets/noto_barber-pole.svg';
-import { ReactComponent as RestaurantIcon } from '../../assets/noto_fork-and-knife-with-plate.svg';
-import { ReactComponent as WellnessIcon } from '../../assets/noto_woman-in-lotus-position-dark-skin-tone.svg';
-import { ReactComponent as ShoppingIcon } from '../../assets/noto_shopping-bags.svg';
-import { ReactComponent as NightlifeIcon } from '../../assets/noto_cocktail-glass.svg';
-
-import PrideParadeImageLarge from '../../assets/Rectangle 52@2x.png';
-import GroupPrideImageLarge from '../../assets/Rectangle 53@2x.png';
-import RainbowMuralImageLarge from '../../assets/Rectangle 54@2x.png';
-
 const styles = (theme) => ({
   root: {
     [theme.breakpoints.up('xs')]: {
@@ -232,7 +215,7 @@ const ButtonRow = ({ classes, buttonSet, handleClick }) => (
     {buttonSet.map((buttonData, index) => (
       <Button
         variant="outlined"
-        startIcon={buttonData.icon}
+        startIcon={<img src={buttonData.icon} alt="icon" />}
         onClick={(event) => handleClick(event, buttonData.search)}
         className={classes.searchButton}
         // eslint-disable-next-line react/no-array-index-key
@@ -247,11 +230,11 @@ const ButtonRow = ({ classes, buttonSet, handleClick }) => (
 const QuickLocationButtons = (classes) => {
   const history = useHistory();
   const locationButtons = [
-    { name: 'NYC', icon: <SolIcon />, search: 'New York City, NY' },
-    { name: 'Atlanta', icon: <AtlantaIcon />, search: 'Atlanta, GA' },
-    { name: 'DC', icon: <DCIcon />, search: 'Washington DC' },
-    { name: 'Houston', icon: <HoustonIcon />, search: 'Houston, TX' },
-    { name: 'LA', icon: <LAIcon />, search: 'Los Angeles, CA' },
+    { name: 'NYC', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_statue-of-liberty.svg', search: 'New York City, NY' },
+    { name: 'Atlanta', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_peach.svg', search: 'Atlanta, GA' },
+    { name: 'DC', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_classical-building.svg', search: 'Washington DC' },
+    { name: 'Houston', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_cactus.svg', search: 'Houston, TX' },
+    { name: 'LA', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_palm-tree.svg', search: 'Los Angeles, CA' },
   ];
   const handleClick = (event, param) => {
     history.push({
@@ -265,12 +248,12 @@ const QuickLocationButtons = (classes) => {
 const QuickCategoryButtons = (classes) => {
   const history = useHistory();
   const categoryButtons = [
-    { name: 'Coffeeshops', icon: <CafeIcon /> },
-    { name: 'Barbershops', icon: <BarberIcon /> },
-    { name: 'Restaurants', icon: <RestaurantIcon /> },
-    { name: 'Wellness', icon: <WellnessIcon /> },
-    { name: 'Shopping', icon: <ShoppingIcon /> },
-    { name: 'Nightlife', icon: <NightlifeIcon /> },
+    { name: 'Coffeeshops', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_hot-beverage.svg' },
+    { name: 'Barbershops', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_barber-pole.svg' },
+    { name: 'Restaurants', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_fork-and-knife-with-plate.svg' },
+    { name: 'Wellness', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_woman-in-lotus-position-dark-skin-tone.svg' },
+    { name: 'Shopping', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_shopping-bags.svg' },
+    { name: 'Nightlife', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_cocktail-glass.svg' },
   ];
   const handleClick = (event, param) => {
     history.push({
@@ -286,7 +269,7 @@ const Home = ({ classes }) => {
     rowOne: {
       title: 'The Mission',
       body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
-      imageUrl: PrideParadeImageLarge,
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2052@2x.png',
       imageAltText: 'happy black person at pride parade',
       flippedImageSide: false,
       buttonRowFunction: AddASpaceButton,
@@ -294,7 +277,7 @@ const Home = ({ classes }) => {
     rowTwo: {
       title: 'Discover New Spaces',
       body: 'Lavender Book is here whether you are traveling or looking for a new local hangout spot.',
-      imageUrl: GroupPrideImageLarge,
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2053@2x.png',
       imageAltText: 'three black people having fun on a street',
       flippedImageSide: true,
       buttonRowFunction: QuickLocationButtons,
@@ -302,7 +285,7 @@ const Home = ({ classes }) => {
     rowThree: {
       title: 'What types of spaces can I search?',
       body: 'Not sure where to start? Use the categories below to narrow your search to specific types of spaces.',
-      imageUrl: RainbowMuralImageLarge,
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2054@2x.png',
       imageAltText: 'black person in front of rainbow mural',
       flippedImageSide: false,
       buttonRowFunction: QuickCategoryButtons,
