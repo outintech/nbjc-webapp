@@ -29,10 +29,10 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    width: '100%',
     [theme.breakpoints.up('xs')]: {
       margin: '0 20px',
     },
-    width: '100%',
   },
   title: {
     [theme.breakpoints.up('xs')]: {
