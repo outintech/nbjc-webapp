@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink, useLocation } from 'react-router-dom';
+
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
@@ -28,15 +29,15 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navWhite.light,
-    color: theme.palette.navWhite.contrastText,
+    backgroundColor: '#FFFFFF',
+    color: '#FFFFFF',
   },
   muiBreakpointWorkaround: {
     minHeight: 64,
   },
   links: {
     marginRight: '1rem',
-    color: theme.palette.navWhite.textDark,
+    color: '#1E1131',
     fontSize: '1.1rem',
     fontWeight: 600,
     backgroundColor: 'transparent',
@@ -140,30 +141,34 @@ const AppBar = ({
           aria-expanded={open ? 'true' : undefined}
           className={classes.links}
           onClick={handleClick}
+          data-testid="open-user-dropdown"
         >
           {TruncateUserName(userContext.userProfile.username)}
         </Button>
         <Menu
           id="log-in-positioned-menu"
-          aria-labelledby="log-in-positioned-button"
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+          data-testid="user-dropdown-menu"
           PaperProps={{
             style: {
               background: '#EBE5F6',
             },
           }}
+          MenuListProps={{
+            'aria-labelledby': 'log-in-positioned-button',
+          }}
         >
-          <MenuItem onClick={navigateToProfile}>
-            <AccountCircleIcon />
+          <MenuItem onClick={navigateToProfile} data-testid="profile-link">
+            <AccountCircleIcon data-testid="profile-icon" />
             My Profile
           </MenuItem>
-          <MenuItem onClick={signOut}>
-            <LogoutIcon />
+          <MenuItem onClick={signOut} data-testid="sign-out-link">
+            <LogoutIcon data-testid="sign-out-icon" />
             Sign Out
           </MenuItem>
         </Menu>
@@ -175,8 +180,8 @@ const AppBar = ({
     const matches = useMediaQuery('(min-width:426px)');
     return (
       <Box className={classes.navLinkBar}>
-        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }}>
-          <AddCircleOutlineIcon className={classes.icons} fontSize="small" />
+        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }} data-testid="add-a-space-link">
+          <AddCircleOutlineIcon className={classes.icons} fontSize="small" data-testid="add-a-space-icon" />
           {matches ? 'Add a Space' : ''}
         </NavLink>
       </Box>
