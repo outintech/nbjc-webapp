@@ -1,0 +1,5 @@
+## SupportButton
+
+```jsx
+<SupportButton />
+```
