@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, NavLink } from 'react-router-dom';
+import { useHistory, NavLink, useLocation } from 'react-router-dom';
+
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
@@ -10,26 +11,29 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
+
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 
+import SearchBar from '../SearchBar';
 import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    [theme.breakpoints.up('xs')]: {
-      height: 56,
-    },
-    [theme.breakpoints.up('md')]: {
-      height: 64,
-    },
+    height: 64,
+  },
+  expandAppBar: {
+    height: 128,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: '#FFFFFF',
     color: '#FFFFFF',
+  },
+  muiBreakpointWorkaround: {
+    minHeight: 64,
   },
   links: {
     marginRight: '1rem',
@@ -45,7 +49,6 @@ const styles = (theme) => ({
     fontSize: '1.5rem',
   },
   logo: {
-    flexGrow: 1,
     textAlign: 'left',
     marginRight: '0.3rem',
   },
@@ -56,25 +59,39 @@ const styles = (theme) => ({
     alignItems: 'center',
     alignSelf: 'right',
   },
+  expandedContent: {
+    flex: 1,
+  },
 });
 
 const AppBar = ({
   classes,
   isLoading,
 }) => {
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
   const userContext = useContext(UserContext);
+  const location = useLocation();
+  const path = location.pathname;
   const history = useHistory();
+  const isDesktopWidth = useMediaQuery('(min-width: 655px)');
 
   const { logout } = useAuth0();
 
-  const Logo = () => {
-    const matches = useMediaQuery('(min-width:426px)');
-    let logoSrc = '/mobile-appBar-logo.svg';
-    if (matches) {
-      logoSrc = '/web-appBar-logo.svg';
+  useEffect(() => {
+    if (path === '/') {
+      setShowSearchBar(false);
+    } else {
+      setShowSearchBar(true);
     }
+  }, [path]);
+
+  const Logo = () => {
+    const logoSrc = '/web-appBar-logo.svg';
     return (
-      <Box className={classes.logo}>
+      <Box className={(path === '/' || (!isDesktopWidth && showSearchBar))
+        ? [classes.logo, classes.expandedContent] : classes.logo}
+      >
         <NavLink to="/">
           <img src={logoSrc} alt="logo" />
         </NavLink>
@@ -83,13 +100,17 @@ const AppBar = ({
   };
 
   const TruncateUserName = (userName) => {
-    if (userName.length > 10) {
-      return `${userName.slice(0, 10)}....`;
+    try {
+      if (userName.length > 10) {
+        return `${userName.slice(0, 10)}....`;
+      }
+    } catch (e) {
+      return 'Account';
     }
     return userName;
   };
 
-  const PositionedMenu = () => {
+  const LoggedInDropdown = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -176,19 +197,26 @@ const AppBar = ({
   );
 
   return (
-    <>
-      <Box className={classes.root} data-testid="app-bar">
-        <MaterialAppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            {!isLoading ? (<Logo />) : null}
-            <Box className={classes.navLinkBar}>
-              <AddASpace />
-              {userContext.userProfile.username ? <PositionedMenu /> : <LogIn />}
-            </Box>
+    <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
+      <MaterialAppBar position="fixed" className={[classes.appBar, classes.muiBreakpointWorkaround]}>
+        <Toolbar className={classes.muiBreakpointWorkaround}>
+          {!isLoading ? (
+            <Logo />
+          ) : null}
+          {(isDesktopWidth && showSearchBar)
+            ? <Box className={classes.expandedContent}><SearchBar /></Box> : null}
+          <Box className={classes.navLinkBar}>
+            <AddASpace />
+            {userContext.userProfile.username ? <LoggedInDropdown /> : <LogIn />}
+          </Box>
+        </Toolbar>
+        {(!isDesktopWidth && showSearchBar) ? (
+          <Toolbar className={classes.muiBreakpointWorkaround}>
+            <Box className={classes.expandedContent}><SearchBar /></Box>
           </Toolbar>
-        </MaterialAppBar>
-      </Box>
-    </>
+        ) : null}
+      </MaterialAppBar>
+    </Box>
   );
 };
 

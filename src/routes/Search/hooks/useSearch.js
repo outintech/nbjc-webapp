@@ -125,6 +125,7 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
       category,
       indicators: searchIndicators,
       location,
+      price,
     } = searchData;
     if (name) {
       query.set('searchTerm', name.name);
@@ -134,6 +135,9 @@ const useSearch = ({ isGeolocationEnabled, userCoords }) => {
     }
     if (location) {
       query.set('location', location);
+    }
+    if (price) {
+      query.set('price', price);
     }
     query.delete('indicators');
     if (searchIndicators) {
