@@ -57,8 +57,14 @@ const styles = (theme) => ({
     backgroundColor: '#1E1131',
     minWidth: '48px',
   },
-  removeTextFieldRadius: {
+  removeTextFieldRadius: {  
     borderRadius: 0,
+  },
+  placeholderFont: {
+    fontWeight: 500,
+    color: '#999999',
+    fontSize: '18px',
+    lineHeight: '22px',
   },
 });
 
@@ -133,7 +139,7 @@ const SearchBar = ({
               InputProps={{
                 ...params.InputProps,
                 style: { padding: 5 },
-                classes: { root: classes.removeTextFieldRadius },
+                classes: { root: classes.removeTextFieldRadius, input: classes.placeholderFont },
               }}
               variant="outlined"
               onChange={handleTextInputChange}
