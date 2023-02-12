@@ -100,7 +100,7 @@ const AppBar = ({
   };
 
   const TruncateUserName = (userName = 'Account') => {
-    if (userName?.length > 10) {
+    if (userName.length > 10) {
       return `${userName.slice(0, 10)}....`;
     }
     return userName;
