@@ -99,13 +99,9 @@ const AppBar = ({
     );
   };
 
-  const TruncateUserName = (userName) => {
-    try {
-      if (userName.length > 10) {
-        return `${userName.slice(0, 10)}....`;
-      }
-    } catch (e) {
-      return 'Account';
+  const TruncateUserName = (userName = 'Account') => {
+    if (userName?.length > 10) {
+      return `${userName.slice(0, 10)}....`;
     }
     return userName;
   };
@@ -200,21 +196,20 @@ const AppBar = ({
     <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
       <MaterialAppBar position="fixed" className={[classes.appBar, classes.muiBreakpointWorkaround]}>
         <Toolbar className={classes.muiBreakpointWorkaround}>
-          {!isLoading ? (
-            <Logo />
-          ) : null}
-          {(isDesktopWidth && showSearchBar)
-            ? <Box className={classes.expandedContent}><SearchBar /></Box> : null}
+          {!isLoading && <Logo />}
+          {isDesktopWidth && showSearchBar
+            && <Box className={classes.expandedContent}><SearchBar /></Box>}
           <Box className={classes.navLinkBar}>
             <AddASpace />
-            {userContext.userProfile.username ? <LoggedInDropdown /> : <LogIn />}
+            {userContext.userProfile?.username ? <LoggedInDropdown /> : <LogIn />}
           </Box>
         </Toolbar>
-        {(!isDesktopWidth && showSearchBar) ? (
-          <Toolbar className={classes.muiBreakpointWorkaround}>
-            <Box className={classes.expandedContent}><SearchBar /></Box>
-          </Toolbar>
-        ) : null}
+        {!isDesktopWidth && showSearchBar
+          && (
+            <Toolbar className={classes.muiBreakpointWorkaround}>
+              <Box className={classes.expandedContent}><SearchBar /></Box>
+            </Toolbar>
+          )}
       </MaterialAppBar>
     </Box>
   );
