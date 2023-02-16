@@ -268,7 +268,7 @@ const Home = ({ classes }) => {
   const rowContent = {
     rowOne: {
       title: 'The Mission',
-      body: 'Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      body: 'Welcome! The Lavender Book is a community-driven platform built for the Black Queer, Black Trans, and Black Gender Non-Binary communities. Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
       imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2052@2x.png',
       imageAltText: 'happy black person at pride parade',
       flippedImageSide: false,
