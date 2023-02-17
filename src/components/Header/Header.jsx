@@ -48,6 +48,7 @@ const styles = (theme) => ({
     lineHeight: '1.235',
     marginBottom: '.6em',
     width: 'auto',
+    textAlign: 'center',
   },
 });
 
@@ -60,7 +61,7 @@ const Header = ({ classes }) => (
           gutterBottom
           className={classes.title}
         >
-          Find spaces for Black Queer Folx
+          Find Affirming Spaces for Black Queer, Trans, and Non-Binary/Non-Conforming Folx
         </Typography>
         <SearchBar />
       </Box>
