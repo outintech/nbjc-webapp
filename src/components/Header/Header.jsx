@@ -61,7 +61,7 @@ const Header = ({ classes }) => (
           gutterBottom
           className={classes.title}
         >
-          Find Affirming Spaces for Black Queer, Trans, and Non-Binary/Non-Conforming
+          Find Affirming Spaces for Black Queer, Trans, and Non-Binary/Non-Conforming Folx
         </Typography>
         <SearchBar />
       </Box>
