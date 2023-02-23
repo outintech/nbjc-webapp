@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
@@ -13,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import BusinessCard from '../../components/BusinessCard';
-import FilterDialog from '../../components/FilterDialog';
+import FilterPanel from '../../components/FilterPanel';
 import Pagination from '../../components/Pagination';
 
 import useSearch from './hooks/useSearch';
@@ -21,21 +22,36 @@ import SearchForm from './SearchForm';
 
 const styles = (theme) => ({
   result: {
-    margin: '10px 0px 40px 0px',
+    // This is for setting the margins of the results returned from search.
   },
   content: {
-    margin: '0 15px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  resultsWrapper: {
     display: 'flex',
     flexDirection: 'column',
     [theme.breakpoints.up('mobile')]: {
-      margin: '0 15px',
+      display: 'grid',
+      gridTemplateColumns: '1fr 3fr',
     },
   },
-  searchResultsWrapper: {
+  filtersContainer: {
+    display: 'flex',
+    alignSelf: 'flex-start',
+    flexDirection: 'column',
+    flexShrink: 0,
+    width: '316px',
+    height: '100%',
+    zIndex: 999,
+    paddingTop: '32px',
+    marginRight: '40px',
+    backgroundColor: '#f2f2f2',
+  },
+  list: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, 350px)',
     gridGap: 50,
-    justifyContent: 'center',
   },
   searchResult: {
     [theme.breakpoints.up('xs')]: {
@@ -68,8 +84,19 @@ const styles = (theme) => ({
     flexGrow: 2,
   },
   filterButton: {
+    [theme.breakpoints.up('mobile')]: {
+      display: 'none',
+    },
     width: '100px !important',
+    marginBottom: '16px',
     height: 36,
+    border: '#EBE5F6 1px solid',
+  },
+  filterButtonText: {
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: '#1E1131',
   },
 });
 
@@ -111,33 +138,8 @@ const Search = ({
     updateFilters('rating', changedFilters.stars);
   };
 
-  const getResultsString = () => {
-    let text = `${pagination.total_count} results found for`;
-    let comma = '';
-    if (search.searchTerm) {
-      text = `${text} ${search.searchTerm}`;
-      comma = ',';
-    }
-    if (search.category) {
-      text = `${text}${comma} ${search.category}`;
-      comma = ',';
-    }
-    if (search.location) {
-      text = `${text}${comma} ${search.location}`;
-      comma = ',';
-    }
-    const indicatorNames = indicators
-      .filter((indicator) => search.indicators.includes(indicator.value))
-      .map((indicator) => indicator.name);
-
-    if (indicatorNames.length < 3) {
-      text = `${text}${comma} ${indicatorNames.join(' and ')}`;
-    } else {
-      text = `${text}${comma} ${indicatorNames[0]} and ${indicatorNames.length - 1} more`;
-    }
-    return text;
-  };
   const isGeoLoading = isGeolocationEnabled && coords === null;
+
   return (
     <div className={classes.content}>
       {indicators.length > 0 && searchResults === null && !isGeoLoading && !loading && (
@@ -155,75 +157,76 @@ const Search = ({
         })}
       >
         {searchResults !== null && searchResults.length > 0 && (
-          <>
-            <div className={classes.filterButtonWrapper}>
-              <Typography variant="h6" className={classes.searchresultsText}>
-                {getResultsString()}
-              </Typography>
-              <Button variant="outlined" onClick={() => setOpenFilter(!openFilter)} color="primary" className={classes.filterButton}>FILTER</Button>
-            </div>
-            <div className={classes.filterWrapper}>
-              {openFilter && (
-                <FilterDialog
-                  open={openFilter}
-                  onClose={() => setOpenFilter(false)}
-                  onToggle={() => setOpenFilter(!openFilter)}
-                  defaultFilters={filters}
-                  setFilters={(changedFilters) => setFilters(changedFilters)}
-                  type={matches ? 'desktop' : 'mobile'}
-                  overrideClasses={{ root: classes.filterDialog }}
-                />
-              )}
-            </div>
-          </>
+          <div className={classes.filtersContainer}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpenFilter(!openFilter)}
+              color="primary"
+              className={classes.filterButton}
+            >
+              <span className={classes.filterButtonText}>FILTER</span>
+            </Button>
+            <FilterPanel
+              open={openFilter}
+              onClose={() => setOpenFilter(false)}
+              type={matches ? 'desktop' : 'mobile'}
+              allIndicators={indicators}
+              search={search}
+              updateSearch={updateSearch}
+              resultCount={searchResults.length}
+            />
+          </div>
         )}
-        <div className={classes.searchResultsWrapper}>
-          {searchResults !== null && searchResults.length > 0
-            && searchResults.map((result) => (
-              <div className={classes.searchResult} key={result.id}>
-                <BusinessCard
-                  business={result}
-                  key={result.id}
-                  overrideClasses={{ root: classes.result }}
-                />
-              </div>
-            ))}
-        </div>
-        {pagination && pagination !== null && (
-          <Pagination
-            totalCount={pagination.total_count || 0}
-            page={pagination.page || 1}
-            perPage={pagination.perPage || 10}
-          />
-        )}
-        {searchResults !== null
-          && search.searchTerm !== null
-          && searchResults.length === 0
-          && !loading
-          && (
-            <div className={classes.emptyStateWrapper}>
-              <Typography variant={matches ? 'h2' : 'h4'} align="center">
-                No Results
-              </Typography>
-              <div className={classes.emptyStateIcon}>
-                <SearchIcon color="primary" fontSize="large" className={classes.emptyStateIcon} />
-              </div>
-              <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
-                We couldn’t find what you’re looking for.
-                Please try again or add a space to Lavender Book.
-              </Typography>
-              <div className={classes.emptyStateFooter}>
-                <Button variant="outlined" href="/" color="secondary">
-                  Home
-                </Button>
-                <Button variant="contained" href="/spaces/new" color="secondary" disableElevation>
-                  Add space
-                </Button>
-              </div>
-            </div>
+        <div>
+          <div className={classes.list}>
+            {searchResults !== null && searchResults.length > 0
+              && searchResults.map((result) => (
+                <div className={classes.searchResult} key={result.id}>
+                  <BusinessCard
+                    business={result}
+                    key={result.id}
+                    overrideClasses={{ root: classes.result }}
+                  />
+                </div>
+              ))}
+          </div>
+          {pagination && pagination !== null && (
+            <Pagination
+              totalCount={pagination.total_count || 0}
+              page={pagination.page || 1}
+              perPage={pagination.perPage || 10}
+            />
           )}
-        {loading && <CircularProgress color="secondary" />}
+        </div>
       </div>
+
+      {searchResults !== null
+        && search.searchTerm !== null
+        && searchResults.length === 0
+        && !loading
+        && (
+          <div className={classes.emptyStateWrapper}>
+            <Typography variant={matches ? 'h2' : 'h4'} align="center">
+              No Results
+            </Typography>
+            <div className={classes.emptyStateIcon}>
+              <SearchIcon color="primary" fontSize="large" className={classes.emptyStateIcon} />
+            </div>
+            <Typography variant={matches ? 'h4' : 'subtitle1'} align="center">
+              We couldn’t find what you’re looking for.
+              Please try again or add a space to Lavender Book.
+            </Typography>
+            <div className={classes.emptyStateFooter}>
+              <Button variant="outlined" href="/" color="secondary">
+                Home
+              </Button>
+              <Button variant="contained" href="/spaces/new" color="secondary" disableElevation>
+                Add space
+              </Button>
+            </div>
+          </div>
+        )}
+      {loading && <CircularProgress color="secondary" />}
     </div>
   );
 };

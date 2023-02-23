@@ -18,6 +18,7 @@ const styles = (theme) => ({
     display: 'block',
     flexGrow: 2,
     width: '100%',
+    marginTop: '30px',
   },
   button: {
     [theme.breakpoints.up('xs')]: {
@@ -89,9 +90,9 @@ const Pagination = ({
     <div className={classes.root}>
       {(backExists || nextExists)
         && (
-        <Typography variant="h5" align="center" className={classes.prompt}>
-          {`Showing ${perPage} of ${totalCount} results`}
-        </Typography>
+          <Typography variant="h5" align="center" className={classes.prompt}>
+            {`Showing ${perPage} of ${totalCount} results`}
+          </Typography>
         )}
       {backButton}
       {nextButton}
