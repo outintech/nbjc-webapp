@@ -57,7 +57,7 @@ const styles = (theme) => ({
     backgroundColor: '#1E1131',
     minWidth: '48px',
   },
-  removeTextFieldRadius: {  
+  removeTextFieldRadius: {
     borderRadius: 0,
   },
   placeholderFont: {
