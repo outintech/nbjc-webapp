@@ -22,6 +22,7 @@ import FilterPanel from '../../components/FilterPanel';
 import Pagination from '../../components/Pagination';
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
+import SupportButton from '../../components/SupportButton/SupportButton';
 
 const styles = () => ({
   content: {
@@ -488,6 +489,7 @@ const Search = ({
                 page={pagination.page || 1}
                 perPage={pagination.perPage || 10}
               />
+              <SupportButton />
             </div>
           )}
         </div>
