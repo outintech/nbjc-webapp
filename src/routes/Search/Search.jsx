@@ -7,9 +7,14 @@ import cx from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import BusinessCard from '../../components/BusinessCard';
@@ -17,6 +22,7 @@ import FilterPanel from '../../components/FilterPanel';
 import Pagination from '../../components/Pagination';
 import useSearch from './hooks/useSearch';
 import SearchForm from './SearchForm';
+import SupportButton from '../../components/SupportButton/SupportButton';
 
 const styles = () => ({
   content: {
@@ -31,15 +37,17 @@ const styles = () => ({
     paddingTop: '32px',
     backgroundColor: '#f2f2f2',
   },
-  searchResult: {
+  desktopMargins: {
     marginLeft: 40,
     marginBottom: 20,
     marginRight: 142,
+    flex: 1,
   },
-  searchResultBreakpoint: {
+  mobileMargins: {
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
+    flex: 1,
   },
   emptyStateWrapper: {
     marginTop: 60,
@@ -58,67 +66,340 @@ const styles = () => ({
       marginRight: 20,
     },
   },
-  searchresultsText: {
-    flexGrow: 2,
-  },
   filterButton: {
-    width: '100px !important',
+    width: '76px !important',
     marginBottom: '16px',
     height: 36,
     border: '#EBE5F6 1px solid',
+    padding: 8,
+    gap: 10,
+    borderRadius: 4,
+    marginRight: 8,
   },
   filterButtonText: {
     fontWeight: 600,
     fontSize: '14px',
     lineHeight: '20px',
+    textTransform: 'none',
+  },
+  filterTextColor: {
     color: '#1E1131',
   },
-  searchCountHeader: {
+  clearAllColor: {
+    border: 0,
+    color: '#633AA3',
+  },
+  numOfResultsContainer: {
     fontWeight: 600,
     fontSize: '32px',
     color: '#1E1131',
     lineHeight: '32px',
     marginBottom: 16,
   },
-  leftSideFilter: {
+  numResultsMobileFont: {
+    fontSize: '20px',
+    lineHeight: '25px',
+    marginBottom: 8,
+  },
+  sortLeftContainer: {
     flex: 1,
   },
-  rightSideFilter: {
+  sortMenuContainer: {
     display: 'flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    color: '#633AA3',
+    textTransform: 'none',
   },
-  filterDropdown: {
+  sortMobileMenuContainer: {
     display: 'flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    width: '100%',
+    minHeight: '40px',
+    backgroundColor: '#F2F2F2',
+    marginBottom: 8,
+    lineHeight: '24px',
+    fontSize: '16px',
   },
-  boldedText: {
+  searchSettingLabel: {
     fontWeight: 600,
     lineHeight: '17.5px',
     color: '#1E1131',
     marginRight: 6,
   },
-  purpleText: {
+  searchSettingMobileLabel: {
+    fontWeight: 400,
+    lineHeight: '24px',
+    color: '#1E1131',
+    fontSize: '16px',
+    marginLeft: 32,
+  },
+  rowContainer: {
     display: 'flex',
-    color: '#633AA3',
   },
-  arrowDropdown: {
-    marginRight: 6,
-    paddingBottom: 4,
-    verticalAlign: 'middle',
+  columnContainer: {
+    display: 'flex',
+    flexDirection: 'column',
   },
-  hiddenElement: {
-    display: 'none',
+  cardMargins: {
+    marginBottom: 40,
   },
-  searchBodyContainer: {
-    width: '100%',
+  headerMargins: {
+    marginTop: 24,
+  },
+  overrideListItem: {
+    backgroundColor: 'pink',
+  },
+  selectedChoice: {
+    fontWeight: 600,
+    backgroundColor: '#E5E5E5',
+    boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)',
   },
 });
+
+const ReusableMenu = (
+  {
+    classes, menuValues, menuStrings, onMenuClick, sortLabel, currentValue = menuValues[0], mobile,
+  },
+) => {
+  const SortContainerClass = mobile ? classes.sortMobileMenuContainer : classes.sortMenuContainer;
+  const SearchSettingClass = mobile ? classes.searchSettingMobileLabel : classes.searchSettingLabel;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setAnchorEl(null);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <div className={SortContainerClass}>
+        <span className={SearchSettingClass} data-testid="menu-dropdown-label">
+          {sortLabel}
+        </span>
+        <Button
+          onClick={handleClick}
+          variant="text"
+          size="small"
+        >
+          <div className={classes.sortMenuContainer}>
+            <span>{`${menuValues[selectedIndex]} ${menuStrings}`}</span>
+            <ArrowDropDownIcon />
+          </div>
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              left: '100%',
+              transform: 'translateX(-23%) translateY(32%)',
+            },
+          }}
+          MenuListProps={{
+            style: {
+              padding: 0,
+              backgroundColor: '#F2F2F2',
+            },
+          }}
+        >
+          {menuValues.map((value, index) => {
+            const boldedText = index === selectedIndex ? classes.selectedChoice : '';
+            return (
+              <MenuItem
+                onClick={(event) => handleMenuItemClick(event, index)}
+                className={boldedText}
+                /* eslint-disable react/no-array-index-key */
+                key={index}
+              >
+                {`${value} ${menuStrings}`}
+              </MenuItem>
+            );
+          })}
+        </Menu>
+      </div>
+    </>
+  );
+};
+
+const querySearch = () => (
+  null
+);
+
+const DistanceMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={[5, 10, 20]}
+    menuStrings="miles"
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="5"
+    mobile={mobile}
+  />
+);
+
+const SortByMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={['Name', 'Highly Rated', 'Recently Added', 'Most Reviewed']}
+    menuStrings=""
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="Highly Rated"
+    mobile={mobile}
+  />
+);
+
+const ShowingPerPageMenu = ({ classes, mobile }) => (
+  <ReusableMenu
+    classes={classes}
+    menuValues={[5, 10, 20]}
+    menuStrings="per page"
+    onMenuClick={[querySearch]}
+    sortLabel="Sort by: "
+    currentValue="5"
+    mobile={mobile}
+  />
+);
+
+const TopSortRow = ({ classes, mobile }) => {
+  const ContainerClass = mobile ? classes.columnContainer : classes.rowContainer;
+  return (
+    <section className={ContainerClass}>
+      {mobile ? null
+        : (
+          <div className={classes.sortLeftContainer}>
+            <ShowingPerPageMenu classes={classes} />
+          </div>
+        )}
+      <div className={ContainerClass}>
+        <DistanceMenu classes={classes} mobile={mobile} />
+        <SortByMenu classes={classes} mobile={mobile} />
+      </div>
+    </section>
+  );
+};
+
+const SortRowMobile = ({ classes, useDesktop }) => {
+  if (useDesktop) {
+    return null;
+  }
+  return (
+    <section className={classes.SortParentContainer}>
+      <ShowingPerPageMenu classes={classes} mobile />
+    </section>
+  );
+};
+
+const NumberOfResultsHeader = ({ classes, pagination, mobile }) => {
+  const resultString = pagination.total_count >= 2 ? 'Results' : 'Result';
+  const numOfResultsString = `${pagination.total_count} Search ${resultString}`;
+  const applyFonts = mobile ? classes.numResultsMobileFont : '';
+  return (
+    <div className={`${classes.numOfResultsContainer} ${applyFonts}`}>
+      {numOfResultsString}
+    </div>
+  );
+};
+
+const OpenFilterPanelButton = (
+  {
+    classes, openFilter, setOpenFilter, clearFilters, display,
+  },
+) => {
+  if (display === false) {
+    return null;
+  }
+  return (
+    <div>
+      <Button
+        variant="outlined"
+        onClick={() => setOpenFilter(!openFilter)}
+        color="primary"
+        className={classes.filterButton}
+      >
+        <span className={`${classes.filterButtonText} ${classes.filterTextColor}`}>Filter</span>
+      </Button>
+      <Button
+        className={`${classes.filterButton} ${classes.clearAllColor}`}
+        onClick={() => null}
+        style={{ backgroundColor: 'transparent' }}
+      >
+        <span className={classes.filterButtonText}>Clear All</span>
+      </Button>
+    </div>
+  );
+};
+
+const FilterPanelAside = ({
+  openFilter,
+  setOpenFilter,
+  isWiderThanBreakpoint,
+  indicators,
+  search,
+  updateSearch,
+  searchResults,
+  classes,
+}) => {
+  const ShowFilterPanel = searchResults !== null && searchResults.length > 0
+    && (isWiderThanBreakpoint || openFilter);
+  if (ShowFilterPanel === false) {
+    return null;
+  }
+  return (
+    <div className={classes.filtersContainer}>
+      <FilterPanel
+        open={openFilter}
+        onClose={() => setOpenFilter(false)}
+        type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
+        allIndicators={indicators}
+        search={search}
+        updateSearch={updateSearch}
+        resultCount={searchResults.length}
+      />
+    </div>
+  );
+};
+
+const SearchBodyHeader = ({
+  classes, pagination, setOpenFilter, openFilter, useDesktop, display,
+}) => {
+  if (display === false) {
+    return null;
+  }
+  return (
+    <header className={classes.headerMargins}>
+      <NumberOfResultsHeader
+        classes={classes}
+        pagination={pagination}
+        mobile={!useDesktop}
+      />
+      <OpenFilterPanelButton
+        classes={classes}
+        openFilter={openFilter}
+        setOpenFilter={setOpenFilter}
+        display={!useDesktop}
+      />
+      <TopSortRow classes={classes} mobile={!useDesktop} />
+    </header>
+  );
+};
 
 const Search = ({
   classes,
   coords,
   isGeolocationEnabled,
 }) => {
-  const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
-
   const [openFilter, setOpenFilter] = useState(false);
   const {
     updateSearch,
@@ -130,6 +411,7 @@ const Search = ({
     userLocation,
     indicators = [],
   } = useSearch({ userCoords: coords, isGeolocationEnabled });
+
   const onSearchSubmit = async (searchTerm) => {
     updateSearch(searchTerm);
   };
@@ -150,6 +432,11 @@ const Search = ({
     updateFilters('rating', changedFilters.stars);
   };
 
+  const isWiderThanBreakpoint = useMediaQuery('(min-width:1376px)');
+  const useDesktop = useMediaQuery('(min-width:838px)');
+  const SearchPageMargins = isWiderThanBreakpoint ? classes.desktopMargins : classes.mobileMargins;
+  const FoundOneOrMoreResults = searchResults !== null && searchResults.length > 0;
+
   const isGeoLoading = isGeolocationEnabled && coords === null;
 
   return (
@@ -164,108 +451,49 @@ const Search = ({
         />
       )}
       <div className={cx(classes.resultsWrapper, { [classes.desktop]: isWiderThanBreakpoint })}>
-        {searchResults !== null
-          && searchResults.length > 0
-          && (isWiderThanBreakpoint || openFilter)
-          && (
-            <div className={classes.filtersContainer}>
-              <FilterPanel
-                open={openFilter}
-                onClose={() => setOpenFilter(false)}
-                type={isWiderThanBreakpoint ? 'desktop' : 'mobile'}
-                allIndicators={indicators}
-                search={search}
-                updateSearch={updateSearch}
-                resultCount={searchResults.length}
-              />
-            </div>
-          )}
-        <div className={classes.searchBodyContainer}>
-          {searchResults !== null && searchResults.length > 0
-            ? (
-              <div
-                className={isWiderThanBreakpoint
-                  ? classes.searchResult
-                  : classes.searchResultBreakpoint}
-                style={{ marginTop: '24px' }}
-              >
-                <div className={classes.searchCountHeader}>
-                  {`${pagination.total_count} Search ${pagination.totalCount >= 2 ? 'Result' : 'Results'}`}
-                </div>
-                {!isWiderThanBreakpoint && (
-                  <div>
-                    <Button
-                      variant="outlined"
-                      onClick={() => setOpenFilter(!openFilter)}
-                      color="primary"
-                      className={classes.filterButton}
-                    >
-                      FILTER
-                    </Button>
-                  </div>
-                )}
-                <div style={{ display: 'flex' }}>
-                  <div className={classes.leftSideFilter}>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Showing:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>10 per page</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
-                  </div>
-                  <div className={classes.rightSideFilter}>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Distance:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>5 miles</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
-                    <div className={classes.filterDropdown}>
-                      <span className={classes.boldedText}>Sort by:</span>
-                      <span className={classes.purpleText}>
-                        <span className={classes.purpleText}>Highly Rated</span>
-                        <ArrowDropDownIcon className={classes.arrowDropdown} />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-            : null}
+        <FilterPanelAside
+          openFilter={openFilter}
+          setOpenFilter={setOpenFilter}
+          isWiderThanBreakpoint={isWiderThanBreakpoint}
+          indicators={indicators}
+          search={search}
+          updateSearch={updateSearch}
+          searchResults={searchResults}
+          classes={classes}
+        />
+        <div className={SearchPageMargins}>
+          <SearchBodyHeader
+            classes={classes}
+            pagination={pagination}
+            setOpenFilter={setOpenFilter}
+            openFilter={openFilter}
+            useDesktop={useDesktop}
+            display={FoundOneOrMoreResults}
+          />
           <div>
-            {searchResults !== null && searchResults.length > 0
-              && searchResults.map((result, index) => (
-                <div
-                  className={isWiderThanBreakpoint
-                    ? classes.searchResult
-                    : classes.searchResultBreakpoint}
+            {FoundOneOrMoreResults && searchResults.map((result, index) => (
+              <div className={classes.cardMargins} key={result.id}>
+                <BusinessCard
+                  business={result}
                   key={result.id}
-                >
-                  <BusinessCard
-                    business={result}
-                    key={result.id}
-                    count={(pagination.page - 1) * 10 + index + 1}
-                  />
-                </div>
-              ))}
+                  count={(pagination.page - 1) * 10 + index + 1}
+                />
+              </div>
+            ))}
           </div>
-          {pagination && pagination !== null && (
-            <div className={isWiderThanBreakpoint
-              ? classes.searchResult
-              : classes.searchResultBreakpoint}
-            >
+          {pagination && pagination !== null && !loading && (
+            <div>
+              <SortRowMobile classes={classes} useDesktop={useDesktop} />
               <Pagination
                 totalCount={pagination.total_count || 0}
                 page={pagination.page || 1}
                 perPage={pagination.perPage || 10}
               />
+              <SupportButton />
             </div>
           )}
         </div>
       </div>
-
       {searchResults !== null
         && search.searchTerm !== null
         && searchResults.length === 0
@@ -304,3 +532,20 @@ Search.props = {
 Search.props = { ...Search.props, ...geoPropTypes };
 
 export default geolocated({ positionOptions: { timeout: 5000 } })(withStyles(styles)(Search));
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  ReusableMenu,
+  DistanceMenu,
+  SortByMenu,
+  ShowingPerPageMenu,
+  TopSortRow,
+  SortRowMobile,
+  NumberOfResultsHeader,
+  OpenFilterPanelButton,
+  FilterPanelAside,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}

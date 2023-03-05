@@ -92,7 +92,7 @@ const styles = () => ({
   },
   mobilePaginationListContainer: {
     display: 'flex',
-    marginTop: 44,
+    marginTop: 0,
     justifyContent: 'center',
   },
   paginationLabel: {
@@ -113,7 +113,7 @@ const styles = () => ({
     fontWeight: 500,
   },
   hideDisplay: {
-    display: 'none',
+    visibility: 'hidden',
   },
   buttonOpenGoToPage: {
     maxWidth: 28,
@@ -134,6 +134,11 @@ const styles = () => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  alignPaginationRange: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 const getPageLink = (history, query, perPage, page) => {
@@ -148,7 +153,7 @@ const NextButton = ({ pageLink, classes }) => {
   const removeUnderline = classes.paginationLabel;
   const nextClasses = `${color} ${removeUnderline} ${classes.expandNavigationButtons}`;
   return (
-    <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none">
+    <Link href={pageLink} aria-label="Go next page" className={nextClasses} underline="none" data-testid="next-button-icon">
       <NavigateNextIcon className={classes.centerText} />
     </Link>
   );
@@ -166,7 +171,7 @@ const BackButton = ({ pageLink, classes }) => {
 };
 
 const CheckValidPageNumber = (totalPages, input) => {
-  if (typeof input !== 'string') {
+  if (typeof input !== 'string' && typeof input !== 'number') {
     return false;
   }
   const pageNum = Number(input);
@@ -203,6 +208,7 @@ const GoToPage = ({
       <form onSubmit={handleSubmit}>
         <span>{label}</span>
         <Input
+          type="number"
           inputProps={{ min: 1, max: totalPages, style: { textAlign: 'center' } }}
           defaultValue={input}
           className={classes.pageInputNavigation}
@@ -213,16 +219,25 @@ const GoToPage = ({
   );
 };
 
-const RangeOfResults = ({ classes, totalCount, calculateRange }) => (
-  (totalCount > 0)
-  && (
-    <Typography variant="h5" align="center" className={classes.showingText}>
-      <span className={classes.centerText}>
-        {calculateRange}
-      </span>
-    </Typography>
-  )
-);
+const RangeOfResults = (
+  {
+    classes, totalCount, calculateRange, desktopDimensions,
+  },
+) => {
+  if (desktopDimensions === false) {
+    return null;
+  }
+  return (
+    (totalCount > 0) && (desktopDimensions)
+    && (
+      <Typography variant="h5" align="center" className={classes.showingText}>
+        <span className={classes.alignPaginationRange}>
+          {calculateRange}
+        </span>
+      </Typography>
+    )
+  );
+};
 
 const OpenGoToPageButton = ({ goToPageLabel, setShowButton, classes }) => {
   const [toggle, setToggle] = useState(true);
@@ -235,7 +250,7 @@ const OpenGoToPageButton = ({ goToPageLabel, setShowButton, classes }) => {
         setShowButton(toggle);
       }}
     >
-      <span classNames={classes.goToPageLabel}>
+      <span className={classes.goToPageLabel}>
         {goToPageLabel}
       </span>
     </Button>
@@ -261,14 +276,22 @@ const PaginationButton = ({
   }
   const isCurrentPage = currPage === pageNumber ? classes.currentPageButton : '';
   const PaginationButtonClasses = `${classes.paginationLabel} ${classes.activeColor} ${isCurrentPage}`;
+  const PageNumberBox = (
+    <div className={classes.paginationButton}>
+      <span className={classes.centerText}>{pageNumber}</span>
+    </div>
+  );
+  if (currPage === pageNumber) {
+    return (
+      <div className={PaginationButtonClasses} underline="none">
+        {PageNumberBox}
+      </div>
+    );
+  }
   return (
-    <>
-      <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
-        <div className={classes.paginationButton}>
-          <span className={classes.centerText}>{pageNumber}</span>
-        </div>
-      </Link>
-    </>
+    <Link href={link} aria-label={`Go to page ${pageNumber}`} className={PaginationButtonClasses} underline="none">
+      {PageNumberBox}
+    </Link>
   );
 };
 
@@ -289,6 +312,7 @@ const RenderPaginationButtons = (
       currPage={currPage}
       link={page.link}
       setShowButton={setShowButton}
+      key={page.pageNumber}
     />
   ))
 );
@@ -299,7 +323,7 @@ const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, qu
     currPage: page,
     nextPage: ((page + 1 < totalPages) ? page + 1 : null),
     nextNextPage: ((page + 2 < totalPages) ? page + 2 : null),
-    ellipsis: ((page + 3 <= totalPages) ? labelForGoToPage : null),
+    ellipsis: ((page + 2 <= totalPages) ? labelForGoToPage : null),
     lastPage: ((totalPages !== page) ? totalPages : null),
   };
   pagesToRender = Object.values(pagesToRender).filter((pgNum) => pgNum !== null);
@@ -307,6 +331,13 @@ const calculatePaginationMenu = (totalPages, page, labelForGoToPage, history, qu
     { pageNumber: pg, link: getPageLink(history, query, perPage, pg) }
   ));
   return pagesWithLinks;
+};
+
+const CalculatePageRange = (page, perPage, totalCount) => {
+  const startingRange = (page - 1) * perPage + 1;
+  const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
+  const resultString = endingRange <= 1 ? 'Result' : 'Results';
+  return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
 };
 
 const Pagination = ({
@@ -347,13 +378,6 @@ const Pagination = ({
     nextButton = `${nextLink}?${query.toString()}`;
   }
 
-  const CalculatePageRange = () => {
-    const startingRange = (page - 1) * perPage + 1;
-    const endingRange = (page) * perPage < totalCount ? (page) * perPage : totalCount;
-    const resultString = endingRange <= 1 ? 'Result' : 'Results';
-    return `Showing ${startingRange} - ${endingRange} of ${totalCount} ${resultString}`;
-  };
-
   const navigationObject = {
     history, query, perPage,
   };
@@ -366,7 +390,8 @@ const Pagination = ({
           <RangeOfResults
             totalCount={totalPages}
             classes={classes}
-            calculateRange={CalculatePageRange()}
+            calculateRange={CalculatePageRange(page, perPage, totalCount)}
+            desktopDimensions={useDesktop}
           />
         </div>
         <div className={navigationContainerClasses}>
@@ -410,3 +435,22 @@ Pagination.propTypes = {
 Pagination.defaultProps = {};
 
 export default withStyles(styles)(Pagination);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  getPageLink,
+  NextButton,
+  BackButton,
+  CheckValidPageNumber,
+  GoToPage,
+  RangeOfResults,
+  OpenGoToPageButton,
+  PaginationButton,
+  RenderPaginationButtons,
+  calculatePaginationMenu,
+  CalculatePageRange,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}

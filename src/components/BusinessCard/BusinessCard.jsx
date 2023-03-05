@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
   Box,
+  Button,
+  Menu,
+  MenuItem,
   Typography,
 } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
+import ShareIcon from '@material-ui/icons/Share';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -61,7 +66,7 @@ const styles = () => ({
     color: '#666666',
     marginBottom: '2px',
   },
-  TopCardContainer: {
+  topCardContainer: {
     marginBottom: 10,
     width: '100%',
     display: 'flex',
@@ -76,21 +81,21 @@ const styles = () => ({
   mobileTitleBar: {
     fontSize: '16px',
   },
-  TitleAddressParentContainer: {
+  titleAddressParentContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
   },
-  CTAParentContainer: {
+  ctaParentContainer: {
     borderTop: '1px solid #E5E5E5',
     paddingTop: '12px',
     minHeight: '40px',
   },
-  CTAContainer: {
+  ctaContainer: {
     display: 'flex',
     maxWidth: '800px',
   },
-  CTAButtonContainer: {
+  ctaButtonContainer: {
     display: 'flex',
     textDecoration: 'none',
     marginRight: 'auto',
@@ -98,6 +103,7 @@ const styles = () => ({
   },
   purpleIcon: {
     color: '#633AA3',
+    fontWeight: 500,
   },
   addressString: {
     textDecoration: 'underline',
@@ -106,29 +112,33 @@ const styles = () => ({
   ordinalNumberMargins: {
     margin: '0 5px',
   },
-  BottomCardContainer: {
+  bottomCardContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
   },
-  ChipList: {
+  chipList: {
     display: 'flex',
     flex: 1,
+    maxWidth: '800px',
   },
-  CardInformationContainer: {
+  cardInformationContainer: {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
   },
-  BusinessCardContainer: {
+  businessCardContainer: {
     display: 'flex',
     margin: 16,
+  },
+  shareButton: {
+    color: 'black',
   },
 });
 
 const convertAddressToGoogleMapsLink = (businessAddress) => {
   const googleAPIQuery = 'https://www.google.com/maps/dir/?api=1&destination=';
-  return googleAPIQuery + encodeURIComponent(businessAddress.address);
+  return googleAPIQuery + encodeURIComponent(businessAddress);
 };
 
 const formatPhoneNumber = (phoneNumberString) => {
@@ -155,9 +165,9 @@ const Image = (
   const LinkToSpace = `/spaces/${id}`;
   return (
     <Box className={`${classes.imageContainer} ${ImageSizing}`}>
-      <a href={LinkToSpace}>
+      <Link to={LinkToSpace}>
         <img src={CardImage} alt="business" className={classes.cardImage} />
-      </a>
+      </Link>
     </Box>
   );
 };
@@ -173,7 +183,7 @@ const TopCardContent = (
     id,
   },
 ) => (
-  <Box className={classes.TopCardContainer}>
+  <Box className={classes.topCardContainer}>
     <Image
       classes={classes}
       imageUrl={imageUrl}
@@ -181,7 +191,7 @@ const TopCardContent = (
       id={id}
       showImage={!useDesktop}
     />
-    <Box className={classes.TitleAddressParentContainer}>
+    <Box className={classes.titleAddressParentContainer}>
       <TitleBar
         classes={classes}
         count={count}
@@ -202,11 +212,30 @@ const OrdinalNumber = ({ classes, count }) => {
   );
 };
 
-const ShareMenu = () => {
-  const onClick = 'TODO';
+const ShareMenu = ({ classes }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
-      <MoreVertIcon />
+      <Button onClick={handleClick} data-testid="share-button">
+        <MoreVertIcon />
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <ShareIcon className={classes.shareButton} />
+          Share
+        </MenuItem>
+      </Menu>
     </>
   );
 };
@@ -225,7 +254,7 @@ const TitleBar = ({
         <OrdinalNumber classes={classes} count={count} />
         {businessName}
       </span>
-      <ShareMenu />
+      <ShareMenu classes={classes} />
     </Box>
   );
 };
@@ -240,29 +269,30 @@ const AddressRow = ({ classes, address }) => {
         target="_blank"
         rel="noreferrer"
       >
-        <LocationOnIcon className={classes.addressIcon} />
+        <LocationOnIcon className={classes.addressIcon} data-testid="location-icon" />
         <Typography variant="body1" className={classes.addressString}>
           {address}
         </Typography>
       </a>
+      <div style={{ flex: 1 }} />
     </>
   );
 };
 
 const AddReviewCTA = ({ id, classes }) => {
-  const link = `/spaces/${id}/reviews/new`;
+  const spacesUrl = `/spaces/${id}/reviews/new`;
   return (
-    <a href={link} className={classes.CTAButtonContainer}>
-      <RateReviewIcon color="secondary" fontSize="small" />
+    <Link to={spacesUrl} className={classes.ctaButtonContainer}>
+      <RateReviewIcon color="secondary" fontSize="small" data-testid="review-icon" />
       <span>Add Review</span>
-    </a>
+    </Link>
   );
 };
 
 const RatingCTA = ({ classes, averageRating }) => {
   const label = 'Rating';
   return (
-    <Box className={classes.CTAButtonContainer}>
+    <Box className={classes.ctaButtonContainer}>
       <span>{label}</span>
       <StarIcon color="secondary" fontSize="small" />
       <span className={classes.purpleIcon}>{averageRating}</span>
@@ -271,12 +301,15 @@ const RatingCTA = ({ classes, averageRating }) => {
 };
 
 const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
+  if (phoneNumber === '' || phoneNumber === undefined) {
+    return null;
+  }
   const phoneString = `tel:${phoneNumber}`;
   const label = (<span>{formatPhoneNumber(phoneNumber)}</span>);
   const displayLabelOnDesktop = useDesktop ? label : null;
   return (
-    <a href={phoneString} className={classes.CTAButtonContainer}>
-      <PhoneIcon className={classes.purpleIcon} fontSize="small" />
+    <a href={phoneString} className={classes.ctaButtonContainer}>
+      <PhoneIcon className={classes.purpleIcon} fontSize="small" data-testid="phone-icon" />
       {displayLabelOnDesktop}
     </a>
   );
@@ -285,8 +318,8 @@ const CallPhoneCTA = ({ phoneNumber, classes, useDesktop }) => {
 const VisitWebsiteCTA = ({ classes, useDesktop }) => {
   const label = useDesktop ? <span>Visit Website</span> : null;
   return (
-    <Box className={classes.CTAButtonContainer}>
-      <LanguageIcon color="secondary" fontSize="small" />
+    <Box className={classes.ctaButtonContainer}>
+      <LanguageIcon color="secondary" fontSize="small" data-testid="visit-website-icon" />
       {label}
     </Box>
   );
@@ -297,8 +330,8 @@ const CTAs = (
     classes, id, averageRating, phoneNumber, useDesktop,
   },
 ) => (
-  <Box className={classes.CTAParentContainer}>
-    <Box className={classes.CTAContainer}>
+  <Box className={classes.ctaParentContainer}>
+    <Box className={classes.ctaContainer}>
       <AddReviewCTA classes={classes} id={id} />
       <RatingCTA classes={classes} averageRating={averageRating} />
       <CallPhoneCTA phoneNumber={phoneNumber} classes={classes} useDesktop={useDesktop} />
@@ -312,8 +345,8 @@ const BottomCardContent = (
     classes, id, averageRating, phoneNumber, useDesktop, filters,
   },
 ) => (
-  <Box className={classes.BottomCardContainer}>
-    <Box className={classes.ChipList}>
+  <Box className={classes.bottomCardContainer}>
+    <Box className={classes.chipList}>
       <ChipList chips={filters} />
     </Box>
     <CTAs
@@ -346,7 +379,7 @@ const BusinessCard = ({
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.BusinessCardContainer}>
+      <Box className={classes.businessCardContainer}>
         <Image
           classes={classes}
           imageUrl={imageUrl}
@@ -354,7 +387,7 @@ const BusinessCard = ({
           id={id}
           showImage={useDesktop}
         />
-        <Box className={classes.CardInformationContainer}>
+        <Box className={classes.cardInformationContainer}>
           <TopCardContent
             classes={classes}
             address={address}
@@ -389,3 +422,21 @@ BusinessCard.defaultProps = {
 };
 
 export default withStyles(styles)(BusinessCard);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  convertAddressToGoogleMapsLink,
+  formatPhoneNumber,
+  OrdinalNumber,
+  ShareMenu,
+  TitleBar,
+  AddressRow,
+  AddReviewCTA,
+  RatingCTA,
+  CallPhoneCTA,
+  VisitWebsiteCTA,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}
