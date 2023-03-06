@@ -155,6 +155,21 @@ const styles = () => ({
     fontWeight: 600,
     backgroundColor: '#E5E5E5',
     boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)',
+=======
+  filterButton: {
+    [theme.breakpoints.up('mobile')]: {
+      display: 'none',
+    },
+    width: '100px !important',
+    marginBottom: '16px',
+    height: 36,
+    border: '#EBE5F6 1px solid',
+  },
+  filterButtonText: {
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: '#1E1131',
   },
 });
 
