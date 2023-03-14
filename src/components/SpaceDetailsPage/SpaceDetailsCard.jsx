@@ -26,7 +26,7 @@ import ChipList from '../ChipList';
 import ReviewCard from '../ReviewsPage/ReviewCard';
 import { previousReview, nextReview } from '../../utils/reviewPreview';
 
-const styles = () => ({
+const styles = (theme) => ({
   root: {
     '& .MuiSvgIcon-root': {
       padding: '6px 6px;',
@@ -50,6 +50,15 @@ const styles = () => ({
   cardMedia: {
     margin: 'auto',
     height: '300px',
+    width: '100%',
+    minWidth: '50%',
+    backgroundSize: 'contain',
+    [theme.breakpoints.up('md')]: {
+      height: '400px',
+    },
+    [theme.breakpoints.up('lg')]: {
+      height: '500px',
+    },
   },
   reviewHeader: {
     width: '100%',
@@ -304,7 +313,7 @@ const SpaceDetailCard = ({
         <div className={classes.location}>
           <div className={classes.address}>
             <Typography variant="body1">{address.address_1}</Typography>
-            <Typography variant="body1">{address.address_2}</Typography>
+            <Typography variant="body1">{address.address_2 && address.address_2}</Typography>
             <Typography variant="body1">{address.city}</Typography>
             <Typography variant="body1">{address.postal_code}</Typography>
             <Typography variant="body1">{address.country}</Typography>

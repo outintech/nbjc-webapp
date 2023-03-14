@@ -24,6 +24,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script type="text/javascript" >
+      if( '%NODE_ENV%' === 'production') {
+	  var gscript = document.createElement('script');
+	  gscript.async = true
+	  gscript.src = "https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GOOGLE_ANALYTICS%";
+	  var first = document.getElementsByTagName('script')[0];
+	  first.parentNode.insertBefore(gscript, first);
+      }
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '%REACT_APP_GOOGLE_ANALYTICS%');
+    </script>
     <title>Lavender Book</title>
   </head>
   <body>

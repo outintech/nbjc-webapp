@@ -91,12 +91,8 @@ const ProfilePage = ({ classes }) => {
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
   const [pageStatus, setPageStatus] = useState('');
-  const {
-    user,
-    profileChips,
-    setUserProfile,
-    userProfile,
-  } = useContext(UserContext);
+  const { user, profileChips, setProfileCreated } = useContext(UserContext);
+
   const history = useHistory();
   const auth0User = useAuth0().user;
 
@@ -147,11 +143,11 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: 'Invalid characters',
       }));
-    } else if (fieldValue.trim().length > 20) {
+    } else if (fieldValue.trim().length > 255) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
-        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 255 charcaters',
       }));
     } else {
       setInputError((prevState) => ({
@@ -166,11 +162,6 @@ const ProfilePage = ({ classes }) => {
   useEffect(() => {
     async function postUserData(data) {
       await createUser(data);
-      openSnackBar({
-        vertical: 'top',
-        horizontal: 'center',
-        popperMessage: 'Your changes have been saved.',
-      });
     }
     if (pageStatus === 'userSubmitted') {
       try {
@@ -180,10 +171,7 @@ const ProfilePage = ({ classes }) => {
         });
         setPageStatus('');
         setUserCreated(true);
-        setUserProfile({
-          name: profileInfo.name,
-          ...userProfile,
-        });
+        setProfileCreated('profile created');
       } catch (error) {
         if (error.message.exception.includes('Username has already been taken')) {
           openSnackBar({

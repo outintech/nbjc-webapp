@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -65,6 +65,8 @@ const ProfilePage = ({ classes }) => {
     userProfile,
     user,
     profileChips,
+    profileCreated,
+    setProfileCreated,
   } = useContext(UserContext);
 
   const {
@@ -158,11 +160,11 @@ const ProfilePage = ({ classes }) => {
         [`${fieldName}Error`]: true,
         [`${fieldName}ErrorMessage`]: 'Invalid characters',
       }));
-    } else if (fieldValue.trim().length > 20) {
+    } else if (fieldValue.trim().length > 255) {
       setInputError((prevState) => ({
         ...prevState,
         [`${fieldName}Error`]: true,
-        [`${fieldName}ErrorMessage`]: 'Maximum length is 20 charcaters',
+        [`${fieldName}ErrorMessage`]: 'Maximum length is 255 charcaters',
       }));
     } else {
       setInputError((prevState) => ({
@@ -216,6 +218,17 @@ const ProfilePage = ({ classes }) => {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    if (profileCreated === 'profile created') {
+      openSnackBar({
+        vertical: 'top',
+        horizontal: 'center',
+        popperMessage: 'Your profile has been created.',
+      });
+      setProfileCreated('');
+    }
+  }, []);
+
   const { vertical, horizontal, openBar } = snackBar;
   const { logout } = useAuth0();
 
@@ -236,10 +249,10 @@ const ProfilePage = ({ classes }) => {
         }
       />
       <Typography variant="h4" className={classes.title}>
-        Users Profile
+        User Profile
       </Typography>
       <Typography className={classes.blurb}>
-        View and edit your profile. After you make a change, click Save.
+        View and edit your profile. After you make a change, click Save Changes.
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField

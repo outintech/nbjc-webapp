@@ -62,11 +62,7 @@ const Submit = ({
       </Typography>
       <div className={classes.section}>
         <div className={classes.sectionHeader}>
-          <Typography
-            variant="h6"
-            align="center"
-            className={classes.sectionTitle}
-          >
+          <Typography variant="body2">
             Space Details
           </Typography>
           <EditIcon
@@ -114,6 +110,15 @@ const Submit = ({
           />
         </div>
         <StarRating numberFilled={addSpaceProps.rating} editable={false} />
+        <div>
+          <Typography
+            variant="h6"
+            align="center"
+            className={classes.sectionTitle}
+          >
+            {addSpaceProps.review}
+          </Typography>
+        </div>
       </div>
       <div className={classes.footer}>
         <Button

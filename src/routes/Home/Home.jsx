@@ -1,9 +1,16 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  withStyles,
+} from '@material-ui/core/';
+
+import SupportButton from '../../components/SupportButton/SupportButton';
 
 const styles = (theme) => ({
   root: {
@@ -11,104 +18,300 @@ const styles = (theme) => ({
       margin: '0 20px',
     },
     [theme.breakpoints.up('mobile')]: {
-      margin: '0 100px',
+      margin: '0 40px',
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: '3rem 100px',
     },
   },
   image: {
-    [theme.breakpoints.up('xs')]: {
-      width: '100%',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      maxWidth: '500px',
-    },
+    width: '100%',
     height: 'auto',
     display: 'inherit',
-    margin: '0 auto',
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '450px',
+    },
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '350px',
+      marginBottom: '1rem',
+    },
   },
-  buttonWrapper: {
-    [theme.breakpoints.up('xs')]: {
-      flexWrap: 'wrap-reverse',
+  searchButton: {
+    [theme.breakpoints.up('lg')]: {
+      // Width/Height is 1.7x larger than the base MUI button size.
+      minWidth: 122.4,
+      minHeight: 40.8,
     },
-    [theme.breakpoints.up('mobile')]: {
-      flexWrap: 'no-wrap',
+    backgroundColor: '#FCFBFE',
+    textTransform: 'none',
+    border: '1px solid #EBE5F6',
+    fontWeight: 600,
+    marginBottom: 4,
+  },
+  textContainer: {
+    [theme.breakpoints.up('lg')]: {
+      minWidth: 875,
+      maxWidth: 875,
     },
-    height: '120px',
     display: 'flex',
+    alignItems: 'left',
     justifyContent: 'center',
-    alignContent: 'space-evenly',
+    flexDirection: 'column',
+    overflow: 'auto',
   },
-  button: {
-    [theme.breakpoints.up('xs')]: {
-      marginBottom: '25px',
-    },
-    [theme.breakpoints.up('mobile')]: {
-      marginBottom: '0px',
-    },
-    width: '250px',
+  textHeader: {
+    color: '#1E1131',
+    fontSize: '32px',
+    fontWeight: 600,
   },
-  break: {
-    [theme.breakpoints.up('xs')]: {
-      width: '0px',
-    },
+  textParagraphBody: {
     [theme.breakpoints.up('mobile')]: {
-      width: '25px',
+      marginBottom: '1rem',
+      fontSize: '22px',
     },
+    color: '#1E1131',
+    fontSize: '20px',
+  },
+  mobileImage: {
+    height: 'auto',
+    width: 'auto',
+    display: 'inherit',
+    maxWidth: '300px',
+    minWidth: '300px',
+  },
+  searchButtonContainer: {
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 550,
+    },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: 800,
+    },
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+      marginTop: 10,
+    },
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '1.5rem',
+    marginBottom: '1rem',
+  },
+  rowContainer: {
+    [theme.breakpoints.up('md')]: {
+      gap: 40,
+    },
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  alignColumn: {
+    flexDirection: 'column',
+  },
+  expandWidth: {
+    width: '100%',
   },
 });
 
-const Home = ({ classes }) => {
-  // since this is a copy heavy page
-  // switch to smaller dimensions sooner
-  const matches = useMediaQuery('(min-width:500px)');
-  let src = '/mobile-home-icon.svg';
-  let variant = 'h5';
-  if (matches) {
-    src = '/web-home-icon.svg';
-    variant = 'h4';
-  }
+const RowTextContent = (
+  {
+    classes,
+    titleString,
+    bodyString,
+    alignDirection,
+  },
+) => (
+  <>
+    <Typography variant="h2" align={alignDirection} className={classes.textHeader} data-testid="row-title">
+      {titleString}
+    </Typography>
+    <Typography variant="body1" align={alignDirection} className={classes.textParagraphBody} data-testid="row-body">
+      {bodyString}
+    </Typography>
+  </>
+);
+
+RowTextContent.propTypes = {
+  titleString: PropTypes.string.isRequired,
+  bodyString: PropTypes.string,
+  alignDirection: PropTypes.string,
+};
+
+RowTextContent.defaultProps = {
+  bodyString: '',
+  alignDirection: 'left',
+};
+
+const ButtonComponent = ({ classes, hrefString, buttonLabel }) => (
+  <Button href={hrefString} variant="outlined" className={classes.searchButton}>
+    {buttonLabel}
+  </Button>
+);
+
+ButtonComponent.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  hrefString: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string.isRequired,
+};
+
+const ParentRowContainer = (
+  {
+    classes,
+    rowObject: {
+      imageUrl,
+      imageAltText,
+      flippedImageSide,
+      title,
+      body,
+      buttonRowFunction,
+    },
+  },
+) => {
+  const mediumWidth = useMediaQuery('(min-width:960px');
+  const smallWidth = useMediaQuery('(min-width:425px');
+  const imageSize = smallWidth ? classes.image : classes.mobileImage;
+  const displayAsColumn = mediumWidth ? null : classes.alignColumn;
+  const centerFont = mediumWidth ? 'left' : 'center';
+  const flipImage = mediumWidth ? flippedImageSide : false;
+  const imageComponent = (
+    <img src={imageUrl} alt={imageAltText} className={imageSize} />);
+  const displayImageOnFlip = flipImage ? imageComponent : null;
+  const displayImageWithoutFlip = flipImage ? null : imageComponent;
+  const displayButtonsIfPassedAsProps = buttonRowFunction === undefined
+    ? null : buttonRowFunction(classes, mediumWidth);
 
   return (
-    <div className={classes.root}>
-      <img src={src} alt="Home page" className={classes.image} />
-      <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant} align="center">
-          Welcome! The Lavender Book is a community-driven platform built for the
-          Black Queer, Black Trans, and Black Gender Non-Binary communities.
-        </Typography>
+    <Box className={`${classes.rowContainer} ${displayAsColumn}`}>
+      {displayImageWithoutFlip}
+      <Box className={classes.textContainer}>
+        <RowTextContent
+          classes={classes}
+          titleString={title}
+          bodyString={body}
+          alignDirection={centerFont}
+        />
+        {displayButtonsIfPassedAsProps}
       </Box>
-      <Box component="span" display="block" p={1} m={1}>
-        <Typography variant={variant} align="center">
-          Its mission is to spread the word about spaces where people can be themselves.
-          All spaces and reviews are published by Lavender Book members.
-        </Typography>
-      </Box>
-      <div className={classes.buttonWrapper}>
-        <Button
-          variant="outlined"
-          color="primary"
-          align="center"
-          fullWidth={!matches}
-          href="/spaces/new"
-          className={classes.button}
-          disableElevation
-        >
-          Add a Space
-        </Button>
-        <div className={classes.break} />
-        <Button
-          variant="contained"
-          color="primary"
-          align="center"
-          fullWidth={!matches}
-          href="/search"
-          className={classes.button}
-          disableElevation
-        >
-          Search for a Space
-        </Button>
-      </div>
-    </div>
+      {displayImageOnFlip}
+    </Box>
+  );
+};
+
+const AddASpaceButton = (classes, breakpoint) => {
+  const baseButton = (
+    <Button href="/spaces/new" variant="outlined" className={classes.searchButton} data-testid="add-space-button">
+      Add a Space
+    </Button>
+  );
+  const wideButton = (
+    <Box className={`${classes.searchButtonContainer} ${classes.expandWidth}`} data-testid="add-space-parent">
+      {baseButton}
+    </Box>
+  );
+  return breakpoint ? wideButton : baseButton;
+};
+
+const ButtonRow = ({ classes, buttonSet, handleClick }) => (
+  <Box className={classes.searchButtonContainer}>
+    {buttonSet.map((buttonData, index) => (
+      <Button
+        variant="outlined"
+        startIcon={<img src={buttonData.icon} alt="icon" />}
+        onClick={(event) => handleClick(event, buttonData.search)}
+        className={classes.searchButton}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+      >
+        {buttonData.name}
+      </Button>
+    ))}
+  </Box>
+);
+
+const QuickLocationButtons = (classes) => {
+  const history = useHistory();
+  const locationButtons = [
+    { name: 'NYC', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_statue-of-liberty.svg', search: 'New York City, NY' },
+    { name: 'Atlanta', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_peach.svg', search: 'Atlanta, GA' },
+    { name: 'DC', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_classical-building.svg', search: 'Washington DC' },
+    { name: 'Houston', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_cactus.svg', search: 'Houston, TX' },
+    { name: 'LA', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_palm-tree.svg', search: 'Los Angeles, CA' },
+  ];
+  const handleClick = (event, param) => {
+    history.push({
+      pathname: '/search/results',
+      search: `?searchTerm=&category=&location=${param}`,
+    });
+  };
+  return (<ButtonRow classes={classes} handleClick={handleClick} buttonSet={locationButtons} />);
+};
+
+const QuickCategoryButtons = (classes) => {
+  const history = useHistory();
+  const categoryButtons = [
+    { name: 'Coffeeshops', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_hot-beverage.svg' },
+    { name: 'Barbershops', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_barber-pole.svg' },
+    { name: 'Restaurants', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_fork-and-knife-with-plate.svg' },
+    { name: 'Wellness', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_woman-in-lotus-position-dark-skin-tone.svg' },
+    { name: 'Shopping', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_shopping-bags.svg' },
+    { name: 'Nightlife', icon: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/noto_cocktail-glass.svg' },
+  ];
+  const handleClick = (event, param) => {
+    history.push({
+      pathname: '/search/results',
+      search: `?searchTerm=&category=&location=${param}`,
+    });
+  };
+  return (<ButtonRow classes={classes} buttonSet={categoryButtons} handleClick={handleClick} />);
+};
+
+const Home = ({ classes }) => {
+  const rowContent = {
+    rowOne: {
+      title: 'The Mission',
+      body: 'Welcome! The Lavender Book is a community-driven platform built for the Black Queer, Black Trans, and Black Gender Non-Binary communities. Our mission is to spread the word about spaces where people can be themselves. All spaces and reviews are published by Lavender Book members.',
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2052@2x.png',
+      imageAltText: 'happy black person at pride parade',
+      flippedImageSide: false,
+      buttonRowFunction: AddASpaceButton,
+    },
+    rowTwo: {
+      title: 'Discover New Spaces',
+      body: 'Lavender Book is here whether you are traveling or looking for a new local hangout spot.',
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2053@2x.png',
+      imageAltText: 'three black people having fun on a street',
+      flippedImageSide: true,
+      buttonRowFunction: QuickLocationButtons,
+    },
+    rowThree: {
+      title: 'What types of spaces can I search?',
+      body: 'Not sure where to start? Use the categories below to narrow your search to specific types of spaces.',
+      imageUrl: 'https://lavenderboook.nyc3.cdn.digitaloceanspaces.com/assets/Rectangle%2054@2x.png',
+      imageAltText: 'black person in front of rainbow mural',
+      flippedImageSide: false,
+      buttonRowFunction: QuickCategoryButtons,
+    },
+  };
+
+  return (
+    <Box className={classes.root}>
+      {Object.keys(rowContent)
+        .map((rowObj) => <ParentRowContainer classes={classes} rowObject={rowContent[rowObj]} />)}
+      <SupportButton />
+    </Box>
   );
 };
 
 export default withStyles(styles)(Home);
+
+// eslint-disable-next-line import/no-mutable-exports
+export let Tests = {
+  ParentRowContainer,
+  ButtonComponent,
+  RowTextContent,
+  AddASpaceButton,
+  ButtonRow,
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  Tests = undefined;
+}

@@ -1,277 +1,226 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink, useLocation } from 'react-router-dom';
+
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { useMediaQuery, withStyles } from '@material-ui/core';
-
 import MaterialAppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
-import { NameContext } from '../../context/NameContext';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+
+import SearchBar from '../SearchBar';
 import { UserContext } from '../../context/UserContext';
 
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    height: 56,
-    [theme.breakpoints.up('xs')]: {
-      marginBottom: 20,
-    },
-    [theme.breakpoints.up('mobile')]: {
-      marginBottom: 20,
-    },
+    height: 64,
+  },
+  expandAppBar: {
+    height: 128,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.navBlack.main,
-    color: theme.palette.navBlack.contrastText,
+    backgroundColor: '#FFFFFF',
+    color: '#FFFFFF',
   },
-  selected: {
-    background: theme.palette.action.selected,
+  muiBreakpointWorkaround: {
+    minHeight: 64,
+  },
+  links: {
+    marginRight: '1rem',
+    color: '#1E1131',
+    fontSize: '1.1rem',
+    fontWeight: 600,
+    backgroundColor: 'transparent',
+    textTransform: 'none',
+    textDecoration: 'none',
   },
   icons: {
     color: '#000',
-  },
-  drawer: {
-    width: 375,
-    flexShrink: 0,
-    position: 'static !important',
-    '& .MuiBackdrop-root': {
-      zIndex: 1,
-    },
-  },
-  drawerPaper: {
-    width: 375,
-  },
-  avatar: {
-    backgroundColor: '#ffffff',
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-    marginLeft: 'auto',
-    textTransform: 'uppercase',
+    fontSize: '1.5rem',
   },
   logo: {
-    flexGrow: 1,
-    textAlign: 'center',
+    textAlign: 'left',
+    marginRight: '0.3rem',
+  },
+  navLinkBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'right',
+    alignItems: 'center',
+    alignSelf: 'right',
+  },
+  expandedContent: {
+    flex: 1,
   },
 });
 
 const AppBar = ({
-  selected,
   classes,
-  routes,
   isLoading,
 }) => {
-  const [showDrawer, setShowDrawer] = useState(false);
-  const [showSupportDialog, setShowSupportDialog] = useState(false);
-  const nameContext = useContext(NameContext);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
   const userContext = useContext(UserContext);
+  const location = useLocation();
+  const path = location.pathname;
   const history = useHistory();
+  const isDesktopWidth = useMediaQuery('(min-width: 655px)');
 
-  const pageTitle = (routes.find((item) => item.key === selected) || {}).label;
+  const { logout } = useAuth0();
 
-  const goBack = () => {
-    history.goBack();
-  };
-  // if there is no username, the user might not be signed in
-  // so fallback to icon
-  let avatar = <PersonIcon color="primary" />;
-  if (userContext.userProfile.username) {
-    avatar = userContext.userProfile.username[0];
-  }
-  const showDrawerItems = () => routes.map((item) => {
-    const otherProps = {
-      selected: item.key === selected,
-      color: item.key === selected ? 'primary' : 'inherit',
-    };
-    return (
-      <ListItem
-        button
-        key={item.key}
-        selected={otherProps.selected}
-        className={cx({ [classes.selected]: otherProps.selected })}
-        onClick={() => {
-          setShowDrawer(false);
-          history.push(item.path);
-        }}
-      >
-        <ListItemIcon>
-          <item.icon className={classes.icons} />
-        </ListItemIcon>
-        <ListItemText>
-          <Typography className={classes.icons} variant="subtitle2">
-            {item.label}
-          </Typography>
-        </ListItemText>
-      </ListItem>
-    );
-  });
-
-  const NavIcons = () => {
-    let appIcons;
-    if (
-      selected === 'spaceDetails'
-      || selected === 'addReview'
-      || selected === 'reviews'
-    ) {
-      appIcons = (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="go-back"
-          onClick={goBack}
-          data-testid="appbar-go-back"
-        >
-          <ArrowBackIos />
-        </IconButton>
-      );
+  useEffect(() => {
+    if (path === '/') {
+      setShowSearchBar(false);
     } else {
-      appIcons = (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={() => setShowDrawer(!showDrawer)}
-          data-testid="appbar-menu"
-        >
-          <MenuIcon />
-        </IconButton>
-      );
+      setShowSearchBar(true);
     }
-    return appIcons;
-  };
+  }, [path]);
 
   const Logo = () => {
-    const matches = useMediaQuery('(min-width:376px)');
-    let logoSrc = '/mobile-appBar-logo.svg';
-    if (matches) {
-      logoSrc = '/web-appBar-logo.svg';
-    }
+    const logoSrc = '/web-appBar-logo.svg';
     return (
-      <div className={classes.logo}>
-        <img src={logoSrc} alt="logo" />
-      </div>
+      <Box className={(path === '/' || (!isDesktopWidth && showSearchBar))
+        ? [classes.logo, classes.expandedContent] : classes.logo}
+      >
+        <NavLink to="/">
+          <img src={logoSrc} alt="logo" />
+        </NavLink>
+      </Box>
     );
   };
 
-  return (
-    <>
-      <div className={classes.root} data-testid="app-bar">
-        <MaterialAppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <NavIcons />
-            <Typography variant="h6" data-testid="appbar-title">
-              {isLoading ? '' : pageTitle || nameContext.spaceTitle}
-            </Typography>
-            {pageTitle !== 'undefined' && pageTitle === 'Home' && !isLoading ? <Logo /> : null}
-            <Avatar className={classes.avatar}>
-              <Link href="/profile" underline="none">
-                {avatar}
-              </Link>
-            </Avatar>
-          </Toolbar>
-        </MaterialAppBar>
-        <Drawer
-          open={showDrawer}
-          onClose={() => setShowDrawer(false)}
-          data-testid="appbar-drawer"
-          className={classes.drawer}
-          classes={{
-            paper: classes.drawerPaper,
-            backdrop: classes.backdrop,
+  const TruncateUserName = (userName = 'Account') => {
+    if (userName.length > 10) {
+      return `${userName.slice(0, 10)}....`;
+    }
+    return userName;
+  };
+
+  const LoggedInDropdown = () => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const navigateToProfile = () => {
+      history.push({
+        pathname: '/profile',
+      });
+    };
+    const signOut = () => {
+      logout({
+        returnTo: window.location.origin,
+        client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+        federated: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/v2/logout?federated`,
+      });
+    };
+
+    return (
+      <Box>
+        <Button
+          id="log-in-positioned-button"
+          aria-controls={open ? 'log-in-positioned-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          className={classes.links}
+          onClick={handleClick}
+          data-testid="open-user-dropdown"
+        >
+          {TruncateUserName(userContext.userProfile.username)}
+        </Button>
+        <Menu
+          id="log-in-positioned-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+          data-testid="user-dropdown-menu"
+          PaperProps={{
+            style: {
+              background: '#EBE5F6',
+            },
+          }}
+          MenuListProps={{
+            'aria-labelledby': 'log-in-positioned-button',
           }}
         >
-          <Toolbar />
-          <List>
-            {showDrawerItems()}
-            <ListItem
-              button
-              key="support"
-              onClick={() => {
-                setShowSupportDialog(true);
-              }}
-            >
-              <ListItemIcon>
-                <HelpOutlineOutlinedIcon color="tertiary" className={classes.icons} />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography className={classes.icons} variant="subtitle2">
-                  Support
-                </Typography>
-              </ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
-      </div>
-      <Dialog
-        open={showSupportDialog}
-        onClose={() => setShowSupportDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Leave The Lavender Book?</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to leave The Lavender Book?
-            You will be taken to Google Forms to contact Support.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowSupportDialog(false)} color="primary">
-            Disagree
-          </Button>
-          <Button
-            onClick={() => {
-              window.open('https://forms.gle/mLDNTMGxMojuiKKLA', '_blank');
-              setShowSupportDialog(false);
-              setShowDrawer(false);
-            }}
-            color="primary"
-            autoFocus
-          >
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+          <MenuItem onClick={navigateToProfile} data-testid="profile-link">
+            <AccountCircleIcon data-testid="profile-icon" />
+            My Profile
+          </MenuItem>
+          <MenuItem onClick={signOut} data-testid="sign-out-link">
+            <LogoutIcon data-testid="sign-out-icon" />
+            Sign Out
+          </MenuItem>
+        </Menu>
+      </Box>
+    );
+  };
+
+  const AddASpace = () => {
+    const matches = useMediaQuery('(min-width:426px)');
+    return (
+      <Box className={classes.navLinkBar}>
+        <NavLink to="/spaces/new" className={classes.links} style={{ display: 'flex' }} data-testid="add-a-space-link">
+          <AddCircleOutlineIcon className={classes.icons} fontSize="small" data-testid="add-a-space-icon" />
+          {matches ? 'Add a Space' : ''}
+        </NavLink>
+      </Box>
+    );
+  };
+
+  const LogIn = () => (
+    <Box className={classes.navLinkBar}>
+      <NavLink to="/profile" className={classes.links}>
+        Log In
+      </NavLink>
+    </Box>
+  );
+
+  return (
+    <Box className={isDesktopWidth || !showSearchBar ? classes.root : [classes.root, classes.expandAppBar]} data-testid="app-bar">
+      <MaterialAppBar position="fixed" className={[classes.appBar, classes.muiBreakpointWorkaround]}>
+        <Toolbar className={classes.muiBreakpointWorkaround}>
+          {!isLoading && <Logo />}
+          {isDesktopWidth && showSearchBar
+            && <Box className={classes.expandedContent}><SearchBar /></Box>}
+          <Box className={classes.navLinkBar}>
+            <AddASpace />
+            {userContext.userProfile?.username ? <LoggedInDropdown /> : <LogIn />}
+          </Box>
+        </Toolbar>
+        {!isDesktopWidth && showSearchBar
+          && (
+            <Toolbar className={classes.muiBreakpointWorkaround}>
+              <Box className={classes.expandedContent}><SearchBar /></Box>
+            </Toolbar>
+          )}
+      </MaterialAppBar>
+    </Box>
   );
 };
 
 AppBar.propTypes = {
-  selected: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   isLoading: PropTypes.bool,
-  routes: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
 };
 
 AppBar.defaultProps = {
-  selected: 'home',
   isLoading: false,
 };
 

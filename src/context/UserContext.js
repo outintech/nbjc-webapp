@@ -20,6 +20,10 @@ const UserContextProvider = ({ children }) => {
 
   const [profileChips, setProfileChips] = useState();
 
+  const [profileCreated, setProfileCreated] = useState({
+    creationStatus: '',
+  });
+
   useEffect(() => {
     async function fetchIdentities() {
       const results = await getProfileChips();
@@ -31,7 +35,7 @@ const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        user, setUser, userProfile, setUserProfile, profileChips,
+        user, setUser, userProfile, setUserProfile, profileChips, profileCreated, setProfileCreated,
       }}
     >
       {children}
