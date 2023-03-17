@@ -4,28 +4,27 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Development
 ### Prerequisites
-* This repo uses `node` and `yarn`. 
-* TDB - Specify versions for node and yarn
+* This repo uses `node`. 
+* TDB - Specify versions for node
 * To install node consider using a version manager like [nvm](https://github.com/nvm-sh/nvm)
-* To install yarn consider using a version manager like [yvm](https://yvm.js.org/docs/overview)
 
 ### Setting up the repo locallay
 ```bash
 $ git clone git@github.com:outintech/nbjc-webapp.git
 $ cd nbjc-webapp
-$ yarn install
+$ npm install
 ```
 
 #### Installation Issue with multiple react-router-dom
 If you have issues with compiling with multiple versions of react-router-dom installed locally, downgrade to version 5 by using:
 
-```yarn add react-router-dom@5```
+```npm install react-router-dom@5 --save```
 
 ### Running the repo locally
 The following will start the repo locally with watchers and hmr in localhost:3000
 
 ```bash
-$ yarn start
+$ npm start
 ```
 If 3030 is already in use it will prompt you to run in a different port like so. Hit `Y` to allow 
 ```
@@ -40,7 +39,7 @@ New standalone React components can be scaffolded using a plop script.
 To run the generator: 
 
 ```
-$ yarn generate component
+$ npm run generate
 ```
 In the prompt, provide a name to your compoenent in [PascalCase](https://wiki.c2.com/?PascalCase)
 The script will create :
@@ -54,8 +53,8 @@ The script will create :
 
 Example: 
 ```
-$ yarn generate component
-yarn run v1.22.5
+$ npm run generate component
+nbjc-webapp@0.1.0 generate
 $ plop component
 ? What is your component name? FilterDialog
 ✔  ++ /src/components/FilterDialog/FilterDialog.jsx
@@ -71,19 +70,19 @@ $ plop component
 
 To run the styleguide
 ```
-$ yarn styleguide
+$ npm run styleguide
 ```
 go to localhost:6060 to see the styleguide and modify the examples.
 
 To add styleguide to component in the `src/components` folder simply add a `.md` file with `jsx` codeblocks. 
 
 ### Linting
-* Run `yarn lint` to lint all *.js and *.jsx files in the src folder
+* Run `npm run lint` to lint all *.js and *.jsx files in the src folder
 * CSS lint tbd
 * This repo uses `eslint` with `airbnb` rules.
 
 ### Testing
-* Run `yarn test` to run all tests with a watcher. 
+* Run `npm run test` to run all tests with a watcher. 
 * Tests will automatically run based on changes.
 * Standalone components use snapshot testing to test the rendered component.
 
@@ -96,7 +95,7 @@ To add styleguide to component in the `src/components` folder simply add a `.md`
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -104,12 +103,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm run test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -119,7 +118,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -155,6 +154,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
+### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

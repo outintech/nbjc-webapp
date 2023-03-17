@@ -8,4 +8,4 @@
 
 ## Test
 
-`yarn test SearchBar`
+`npm run test SearchBar`
