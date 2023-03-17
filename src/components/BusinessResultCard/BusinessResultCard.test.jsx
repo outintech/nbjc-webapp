@@ -5,7 +5,7 @@ import BusinessResultCard from './BusinessResultCard';
 
 describe('BusinessResultCard', () => {
   test('renders', () => {
-    const onCheck=jest.fn();
+    const onCheck = jest.fn();
     const business = {
       id: '123',
       name: 'La colombe coffee roasters',
