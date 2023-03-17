@@ -28,7 +28,8 @@ ENV REACT_APP_AUTH0_DOMAIN ${REACT_APP_AUTH0_DOMAIN}
 ARG REACT_APP_AUTH0_CLIENT_ID
 ENV REACT_APP_AUTH0_CLIENT_ID ${REACT_APP_AUTH0_CLIENT_ID}
 
-RUN npm run build
+# workaround for converted crlf window repos
+RUN DISABLE_ESLINT_PLUGIN=true npm run build 
 
 # production environment with reverse proxy
 FROM nginx:stable-alpine
