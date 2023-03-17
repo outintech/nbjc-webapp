@@ -66,8 +66,5 @@
     "./src/**/*.{js,jsx,ts,tsx}": [
       "eslint src/**/*.js src/**/*.jsx --fix-dry-run"
     ]
-  },
-  "engines": {
-    "yarn": "YARN NO LONGER USED - use npm instead."
   }
 }
