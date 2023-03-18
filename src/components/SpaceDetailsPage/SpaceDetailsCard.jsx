@@ -369,7 +369,7 @@ const SpaceDetailCard = ({
             color="secondary"
             aria-label="hours of operation on yelp"
           >
-            <a variant="body1" href={yelpUrl} target="_blank" rel="noreferrer">
+            <a href={yelpUrl} target="_blank" rel="noreferrer">
               <NavigateNextIcon color="primary" />
             </a>
           </IconButton>

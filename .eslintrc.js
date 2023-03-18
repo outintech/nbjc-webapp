@@ -7,7 +7,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'no-plusplus': 0,
     'prefer-destructuring': 0,
-    "linebreak-style": ["error", (process.platform === "win32" ? "windows" : "unix")] // https://stackoverflow.com/q/39114446/2771889
+    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889
   },
   globals: {
     window: true,
