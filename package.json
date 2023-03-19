@@ -66,5 +66,9 @@
     "./src/**/*.{js,jsx,ts,tsx}": [
       "eslint src/**/*.js src/**/*.jsx --fix-dry-run"
     ]
+  },
+  "engines": {
+    "npm": "8.5.5",
+    "node": "16.15.0"
   }
 }
