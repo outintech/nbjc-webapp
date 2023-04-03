@@ -1,0 +1,54 @@
+name: Build and publish docker image
+on:
+  push:
+    branches:
+      - main
+      # filter for specific tagged version
+    paths-ignore:
+      - "README.md"
+
+env:
+  IMAGE_NAME: nbjc-webapp
+      
+jobs:
+  build-image:
+    name: Build docker image
+    # choose a standard runner for our virtual machine
+    runs-on: ubuntu-latest
+    steps:
+      # we'll need to checkout our repo to access our Dockerfile and code
+      - name: Checkout project
+        uses: actions/checkout@v3
+     # calculate image version tag from git commit sha
+      - name: Calculate image tag
+        id: sha
+        run: |
+          echo "image_tag=$(git rev-parse --short=7 HEAD)" >> "${GITHUB_OUTPUT}"
+
+      - name: Docker auth
+        id: docker-auth
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME  }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+    # build new image and tag with version and latest
+      - name: Build dev image
+        run: |
+          docker build \
+          --build-arg REACT_APP_DOMAIN=${{localhost:3000}} \
+          --build-arg REACT_APP_API_HOST=${{http://localhost:8080}} \
+          --build-arg REACT_APP_AUTH0_DOMAIN=${{ secrets.AUTH0_DEV_DOMAIN }} \
+          --build-arg REACT_APP_AUTH0_CLIENT_ID=${{ secrets.AUTH0_DEV_CLIENT_ID }} .
+          docker tag ${{ env.IMAGE_NAME }}:dev
+          docker push ${{ env.IMAGE_NAME }}:dev
+
+      - name: Build prod image and tag latest
+        run: |
+         docker build \
+         --build-arg REACT_APP_DOMAIN=${{lavenderbook.org}} \
+         --build-arg REACT_APP_API_HOST=${{ secrets.API_PROD_HOST }} \
+         --build-arg REACT_APP_AUTH0_DOMAIN=${{ secrets.AUTH0_PROD_DOMAIN }} \
+         --build-arg REACT_APP_AUTH0_CLIENT_ID=${{ secrets.AUTH0_PROD_CLIENT_ID }} .
+         docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.IMAGE_NAME }}:${{ steps.sha.outputs.image_tag }}
+         docker push -a ${{ env.IMAGE_NAME }}
