@@ -8,7 +8,7 @@ on:
       - "README.md"
 
 env:
-  IMAGE_NAME: nbjc-webapp
+  IMAGE_NAME: outintech/nbjc-webapp
       
 jobs:
   build-image:
@@ -36,8 +36,7 @@ jobs:
       - name: Build dev image
         run: |
           docker build -t ${{ env.IMAGE_NAME }}:dev \
-          --build-arg REACT_APP_DOMAIN=localhost:3000 \
-          --build-arg REACT_APP_API_HOST=http://localhost:8080 \
+          --build-arg REACT_APP_API_HOST='http://localhost:8080' \
           --build-arg REACT_APP_AUTH0_DOMAIN=${{ secrets.AUTH0_DEV_DOMAIN }} \
           --build-arg REACT_APP_AUTH0_CLIENT_ID=${{ secrets.AUTH0_DEV_CLIENT_ID }} .
           docker push ${{ env.IMAGE_NAME }}:dev
@@ -45,7 +44,6 @@ jobs:
       - name: Build prod image and tag latest
         run: |
          docker build -t ${{ env.IMAGE_NAME }}:latest \
-         --build-arg REACT_APP_DOMAIN=lavenderbook.org \
          --build-arg REACT_APP_API_HOST=${{ secrets.API_PROD_HOST }} \
          --build-arg REACT_APP_AUTH0_DOMAIN=${{ secrets.AUTH0_PROD_DOMAIN }} \
          --build-arg REACT_APP_AUTH0_CLIENT_ID=${{ secrets.AUTH0_PROD_CLIENT_ID }} .
