@@ -56,6 +56,7 @@ const styles = {
     },
     alignItems: 'baseline',
     maxHeight: '80px',
+    marginTop: '5px',
     marginBottom: '5px',
   },
   nameFilter: {
@@ -119,6 +120,10 @@ const styles = {
       padding: '12px 42px',
     },
     marginBottom: '188px',
+  },
+  applyMobile: {
+    boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
+    marginBottom: 0,
   },
   resultCount: {
     display: 'inline-block',
@@ -294,7 +299,6 @@ const FilterPanel = ({
         placeholder="Search by name"
         value={nameFilterVal}
         InputProps={{
-          disableUnderline: true,
           padding: 5,
           classes: { borderRadius: 0 },
           endAdornment: (
@@ -458,7 +462,7 @@ const FilterPanel = ({
           {priceFilter}
           {indicatorFilters}
         </div>
-        <div className={classes.apply}>
+        <div className={`${classes.apply} ${classes.applyMobile}`}>
           <span className={classes.resultCount}>
             {`${resultCount} Search Result${resultCount === 1 ? '' : 's'}`}
           </span>
