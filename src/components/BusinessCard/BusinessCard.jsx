@@ -121,7 +121,7 @@ const BusinessCard = ({
         classes={{ action: classes.headerAction }}
       />
       <CardMedia
-        image={imageUrl}
+        image={imageUrl || '/web-no-image.png'}
         className={classes.cardMedia}
       />
       <CardContent>
