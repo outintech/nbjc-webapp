@@ -486,7 +486,7 @@ FilterPanel.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['desktop', 'mobile']),
-  allIndicators: PropTypes.arrayOf(PropTypes.object),
+  allIndicators: PropTypes.arrayOf({}),
   search: PropTypes.shape({
     searchTerm: PropTypes.string,
     indicators: PropTypes.arrayOf(PropTypes.string),

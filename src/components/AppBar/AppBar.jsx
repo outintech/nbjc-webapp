@@ -71,6 +71,7 @@ const AppBar = ({
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   const userContext = useContext(UserContext);
+  const { userProfile } = userContext;
   const location = useLocation();
   const path = location.pathname;
   const history = useHistory();
@@ -139,7 +140,7 @@ const AppBar = ({
           onClick={handleClick}
           data-testid="open-user-dropdown"
         >
-          {TruncateUserName(userContext.userProfile.username)}
+          {TruncateUserName(userProfile?.username)}
         </Button>
         <Menu
           id="log-in-positioned-menu"
@@ -201,7 +202,7 @@ const AppBar = ({
             && <Box className={classes.expandedContent}><SearchBar /></Box>}
           <Box className={classes.navLinkBar}>
             <AddASpace />
-            {userContext.userProfile?.username ? <LoggedInDropdown /> : <LogIn />}
+            {userProfile?.username ? <LoggedInDropdown /> : <LogIn />}
           </Box>
         </Toolbar>
         {!isDesktopWidth && showSearchBar

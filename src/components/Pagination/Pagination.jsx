@@ -283,7 +283,7 @@ const PaginationButton = ({
   );
   if (currPage === pageNumber) {
     return (
-      <div className={PaginationButtonClasses} underline="none">
+      <div className={PaginationButtonClasses}>
         {PageNumberBox}
       </div>
     );

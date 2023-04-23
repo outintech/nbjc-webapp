@@ -197,13 +197,14 @@ const ParentRowContainer = (
 };
 
 const AddASpaceButton = (classes, breakpoint) => {
+  const { searchButton, searchButtonContainer, expandWidth } = classes;
   const baseButton = (
-    <Button href="/spaces/new" variant="outlined" className={classes.searchButton} data-testid="add-space-button">
+    <Button href="/spaces/new" variant="outlined" className={searchButton} data-testid="add-space-button">
       Add a Space
     </Button>
   );
   const wideButton = (
-    <Box className={`${classes.searchButtonContainer} ${classes.expandWidth}`} data-testid="add-space-parent">
+    <Box className={`${searchButtonContainer} ${expandWidth}`} data-testid="add-space-parent">
       {baseButton}
     </Box>
   );
